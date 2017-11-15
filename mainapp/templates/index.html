@@ -1,0 +1,182 @@
+{% include "head.html" %}
+
+{% load static %}
+<script src="{% static "site_js/main.js" %}"></script>
+
+<div class="mainpage-container">
+    <div class="mainpage-leftdiv">
+        <div style="padding: 10pt">
+            <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>
+        </div>
+        <div style="padding-left: 10pt">
+            <div style="width: 40%; display: inline-block">
+                <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON
+            </div>
+            <span style="width: 50pt"></span>
+            <div style="width: 40%; display: inline-block">
+                <input type="radio" name='format_type' id="XML-radio">&nbsp;XML
+            </div>
+        </div>
+        <div class="form-inline" style="padding: 10pt">
+            <label class="control-label" for="fileInput">From File&nbsp; &nbsp;</label>
+            <input class="input-file" id="fileInput" type="file">
+            <a class="btn btn-primary" id="file_btn">Load</a>
+        </div>
+        <div id="script_area"></div>
+    </div>
+
+    <div class="mainpage-rightdiv">
+
+        <div class="panel panel-primary text-warning" id="change_div">
+            Some changes happened. Please parse again.
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-target="#parse_stat_div">Parse Status</a>
+                </h3>
+            </div>
+            <div class="panel-body collapse in" id="parse_stat_div">
+                <p class="parse_status" id="doc_status"><i class="icon-play"></i>Document Parse</p>
+                <p class="parse_status" id="api_status"><i class="icon-play"></i>API Parse</p>
+                <p class="parse_status" id="scenario_status"><i class="icon-play"></i>Scenario Parse</p>
+                <p class="parse_status" id="config_status"><i class="icon-play"></i>Test Config Parse</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="panel panel-primary panel-body" id="error_panel">
+            <h5>Error</h5>
+            <div style="height: 5px"></div>
+            <div id="error_list" style="color: darkred">
+                No error.
+            </div>
+        </div>
+
+        <div class="row list_container">
+            <div class="span3">
+                <h5><a data-toggle="collapse" data-target="#api_list">API List</a></h5>
+                <div style="height: 5px"></div>
+                <div id="api_list" class="collapse in">
+                </div>
+            </div>
+            <div class="span1"> </div>
+            <div class="span3">
+                <h5><a data-toggle="collapse" data-target="#scenario_list">Scenario List</a></h5>
+                <div style="height: 5px"></div>
+                <div id="scenario_list" class="collapse in">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-success" style="margin-top: 20pt; margin-bottom: 20pt" id="api_ops">
+            <div class="panel-heading">
+                <h5>API Analysis</h5>
+            </div>
+            <div class="panel-body">
+                <select id="api_select" style="width: 100%">
+                    <option name="default">Select an API</option>
+                </select><br>
+                <div class="form-inline" style="margin-bottom: 10pt">
+                    <label class="checkbox-inline">
+                        <input id="isali_checkbox" type="checkbox"> Is Ali Cloud API?
+                    </label>
+                    <span class="control-group" id="ali_secret_div">
+                        <input type="password" class="form-control" placeholder="Ali Secret Key" id="secretkey_text">
+                    </span>
+                </div>
+                <div class="form-inline" style="margin-bottom: 10pt">
+                    <label class="control-group" id="timeout_div" style="display: block">
+                        Timeout
+                        <input type="text" class="form-control" value="2000" id="timeout_input">
+                        ms
+                    </label>
+                </div>
+                <div style="display: block">
+                    <a id="datagen_btn" class="btn btn-primary btn-success" style="width: 40%">Generate Request Data</a>
+                    <a id="single_btn" class="btn btn-primary btn-success text-right" style="width: 40%">Run Single API Test</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary" id="scenario_ops">
+            <hr>
+            <a id="scenario_btn" class="btn btn-large btn-block btn-success">Run Scenario Test</a>
+        </div>
+
+
+        <div class="panel panel-primary" id="datagen_panel">
+            <hr>
+            <h5><a data-toggle="collapse" data-target="#datagen_frame_div">Data Generate</a></h5>
+            <div id="datagen_frame_div" class="collapse in">
+                <div id="datagen_success_div">
+                    <strong class="text-success">Success</strong><br>
+                    <strong>Data</strong>&nbsp; &nbsp;<a id="datagen_copy">[copy]</a><br>
+                    <div id="datagen_div"></div>
+                </div>
+                <div id="datagen_fail_div">
+                    <strong class="text-error">Failed</strong><br>
+                    <strong>Errors:</strong><br>
+                    <div id="datagen_err_div"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary" id="singleapi_panel">
+            <hr>
+            <h5><a data-toggle="collapse" data-target="#singleapi_frame_div">Single API Test</a></h5>
+            <div id="singleapi_frame_div" class="collapse in">
+                <div id="singleapi_success_div">
+{#                    <strong class="text-success">Success</strong><br>#}
+                    <strong>Report</strong>&nbsp; &nbsp;<a id="singleapi_copy">[copy]</a><br>
+                    <div id="singleapi_div"></div>
+                </div>
+                <div id="singleapi_fail_div">
+                    <strong class="text-error">Failed</strong><br>
+                    <strong>Errors:</strong><br>
+                    <div id="singleapi_err_div"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary" id="scenario-panel">
+            <hr>
+            <h5><a data-toggle="collapse" data-target="#scenario_frame_div">Scenario</a></h5>
+            <div id="scenario_frame_div" class="collapse in">
+                <div id="scenario_running_div">
+                    <h4 class="text-center">Running</h4>
+                    <p class="text-center">Case #<span id="case_num">0</span>, Step #<span id="step_num">0</span></p>
+                    <h6 class="text-center"><small id="scenario_running_updatestat">Not updated.</small></h6>
+                </div>
+                <div id="scenario_notstart_div">
+                    <h4 class="text-center">Not Start</h4>
+                </div>
+                <div id="scenario_finish_div">
+                    <strong class="text-success">Finished</strong><br>
+                    <strong>Report</strong>&nbsp; &nbsp;<a id="scenario_copy">[copy]</a><br>
+                    <div id="scenario_div"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="copy_modal" class="modal hide fade in" style="display: none; ">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Raw JSON Data</h3>
+        </div>
+        <div class="modal-body">
+            <div id="json_area" style="max-height: 300pt; word-break:break-all; overflow-y: scroll"></div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+
+</div>
+
+{% include "tail.html" %}

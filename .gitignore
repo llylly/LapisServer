@@ -1,0 +1,8 @@
+*.so
+*.sqlite3
+.idea/
+mainapp/static/assets
+mainapp/static/ace
+mainapp/static/css
+mainapp/static/img
+mainapp/static/js

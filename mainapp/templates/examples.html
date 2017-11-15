@@ -1,0 +1,43 @@
+{% include "head.html" %}
+{% load static %}
+
+<div class="container">
+    <h4>Examples</h4>
+    <hr>
+
+    <h5>Official Demo</h5>
+    <span class="badge badge-success">YAML</span>
+    &nbsp; &nbsp; <a href="{% static "assets/examples/official_demo.yaml" %}">[download]</a><br>
+    The official demo script on Swagger site.
+
+    <hr>
+
+    <h5>Tiny Dictionary Service</h5>
+    <span class="badge badge-success">YAML</span>
+    &nbsp; &nbsp; <a href="{% static "assets/examples/map_server.yaml" %}">[download]</a><br>
+    A tiny service like a Python dict. The service is actually available. A scenario definition is included too.
+
+    <hr>
+
+    <h5>Post Service</h5>
+    <span class="badge badge-success">YAML</span>
+    &nbsp; &nbsp; <a href="{% static "assets/examples/post_server.yaml" %}">[download]</a><br>
+    A tiny Twitter-like post service, including API definitions and a scenario. But the service is fictional.
+
+    <hr>
+
+    <h5>Aliyun Instance APIs Example</h5>
+    <span class="badge badge-success">YAML</span>
+    &nbsp; &nbsp; <a href="{% static "assets/examples/ali_sample.yaml" %}">[download]</a><br>
+    API definitions of some Aliyun Instance APIs. A scenario definition is also inside. The service is available.<br>
+    But to use it, please fill in your Ali Access Key and Key Secret into the script.
+
+    <hr>
+
+    <h5>Aliyun OSS APIs</h5>
+    <span class="badge badge-success">YAML</span>
+    &nbsp; &nbsp; <a href="{% static "assets/examples/oss.fill.yaml" %}">[download]</a><br>
+    Full API definitions of Aliyun OSS service.
+</div>
+
+{% include "tail.html" %}
