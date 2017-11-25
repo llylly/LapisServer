@@ -35,6 +35,9 @@ def main(source, out):
         if ret3 is True:
             ans['scenarioParse'] = True
             ans['scenarioNames'] = getScenarioNames()
+            ans['scenarioDetail'] = dict()
+            for name in ans['scenarioNames']:
+                ans['scenarioDetail'][name] = getScenario(name)
 
     if ans['scenarioParse']:
         ret4 = parseConfig()

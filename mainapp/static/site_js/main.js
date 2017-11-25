@@ -37,8 +37,10 @@ $(function(){
     clean();
 
     editor = ace.edit("script_area");
-    editor.setTheme("ace/theme/monokai");
+    editor.setTheme("ace/theme/xcode");
     editor.getSession().setMode("ace/mode/yaml");
+    editor.setHighlightActiveLine(true);
+    editor.getSession().setUseWrapMode(true);
 
     editor.getSession().on('change', function(e) {
         if (session != "-1")
@@ -171,20 +173,26 @@ $(function(){
                                         $('#error_panel').show();
                                         error_arr = result.errors;
                                         error_str = "";
+                                        min_line = -1;
                                         for (index in error_arr) {
                                             now_item = error_arr[index];
                                             error_str += "<p>" + "line: " + now_item.line + "   " +
                                                 "col: " + now_item.col + "<br>" +
                                                 "errNo: " + now_item.errno + "<br>" +
                                                 "msg: " + now_item.msg + "</p>";
+                                            if (min_line == -1)
+                                                min_line = now_item.line;
+                                            else
+                                                min_line = min(min_line, now_item.line);
                                         }
+                                        editor.gotoLine(min_line);
                                         $('#error_list').html(error_str);
                                     }
                                     if (result.apiParse) {
                                         api_str = "";
                                         for (index in result.apiNames) {
                                             now_item = result.apiNames[index];
-                                            api_str += now_item.name + "  <span class=\"badge badge-success\">" +
+                                            api_str += now_item.name + "  <span class=\"badge badge-success apitype\">" +
                                                 now_item.method + "</span><br>";
                                         }
                                         $('#api_list').html(api_str);
@@ -193,7 +201,11 @@ $(function(){
                                         scenario_str = "";
                                         for (index in result.scenarioNames) {
                                             now_item = result.scenarioNames[index];
-                                            scenario_str += String(now_item) + "<br>";
+                                            scenario_str += "<span class='btn-link' data-toggle='collapse' data-target='#scenario_" +
+                                                String(now_item) + "'>" + String(now_item) + "</span><br>";
+                                            scenario_str += "<div class='collapse' style='padding-left: 10px' id='scenario_" + String(now_item) + "'>";
+                                            scenario_str += present(eval('result.scenarioDetail.' + String(now_item)), 'scenario' + String(now_item), 0, 0).text;
+                                            scenario_str += "</div>";
                                         }
                                         $("#scenario_list").html(scenario_str);
                                     }
@@ -405,7 +417,6 @@ $(function(){
             }
         );
     });
-
 });
 
 function ticker() {

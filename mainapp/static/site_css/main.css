@@ -25,6 +25,22 @@
     color: darkgreen;
 }
 
+.mainpage-leftdiv .badgenormal, .badge-important, .badge-success {
+    display: none;
+}
+
+.parse_status .badgenormal {
+    display: inherit;
+}
+
+.parse_status_err .badge-important {
+    display: inherit;
+}
+
+.parse_status_fin .badge-success {
+    display: inherit;
+}
+
 .list_container {
     max-height: 300pt;
     overflow-x: hidden;
@@ -32,7 +48,7 @@
 }
 
 #script_area {
-    height: calc(100% - 133px)
+    height: calc(100% - 153px)
 }
 
 .mainpage-container {
@@ -54,7 +70,7 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
-    background-color: #DCDCDC
+    background-color: #F0F0F0
 }
 
 .mainpage-rightdiv {
@@ -66,4 +82,8 @@
     overflow-y:scroll;
     width: 50%;
     padding: 10pt;
+}
+
+.apitype {
+    display: inline-block;
 }

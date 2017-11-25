@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9c+k)b(@35ulol--$^c2atosdvzl#v1iv67+(klm!*z(bo*l5i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['123.56.78.41']
+ALLOWED_HOSTS = ['123.56.78.41', '127.0.0.1']
 
 
 # Application definition
@@ -121,6 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "mainapp/static")
 
 WORKER_CMD = '/Users/lly/anaconda/bin/python'

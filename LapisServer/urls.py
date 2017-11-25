@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^api/scenario_test$', coreapp.views.scenario_test),
     url(r'^api/scenario_test_query$', coreapp.views.scenario_test_query),
 
-    url(r'^', mainapp.views.index),
+    url(r'^$', mainapp.views.index),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
