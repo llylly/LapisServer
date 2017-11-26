@@ -14,25 +14,17 @@ function clean() {
     $('.parse_status_err').removeClass('parse_status_err').addClass('parse_status');
     $('#error_panel').hide();
     $('#error_list').html("No error.");
+    $('#transform_ops').hide();
+    $('#basic_info_panel').hide();
+    $('#api_panel').hide();
     $('#api_list').html("");
-    $('#scenario_list').html("");
     $('#api_ops').hide();
     $('#api_select').empty().append($("<option>").val('default').text('Select an API'));
-    $('#scenario_ops').hide();
-    $('#ali_secret_div').hide();
     $('#datagen_panel').hide();
-    $('#singleapi_panel').hide();
-    $('#scenario_running_div').hide();
-    $('#scenario_notstart_div').hide();
-    $('#scenario_finish_div').hide();
-    $('#scenario-panel').hide();
-    $('#scenario_running_updatestat').text('Not updated.');
     $('#change_div').hide();
 }
 
 $(function(){
-
-    ticker();
 
     clean();
 
@@ -64,26 +56,8 @@ $(function(){
             editor.getSession().setMode("ace/mode/xml");
     });
 
-    $('#isali_checkbox').change(function(){
-        if ($('#isali_checkbox').is(':checked')) {
-            $('#ali_secret_div').show();
-        } else {
-            $('#ali_secret_div').hide();
-        }
-    });
-
     $('#datagen_copy').click(function(){
        $('#json_area').html(datagen_cpystr);
-       $('#copy_modal').modal('show');
-    });
-
-    $('#singleapi_copy').click(function(){
-       $('#json_area').html(singleapi_cpystr);
-       $('#copy_modal').modal('show');
-    });
-
-    $('#scenario_copy').click(function(){
-       $('#json_area').html(scenario_cpystr);
        $('#copy_modal').modal('show');
     });
 
@@ -159,17 +133,7 @@ $(function(){
                                             $("#api_status").removeClass("parse_status").addClass("parse_status_fin");
                                         else
                                             $("#api_status").removeClass("parse_status").addClass("parse_status_err");
-                                    if (result.docParse && result.apiParse)
-                                        if (result.scenarioParse)
-                                            $("#scenario_status").removeClass("parse_status").addClass("parse_status_fin");
-                                        else
-                                            $("#scenario_status").removeClass("parse_status").addClass("parse_status_err");
-                                    if (result.docParse && result.apiParse && result.scenarioParse)
-                                        if (result.configParse)
-                                            $("#config_status").removeClass("parse_status").addClass("parse_status_fin");
-                                        else
-                                            $("#config_status").removeClass("parse_status").addClass("parse_status_err");
-                                    if (!result.docParse || !result.apiParse || !result.scenarioParse || !result.configParse) {
+                                    if (!result.docParse || !result.apiParse) {
                                         $('#error_panel').show();
                                         error_arr = result.errors;
                                         error_str = "";
@@ -189,25 +153,17 @@ $(function(){
                                         $('#error_list').html(error_str);
                                     }
                                     if (result.apiParse) {
+                                        $('#basic_info_table').html(basic_info_present(result));
                                         api_str = "";
                                         for (index in result.apiNames) {
                                             now_item = result.apiNames[index];
-                                            api_str += now_item.name + "  <span class=\"badge badge-success apitype\">" +
-                                                now_item.method + "</span><br>";
+                                            api_str += api_detail_present(now_item.name, now_item.method,
+                                                eval('result.apiDetail["' + now_item.name + '"]["' + now_item.method + '"]'), index, "api_detail_");
                                         }
                                         $('#api_list').html(api_str);
-                                    }
-                                    if (result.scenarioParse) {
-                                        scenario_str = "";
-                                        for (index in result.scenarioNames) {
-                                            now_item = result.scenarioNames[index];
-                                            scenario_str += "<span class='btn-link' data-toggle='collapse' data-target='#scenario_" +
-                                                String(now_item) + "'>" + String(now_item) + "</span><br>";
-                                            scenario_str += "<div class='collapse' style='padding-left: 10px' id='scenario_" + String(now_item) + "'>";
-                                            scenario_str += present(eval('result.scenarioDetail.' + String(now_item)), 'scenario' + String(now_item), 0, 0).text;
-                                            scenario_str += "</div>";
-                                        }
-                                        $("#scenario_list").html(scenario_str);
+
+                                        $('#basic_info_panel').show();
+                                        $('#api_panel').show();
                                     }
                                     if (result.docParse && result.apiParse) {
                                         for (index in result.apiNames) {
@@ -216,10 +172,14 @@ $(function(){
                                             val = now_item.method + '_' + now_item.name;
                                             $("#api_select").append($("<option>").val(val).text(text));
                                         }
+                                        if ($('#YAML-radio').is(':checked')) {
+                                            $('#transform_btn').text('Transform to XML Format');
+                                        }
+                                        if ($('#XML-radio').is(':checked')) {
+                                            $('#transform_btn').text('Transform to YAML Format');
+                                        }
                                         $("#api_ops").show();
-                                    }
-                                    if (result.docParse && result.apiParse && result.scenarioParse && result.configParse) {
-                                        $("#scenario_ops").show();
+                                        $("#transform_ops").show();
                                     }
                                 }
                             }
@@ -228,6 +188,42 @@ $(function(){
                 }
             }
         );
+    });
+
+    $('#transform_btn').click(function(){
+       $.get(
+            "/api/session_verify?id=" + session,
+            function(data, status) {
+                if (status != 'success') {
+                    alert('Unknown error.');
+                } else {
+                    data = eval(data);
+                    if (data.code != '200') {
+                        alert('Unknown error.');
+                    } else {
+                        session = data.id;
+                        $.post(
+                            "/api/script_transform",
+                            {
+                                session: session
+                            },
+                            function(data, status) {
+                                if (status != 'success') {
+                                    alert('Unknown Error');
+                                } else {
+                                    data = eval(data);
+                                    if (data.code != "200") {
+                                        alert(data.msg);
+                                    } else {
+                                        window.open(data.link, 'Download');
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+       );
     });
 
     $('#datagen_btn').click(function(){
@@ -279,11 +275,11 @@ $(function(){
                                             $('#datagen_success_div').show();
                                             $('#datagen_fail_div').hide();
                                             datagen_cpystr = JSON.stringify(result.data);
-                                            $('#datagen_div').html(present(result.data, 'datagen_res_', 0, 0).text);
+                                            $('#datagen_div').html("&nbsp; &nbsp;" + present(result.data, 'datagen_res_', 2, 0).text);
                                         } else {
                                             $('#datagen_success_div').hide();
                                             $('#datagen_fail_div').show();
-                                            $('#datagen_err_div').html(present(result.errors, 'datagen_errres_', 0, 0).text);
+                                            $('#datagen_err_div').html(present(result.errors, 'datagen_errres_', 2, 0).text);
                                         }
                                     }
                                 }
@@ -295,190 +291,239 @@ $(function(){
         );
     });
 
-    $('#single_btn').click(function(){
-        if ($('#single_btn').attr("disabled") == "disabled") return;
-        api_str = $("#api_select").val();
-        index = api_str.indexOf('_');
-        if (index == -1) {
-            alert('Please specify an API.');
-            return;
-        }
-        method = api_str.substr(0, index);
-        api_name = api_str.substr(index + 1);
-        isali = $('#isali_checkbox').is(':checked');
-        secret_key = $('#secretkey_text').val();
-        if (isali) {
-            if (secret_key == "")
-                alert('Please specify Ali secret key.');
-        }
-        timeout = parseInt($('#timeout_input').val());
-        if (isNaN(timeout) || (timeout <= 0)) {
-            alert('Invalid timeout parameter. It should be a positive integer')
-        }
-
-        $.get(
-            "/api/session_verify?id=" + session,
-            function(data, status) {
-                if (status != 'success') {
-                    alert('Unknown error.');
-                } else {
-                    data = eval(data);
-                    if (data.code != "200") {
-                        alert('Unknown error.');
-                    } else {
-                        session = data.id;
-                        $('#single_btn').attr('disabled', 'disabled');
-                        $.post(
-                            "/api/single_test",
-                            {
-                                session: session,
-                                method: method,
-                                api: api_name,
-                                isali: isali,
-                                secret_key: secret_key,
-                                timeout: timeout
-                            },
-                            function(data, status) {
-                                $('#single_btn').removeAttr('disabled');
-                                if (status != 'success') {
-                                    alert('Unknown Error');
-                                } else {
-                                    data = eval(data);
-                                    if (data.code == '203') {
-                                        alert(data.msg);
-                                        clean();
-                                    } else if (data.code != '200') {
-                                        alert(data.msg)
-                                    } else {
-                                        $('#singleapi_panel').show();
-                                        result = data.result;
-                                        if ((result.succeed) && (result.errors.length == 0)) {
-                                            $('#singleapi_success_div').show();
-                                            $('#singleapi_fail_div').hide();
-                                            singleapi_cpystr = JSON.stringify(result.report);
-                                            $('#singleapi_div').html(present(result.report, 'singleapi_rep_', 0, 0).text);
-                                        } else {
-                                            $('#datagen_success_div').hide();
-                                            $('#datagen_fail_div').show();
-                                            $('#datagen_err_div').html(present(result.errors, 'singleapi_errres_', 0, 0).text);
-                                        }
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        )
-    });
-
-    $('#scenario_btn').click(function(){
-        if ($('#scenario_btn').attr("disabled") == "disabled") return;
-        $.get(
-            "/api/session_verify?id=" + session,
-            function(data, status) {
-                if (status != 'success') {
-                    alert('Unknown error.');
-                } else {
-                    data = eval(data);
-                    if (data.code != "200") {
-                        alert('Unknown error.');
-                    } else {
-                        session = data.id;
-                        $('#scenario_btn').attr('disabled', 'disabled');
-                        $.post(
-                            "/api/scenario_test",
-                            {
-                                session: session
-                            },
-                            function (data, status) {
-                                if (status != 'success') {
-                                    alert('Unknown Error');
-                                    $('#scenario_btn').removeAttr('disabled');
-                                } else {
-                                    data = eval(data);
-                                    if (data.code == '203') {
-                                        alert(data.msg);
-                                        clean();
-                                        $('#scenario_btn').removeAttr('disabled');
-                                    } else if (data.code != '200') {
-                                        alert(data.msg)
-                                        $('#scenario_btn').removeAttr('disabled');
-                                    } else {
-                                        $('#scenario-panel').show();
-                                        $('#scenario_running_div').show();
-                                        scenario_result_update();
-                                    }
-                                }
-                            }
-                        );
-                    }
-                }
-            }
-        );
-    });
 });
 
-function ticker() {
-    text = $('#scenario_running_updatestat').text();
-    if (text == 'Updated just now.')
-        $('#scenario_running_updatestat').text('Updated 1 second(s) ago.');
-
-    if (text.indexOf(' second(s) ago') >= 0) {
-        tail = text.indexOf(' second(s) ago');
-        prev = text.substr(8, tail-8);
-        prev = parseInt(prev);
-        now = prev + 1;
-        $('#scenario_running_updatestat').text('Updated ' + String(now) + ' second(s) ago.');
+function basic_info_present(obj) {
+    function arrSerailize(obj) {
+        s = '';
+        for (i in obj)
+            s += obj[i] + '; ';
+        return s;
     }
 
-    setTimeout(ticker, 1000);
+    function add(s, key, value) {
+        return s + '<tr><td><strong>' + key + '</strong></td><td>' + value + '</td></tr>';
+    }
+
+    ans = '';
+    ans = add(ans, 'Title', obj.info.title);
+    if (!obj.info.description == false)
+        ans = add(ans, 'Description', obj.info.description);
+    else
+        ans = add(ans, 'Description', '<em>Unfilled</em>');
+    ans = add(ans, 'Version', obj.info.version);
+
+    ans = add(ans, 'Host', obj.host);
+
+    if (!obj.basePath == false)
+        ans = add(ans, 'BasePath', obj.basePath);
+    else
+        ans = add(ans, 'BasePath', '<em>Unfilled</em>');
+
+    if (!obj.schemes == false) {
+        ans = add(ans, 'Schemes', arrSerailize(obj.schemes));
+    } else
+        ans = add(ans, 'Schemes', '<em>Unfilled</em>');
+
+    if (!obj.consumes == false) {
+        ans = add(ans, 'Consumes', arrSerailize(obj.consumes));
+    } else
+        ans = add(ans, 'Consumes', '<em>Unfilled</em>');
+
+    if (!obj.produces == false) {
+        ans = add(ans, 'Produces', arrSerailize(obj.produces))
+    } else
+        ans = add(ans, 'Produces', '<em>Unfilled</em>');
+
+    return ans;
 }
 
-function scenario_result_update() {
-    $('#scenario_running_updatestat').text('Updated just now.');
-    $.post(
-        "/api/scenario_test_query",
-        {
-            session: session
-        },
-        function (data, status) {
-            if (status != 'success') {
-                alert('Unknown Error');
-                $('#scenario_btn').removeAttr('disabled');
-            } else {
-                data = eval(data);
-                if (data.code != '200') {
-                    alert(data.msg);
-                    $('#scenario_btn').removeAttr('disabled');
-                } else {
-                    if (data.stat == '-1') {
-                        $('#scenario_notstart_div').show();
-                        $('#scenario_running_div').hide();
-                        $('#scenario_finish_div').hide();
-                        $('#scenario_running_updatestat').text('Not updated.');
-                        $('#scenario_btn').removeAttr('disabled');
-                    }
-                    if (data.stat == '0') {
-                        $('#scenario_notstart_div').hide();
-                        $('#scenario_running_div').show();
-                        $('#scenario_finish_div').hide();
-                        $('#case_num').text(data.caseN);
-                        $('#step_num').text(data.stepN);
-                        setTimeout(scenario_result_update, 3000);
-                    }
-                    if (data.stat == '1') {
-                        $('#scenario_notstart_div').hide();
-                        $('#scenario_running_div').hide();
-                        $('#scenario_finish_div').show();
-                        $('#scenario_div').html(present(data.result, 'scenario_rep_', 0, 0).text);
-                        $('#scenario_btn').removeAttr('disabled');
-                        scenario_cpystr = JSON.stringify(data.result);
-                    }
-                }
-            }
+function api_detail_present(name, method, entity, no, prefix) {
+    tag_str = '';
+    if (!entity.tags == false) {
+        tag_str = '<tr>\
+        <td>Tags</td>\
+        <td>';
+        for (ind in entity.tags) {
+            tag_str += '<span class="badge badge-default">' + entity.tags[ind] + '</span>';
         }
-    )
+        tag_str += '</td></tr>';
+    }
+
+    summary_str = '';
+    if (!entity.summary == false)
+        summary_str = entity.summary;
+
+    description_str = '';
+    if (!entity.description == false)
+        description_str = entity.description;
+
+    externaldoc_str = '';
+    if (!entity.externalDocs == false)  {
+        externaldoc_str = '<tr><td>ExternalDocs</td><td>' + present(entity.externalDocs, prefix + 'external_doc_', 0, 0).text + '</td></tr>';
+    }
+
+    operationid_str = '';
+    if (!entity.operationId == false) {
+        operationid_str = '<tr><td>OperationId</td><td>' + entity.operationId + '</td></tr>';
+    }
+
+    consumes_str = '';
+    for (ind in entity.consumes) {
+        consumes_str += entity.consumes[ind] + '; ';
+    }
+
+    produces_str = '';
+    for (ind in entity.produces) {
+        produces_str += entity.produces[ind] + '; ';
+    }
+
+    schemes_str = '';
+    for (ind in entity.schemes) {
+        schemes_str += entity.schemes[ind] + '; ';
+    }
+
+    deprecated_str = '';
+    if (entity.deprecated) {
+        deprecated_str = '<tr><td><span class="text-error">Deprecated</span></td><td><span class="text-error">True</span></td></tr>';
+    }
+
+    constraint_str = '';
+    if (!entity['x-constraint'] == false) {
+        constraint_str = '<tr><td>x-constraint</td><td>' + present(entity['x-constraint'], prefix + 'constraint_', 0, 0).text + '</td></tr>';
+    }
+
+    // --------
+
+    param_str = '<table class="table"><thead><tr><th>Name</th><th>In</th><th>Required</th><th>Description</th><th>Schema</th></tr></thead><tbody>';
+    has_param = false;
+    for (i in entity.parameters) {
+        has_param = true;
+        now_param = entity.parameters[i];
+        param_str += '<tr><td>' + now_param.name + '</td><td>'  + now_param.in + '</td>' + '<td>';
+        param_str += now_param.required;
+        if (!now_param['x-nullProbability'] == false) {
+            param_str += ' (NullProbability = ' + String(now_param['x-nullProbability']) + ')';
+        }
+        param_str += '</td><td>';
+        if (!now_param.description == false)
+            param_str += now_param.description;
+        param_str += '</td><td>';
+        if (!now_param['schema'] == false)
+            param_str += present(now_param['schema'], prefix + 'param_' + String(i) + '_schema_', 0, 0).text;
+        if (!now_param['x-schema'] == false)
+            param_str += present(now_param['x-schema'], prefix + 'param_' + String(i) + '_schema_', 0, 0).text;
+        param_str += '</td></tr>';
+    }
+    if (!has_param) param_str += '<tr><td>No Parameter</td></tr>';
+    param_str += '</tbody></table>';
+
+    // --------
+
+    response_str = '<table class="table"><thead><tr><th>Code</th><th>Description</th><th>Schema</th></tr></thead><tbody>';
+    has_resp = false;
+    for (key in entity.responses)
+        if (key != 'x-extension') {
+            has_resp = true;
+            now_resp = entity.responses[key];
+            response_str += '<tr><td>' + key + '</td><td>';
+            if (!now_resp.description == false)
+                response_str += now_resp.description;
+            response_str += '</td><td>';
+            if (!now_resp.schema == false)
+                response_str += present(now_resp.schema, prefix + 'response_' + String(i) + '_schema_', 0, 0).text;
+            response_str += '</td></tr>';
+        }
+    if (!has_resp) response_str += '<tr><td>No Response Definition</td></tr>';
+    response_str += '</tbody></table>';
+
+    // --------
+
+    responseext_str = '';
+    if (!entity.responses['x-extension'] == false) {
+        inner_str = '<table class="table"><thead><tr><th>Code</th><th>Name</th><th>Description</th><th>Field</th><th>Schema</th><th>Related Parameters</th></tr></thead><tbody>';
+        has_ext = false;
+        for (i in entity.responses['x-extension']) {
+            has_ext = true;
+            now_ext = entity.responses['x-extension'][i];
+            inner_str += '<tr><td>' + now_ext.code + '</td>';
+            inner_str += '<td>' + now_ext.name + '</td>';
+            inner_str += '<td>';
+            if (!now_ext.description == false)
+                inner_str += now_ext.description;
+            inner_str += '</td>';
+            inner_str += '<td>' + now_ext.field + "</td>";
+            inner_str += '<td>';
+            if (!now_ext.schema == false)
+                inner_str += present(now_ext.schema, prefix + 'responseext_' + String(i) + '_schema_', 0, 0).text;
+            inner_str += '</td>';
+            inner_str += '<td>';
+            for (j in now_ext.relatedParameters) {
+                inner_str += now_ext.relatedParameters[j] + '; ';
+            }
+            inner_str += '</td></tr>';
+        }
+        if (!has_ext) inner_str += '<tr><td>No Response Extension Definition.</td></tr>';
+        inner_str += '</tbody></table>';
+        responseext_str = '<div class="panel panel-info">\
+                       <div class="panel-heading" style="font-size: 10pt">\
+                           <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_responseext' + '">Response Extensions</a>\
+                   </div>\
+                   <div class="panel-body collapse" id="' + prefix + String(no) + '_responseext' + '">' + inner_str + '</div>\
+               </div>';
+    }
+
+    // --------
+
+    ans = '<div class="panel panel-success">\
+           <div class="panel-heading" style="font-size: 12pt">\
+              <a data-toggle="collapse" href="#" data-target="#' + prefix + String(no) + '">' + name + '</a>\
+               <span class="badge badge-info">' + method + '</span>\
+               &nbsp; &nbsp; <h6 style="display: inline">' + summary_str + '</h6>\
+           </div>\
+           <div class="panel-body collapse" id="' + prefix + String(no) + '">\
+               <table class="table">\
+                   <thead />\
+                   <tbody>' +
+        tag_str +
+                       '<tr>\
+                           <td>Description</td>\
+                           <td>' + description_str + '</td>\
+                       </tr>' +
+        externaldoc_str +
+        operationid_str +
+                       '<tr>\
+                           <td>Consumes</td>\
+                           <td>' + consumes_str + '</td>\
+                       </tr>\
+                       <tr>\
+                           <td>Produces</td>\
+                           <td>' + produces_str + '</td>\
+                       </tr>\
+                       <tr>\
+                           <td>Schemes</td>\
+                           <td>' + schemes_str + '</td>\
+                       </tr>' +
+        deprecated_str +
+        constraint_str +
+                   '</tbody>\
+               </table>\
+               <div class="panel panel-info">\
+                   <div class="panel-heading" style="font-size: 10pt">\
+                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_param' + '">Parameters</a>\
+                   </div>\
+                   <div class="panel-body collapse" id="' + prefix + String(no) + '_param' + '">' + param_str + '</div>\
+               </div>\
+               <div class="panel panel-info">\
+                   <div class="panel-heading" style="font-size: 10pt">\
+                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_response' + '">Responses</a>\
+                   </div>\
+                   <div class="panel-body collapse" id="' + prefix + String(no) + '_response' + '">' + response_str + '</div>\
+               </div>' +
+        responseext_str +
+           '</div>\
+        </div>';
+    return ans;
 }
 
 function present(obj, idprefix, level, index) {

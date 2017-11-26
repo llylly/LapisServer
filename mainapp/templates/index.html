@@ -47,28 +47,20 @@ $(function () {
                 <span class="badge badge-success">Stage 2</span>
                 <span class="badge badge-important">Stage 2</span>
             </a>
-            <a class="parse_status span1" id="scenario_status" data-toggle="tooltip" title="Scenario Parse">
-                <span class="badge badgenormal">Stage 3</span>
-                <span class="badge badge-success">Stage 3</span>
-                <span class="badge badge-important">Stage 3</span>
-            </a>
-            <a class="parse_status span1" id="config_status" data-toggle="tooltip" title="Test Config Parse">
-                <span class="badge badgenormal">Stage 4</span>
-                <span class="badge badge-success">Stage 4</span>
-                <span class="badge badge-important">Stage 4</span>
-            </a>
         </div>
 
     </div>
 
     <div class="mainpage-rightdiv">
 
-        <div class="panel panel-primary text-warning" id="change_div">
-            Some changes happened. Please parse again.
-            <hr>
+        <div class="panel panel-null text-warning" id="change_div">
+            <div class="panel-body">
+                Some changes happened. Please parse again.
+                <hr>
+            </div>
         </div>
 
-        <div class="panel panel-primary panel-body" id="error_panel">
+        <div class="panel panel-null panel-body" id="error_panel">
             <h5>Error</h5>
             <div style="height: 5px"></div>
             <div id="error_list" style="color: darkred">
@@ -76,116 +68,73 @@ $(function () {
             </div>
         </div>
 
-        <div class="row list_container">
-            <div class="span3">
-                <h5><a data-toggle="collapse" data-target="#api_list">API List</a></h5>
-                <div style="height: 5px"></div>
-                <div id="api_list" class="collapse in">
-                </div>
-            </div>
-            <div class="span1"> </div>
-            <div class="span3">
-                <h5><a data-toggle="collapse" data-target="#scenario_list">Scenario List</a></h5>
-                <div style="height: 5px"></div>
-                <div id="scenario_list" class="collapse in">
+        <div class="panel panel-null" id="transform_ops">
+            <div class="panel-body">
+                <div class="row">
+                    <div style="width: 30%; margin-left: 70%">
+                        <a id="transform_btn" class="btn btn-primary btn-block btn-success">Transform to Another Format</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="panel panel-success" style="margin-top: 20pt; margin-bottom: 20pt" id="api_ops">
+        <div class="panel panel-null" id="basic_info_panel">
             <div class="panel-heading">
-                <h5>API Analysis</h5>
+                <a href="#" data-toggle="collapse" data-target="#basic_info_body">Basic Info</a>
+            </div>
+            <div class="panel-body collapse in" id="basic_info_body">
+                <table class="table">
+                    <tbody id="basic_info_table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel panel-null" id="api_panel">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-target="#api_list" href="#">API List</a>
+            </div>
+            <div class="panel-body">
+                <div id="api_list" class="collapse in">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary" style="margin-top: 20pt; margin-bottom: 20pt" id="api_ops">
+            <div class="panel-heading">
+                Data Generation
             </div>
             <div class="panel-body">
                 <select id="api_select" style="width: 100%">
                     <option name="default">Select an API</option>
                 </select><br>
-                <div class="form-inline" style="margin-bottom: 10pt">
-                    <label class="checkbox-inline">
-                        <input id="isali_checkbox" type="checkbox"> Is Ali Cloud API?
-                    </label>
-                    <span class="control-group" id="ali_secret_div">
-                        <input type="password" class="form-control" placeholder="Ali Secret Key" id="secretkey_text">
-                    </span>
-                </div>
-                <div class="form-inline" style="margin-bottom: 10pt">
-                    <label class="control-group" id="timeout_div" style="display: block">
-                        Timeout
-                        <input type="text" class="form-control" value="2000" id="timeout_input">
-                        ms
-                    </label>
-                </div>
                 <div class="row">
-                    <div class="span3">
+                    <div style="width: 50%; margin-left: 25%">
                         <a id="datagen_btn" class="btn btn-primary btn-block btn-success">Generate Request Data</a>
                     </div>
-                    <div class="span3 pull-right">
-                        <a id="single_btn" class="btn btn-primary btn-block btn-success text-right">Run Single API Test</a>
+                </div>
+                <div id="datagen_panel">
+                    <hr>
+                    <h5><a data-toggle="collapse" data-target="#datagen_frame_div">Generation Result</a></h5>
+                    <div id="datagen_frame_div" class="collapse in">
+                        <div id="datagen_success_div">
+                            <strong class="text-success">Success</strong><br>
+                            <strong>Data</strong>&nbsp; &nbsp;<a id="datagen_copy">[copy]</a><br>
+                            <div id="datagen_div"></div>
+                        </div>
+                        <div id="datagen_fail_div">
+                            <strong class="text-error">Failed</strong><br>
+                            <strong>Errors:</strong><br>
+                            <div id="datagen_err_div"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="panel panel-primary" id="scenario_ops">
-            <hr>
-            <div class="text-center">
-                <a id="scenario_btn" class="btn btn-large btn-success">Run Scenario Test</a>
-            </div>
-        </div>
 
 
-        <div class="panel panel-primary" id="datagen_panel">
-            <hr>
-            <h5><a data-toggle="collapse" data-target="#datagen_frame_div">Data Generate</a></h5>
-            <div id="datagen_frame_div" class="collapse in">
-                <div id="datagen_success_div">
-                    <strong class="text-success">Success</strong><br>
-                    <strong>Data</strong>&nbsp; &nbsp;<a id="datagen_copy">[copy]</a><br>
-                    <div id="datagen_div"></div>
-                </div>
-                <div id="datagen_fail_div">
-                    <strong class="text-error">Failed</strong><br>
-                    <strong>Errors:</strong><br>
-                    <div id="datagen_err_div"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-primary" id="singleapi_panel">
-            <hr>
-            <h5><a data-toggle="collapse" data-target="#singleapi_frame_div">Single API Test</a></h5>
-            <div id="singleapi_frame_div" class="collapse in">
-                <div id="singleapi_success_div">
-                    <strong>Report</strong>&nbsp; &nbsp;<a id="singleapi_copy">[copy]</a><br>
-                    <div id="singleapi_div"></div>
-                </div>
-                <div id="singleapi_fail_div">
-                    <strong class="text-error">Failed</strong><br>
-                    <strong>Errors:</strong><br>
-                    <div id="singleapi_err_div"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-primary" id="scenario-panel">
-            <hr>
-            <h5><a data-toggle="collapse" data-target="#scenario_frame_div">Scenario</a></h5>
-            <div id="scenario_frame_div" class="collapse in">
-                <div id="scenario_running_div">
-                    <h4 class="text-center">Running</h4>
-                    <p class="text-center">Case #<span id="case_num">0</span>, Step #<span id="step_num">0</span></p>
-                    <h6 class="text-center"><small id="scenario_running_updatestat">Not updated.</small></h6>
-                </div>
-                <div id="scenario_notstart_div">
-                    <h4 class="text-center">Not Start</h4>
-                </div>
-                <div id="scenario_finish_div">
-                    <strong class="text-success">Finished</strong><br>
-                    <strong>Report</strong>&nbsp; &nbsp;<a id="scenario_copy">[copy]</a><br>
-                    <div id="scenario_div"></div>
-                </div>
-            </div>
-        </div>
 
     </div>
 

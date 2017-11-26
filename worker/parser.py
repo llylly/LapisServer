@@ -28,25 +28,54 @@ def main(source, out):
         ret2 = parseAPI()
         if ret2 is True:
             ans['apiParse'] = True
+
             ans['apiNames'] = getAPINames()
+            ans['apiDetail'] = dict()
+            for key in ans['apiNames']:
+                if key['name'] not in ans['apiDetail']:
+                    ans['apiDetail'][key['name']] = dict()
+                value = getAPI(key['name'], key['method'])
+                if value is not None:
+                    ans['apiDetail'][key['name']][key['method']] = value
 
-    if ans['apiParse']:
-        ret3 = parseScenario()
-        if ret3 is True:
-            ans['scenarioParse'] = True
-            ans['scenarioNames'] = getScenarioNames()
-            ans['scenarioDetail'] = dict()
-            for name in ans['scenarioNames']:
-                ans['scenarioDetail'][name] = getScenario(name)
+            ans['info'] = getInfo()
+            ans['host'] = getHost()
+            tmp = getBasePath()
+            if tmp is not None:
+                ans['basePath'] = tmp
+            tmp = getSchemes()
+            if tmp is not None:
+                ans['schemes'] = tmp
+            tmp = getConsumes()
+            if tmp is not None:
+                ans['consumes'] = tmp
+            tmp = getProduces()
+            if tmp is not None:
+                ans['produces'] = tmp
 
-    if ans['scenarioParse']:
-        ret4 = parseConfig()
-        if ret4 is True:
-            ans['configParse'] = True
-            ans['config'] = getConfig()
 
-    if (not ans['docParse']) or (not ans['apiParse']) or (not ans['scenarioParse']) or (not ans['configParse']):
-        ans['errors'] = getErrors()
+    # if ans['apiParse']:
+    #     ret3 = parseScenario()
+    #     if ret3 is True:
+    #         ans['scenarioParse'] = True
+    #         ans['scenarioNames'] = getScenarioNames()
+    #         ans['scenarioDetail'] = dict()
+    #         for name in ans['scenarioNames']:
+    #             ans['scenarioDetail'][name] = getScenario(name)
+    #
+    # if ans['scenarioParse']:
+    #     ret4 = parseConfig()
+    #     if ret4 is True:
+    #         ans['configParse'] = True
+    #         ans['config'] = getConfig()
+    #
+    # if (not ans['docParse']) or (not ans['apiParse']) or (not ans['scenarioParse']) or (not ans['configParse']):
+    #     ans['errors'] = getErrors()
+
+    if (not ans['docParse']) or (not ans['apiParse']):
+        err = getErrors()
+        if len(err) > 0:
+            ans['errors'] = err
 
     with open(out, 'w') as f:
         json.dump(ans, f)

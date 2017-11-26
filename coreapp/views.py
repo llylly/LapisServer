@@ -5,9 +5,10 @@ import os
 import json
 import uuid
 import time
+import mimetypes
 from parse import parse
 from LapisServer import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import mainapp.my_thread
 
 worker_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'worker')
@@ -84,6 +85,70 @@ def script_parse(request):
     return JsonResponse({'code': 200, 'msg': 'success', 'result': result})
 
 
+def script_transform(request):
+    session = request.POST.get('session', None)
+    if (session is None) or (str(session) not in sessions):
+        return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
+    session = str(session)
+    if status[session]['status'] < 1:
+        return JsonResponse({'code': 203, 'msg': 'Not parsed.'})
+
+    script_file = str(status[session]['scriptPath'])
+    out_file = script_file.rsplit('.', 1)[0]
+    if script_file.endswith('.yaml'):
+        out_file += '.xml'
+    if script_file.endswith('.xml'):
+        out_file += '.yaml'
+    dir_name = os.path.join(swap_dir, session)
+    script_path = os.path.join(dir_name, script_file)
+    transres_path = os.path.join(dir_name, 'trans_res.json')
+    out_path = os.path.join(dir_name, out_file)
+
+    outs = os.popen(
+        str('{} {}/transformer.py --source {} --msgpath {} --out {}'.format(settings.WORKER_CMD, worker_dir,
+                                                                            script_path, transres_path, out_path))
+    )
+    for o in outs:
+        print(o)
+    with open(transres_path, str('r')) as f:
+        result = json.load(f)
+    if result['success']:
+        return JsonResponse({'code': 200,
+                             'link': '/api/script_download?session={}&format={}'
+                            .format(session, out_file.rsplit('.', 1)[1].upper())})
+    else:
+        return JsonResponse({'code': 204, 'msg': 'Transform error.', 'result': result})
+
+
+def script_download(request):
+    session = request.GET.get('session', None)
+    if (session is None) or (str(session) not in sessions):
+        return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
+    session = str(session)
+    if status[session]['status'] < 1:
+        return JsonResponse({'code': 203, 'msg': 'Not parsed.'})
+
+    format = request.GET.get('format', None)
+    if format is None:
+        return JsonResponse({'code': 209, 'msg': 'Invalid format.'})
+    format = str(format)
+    if format != 'YAML' and format != 'XML':
+        return JsonResponse({'code': 209, 'msg': 'Invalid format.'})
+
+    dir_name = os.path.join(swap_dir, session)
+    script_file = 'script.{}'.format(format.lower())
+    script_path = os.path.join(dir_name, script_file)
+    if os.path.exists(script_path):
+        with open(script_path, str('r')) as f:
+            data = f.read()
+        response = HttpResponse(data, content_type=mimetypes.guess_type(script_path)[0])
+        response['Content-Disposition'] = "attachment; filename={0}".format(script_file)
+        response['Content-Length'] = os.path.getsize(script_path)
+        return response
+    else:
+        return JsonResponse({'code': 210, 'msg': 'File not exist.'})
+
+
 def apidata_gen(request):
     session = request.POST.get('session', None)
     method = request.POST.get('method', None)
@@ -91,7 +156,8 @@ def apidata_gen(request):
     if (session is None) or (str(session) not in sessions):
         return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
     session = str(session)
-    if method is None or (str(method) != 'get' and str(method) != 'post'):
+    if method is None or (str(method) != 'get' and str(method) != 'post'
+                          and str(method) != 'put' and str(method) != 'delete'):
         return JsonResponse({'code': 202, 'msg': 'Invalid \'method\'.'})
     if status[session]['status'] < 1:
         return JsonResponse({'code': 203, 'msg': 'Not parsed.'})
