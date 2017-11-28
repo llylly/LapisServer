@@ -1,0 +1,62 @@
+host: BucketName.oss-cn-hangzhou.aliyuncs.com
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    describe: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+path:
+    /PutBucketReferer:
+        describe: Put Bucket Referer操作可以设置一个bucket的referer访问白名单和是否允许referer字段为空的请求访问。 Bucket Referer防盗链具体见OSS防盗链。
+                  1.	只有Bucket的拥有者才能发起Put Bucket Referer请求，否则返回403 Forbidden消息。错误码：AccessDenied。
+                  2.	AllowEmptyReferer中指定的配置将替换之前的AllowEmptyReferer配置，该字段为必填项，系统中默认的AllowEmptyReferer配置为true。
+                  3.	此操作将用RefererList中的白名单列表覆盖之前配置的白名单列表，当用户上传的RefererList为空时（不包含Referer请求元素），此操作会覆盖已配置的白名单列表，即删除之前配置的RefererList。
+                  4.	如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+        get:
+            consumes:
+            - application/xml
+            parameters:
+            -   describe:  保存Referer配置内容的容器  类型：容器  子节点：AllowEmptyReferer节点、RefererList节点  父节点：无 
+                in: formData
+                name: RefererConfiguration
+                require: true
+                type: object
+                x-schema:
+                    properties:
+                        AllowEmptyReferer:
+                            default: 'true'
+                            describe:  指定是否允许referer字段为空的请求访问。  类型：枚举字符串  有效值：true或false 默认值：true  父节点：RefererConfiguration 
+                            enum:
+                            - 'true'
+                            - 'false'
+                            in: formData
+                            name: AllowEmptyReferer
+                            require: true
+                            type: string
+                        RefererList:
+                            describe:  保存referer访问白名单的容器。  类型：容器  父节点：RefererConfiguration  子节点：Referer 
+                            in: formData
+                            name: RefererList
+                            require: true
+                            type: object
+                            x-schema:
+                                properties:
+                                    Referer:
+                                        describe:  指定一条referer访问白名单。  类型：字符串  父节点：RefererList 
+                                        in: formData
+                                        name: Referer
+                                        require: false
+                                        type: string
+                                type: object
+                    type: object
+            produces:
+            - application/xml
+            responses:
+                200:
+                    description: success response
+                    properties: {}
+                403:
+                    description: 只有Bucket的拥有者才能发起Put Bucket Referer请求，否则返回403 Forbidden消息。错误码：AccessDenied。
+                default:
+                    description: 如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+        summary: 设置Bucket的防盗链规则

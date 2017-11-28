@@ -9,8 +9,10 @@
 
     <script src="{% static "js/jquery-2.1.0.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-
+    <script src="{% static "js/jquery.md5.js" %}"></script>
     <script src="{% static "ace/src-min-noconflict/ace.js" %}"></script>
+
+    <script src="{% static "site_js/head.js" %}"></script>
 </head>
 <body>
 
@@ -22,8 +24,75 @@
                         <a class="brand" href="/">LapisServer</a>
                     </li>
                     <li><a href="/examples">Examples</a></li>
+                    <li><a href="/tutorial">Tutorial</a></li>
                     <li><a href="/about">About</a></li>
                 </ul>
+                <ul class="nav pull-right">
+                    <li class="dropdown user_unlogin">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="reg_dropdown">
+                            Register
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div style="padding: 5px">
+                                    <input type="text" class="control-label" placeholder="Username" id="reg_username" />
+                                    <input type="password" class="control-label" placeholder="Password" id="reg_password" />
+                                    <input type="password" class="control-label" placeholder="Repeat Password" id="reg_password_repeat" />
+                                    <a href="#" class="btn btn-primary btn-block" id="register_btn">Register</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user_unlogin">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="login_dropdown">
+                            Login
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div style="padding: 5px">
+                                    <input type="text" class="control-label" placeholder="Username" id="login_username" />
+                                    <input type="password" class="control-label" placeholder="Password" id="login_password" />
+                                    <a href="#" class="btn btn-primary btn-block" id="login_btn">Login</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user_login">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="username_span">Username</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="logout_nav">Logout</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" id="changepwd_nav">Change Password</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </div>
+
+    <div id="changepasswd_modal" class="modal hide fade in" style="display: none; ">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Change Password</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="form-row">
+                    <input class='span5' type="password" id="change_oldpwd" placeholder="Old Password" />
+                </div>
+                <div class="form-row">
+                    <input class='span5' type="password" id="change_newpwd" placeholder="New Password" />
+                </div>
+                <div class="form-row">
+                    <input class='span5' type="password" id="change_newpwd_repeat" placeholder="New Password Repeat" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger" id="changepwd_btn">Change Password</a>
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
         </div>
     </div>

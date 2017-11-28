@@ -1,0 +1,28 @@
+host: BucketName.oss-cn-hangzhou.aliyuncs.com
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    describe: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+path:
+    /PutBucketACL:
+        describe: Put Bucket ACL接口用于修改Bucket访问权限。目前Bucket有三种访问权限：public-read-write，publicread和private。Put Bucket ACL操作通过Put请求中的“x-oss-acl”头来设置。这个操作只有该Bucket的创建者有权限执行。如果操作成功，则返回200；否则返回相应的错误码和提示信息。
+                    1.	如果bucket存在，发送时带的权限和已有权限不一样，并且请求发送者是bucket拥有者时。该请求不会改变bucket内容，但是会更新权限。
+                    2.	如果用户发起Put Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。
+                    3.	如果请求中没有，“x-oss-acl”头，并且该bucket已存在，并属于该请求发起者，则维持原 bucket权限不变。
+        put:
+            consumes:
+            - application/xml
+            parameters: []
+            produces:
+            - application/xml
+            responses:
+                200:
+                    description: success response
+                    properties: {}                
+                403:
+                    description: 如果用户发起Put Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。
+                400:
+                    description: 如果该设置的权限不存在，示例400 Bad Request消息
+        summary: 设置Bucket访问权限

@@ -1,0 +1,66 @@
+host: BucketName.oss-cn-hangzhou.aliyuncs.com
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    describe: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+path:
+    /PutBucket:
+        describe: PutBucket用于创建Bucket（不支持匿名访问）。默认情况下，创建的Bucket所在的Region和发送请求的Endpoint所对应的Region一致，用户可以在请求的body中显式指定Bucket位于的数据中心，从而最优化延迟，最小化费用或者满足监管要求等。Bucket所在的数据中心确定后，该Bucket下的所有Object将一直存放在对应的地区。更多内容参见Bucket和数据中心。
+                    1.	可以Put请求中的“x-oss-acl”头来设置Bucket 访问权限。目前Bucket有三种访问权限：publicread-write，public-read和private。
+                    2.	当用户通过oss默认的域名创建Bucket时，可以不指定Bucket的数据中心（请求body为空），这时 oss将为其指定默认的数据中心oss-cn-hangzhou。另外，此时用户还可以设置该Bucket所在的数据中心为合法数据中心值中的任意一个。
+                    3.	若创建Bucket时指定的数据中心值非法，返回400，错误码 InvalidLocationConstraint。
+                    4.	若指定的数据中心与请求的终端域名不一致，返回400，错误码：IllegalLocationConstraintException。
+                    5.	已经存在的Bucket不允许修改数据中心，否则会返回409 Conflict，错误信息：Bucket already exists can't modify location。
+                    6.	如果请求的Bucket已经存在，并且请求者是所有者，同样返回200 OK成功。
+                    7.	如果请求的Bucket已经存在，但是不是请求者所拥有的，返回409 Conflict。错误码：BucketAlreadyExists。
+                    8.	如果想创建的Bucket不符合命名规范，返回400 Bad Request消息。错误码：InvalidBucketName。
+                    9.	如果用户发起PUT Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。
+                    10.	如果PutBucket的时候发现已经超过bucket最大创建数——10时，返回400 Bad Request消息。错误码：TooManyBuckets。
+                    11.	创建的Bucket，如果没有指定访问权限，则默认使用“Private”权限。
+                    
+        put:
+            consumes:
+            - application/xml
+            parameters: 
+            -   describe: 限定返回的bucket name必须以prefix作为前缀，可以不设定，不设定时不过滤前缀信息数据 类型：字符串 默认值：无
+                in: query
+                name: CreateBucketConfiguration
+                require: false
+                type: object
+                schema:
+                    responses:
+                        LocationConstraint:
+                            describe: 指定Bucket所在的数据中心，关于数据中心和终端域名的更多内容，参见访问域名和数据中心。类型：枚举 合法值：oss-cn-hangzhou、oss-cn-qingdao、 oss-cn-beijing、oss-cn-hongkong、oss-cnshenzhen、oss-cn-shanghai、oss-us-west-1、oss-ap-southeast-1 默认值：oss-cn-hangzhou 父节点：CreateBucketConfiguration
+                            enum:
+                            - oss-cn-hangzhou
+                            - oss-cn-qingdao
+                            - oss-cn-beijing
+                            - oss-cn-hongkong
+                            - oss-cnshenzhen
+                            - oss-cn-shanghai
+                            - oss-us-west-1
+                            - oss-ap-southeast-1
+                            default: oss-cn-hangzhou
+                            in: query
+                            name: CreateBucketConfiguration
+                            require: false
+                        
+            
+            produces:
+            - application/xml
+            responses:
+                200:
+                    description: success response
+                    properties: {}
+                400:
+                    description: 若创建Bucket时指定的数据中心值非法，返回400，错误码 InvalidLocationConstraint; 
+                                 如果想创建的Bucket不符合命名规范，返回400 Bad Request消息。错误码：InvalidBucketName; 
+                                 如果PutBucket的时候发现已经超过bucket最大创建数——10时，返回400 Bad Request消息。错误码：TooManyBuckets。
+                403:
+                    description: 如果用户发起PUT Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。
+                409:
+                    description: 已经存在的Bucket不允许修改数据中心，否则会返回409 Conflict，错误信息：Bucket already exists can't modify location; 
+                                 如果请求的Bucket已经存在，但是不是请求者所拥有的，返回409 Conflict。错误码：BucketAlreadyExists。
+        summary: 创建Bucket

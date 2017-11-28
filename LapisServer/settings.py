@@ -123,4 +123,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "mainapp/static")
 
+CLOUD_API_DIR = 'cloud_api_examples'
+
 WORKER_CMD = '/Users/lly/anaconda/bin/python'

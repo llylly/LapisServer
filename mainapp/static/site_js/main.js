@@ -9,6 +9,8 @@ datagen_cpystr = "";
 singleapi_cpystr = "";
 scenario_cpystr = "";
 
+change_flag = false;
+
 function clean() {
     $('.parse_status_fin').removeClass('parse_status_fin').addClass('parse_status');
     $('.parse_status_err').removeClass('parse_status_err').addClass('parse_status');
@@ -25,8 +27,36 @@ function clean() {
 }
 
 $(function(){
-
     clean();
+
+    $('#filename_astar').hide();
+
+    $('#save_btn').click(function() {
+        if (change_flag) {
+            $.post(
+                "/api/user/save_file",
+                {
+                    filename: $('#filename_span').html(),
+                    script: editor.getValue()
+                },
+                function (data, status) {
+                    if (status != 'success') {
+                        alert('Unknown Error');
+                    } else {
+                        data = eval(data);
+                        if (data.code != "200") {
+                            alert(data.msg);
+                        } else {
+                            bar_update();
+                            $('#filename_astar').hide();
+                        }
+                    }
+                }
+            );
+        } else {
+            alert('There is no change.');
+        }
+    });
 
     editor = ace.edit("script_area");
     editor.setTheme("ace/theme/xcode");
@@ -37,6 +67,8 @@ $(function(){
     editor.getSession().on('change', function(e) {
         if (session != "-1")
                 $('#change_div').show();
+        $('#filename_astar').show();
+        change_flag = true;
     });
     $('#YAML-radio').change(function() {
         if (session != "-1")
@@ -59,6 +91,74 @@ $(function(){
     $('#datagen_copy').click(function(){
        $('#json_area').html(datagen_cpystr);
        $('#copy_modal').modal('show');
+    });
+
+    $('#filename_span').click(function(){
+        $('#chgfilename_modal').modal('show');
+        $('#chgfilename_input').val($('#filename_span').html());
+    });
+
+    $('#chgfilename_btn').click(function() {
+        newname = $('#chgfilename_input').val();
+        if (newname == "") {
+            alert("New name should not be empty.");
+            return;
+        }
+        $('#filename_span').html(newname);
+        $('#chgfilename_modal').modal('hide');
+        $('#filename_astar').show();
+        change_flag = true;
+    });
+
+    $('#rename_btn').click(function() {
+        newname = $('#rename_input').val();
+        if (newname == "") {
+            alert("New name should not be empty.");
+            return;
+        }
+        name_tmp2 = newname;
+        $.post(
+            "/api/user/rename_file",
+            {
+                oldname: name_tmp1,
+                newname: name_tmp2
+            },
+            function(data, status) {
+                if (status != 'success') {
+                    alert('Unknown Error');
+                } else {
+                    data = eval(data);
+                    if (data.code != "200") {
+                        alert(data.msg);
+                    } else {
+                        bar_update();
+                        $('#rename_modal').modal('hide');
+                    }
+                }
+            }
+        )
+    });
+
+    $('#delconfirm_btn').click(function() {
+       $.post(
+            "/api/user/del_file",
+            {
+                filename: name_tmp1
+            },
+            function(data, status) {
+                if (status != 'success') {
+                    alert('Unknown Error');
+                } else {
+                    data = eval(data);
+                    if (data.code != "200") {
+                        alert(data.msg);
+                    } else {
+                        bar_update();
+                        $('#delconfirm_modal').modal('hide');
+                    }
+                }
+            }
+        )
     });
 
     $('#file_btn').click(function(){

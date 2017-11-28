@@ -1,0 +1,151 @@
+{% include "head.html" %}
+{% load static %}
+
+<link href="{% static "site_css/main.css" %}" rel="stylesheet">
+
+<div class="container">
+    <h4>Tutorial</h4>
+    <hr>
+    <div class="row">
+        <div class="span3">
+            <ul class="nav nav-list affix bs-docs-sidenav">
+                <li>
+                    <a href="#s1">
+                        <i class="icon-chevron-right"></i>
+                        Write API Specification Script
+                    </a>
+                </li>
+                <li>
+                    <a href="#s2">
+                        <i class="icon-chevron-right"></i>
+                        Load Script From Your Computer
+                    </a>
+                </li>
+                <li>
+                    <a href="#s3">
+                        <i class="icon-chevron-right"></i>
+                        Parse
+                    </a>
+                </li>
+                <li>
+                    <a href="#s4">
+                        <i class="icon-chevron-right"></i>
+                        Read Parse Result
+                    </a>
+                </li>
+                <li>
+                    <a href="#s5">
+                        <i class="icon-chevron-right"></i>
+                        Register and Store Your Document
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="span8">
+
+            <section id="s1">
+                <h4>Write API Specification Script</h4>
+                <hr>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/code_editor.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                Following the specification documentation <a href="{% static "assets/Swagger-Compatible API & Scenario DSL.pdf" %}">PDF</a>, or
+                <a href="/examples">Examples</a>, you can document your APIs.
+                <br>
+                The specification is extended from Swagger (OpenAPI), so it's also OK to migrate from there.
+                Although you will miss our extended features.
+                <br>
+                The code editor is in left column of <a href="/">Front Page</a>.
+                <br>
+                <br>
+            </section>
+
+            <section id="s2">
+                <h4>Load Script From Your Computer</h4>
+                <hr>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/from_local.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                You can load the script from local file system.<br>
+                After selected your script file, remember to click <strong>"Load"</strong> to load it to the code editor.
+                <br>
+                <br>
+            </section>
+
+            <section id="s3">
+                <h4>Parse</h4>
+                <hr>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/parse_btn.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                Choose the format of script. We support JSON, YAML and XML format script. Then click <strong>"Parse"</strong> to get the parse result.<br>
+                The parse process contains two stages: Document Parse, API Parse.<br>
+                In Document Parse, we check the format correctness. In API Parse, we check the meanings of each fields.<br>
+                When error detected, they are demonstrated in the right column.<br>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/error_example.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                <br>
+                <br>
+            </section>
+
+            <section id="s4">
+                <h4>Read Parse Result</h4>
+                <hr>
+                The result contains 3 parts: basic info, API details, and request data generation.
+                <br>
+                <h5>Basic Info:</h5>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/basic_info.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                The basic info section demonstrates essential info of the script.
+                <br>
+                <h5>API Detail:</h5>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/api_info_fold.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                Each API is shown in a panel. Click the API name, you can unfold the panel. The parameters and responses panel in it can also be unfolded for detail.
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/api_info_unfold.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                <br>
+                <h5>Request Data Generation:</h5>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/data_gen.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                In Data Generation panel, select an API, then click <strong>"Generate Request Data"</strong> to get an example of request data generated.
+                <br>
+                <br>
+            </section>
+
+            <section id="s5">
+                <h4>Register and Store Your Document</h4>
+                <hr>
+                Register, then you will get a repository to store and retrieve your documents conveniently.<br>
+                The <strong>"Register"</strong> button is in the right side of top navigation bar.
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/register.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                <br>
+                After login, in the left side, "My Files" column will show. Click each name, the saved document will be loaded to the code editor.<br>
+                Hover over the names, the <strong>"Rename"</strong> and <strong>"Delete"</strong> button will show.<br>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/files.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                <br>
+                To save the modified version, at first, you can click the filename at the top of code editor to change document name.<br>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/change_doc_name.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                After that, click <strong>"Save"</strong> button below the "Parse" button to save. As the result, the document will show immediately in the left column.
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/save_doc.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div style="min-height: 100pt;"></div>
+</div>
+
+{% include "tail.html" %}

@@ -1,8 +1,18 @@
 {% include "head.html" %}
 {% load static %}
 
+
+<script src="{% static "site_js/examples.js" %}"></script>
+
 <div class="container">
-    <h4>Examples</h4>
+    <h4>Cloud Service Examples</h4>
+    <hr>
+    <table class="table table-bordered">
+        <tbody id="cloud_example_list">
+        </tbody>
+    </table>
+    <hr>
+    <h4>Simple Examples</h4>
     <hr>
 
     <h5>Official Demo</h5>
@@ -38,6 +48,8 @@
     <span class="badge badge-success">YAML</span>
     &nbsp; &nbsp; <a href="{% static "assets/examples/oss.fill.yaml" %}">[download]</a><br>
     Full API definitions of Aliyun OSS service.
+
+    <div style="min-height: 100pt"></div>
 </div>
 
 {% include "tail.html" %}

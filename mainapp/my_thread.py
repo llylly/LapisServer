@@ -51,9 +51,11 @@ class SwapCleaner(threading.Thread):
                 self.sessions.remove(i)
                 del self.status[i]
 
+            print('!!!')
             if os.path.exists(self.swap_dir):
                 files = os.listdir(self.swap_dir)
                 for f in files:
+                    print(f)
                     abs_f = os.path.join(self.swap_dir, f)
                     if os.path.exists(abs_f) and (not os.path.isfile(abs_f)):
                         if f not in self.status:
