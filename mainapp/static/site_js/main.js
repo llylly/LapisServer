@@ -280,6 +280,7 @@ $(function(){
                                         }
                                         $("#api_ops").show();
                                         $("#transform_ops").show();
+                                        editor.resize();
                                     }
                                 }
                             }

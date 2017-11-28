@@ -85,6 +85,7 @@
     position: relative;
     width: 50%;
     background-color: #F0F0F0;
+    overflow-x: auto;
     overflow-y: auto;
 }
 
