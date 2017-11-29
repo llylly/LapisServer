@@ -26,12 +26,8 @@ function clean() {
     $('#change_div').hide();
 }
 
-$(function(){
-    clean();
-
-    $('#filename_astar').hide();
-
-    $('#save_btn').click(function() {
+function save() {
+    if (username != null) {
         if (change_flag) {
             $.post(
                 "/api/user/save_file",
@@ -56,6 +52,22 @@ $(function(){
         } else {
             alert('There is no change.');
         }
+    }
+}
+
+$(function(){
+    clean();
+
+    $('#filename_astar').hide();
+
+    $(document).keydown(function(e){
+        if( e.ctrlKey  == true && e.keyCode == 83 ){
+            save();
+            return false;
+        }
+    });
+    $('#save_btn').click(function() {
+        save();
     });
 
     editor = ace.edit("script_area");
