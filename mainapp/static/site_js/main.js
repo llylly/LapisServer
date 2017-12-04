@@ -110,7 +110,30 @@ $(function(){
         $('#chgfilename_input').val($('#filename_span').html());
     });
 
+    $('#new_file_trigger_btn').click(function(){
+        $('#newfile_modal').modal('show');
+        if (editor.getValue() != '') {
+            $('#newfile_danger_div').show();
+        } else {
+            $('#newfile_danger_div').hide();
+        }
+        $('#newfile_input').val('Noname');
+    });
+
+    $('#newfile_btn').click(function() {
+       if ($('#newfile_input').val() == '') {
+           alert('Name should not be empty.');
+           return;
+       }
+       $('#filename_span').html($('#newfile_input').val());
+       editor.setValue("");
+       $('#filename_astar').hide();
+       change_flag = false;
+       $('#newfile_modal').modal('hide');
+    });
+
     $('#chgfilename_btn').click(function() {
+        oldname = $('#filename_span').html();
         newname = $('#chgfilename_input').val();
         if (newname == "") {
             alert("New name should not be empty.");
@@ -118,8 +141,38 @@ $(function(){
         }
         $('#filename_span').html(newname);
         $('#chgfilename_modal').modal('hide');
-        $('#filename_astar').show();
-        change_flag = true;
+
+        in_list = false;
+        for (i in files)
+            if (files[i] == oldname) {
+                in_list = true;
+                break;
+            }
+
+        if (in_list) {
+            $.post(
+                "/api/user/rename_file",
+                {
+                    oldname: oldname,
+                    newname: newname
+                },
+                function(data, status) {
+                    if (status != 'success') {
+                        alert('Unknown Error');
+                    } else {
+                        data = eval(data);
+                        if (data.code != "200") {
+                            alert(data.msg);
+                        } else {
+                            bar_update();
+                        }
+                    }
+                }
+            );
+        } else {
+            $('#filename_astar').show();
+            change_flag = true;
+        }
     });
 
     $('#rename_btn').click(function() {
@@ -144,6 +197,8 @@ $(function(){
                         alert(data.msg);
                     } else {
                         bar_update();
+                        if (name_tmp1 == $('#filename_span').html())
+                            $('#filename_span').html(name_tmp2);
                         $('#rename_modal').modal('hide');
                     }
                 }
@@ -194,6 +249,9 @@ $(function(){
                 alert(res.msg);
             } else {
                 editor.setValue(res.script);
+                $('#filename_span').html(res.name);
+                save();
+                change_flag = false;
             }
         }).fail(function(res) {
             alert('File upload failed.')

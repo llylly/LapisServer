@@ -1,0 +1,188 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/ListMultipartUploads/?uploads:
+        get:
+            description: List Multipart Uploads可以罗列出所有执行中的Multipart Upload事件，即已经被初始化的MultipartUpload但是未被Complete或者Abort的Multipart Upload事件。OSS返回的罗列结果中最多会包含1000个 Multipart Upload信息。如果想指定OSS返回罗列结果内Multipart Upload信息的数目，可以在请求中添加 max-uploads参数。另外，OSS返回罗列结果中的IsTruncated元素标明是否还有其他的Multipart Upload。
+                    1.	“max-uploads”参数最大值为1000。
+                    2.	在OSS的返回结果首先按照Object名字字典序升序排列；对于同一个Object，则按照时间序，升序排列。
+                    3.	可以灵活地使用prefix参数对bucket内的object进行分组管理（类似与文件夹的功能）。
+                    4.	List Multipart Uploads请求支持5种请求参数： prefix，marker，delimiter，upload-idmarker和max-uploads。通过这些参数的组合，可以设定查询Multipart Uploads事件的规则，获得期望的查询结果。
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters:
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  是一个用于对Object名字进行分组的字符。所有名字包含指定的前缀且第一次出现delimiter字符之间的object作为一组元素——CommonPrefixes。    类型：字符串 
+                in: formData
+                name: delimiter
+                required: true
+                type: string
+            -   default: 1000
+                description:  限定此次返回Multipart   Uploads事件的最大数目，如果不设定，默认为1000，max-uploads取值不能大于1000。    类型：字符串 
+                in: formData
+                maxLength: 1000
+                name: max-uploads
+                required: true
+                type: integer
+            -   description:  与upload-id-marker参数一同使用来指定返回结果的起始位置。   l    如果upload-id-marker参数未设置，查询结果中包含：所有Object名字的字典序大于key-marker参数值的Multipart事件。   l    如果upload-id-marker参数被设置，查询结果中包含：所有Object名字的字典序大于key-marker参数值的Multipart事件和Object名字等于key-marker参数值，但是Upload   ID比upload-id-marker参数值大的Multipart   Uploads事件。    类型：字符串 
+                in: formData
+                name: key-marker
+                required: true
+                type: string
+            -   description:  限定返回的object   key必须以prefix作为前缀。注意使用prefix查询时，返回的key中仍会包含prefix。    类型：字符串 
+                in: formData
+                name: prefix
+                required: true
+                type: string
+            -   description:  与key-marker参数一同使用来指定返回结果的起始位置。   l    如果key-marker参数未设置，则OSS忽略upload-id-marker参数。   l    如果key-marker参数被设置，查询结果中包含：所有Object名字的字典序大于key-marker参数值的Multipart事件和Object名字等于key-marker参数值，但是Upload   ID比upload-id-marker参数值大的Multipart   Uploads事件。    类型：字符串 
+                in: formData
+                name: upload-id-marker
+                required: true
+                type: string
+            -   default: None
+                description:  指定对返回的内容进行编码，指定编码的类型。Delimiter、KeyMarker、Prefix、NextKeyMarker和Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Delimiter、KeyMarker、Prefix、NextKeyMarker和Key进行编码。 数据类型：字符串 默认值：无 
+                in: formData
+                name: encoding-type
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            ListMultipartUploadsResult:
+                                description:  保存List   Multipart Upload请求结果的容器。    类型：容器    子节点：Bucket, KeyMarker, UploadIdMarker, NextKeyMarker,   NextUploadIdMarker, MasUploads, Delimiter, Prefix, CommonPrefixes,   IsTruncated, Upload    父节点：None 
+                                in: formData
+                                name: ListMultipartUploadsResult
+                                type: object
+                                properties:
+                                    Bucket:
+                                        description:  Bucket名称。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: Bucket
+                                        type: string
+                                    EncodingType:
+                                        description:  指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那返回的结果会对Delimiter、KeyMarker、Prefix、NextKeyMarker和Key这些元素进行编码。 类型：字符串 父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: EncodingType
+                                        type: string
+                                    IsTruncated:
+                                        default: 'false'
+                                        description:  标明是否本次返回的Multipart   Upload结果列表被截断。“true”表示本次没有返回全部结果；“false”表示本次已经返回了全部结果。    类型：枚举字符串   有效值：false、true    默认值：false    父节点：ListMultipartUploadsResult 
+                                        enum: 
+                                        - "false"
+                                        - "true"
+                                        in: formData
+                                        name: IsTruncated
+                                        type: string
+                                    KeyMarker:
+                                        description:  列表的起始Object位置。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: KeyMarker
+                                        type: string
+                                    MaxUploads:
+                                        description:  返回的最大Upload数目。    类型：整数    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: MaxUploads
+                                        required: true
+                                        type: integer
+                                    NextKeyMarker:
+                                        description:  如果本次没有返回全部结果，响应请求中将包含NextKeyMarker元素，用于标明接下来请求的KeyMarker值。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: NextKeyMarker
+                                        type: string
+                                    NextUploadMarker:
+                                        description:  如果本次没有返回全部结果，响应请求中将包含NextUploadMarker元素，用于标明接下来请求的UploadMarker值。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: NextUploadMarker
+                                        type: string
+                                    Upload:
+                                        description:  保存Multipart   Upload事件信息的容器。    类型：容器    子节点：Key, UploadId, Initiated    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: Upload
+                                        type: object
+                                        properties:
+                                            Initiated:
+                                                description:  Multipart   Upload事件初始化的时间.    类型：日期    父节点：Upload 
+                                                in: formData
+                                                name: Initiated
+                                                type: string
+                                            Key:
+                                                description:  初始化Multipart   Upload事件的Object名字。    类型：字符串    父节点：Upload 
+                                                in: formData
+                                                name: Key
+                                                type: string
+                                            UploadId:
+                                                description:  Multipart   Upload事件的ID。    类型：字符串    父节点：Upload 
+                                                in: formData
+                                                name: UploadId
+                                                type: string
+                                    UploadIdMarker:
+                                        description:  列表的起始UploadID位置。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: UploadIdMarker
+                                        type: string
+        summary: 罗列出所有执行中的Multipart Upload事件
+        x-requestformat: '
+                        Get /?uploads HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date
+                        Authorization: Signature
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Get /?uploads  HTTP/1.1
+                        Host:oss-example. oss-cn-hangzhou.aliyuncs.com
+                        Date: Thu, 23 Feb 2012 06:14:27 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:JX75CtQqsmBBz+dcivn7kwBMvOY=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200
+                        Server: AliyunOSS
+                        Connection: keep-alive
+                        Content-length: 1839
+                        Content-type: application/xml
+                        x-oss-request-id: 58a41847-3d93-1905-20db-ba6f561ce67a Date: Thu, 23 Feb 2012 06:14:27 GMT
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <ListMultipartUploadsResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                            <Bucket>oss-example</Bucket>
+                            <KeyMarker></KeyMarker>
+                            <UploadIdMarker></UploadIdMarker>
+                            <NextKeyMarker>oss.avi</NextKeyMarker>
+                            <NextUploadIdMarker>0004B99B8E707874FC2D692FA5D77D3F</NextUploadIdMarker>     <Delimiter></Delimiter>
+                            <Prefix></Prefix>
+                            <MaxUploads>1000</MaxUploads>
+                            <IsTruncated>false</IsTruncated>
+                            <Upload>
+                                <Key>multipart.data</Key>
+                                <UploadId>0004B999EF518A1FE585B0C9360DC4C8</UploadId>
+                                <Initiated>2012-02-23T04:18:23.000Z</Initiated>
+                            </Upload>
+                            <Upload>
+                                <Key>multipart.data</Key>
+                                <UploadId>0004B999EF5A239BB9138C6227D69F95</UploadId>
+                                <Initiated>2012-02-23T04:18:23.000Z</Initiated>
+                            </Upload>
+                            <Upload>
+                                <Key>oss.avi</Key>
+                                <UploadId>0004B99B8E707874FC2D692FA5D77D3F</UploadId>
+                                <Initiated>2012-02-23T06:14:27.000Z</Initiated>     </Upload>
+                        </ListMultipartUploadsResult>
+
+                        '
+            id: 1

@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^index_fileupload$', mainapp.views.index_fileupload),
     url(r'^get_cloud_api_examples$', mainapp.views.get_cloud_api_examples),
     url(r'^download_cloud_api_examples$', mainapp.views.download_cloud_api_examples),
+    url(r'^read_cloud_api_examples$', mainapp.views.read_cloud_api_examples),
 
     url(r'^api/session_verify$', coreapp.views.session_verify),
     url(r'^api/script_parse$', coreapp.views.script_parse),

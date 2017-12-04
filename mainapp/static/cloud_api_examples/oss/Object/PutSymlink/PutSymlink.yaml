@@ -1,0 +1,66 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutSymlink/{ObjectName}?symlink:
+        put:
+            description: Put Symlink用于创建符号链接。
+                      1.	TargetObjectName同ObjectName一样，需要URL encode。
+                      2.	符号链接的目标文件类型不能为符号链接。
+                      3.	创建符号链接时, 
+                      	不检查目标文件是否存在
+                      	不检查目标文件类型是否合法
+                      	不检查目标文件是否有权限访问以上检查，都推迟到GetObject等需要访问目标文件的API。
+                      4.	如果试图添加的文件已经存在，并且有访问权限。新添加的文件将覆盖原来的文件，成功返回200 OK。
+                      5.	如果在PutSymlink的时候，携带以x-oss-meta-为前缀的参数，则视为user meta，比如x-ossmeta-location。一个Object可以有多个类似的参数，但所有的user meta总大小不能超过8k。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+        x-requestformat: '
+                        PUT /ObjectName?symlink HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+                        x-oss-symlink-target: TargetObjectName
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        PUT /link-to-oss?symlink HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Cache-control: no-cache
+                        Content-Disposition: attachment;filename=oss_download.jpg
+                        Date: Tue, 08 Nov 2016 02:00:25 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:kZoYNv66bsmc10+dcGKw5x2PRrk= x-oss-symlink-target: oss.jpg
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Server: AliyunOSS
+                        Date: Tue, 08 Nov 2016 02:00:25 GMT
+                        Content-Length: 0 Connection: keep-alive x-oss-request-id: 582131B9109F4EE66CDE56A5 ETag: "0A477B89B4602AA8DECB8E19BFD447B6"
+
+                        '
+            id: 1

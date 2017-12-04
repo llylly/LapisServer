@@ -1,0 +1,129 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucketWebsite/?website:
+        
+        get:
+            description: Get Bucket Website操作用于查看bucket的静态网站托管状态。
+                    1.	如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。
+                    2.	只有Bucket的拥有者才能查看Bucket的静态网站托管状态，否则返回403 Forbidden错误,错误码：AccessDenied。
+                    3.	如果源Bucket未设置静态网站托管功能，OSS会返回404错误，错误码为：NoSuchWebsiteConfiguration。
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            WebsiteConfiguration:
+                                description: ' 请求的容器  类型：容器 父元素: 无 '
+                                in: formData
+                                name: WebsiteConfiguration
+                                type: object
+                                properties:
+                                    ErrorDocument:
+                                        description: ' 子元素Key的父元素 类型: 容器 父元素: WebsiteConfiguration '
+                                        in: formData
+                                        name: ErrorDocument
+                                        type: object
+                                        properties:
+                                            Key:
+                                                description: ' 返回404错误时使用的文件名  类型:字符串  父元素: WebsiteConfiguration.ErrorDocument 有条件：当ErrorDocument设置时，必需 '
+                                                in: formData
+                                                name: Key
+                                                type: string
+                                    IndexDocument:
+                                        description: ' 子元素Suffix的父元素.  类型: 容器 父元素: WebsiteConfiguration '
+                                        in: formData
+                                        name: IndexDocument
+                                        type: object
+                                        properties:
+                                            Suffix:
+                                                description: ' 返回目录URL时添加的索引文件名，不要为空，也不要包含"/"。例如索引文件设置为index.html，则访问:oss-cn-hangzhou.aliyuncs.com/mybucket/mydir/这样请求的时候默认都相当于访问oss-cn-hangzhou.aliyuncs.com/mybucket/index.html  类型:字符串 父元素: WebsiteConfiguration.IndexDocument '
+                                                in: formData
+                                                name: Suffix
+                                                required: true
+                                                type: string
+                403:
+                    description: 只有Bucket的拥有者才能查看Bucket的静态网站托管状态，否则返回403 Forbidden错误,错误码：AccessDenied。
+                404:
+                    description: 如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。
+                                 如果源Bucket未设置静态网站托管功能，OSS会返回404错误，错误码为：NoSuchWebsiteConfiguration。
+        summary: 查看Bucket的静态网站托管状态
+        x-requestformat: '
+                        GET /?referer HTTP/1.1
+                        Host: BucketName.oss.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Get /?referer HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Thu, 13 Sep 2012 07:51:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=
+                        '
+            id: 1
+        -   description: '
+                        Get /?website HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Thu, 13 Sep 2012 07:51:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=
+
+                        '
+            id: 2
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Thu, 13 Sep 2012 07:51:28 GMT
+                        Connection: keep-alive
+                        Content-Length: 218
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <WebsiteConfiguration xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                        <IndexDocument>
+                        <Suffix>index.html</Suffix>
+                            </IndexDocument>
+                            <ErrorDocument>
+                                <Key>error.html</Key>
+                            </ErrorDocument>
+                        </WebsiteConfiguration>
+
+
+                        '
+            id: 1
+            note: 已设置LOG规则的返回示例
+        -   description: '
+                        HTTP/1.1 404
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Thu, 13 Sep 2012 07:56:46 GMT
+                        Connection: keep-alive
+                        Content-Length: 308
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Error xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                            <Code>NoSuchWebsiteConfiguration</Code>
+                            <Message>The specified bucket does not have a website configuration.</Message>
+                            <BucketName>oss-example</BucketName>
+                            <RequestId>505191BEC4689A033D00236F</RequestId>
+                            <HostId>oss-example.oss-cn-hangzhou.aliyuncs.com</HostId> </Error>
+
+                        '
+            id: 2
+            note: 未设置LOG规则的返回示例

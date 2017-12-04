@@ -1,0 +1,66 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/DeleteBucket:
+        
+        delete:
+            description: Delete Bucket用于删除某个Bucket。
+                    1.	如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。
+                    2.	为了防止误删除的发生，OSS不允许用户删除一个非空的Bucket。
+                    3.	如果试图删除一个不为空的Bucket，返回409 Conflict错误，错误码：BucketNotEmpty。
+                    4.	只有Bucket的拥有者才能删除这个Bucket。如果试图删除一个没有对应权限的Bucket，返回403 Forbidden错误。错误码：AccessDenied。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                403:
+                    description: 只有Bucket的拥有者才能删除这个Bucket。如果试图删除一个没有对应权限的Bucket，返回403 Forbidden错误。错误码：AccessDenied。
+                404:
+                    description: 如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。
+                409:
+                    description: 如果试图删除一个不为空的Bucket，返回409 Conflict错误，错误码：BucketNotEmpty。
+        produces:
+        - application/xml
+        summary: 删除Bucket
+        x-requestformat: '
+                        DELETE / HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        DELETE / HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Fri, 24 Feb 2012 05:31:04 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:ceOEyZavKY4QcjoUWYSpYbJ3naA=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 204 No Content
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Fri, 24 Feb 2012 05:31:04 GMT
+                        Connection: keep-alive
+                        Content-Length: 0
+                        Server: AliyunOSS
+
+                        '
+            id: 1

@@ -1,0 +1,64 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/AbortMultipartUpload/{ObjectName}?uploadId={UploadId}:
+        delete:
+            description: 该接口可以根据用户提供的Upload ID中止其对应的Multipart Upload事件。当一个Multipart Upload事件被中止后，就不能再使用这个Upload ID做任何操作，已经上传的Part数据也会被删除。
+                      1. 中止一个Multipart Upload事件时，如果其所属的某些Part仍然在上传，那么这次中止操作将无法删除这些Part。所以如果存在并发访问的情况，为了彻底释放OSS上的空间，需要调用几次AbortMultipart Upload接口。 
+                      2. 如果输入的Upload Id不存在，OSS会返回404错误，错误码为：NoSuchUpload。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters:
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  唯一标示此次Multipart Upload事件的ID。
+                in: path
+                name: UploadId
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                404:
+                    description: 如果输入的Upload Id不存在，OSS会返回404错误，错误码为：NoSuchUpload。
+        summary: 取消Multipart Upload事件
+        x-requestformat: '
+                        DELETE /ObjectName?uploadId=UploadId HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date
+                        Authorization: Signature
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Delete /multipart.data?&uploadId=0004B9895DBBB6EC98E  HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Wed, 22 Feb 2012 08:32:21 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:J/lICfXEvPmmSW86bBAfMmUmWjI=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 204
+                        Server: AliyunOSS Connection: keep-alive
+                        x-oss-request-id: 059a22ba-6ba9-daed-5f3a-e48027df344d
+                        Date: Wed, 22 Feb 2012 08:32:21 GMT
+
+                        '
+            id: 1

@@ -1,0 +1,207 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/UploadPartCopy/{ObjectName}?partNumber={PartNumber}&uploadId={UploadId}:
+        put:
+            description: Upload Part Copy通过从一个已存在的Object中拷贝数据来上传一个Part。通过在Upload Part请求的基础上增加一个Header:x-oss-copy-source来调用该接口。当拷贝一个大于1GB的文件时，必须使用Upload Part Copy的方式进行拷贝。如果想通过单个操作拷贝小于1GB的文件，可以参考Copy Object。
+                    1.	调用该接口上传Part数据前，必须调用Initiate Multipart Upload接口，获取一个OSS服务器颁发的 Upload ID。
+                    2.	Multipart Upload要求除最后一个Part以外，其他的Part大小都要大于100KB。但是Upload Part接口并不会立即校验上传Part的大小（因为不知道是否为最后一块）；只有当Complete Multipart Upload的时候才会校验。
+                    3.	不指定x-oss-copy-source-range请求头时，表示拷贝整个源Object。当指定该请求头时，则返回消息中会包含整个文件的长度和此次拷贝的范围，例如：Content-Range:bytes 0-9/44，表示整个文件长度为44，此次拷贝的范围为0-9。当指定的范围不符合范围规范时，则拷贝整个文件，并且不在结果中提及Content-Range。
+                    4.	若调用Initiate Multipart Upload接口时，指定了x-oss-server-side-encryption请求头，则会对上传的Part进行加密编码，并在Upload Part响应头中返回x-oss-server-side-encryption头，其值表明该Part的服务器端加密算法，具体见Initiate Multipart Upload接口。 5. 该操作不能拷贝通过Append追加上传方式产生的object。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  分块标识号
+                in: path
+                name: PartNumber
+                required: true
+                type: string
+            -   description:  唯一标示此次Multipart Upload事件的ID。
+                in: path
+                name: UploadId
+                required: true
+                type: string
+            -   description:  复制源地址（必须有可读权限）类型：字符串 默认值：无
+                in: header
+                name: x-oss-copy-source
+                required: true
+                type: string
+            -   description:  源Object的拷贝范围。如，设定 bytes=0-9，表示传送第0到第9这10个字符。 当拷贝整个源Object时不需要该请求Header。类型：整型默认值：无
+                in: header
+                name: x-oss-copy-source-range
+                required: true
+                type: integer
+            -   description:  如果源Object的ETag值和用户提供的ETag相等，则执行拷贝操作，并返回200；否则返回412HTTP错误码（预处理失败）。类型：字符串 默认值：无
+                in: header
+                name: x-oss-copy-source-if-match
+                required: true
+                type: string
+            -   description:  如果源Object的ETag值和用户提供的ETag不相等，则执行拷贝操作，并返回200；否则返回304HTTP错误码（预处理失败）。类型：字符串 默认值：无
+                in: header
+                name: x-oss-copy-source-if-none-match
+                required: true
+                type: string  
+            -   description:  如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误。类型：字符串 默认值：无
+                in: header
+                name: x-oss-copy-source-if-unmodified-since
+                required: true
+                type: string  
+            -   description:  如果源Object自从用户指定的时间以后被修改过，则执行拷贝操作；否则返回304 HTTP错误码（预处理失败）。类型：字符串 默认值：无
+                in: header
+                name: x-oss-copy-source-if-modified-since
+                required: true
+                type: string 
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success respons
+                    schema:
+                        type: object
+                        properties:
+                            x-oss-copy-source-if-match:
+                                description:  如果源Object的ETAG值和用户提供的ETAG相等，则执行拷贝操作；否则返回412   HTTP错误码（预处理失败）。    类型：字符串    默认值：无 
+                                in: formData
+                                name: x-oss-copy-source-if-match
+                                type: string
+                            x-oss-copy-source-if-modified-since:
+                                description:  如果源Object自从用户指定的时间以后被修改过，则执行拷贝操作；否则返回412   HTTP错误码（预处理失败）。    类型：字符串    默认值：无 
+                                in: formData
+                                name: x-oss-copy-source-if-modified-since
+                                type: string
+                            x-oss-copy-source-if-none-match:
+                                description:  如果源Object自从用户指定的时间以后就没有被修改过，则执行拷贝操作；否则返回412   HTTP错误码（预处理失败）。    类型：字符串    默认值：无 
+                                in: formData
+                                name: x-oss-copy-source-if-none-match
+                                type: string
+                            x-oss-copy-source-if-unmodified-since:
+                                description:  如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412   precondition failed错误。    类型：字符串    默认值：无 
+                                in: formData
+                                name: x-oss-copy-source-if-unmodified-since
+                                type: string
+                304:
+                    description: x-oss-copy-source-if-none-match如果源Object的ETag值和用户提供的ETag不相等，则执行拷贝操作，并返回200；否则返回304HTTP错误码（预处理失败）。
+                                 x-oss-copy-source-if-modified-since如果源Object自从用户指定的时间以后被修改过，则执行拷贝操作；否则返回304 HTTP错误码（预处理失败）。
+                412:
+                    description: x-oss-copy-source-if-match如果源Object的ETag值和用户提供的ETag相等，则执行拷贝操作，并返回200；否则返回412HTTP错误码（预处理失败）。
+                                 x-oss-copy-source-if-unmodified-since如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误。
+  
+        summary: 分块复制上传文件
+        host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}/oss-cn-hangzhou.aliyuncs.com/HeadObject/{ObjectName}:
+        description: Head Object只返回某个Object的meta信息，不返回文件内容。
+                1.	不论正常返回200 OK还是非正常返回，Head Object都不返回消息体。
+                2.	HeadObject支持在头中设定If-Modified-Since, If-Unmodified-Since, If-Match，If-None-Match的查询条件。具体规则请参见GetObject中对应的选项。如果没有修改，返回304 NotModified。
+                3.	如果用户在PutObject的时候传入以x-oss-meta-为开头的user meta，比如x-oss-metalocation，返回消息时，返回这些user meta。
+                4.	如果文件不存在返回404 Not Found错误。
+                5.	若该Object为进行服务器端熵编码加密存储的，则在Head请求响应头中，会返回x-oss-serverside-encryption，其值表明该Object的服务器端加密算法。
+                6.	如果文件类型为符号链接， 响应头中Content-Length、ETag、Content-Md5 均为目标文件的元信息；Last-Modified是目标文件和符号链接的最大值；其他均为符号链接元信息。
+                7.	如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。
+                8.	如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。 
+
+        head:
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  如果指定的时间早于实际修改时间，则正常传送文件，并返回200 OK；否则返回304 not modified 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT
+                in: header
+                name: If-Modified-Since
+                required: true
+                type: string
+            -   description:  如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT
+                in: header
+                name: If-Unmodified-Since
+                required: true
+                type: string
+            -   description:  如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412precondition failed错误 类型：字符串 默认值：无
+                in: header
+                name: If-Match
+                required: true
+                type: string
+            -   description:  如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified 类型：字符串 默认值：无
+                in: header
+                name: If-None-Match
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                304:
+                    description: 如果包含If-Modified-Since并且不符合或者包含If-None-Match并且不符合，返回304 NotModified。
+                                 If-None-Match如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified。
+                400:
+                    description: 如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。
+                404:
+                    description: 如果文件不存在返回404 Not Found错误。
+                                 如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。
+                412:
+                    description: 如果包含If-Unmodified-Since并且不符合或者包含If-Match并且不符合，返回412 precondition failed。
+                                 If-Match如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412。  
+        summary: 获得Object的meta信息
+        x-requestformat: '
+                        PUT /ObjectName? partNumber=PartNumber&uploadId=UploadId HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date
+                        Content-Length: Size Authorization: SignatureValue
+                        x-oss-copy-source: /SourceBucketName/SourceObjectName x-oss-copy-source-range:bytes=first-last
+
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        PUT /multipart.data?partNumber=1&uploadId=0004B9895DBBB6EC98E36  HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Content-Length：6291456
+                        Date: Wed, 22 Feb 2012 08:32:21 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:J/lICfXEvPmmSW86bBAfMmUmWjI= x-oss-copy-source: /oss-example/ src-object x-oss-copy-source-range:bytes=100-6291756
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Server: AliyunOSS Connection: keep-alive
+                        x-oss-request-id: 3e6aba62-1eae-d246-6118-8ff42cd0c21a Date: Thu, 17 Jul 2014 06:27:54 GMT'
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <CopyPartResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                        <LastModified>2014-07-17T06:27:54.000Z </LastModified>
+                        <ETag>"5B3C1A2E053D763E1B002CC607C5A0FE"</ETag> </CopyPartResult>
+
+                        '
+            id: 1
+            

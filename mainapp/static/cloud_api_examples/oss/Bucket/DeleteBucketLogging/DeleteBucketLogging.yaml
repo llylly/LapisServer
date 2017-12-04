@@ -1,0 +1,60 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/DeleteBucketLogging/?logging:
+        delete:
+            description: Delete Bucket Logging操作用于关闭bucket访问日志记录功能。
+                    1.	如果Bucket不存在，返回404 no content错误，错误码：NoSuchBucket。
+                    2.	只有Bucket的拥有者才能关闭Bucket访问日志记录功能。如果试图操作一个不属于你的Bucket，OSS返回403 Forbidden错误，错误码：AccessDenied。 
+                    3.  如果目标Bucket并没有开启Logging功能，仍然返回HTTP状态码 204。
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                204:
+                    description: 如果目标Bucket并没有开启Logging功能，仍然返回HTTP状态码 204。
+                403:
+                    description: 只有Bucket的拥有者才能关闭Bucket访问日志记录功能。如果试图操作一个不属于你的Bucket，OSS返回403 Forbidden错误，错误码：AccessDenied。
+                404:
+                    description: 如果Bucket不存在，返回404 no content错误，错误码：NoSuchBucket。
+        summary: 关闭Bucket访问日志记录功能
+        x-requestformat: '
+                        DELETE /?logging HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                         
+                        DELETE /?logging HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Fri, 24 Feb 2012 05:35:24 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:6ZVHOehYzxoC1yxRydPQs/CnMZU=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 204 No Content
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Fri, 24 Feb 2012 05:35:24 GMT
+                        Connection: keep-alive
+                        Content-Length: 0
+                        Server: AliyunOSS
+                        '
+            id: 1

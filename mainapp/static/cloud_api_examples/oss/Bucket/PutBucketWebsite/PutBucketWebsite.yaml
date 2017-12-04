@@ -1,0 +1,116 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucketWebsite/?website:
+        put:
+            description: Put Bucket Website操作可以将一个bucket设置成静态网站托管模式。
+                    1.	所谓静态网站是指所有的网页都由静态内容构成，包括客户端执行的脚本，例如JavaScript；OSS不支持涉及到需要服务器端处理的内容，例如PHP，JSP，APS.NET等。
+                    2.	如果你想使用自己的域名来访问基于bucket的静态网站，可以通过域名CNAME来实现。具体配置方法见3.4节：自定义域名绑定。
+                    3.	用户将一个bucket设置成静态网站托管模式时，必须指定索引页面，错误页面则是可选的。
+                    4.	用户将一个bucket设置成静态网站托管模式时，指定的索引页面和错误页面是该bucket内的一个 object。
+                    5.	在将一个bucket设置成静态网站托管模式后，对静态网站根域名的匿名访问，OSS将返回索引页面；对静态网站根域名的签名访问，OSS将返回Get Bucket结果。
+                    6.	如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+            
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters:
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description: ' 请求的容器  类型：容器 父元素: 无 '
+                in: formData
+                name: WebsiteConfiguration
+                required: true
+                type: object
+                x-schema:
+                    properties:
+                        ErrorDocument:
+                            description: ' 子元素Key的父元素 类型: 容器 父元素: WebsiteConfiguration '
+                            in: formData
+                            name: ErrorDocument
+                            required: false
+                            type: object
+                            properties:
+                                Key:
+                                    description: ' 返回404错误时使用的文件名  类型:字符串  父元素: WebsiteConfiguration.ErrorDocument 有条件：当ErrorDocument设置时，必需 '
+                                    in: formData
+                                    name: Key
+                                    required: false
+                                    type: string
+                        IndexDocument:
+                            description: ' 子元素Suffix的父元素.  类型: 容器 父元素: WebsiteConfiguration '
+                            in: formData
+                            name: IndexDocument
+                            required: true
+                            type: object
+                            properties:
+                                Suffix:
+                                    description: ' 返回目录URL时添加的索引文件名，不要为空，也不要包含"/"。例如索引文件设置为index.html，则访问:oss-cn-hangzhou.aliyuncs.com/mybucket/mydir/这样请求的时候默认都相当于访问oss-cn-hangzhou.aliyuncs.com/mybucket/index.html  类型:字符串 父元素: WebsiteConfiguration.IndexDocument '
+                                    in: formData
+                                    name: Suffix
+                                    required: true
+                                    type: string
+                    type: object
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    properties: {}
+                default:
+                    description: 如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+        summary: 设置Bucket为静态网站托管模式
+        x-requestformat: '
+                        PUT /?website HTTP/1.1
+                        Date: GMT Date
+                        Content-Length：ContentLength
+                        Content-Type: application/xml
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Authorization: SignatureValue
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <WebsiteConfiguration>
+                            <IndexDocument>
+                                <Suffix>index.html</Suffix>
+                            </IndexDocument>
+                            <ErrorDocument>
+                                <Key>errorDocument.html</Key>
+                            </ErrorDocument>
+                        </WebsiteConfiguration>
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        PUT /?website HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Content-Length: 209
+                        Date: Fri, 04 May 2012 03:21:12 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA=
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <WebsiteConfiguration>
+                        <IndexDocument>
+                        <Suffix>index.html</Suffix>
+                        </IndexDocument>
+                        <ErrorDocument>
+                        <Key>error.html</Key>
+                        </ErrorDocument>
+                        </WebsiteConfiguration>
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Fri, 04 May 2012 03:21:12 GMT
+                        Content-Length: 0
+                        Connection: keep-alive
+                        Server: AliyunOSS
+
+                        '
+            id: 1

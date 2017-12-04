@@ -1,0 +1,49 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /CallBack:
+        put:
+            description: 用户只需要在发送给OSS的请求中携带相应的Callback参数，即能实现回调。现在支持CallBack的API 接口有：PutObject、PostObject、CompleteMultipartUpload。
+
+            consumes:
+            - application/json
+            parameters: 
+            -   description:  文件上传成功后OSS向此url发送回调请求，请求方法为POST，body为callbackBody指定的内容。正常情况下，该url需要响应“HTTP/1.1 200OK”，body必须为JSON格式，响应头Content-Length必须为合法的值，且不超过3MB。
+                              支持同时配置最多5个url，以”;”分割。OSS会依次发送请求直到第一个返回成功为止。
+                              如果没有配置或者值为空则认为没有配置callback。
+                              支持HTTPS地址。
+                              为了保证正确处理中文等情况，callbackUrl需做url编码处理，比如http://example.com/中文.php?key=value&中文名称=中文值 需要编码成
+                              http://example.com/%E4%B8%AD%E6%96%87.php?key=v alue&%E4%B8%AD%E6%96 %87%E5%90%8D%E7%A7%B0=%E4%B8%AD%E6%96%87%E5%80%BC
+                in: query
+                name: callbackUrl
+                required: true
+                type: string
+            -   description:  发起回调请求时Host头的值，只有在设置了callbackUrl时才有效。
+                              如果没有配置callbckHost，则会解析 callbackUrl中的url并将解析出的host填充到callbackHost中
+                in: query
+                name: callbackHost
+                required: false
+                type: string
+            -   description:  发起回调时请求body的值，例如：key=$(key)&etag=$(etag) &my_var=$(x:my_var)。
+                              支持OSS系统变量、自定义变量和常量，支持的系统变量如下表所示 。自定义变量的支持方式在PutObject和CompleteMultipart中是通过 callback-var来传递，在PostObject中则是将各个变量通过表单域来传递。
+                in: query
+                name: callbackBody
+                required: true
+                type: string
+            -   description:  发起回调请求的ContentType，支持application/xwww-form-urlencoded和application/json，默认为前者。
+                              如果为application/x-wwwform-urlencoded，则 callbackBody中的变量将会被经过url编码的值替换掉，如果为application/json，则会按照 json格式替换其中的变量。
+                in: query
+                name: calbackBodyType
+                required: false
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+            summary: 上传回调

@@ -1,0 +1,227 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /oss.aliyuncs.com/GetService:
+        get:
+            description: 对于服务地址作Get请求可以返回请求者拥有的所有Bucket，其中“/”表示根目录，
+                        GetService(ListBuckets)时，可以通过prefix，marker和max-keys对list做限定，返回部分结果。
+                    1.	GetService这个API只对验证通过的用户有效。
+                    2.	如果请求中没有用户验证信息（即匿名访问），返回403 Forbidden。错误码：AccessDenied。
+                    3.	当所有的bucket都返回时，返回的xml中不包含Prefix、Marker、MaxKeys、IsTruncated、NextMarker节点，如果还有部分结果未返回，则增加上述节点，其中NextMarker用于继续查询时给marker赋值。                  
+        
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters:
+            -   description: 限定返回的bucket name必须以prefix作为前缀，可以不设定，不设定时不过滤前缀信息数据 类型：字符串 默认值：无
+                in: query
+                name: prefix
+                required: false
+                type: string
+            -   description: 设定结果从marker之后按字母排序的第一个开始返回，可以不设定，不设定时从头开始返回数据 类型：字符串 默认值：无
+                in: query
+                name: marker
+                required: false
+                type: string
+            -   default: 100
+                description: 限定此次返回bucket的最大数，如果不设定，默认为100，max-keys取值不能大于1000数据 类型：字符串 默认值：100
+                in: query
+                maxLength: 1000
+                name: max-keys
+                required: false
+                type: integer
+            produces:
+            - application/xml
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            ListAllMyBucketsResult:
+                                description: '保存Get Service请求结果的容器。类型：容器, 子节点: Owner, Buckets,父节点：None'
+                                in: formData
+                                name: ListAllMyBucketsResult
+                                type: object
+                                properties:
+                                    Buckets:
+                                        description: 保存多个Bucket信息的容器。类型：容器 子节点：Bucket,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: Buckets
+                                        type: object
+                                        properties:
+                                            Bucket:
+                                                description: 保存bucket信息的容器. 类型：容器 子节点：Name, CreationDate, Location 父节点：ListAllMyBucketsResult.Buckets
+                                                in: formData
+                                                name: Bucket
+                                                required: true
+                                                type: object
+                                                properties:
+                                                    CreateDate:
+                                                        description: Bucket创建时间,类型：时间 (格式：yyyy-mm-ddThh:mm:ss.timezone,   e.g.,   2011-12-01T12:27:13.000Z),父节点：ListAllMyBucketsResult.Buckets.Bucket,
+                                                        in: formData
+                                                        name: CreateDate
+                                                        type: string
+                                                    ExtranetEndpoint:
+                                                        description: Bucket访问的外网域名  类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket
+                                                        in: formData
+                                                        name: ExtranetEndpoint
+                                                        type: string
+                                                    IntranetEndpoint:
+                                                        description: 同区域ECS访问Bucket的内网域名, 类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket
+                                                        in: formData
+                                                        name: IntranetEndpoint
+                                                        type: string
+                                                    Location:
+                                                        description: Bucket所在的数据中心,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket
+                                                        in: formData
+                                                        name: Location
+                                                        type: string
+                                                    Name:
+                                                        description: Bucket名称。,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket
+                                                        in: formData
+                                                        name: Name
+                                                        type: string
+                                                    StorageClass:
+                                                        description: Bucket存储类型，支持“Standard”、“IA”、“Archive”。（目前只有部分区域支持“Archive”类型）,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket,
+                                                        in: formData
+                                                        name: StorageClass
+                                                        type: string
+                                    IsTruncated:
+                                        description: 指明是否所有的结果都已经返回：“true”表示本次没有返回全部结果；“false”表示本次已经返回了全部结果。当bucket未全部返回时才有此节点。,类型：枚举字符串,有效值：true、false,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: IsTruncated
+                                        type: string
+                                    Marker:
+                                        description: 标明这次GetService(ListBucket)的起点，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: Marker
+                                        type: string
+                                    MaxKeys:
+                                        description: 响应请求内返回结果的最大数目，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: MaxKeys
+                                        type: string
+                                    NextMarker:
+                                        description: 表示下一次GetService(ListBucket)可以以此为marker，将未返回的结果返回。当bucket未全部返回时才有此节点。,类型：字符串,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: NextMarker
+                                        type: string
+                                    Owner:
+                                        description: 用于存放Bucket拥有者信息的容器。,类型：容器,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: Owner
+                                        type: object
+                                        properties:
+                                            DisplayName:
+                                                description: Bucket拥有者的名称 (目前和ID一致)。,类型：字符串,父节点：ListAllMyBucketsResult.Owner
+                                                in: formData
+                                                name: DisplayName
+                                                type: string
+                                            ID:
+                                                description: Bucket拥有者的用户ID。,类型：字符串,父节点：ListAllMyBucketsResult.Owner
+                                                in: formData
+                                                name: ID
+                                                type: string
+                                        
+                                    Prefix:
+                                        description: 本次查询结果的前缀，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult
+                                        in: formData
+                                        name: Prefix
+                                        type: string
+                            
+                403:
+                    description: 如果请求中没有用户验证信息（即匿名访问），返回403 Forbidden。错误码：AccessDenied。
+        summary: 得到该账户下所有Bucket
+        x-othername: ListBucket
+        x-requestformat: '
+                        GET / HTTP/1.1
+                        Host: oss.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+  
+        x-requestsample:  
+        -   description: '
+                        GET / HTTP/1.1
+                        Date: Thu, 15 May 2014 11:18:32 GMT
+                        Host: oss-cn-hangzhou.aliyuncs.com
+                        Authorization: OSS nxj7dtl1c24jwhcyl5hpvnhi:COS3OQkfQPnKmYZTEHYv2qUl5jI=
+
+                        '
+            id: 1
+        -   description: '
+                        GET /?prefix=xz02tphky6fjfiuc&max-keys=1 HTTP/1.1
+                        Date: Thu, 15 May 2014 11:18:32 GMT
+                        Host: oss-cn-hangzhou.aliyuncs.com
+                        Authorization: OSS nxj7dtl1c24jwhcyl5hpvnhi:COS3OQkfQPnKmYZTEHYv2qUl5jI=
+                         '
+            id: 2
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Date: Thu, 15 May 2014 11:18:32 GMT
+                        Content-Type: application/xml
+                        Content-Length: 556
+                        Connection: keep-alive Server: AliyunOSS x-oss-request-id: 5374A2880232A65C23002D74
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <ListAllMyBucketsResult>
+                        <Owner>
+                            <ID>51264</ID>
+                            <DisplayName>51264</DisplayName>
+                        </Owner>
+                        <Buckets>
+                            <Bucket>
+                            <CreationDate>2015-12-17T18:12:43.000Z</CreationDate>
+                            <ExtranetEndpoint>oss-cn-shanghai.aliyuncs.com</ExtranetEndpoint>
+                            <IntranetEndpoint>oss-cn-shanghai-internal.aliyuncs.com</IntranetEndpoint>
+                            <Location>oss-cn-shanghai</Location>
+                            <Name>app-base-oss</Name>
+                            </Bucket>
+                            <Bucket>
+                            <CreationDate>2014-12-25T11:21:04.000Z</CreationDate>
+                            <ExtranetEndpoint>oss-cn-hangzhou.aliyuncs.com</ExtranetEndpoint>
+                            <IntranetEndpoint>oss-cn-hangzhou-internal.aliyuncs.com</IntranetEndpoint>
+                            <Location>oss-cn-hangzhou</Location>
+                            <Name>atestleo23</Name>
+                            </Bucket>
+                        </Buckets>
+                        </ListAllMyBucketsResult>
+
+                        '
+            id: 1
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Date: Thu, 15 May 2014 11:18:32 GMT
+                        Content-Type: application/xml
+                        Content-Length: 545
+                        Connection: keep-alive Server: AliyunOSS x-oss-request-id: 5374A2880232A65C23002D75
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <ListAllMyBucketsResult>
+                        <Prefix>xz02tphky6fjfiuc</Prefix>
+                        <Marker></Marker>
+                        <MaxKeys>1</MaxKeys>
+                        <IsTruncated>true</IsTruncated>
+                        <NextMarker>xz02tphky6fjfiuc0</NextMarker>
+                        <Owner>
+                            <ID>ut_test_put_bucket</ID>
+                            <DisplayName>ut_test_put_bucket</DisplayName>
+                        </Owner>
+                        <Buckets>
+                            <Bucket>
+                            <CreationDate>2014-05-15T11:18:32.000Z</CreationDate>
+                            <ExtranetEndpoint>oss-cn-hangzhou.aliyuncs.com</ExtranetEndpoint>
+                            <IntranetEndpoint>oss-cn-hangzhou-internal.aliyuncs.com</IntranetEndpoint>
+                            <Location>oss-cn-hangzhou</Location>
+                            <Name>xz02tphky6fjfiuc0</Name>
+                            </Bucket>
+                        </Buckets>
+                        </ListAllMyBucketsResult>
+
+                         '
+            id: 2

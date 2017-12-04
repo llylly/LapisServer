@@ -189,6 +189,8 @@ function bar_update() {
         $('.mainpage-filediv').hide();
         $("#filename_div").hide();
         $("#save_btn").hide();
+
+        files = [];
     } else {
         $(".user_unlogin").hide();
         $(".user_login").show();

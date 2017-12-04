@@ -1,0 +1,65 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/DeleteObject/{ObjectName}:
+        delete:
+            description: DeleteObject用于删除某个Object。
+                      1.	DeleteObject要求对该Object要有写权限。
+                      2.	如果要删除的Object不存在，OSS也返回状态码204（ No Content）。
+                      3.	如果Bucket不存在，返回404 Not Found。
+                      4.	如果文件类型为符号链接，只删除符号链接自身。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                204:
+                    description: 如果要删除的Object不存在，OSS也返回状态码204（ No Content）
+                400:
+                    description: 如果Bucket不存在，返回404 Not Found。
+        summary: 在Object尾追加上传数据
+        x-requestformat: '
+                        DELETE /ObjectName HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        DELETE /copy_oss.jpg HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Fri, 24 Feb 2012 07:45:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:zUglwRPGkbByZxm1+y4eyu+NIUs=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 204 NoContent
+                        x-oss-request-id: 559CC9BDC755F95A64485981
+                        Date: Fri, 24 Feb 2012 07:45:28 GMT
+                        Content-Length: 0
+                        Connection: keep-alive
+                        Server: AliyunOSS
+
+                        '
+            id: 1

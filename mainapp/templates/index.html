@@ -16,6 +16,9 @@ $(function () {
         <div class="row text-center">
             <h4>My Files</h4>
         </div>
+        <div class="row">
+            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="new_file_trigger_btn">New File</a>
+        </div>
         <div class="mainpage-filelist">
         </div>
     </div>
@@ -38,32 +41,47 @@ $(function () {
         <div id="script_area"></div>
 
         <div class="row" style="margin: 10pt">
-            <div class="span2" style="margin-left: 0">
+            <div class="span3" style="margin-left: 0">
+                Script format: <br>
                 <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON
+                <input type="radio" name='format_type' id="XML-radio" style="margin-left: 20pt">&nbsp;XML
             </div>
-            <div class="span1" style="margin-left: 0">
-                <input type="radio" name='format_type' id="XML-radio">&nbsp;XML
-            </div>
-            <div class="span2 pull-right" style="margin-left: 0">
+            <div class="span2 pull-right" style="margin-right: 0">
                 <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>
-            </div>
-        </div>
-
-        <div class="row" style="padding-left: 10pt; padding-right: 10pt" >
-            <a class="parse_status span1" id="doc_status" data-toggle="tooltip" title="Document Parse">
-                <span class="badge badgenormal">Stage 1</span>
-                <span class="badge badge-success">Stage 1</span>
-                <span class="badge badge-important">Stage 1</span>
-            </a>
-            <a class="parse_status span1" id="api_status" data-toggle="tooltip" title="API Parse">
-                <span class="badge badgenormal">Stage 2</span>
-                <span class="badge badge-success">Stage 2</span>
-                <span class="badge badge-important">Stage 2</span>
-            </a>
-            <div class="span2 pull-right" style="margin-right: 0pt">
                 <a class="btn btn-success btn-block" id="save_btn">Save</a>
             </div>
         </div>
+
+{#        <div class="row" style="margin: 10pt">#}
+{#            <div class="span2" style="margin-left: 0">#}
+{#                <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON#}
+{#            </div>#}
+{#            <div class="span1" style="margin-left: 0">#}
+{#                <input type="radio" name='format_type' id="XML-radio">&nbsp;XML#}
+{#            </div>#}
+{#            <div class="span2 pull-right" style="margin-left: 0">#}
+{#                <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>#}
+{#            </div>#}
+{#        </div>#}
+
+{#        <div class="row" style="padding-left: 10pt; padding-right: 10pt" >#}
+{#            <a class="parse_status span1" id="doc_status" data-toggle="tooltip" title="Document Parse">#}
+{#                <span class="badge badgenormal">Stage 1</span>#}
+{#                <span class="badge badge-success">Stage 1</span>#}
+{#                <span class="badge badge-important">Stage 1</span>#}
+{#            </a>#}
+{#            <a class="parse_status span1" id="api_status" data-toggle="tooltip" title="API Parse">#}
+{#                <span class="badge badgenormal">Stage 2</span>#}
+{#                <span class="badge badge-success">Stage 2</span>#}
+{#                <span class="badge badge-important">Stage 2</span>#}
+{#            </a>#}
+{#        </div>#}
+
+{#        <div class="row" style="padding-left: 10pt; padding-right: 10pt" >#}
+{#            <div class="span2 pull-right" style="margin-right: 0pt">#}
+{#                <a class="btn btn-success btn-block" id="save_btn">Save</a>#}
+{#            </div>#}
+{#        </div>#}
 
     </div>
 
@@ -116,41 +134,6 @@ $(function () {
                 </div>
             </div>
         </div>
-
-        <div class="panel panel-primary" style="margin-top: 20pt; margin-bottom: 20pt" id="api_ops">
-            <div class="panel-heading">
-                Data Generation
-            </div>
-            <div class="panel-body">
-                <select id="api_select" style="width: 100%">
-                    <option name="default">Select an API</option>
-                </select><br>
-                <div class="row">
-                    <div style="width: 50%; margin-left: 25%">
-                        <a id="datagen_btn" class="btn btn-primary btn-block btn-success">Generate Request Data</a>
-                    </div>
-                </div>
-                <div id="datagen_panel">
-                    <hr>
-                    <h5><a data-toggle="collapse" data-target="#datagen_frame_div">Generation Result</a></h5>
-                    <div id="datagen_frame_div" class="collapse in">
-                        <div id="datagen_success_div">
-                            <strong class="text-success">Success</strong><br>
-                            <strong>Data</strong>&nbsp; &nbsp;<a id="datagen_copy">[copy]</a><br>
-                            <div id="datagen_div"></div>
-                        </div>
-                        <div id="datagen_fail_div">
-                            <strong class="text-error">Failed</strong><br>
-                            <strong>Errors:</strong><br>
-                            <div id="datagen_err_div"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
 
     </div>
 
@@ -219,6 +202,28 @@ $(function () {
         </div>
         <div class="modal-footer">
             <a href="#" class="btn btn-success" id="rename_btn">Change</a>
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+
+    <div id="newfile_modal" class="modal hide fade in" style="display: none">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>New File</h3>
+        </div>
+        <div class="modal-body">
+            <div id="newfile_danger_div">
+                <span class="text-danger">
+                    <strong>There is existing script in the editor. Sure to overwrite it?</strong>
+                </span>
+            </div>
+            <br>
+            New Document Name:<br>
+            <input class="span5" type="text" id="newfile_input" />
+            <div class="help-block">Extension name (.yaml/.xml) should NOT be contained.</div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-success" id="newfile_btn">New</a>
             <a href="#" class="btn" data-dismiss="modal">Close</a>
         </div>
     </div>

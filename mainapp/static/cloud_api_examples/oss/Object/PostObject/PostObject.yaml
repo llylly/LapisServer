@@ -1,0 +1,250 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/PostObject:
+        post:
+            description: Post Object使用HTML表单上传文件到指定bucket。Post作为Put的替代品，使得基于浏览器上传文件到 bucket成为可能。Post Object的消息实体通过多重表单格式（multipart/form-data）编码，在Put Object操作中参数通过HTTP请求头传递，在Post操作中参数则作为消息实体中的表单域传递。
+                    1.	进行Post操作要求对bucket有写权限，如果bucket为public-read-write，可以不上传签名信息，否则要求对该操作进行签名验证。与Put操作不同，Post操作使用AccessKeySecret对policy进行签名计算出签名字符串作为Signature表单域的值，OSS会验证该值从而判断签名的合法性。
+                    2.	无论bucket是否为public-read-write，一旦上传OSSAccessKeyId, policy, Signature表单域中的任意一个，则另两个表单域为必选项，缺失时OSS会返回错误码：InvalidArgument。
+                    3.	post操作提交表单编码必须为“multipart/form-data”，即header中Content-Type为 multipart/form-data; boundary=xxxxxx这样的形式，boundary为边界字符串。
+                    4.	提交表单的URL为bucket域名即可，不需要在URL中指定object。即请求行是POST / HTTP/1.1，不能写成POST /ObjectName HTTP/1.1
+                    5.	policy规定了该次Post请求中表单域的合法值，OSS会根据policy判断请求的合法性，如果不合法会返回错误码：AccessDenied。在检查policy合法性时，policy中不涉及的表单域不进行检查。
+                    6.	表单和policy必须使用UTF-8编码，policy为经过UTF-8编码和base64编码的JSON。
+                    7.	Post请求中可以包含额外的表单域，OSS会根据policy对这些表单域检查合法性。
+                    8.	如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+                    9.	如果POST请求中包含Header签名信息或URL签名信息，OSS不会对它们做检查。
+                    10.	如果请求中携带以x-oss-meta-为前缀的表单域，则视为user meta，比如x-oss-meta-location。一个Object可以有多个类似的参数，但所有的user meta总大小不能超过8k。
+                    11.	Post请求的body总长度不允许超过5G。若文件长度过大，会返回错误码：EntityTooLarge。
+                    12.	如果上传指定了x-oss-server-side-encryption Header请求域，则必须设置其值为AES256，否则会返回400和错误码：InvalidEncryptionAlgorithmError。指定该Header后，在响应头中也会返回该Header，OSS会对上传的Object进行加密编码存储，当这个Object被下载时，响应头中会包含x-oss-server-side-encryption，值被设置成该Object的加密算法。
+                    13.	表单域为大小写不敏感的，但是表单域的值为大小写敏感的。
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  Bucket   拥有者的Access   Key Id。    类型：字符串    默认值：无    限制：当bucket非public-read-write或者提供了policy（或Signature）表单域时，必须提供该表单域。 
+                in: formData
+                name: OSSAccessKeyId
+                required: false
+                type: string
+            -   description:  policy规定了请求的表单域的合法性。不包含policy表单域的请求被认为是匿名请求，并且只能访问public-read-write的bucket。更详细描述请参考下文 Post Policy。    类型：字符串    默认值：无    限制：当bucket非public-read-write或者提供了OSSAccessKeyId（或Signature）表单域时，必须提供该表单域。 
+                in: formData
+                name: policy
+                required: false
+                type: string
+            -   description:  根据Access   Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性。更详细描述请参考下文 Post Signature。    类型：字符串    默认值：无    限制：当bucket非public-read-write或者提供了OSSAccessKeyId（或policy）表单域时，必须提供该表单域。 
+                in: formData
+                name: Signature
+                required: false
+                type: string
+            -   description:  指定该Object被下载时的网页的缓存行为；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Cache-Control
+                required: false
+                type: string
+            -   description:  RFC2616中定义的HTTP请求内容类型。   类型：字符串   默认值：无   使用场景：需要向OSS提交数据的请求
+                in: header
+                name: ContentType
+                required: false
+                type: string
+            -   description:  指定该Object被下载时的名称；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Content-Disposition
+                required: false
+                type: string
+            -   description:  指定该Object被下载时的内容编码格式；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Content-Encoding
+                required: false
+                type: string
+            -   description:  过期时间；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无    注意 ：OSS不会对这个值进行限制和验证 
+                in: header
+                name: Expires
+                required: false
+                type: string
+            -   description:  文件或文本内容，必须是表单中的最后一个域。浏览器会自动根据文件类型来设置Content-Type，会覆盖用户的设置。   OSS一次只能上传一个文件。    类型：字符串    默认值：无 
+                in: formData
+                name: file
+                required: true
+                type: string
+            -   description:  上传文件的object名称。   如果需要使用用户上传的文件名称作为object名，使用${filename}变量。例如：如果用户上传了文件b.jpg，而key域的值设置为/user/a/${filename}，最终的object名为/user/a/b.jpg。   如果文件名包含路径，则去除文件名中的路径，例如用户上传了文件a/b/c/b.jpg，则取文件名为b.jpg，若key域的值设置为/user/a/${filename}，最终的object名为/user/a/b.jpg    类型：字符串    默认值：无 
+                in: formData
+                name: key
+                required: true
+                type: string
+            -   description:  上传成功后客户端跳转到的URL，如果未指定该表单域，返回结果由success_action_status表单域指定。如果上传失败，OSS返回错误码，并不进行跳转。    类型：字符串    默认值：无 
+                in: formData
+                name: success_action_redirect
+                required: false
+                type: string
+            -   default: '204'
+                description:  未指定success_action_redirect表单域时，该表单域指定了上传成功后返回给客户端的状态码。   接受值为200,   201, 204（默认）。   如果该域的值为200或者204，OSS返回一个空文档和相应的状态码。   如果该域的值设置为201，OSS返回一个XML文件和201状态码。   如果其值未设置或者设置成一个非法值，OSS返回一个空文档和204状态码。    类型：字符串    默认值：无 
+                enum:
+                - '200'
+                - '201'
+                - '204'
+                in: formData
+                name: success_action_status
+                required: false
+                type: string
+            -   description:  用户指定的user   meta值。   OSS不会检查或者使用该值。    类型：字符串    默认值：无 
+                in: formData
+                name: x-oss-meta-*
+                required: false
+                type: string
+            -   description:  指定OSS创建object时的服务器端加密编码算法。    类型：字符串    合法值：AES256 
+                enum:
+                - AES256
+                in: formData
+                name: x-oss-server-side-encryption
+                required: false
+                type: string
+            -   description:  指定oss创建object时的访问权限。    类型：字符串    合法值：public-read，private，public-read-write 
+                in: formData
+                name: x-oss-object-acl
+                required: false
+                type: string
+            -   description:  若本次访问是使用STS临时授权方式，则需要指定该项为SecurityToken的值，同时OSSAccessKeyId需要使用与之配对的临时AccessKeyId，计算签名时，与使用普通AccessKeyId签名方式一致。    类型：字符串    默认值：无 
+                in: formData
+                name: x-oss-security-token
+                required: false
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            PostResponse:
+                                description:  保持Post请求结果的容器。 类型：容器 子节点：Bucket, ETag, Key, Location
+                                in: formData
+                                name: PostResponse
+                                type: string
+                                properties:    
+                                    key: 
+                                        description:  上传文件的object名称。   如果需要使用用户上传的文件名称作为object名，使用${filename}变量。例如：如果用户上传了文件b.jpg，而key域的值设置为/user/a/${filename}，最终的object名为/user/a/b.jpg。   如果文件名包含路径，则去除文件名中的路径，例如用户上传了文件a/b/c/b.jpg，则取文件名为b.jpg，若key域的值设置为/user/a/${filename}，最终的object名为/user/a/b.jpg    类型：字符串    默认值：无 
+                                        in: formData
+                                        name: key
+                                        type: string
+                                    Bucket:
+                                        description:  Bucket名称。 类型：字符串 父节点：PostResponse
+                                        in: formData
+                                        name: Bucket
+                                        type: string
+                                    ETag:
+                                        description:  ETag (entity tag) 在每个Object生成的时候被创建，Post请求创建的Object，ETag值是该 Object内容的uuid，可以用于检查该Object内容是否发生变化。类型：字符串 父节点：PostResponse
+                                        in: formData
+                                        name: ETag
+                                        type: string
+                                    Location:
+                                        description:  新创建Object的URL。类型：字符串 父节点：PostResponse
+                                        in: formData
+                                        name: Location
+                                        type: string
+                400:
+                    description: 如果上传指定了x-oss-server-side-encryption Header请求域，则必须设置其值为AES256，否则会返回400和错误码：InvalidEncryptionAlgorithmError。
+                default:
+                    description: 无论bucket是否为public-read-write，一旦上传OSSAccessKeyId, policy, Signature表单域中的任意一个，则另两个表单域为必选项，缺失时OSS会返回错误码：InvalidArgument。
+                                 Post请求的body总长度不允许超过5G。若文件长度过大，会返回错误码：EntityTooLarge。
+
+        summary: 使用Post上传Object
+        x-requestformat: '
+                        POST / HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        User-Agent: browser_data
+                        Content-Length：ContentLength
+                        Content-Type: multipart/form-data; boundary=9431149156168
+                        --9431149156168
+                        Content-Disposition: form-data; name="key"
+                        key
+                        --9431149156168
+                        Content-Disposition: form-data; name="success_action_redirect"
+                        success_redirect
+                        --9431149156168
+                        Content-Disposition: form-data; name="Content-Disposition"
+                        attachment;filename=oss_download.jpg
+                        --9431149156168
+                        Content-Disposition: form-data; name="x-oss-meta-uuid"
+                        myuuid
+                        --9431149156168
+                        Content-Disposition: form-data; name="x-oss-meta-tag"
+                        mytag
+                        --9431149156168
+                        Content-Disposition: form-data; name="OSSAccessKeyId"
+                        access-key-id
+                        --9431149156168
+                        Content-Disposition: form-data; name="policy"
+                        encoded_policy --9431149156168
+                        Content-Disposition: form-data; name="Signature"
+                        signature
+                        --9431149156168
+                        Content-Disposition: form-data; name="file"; filename="MyFilename.jpg"
+                        Content-Type: image/jpeg
+                        file_content
+                        --9431149156168
+                        Content-Disposition: form-data; name="submit"
+                        Upload to OSS
+                        --9431149156168--
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        POST / HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Content-Length: 344606
+                        Content-Type: multipart/form-data; boundary=9431149156168
+                        --9431149156168
+                        Content-Disposition: form-data; name="key"
+                        /user/a/${filename}
+                        --9431149156168
+                        Content-Disposition: form-data; name="success_action_status"
+                        200
+                        --9431149156168
+                        Content-Disposition: form-data; name="Content-Disposition"
+                        content_disposition
+                        --9431149156168
+                        Content-Disposition: form-data; name="x-oss-meta-uuid"
+                        uuid
+                        --9431149156168
+                        Content-Disposition: form-data; name="x-oss-meta-tag"
+                        metadata --9431149156168
+                        Content-Disposition: form-data; name="OSSAccessKeyId"
+                        44CF9590006BF252F707
+                        --9431149156168
+                        Content-Disposition: form-data; name="policy"
+                        eyJleHBpcmF0aW9uIjoiMjAxMy0xMi0wMVQxMjowMDowMFoiLCJjb25kaXRpb25zIjpbWyJjb250ZW50LWxlbmd0aC1 yYW5nZSIsIDAsIDEwNDg1NzYwXSx7ImJ1Y2tldCI6ImFoYWhhIn0sIHsiQSI6ICJhIn0seyJrZXkiOiAiQUJDIn1dfQ== --9431149156168
+                        Content-Disposition: form-data; name="Signature"
+                        kZoYNv66bsmc10+dcGKw5x2PRrk=
+                        --9431149156168
+                        Content-Disposition: form-data; name="file"; filename="MyFilename.txt"
+                        Content-Type: text/plain
+                        abcdefg
+                        --9431149156168
+                        Content-Disposition: form-data; name="submit"
+                        Upload to OSS
+                        --9431149156168--
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        x-oss-request-id: 61d2042d-1b68-6708-5906-33d81921362e
+                        Date: Fri, 24 Feb 2014 06:03:28 GMT
+                        ETag: 5B3C1A2E053D763E1B002CC607C5A0FE
+                        Connection: keep-alive
+                        Content-Length: 0 Server: AliyunOSS
+
+
+                        '
+            id: 1

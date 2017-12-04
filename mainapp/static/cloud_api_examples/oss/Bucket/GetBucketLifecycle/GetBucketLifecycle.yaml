@@ -1,0 +1,97 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    describe: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucketLifecycle/?lifecycle:
+        get:
+            description: Get Bucket Lifecycle用于查看Bucket的Lifecycle配置。
+                    1.	只有Bucket的拥有者才能查看Bucket的Lifecycle配置，否则返回403 Forbidden错误,错误码：AccessDenied。
+                    2.	如果Bucket或Lifecycle不存在，返回404 Not Found错误，错误码：NoSuchBucket或 NoSuchLifecycle。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                403:
+                    description: 只有Bucket的拥有者才能查看Bucket的Lifecycle配置，否则返回403 Forbidden错误,错误码：AccessDenied。
+                404:
+                    description: 如果Bucket或Lifecycle不存在，返回404 Not Found错误，错误码：NoSuchBucket或NoSuchLifecycle。
+        summary: 查看Bucket中Object的生命周期规则
+        x-requestformat: '
+                        GET /?lifecycle HTTP/1.1
+                        Host: BucketName.oss.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Get /?lifecycle HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Mon, 14 Apr 2014 01:17:29 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:ceOEyZavKY4QcjoUWYSpYbJ3naA=
+
+                        '
+            id: 1
+        -   description: '
+                        Get /?lifecycle HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Mon, 14 Apr 2014 01:17:29 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:ceOEyZavKY4QcjoUWYSpYbJ3naA=
+
+                        '
+            id: 2
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Mon, 14 Apr 2014 01:17:29 GMT
+                        Connection: keep-alive
+                        Content-Length: 255
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <LifecycleConfiguration>
+                        <Rule>
+                            <ID>delete after one day</ID>
+                            <Prefix>logs/</Prefix>
+                            <Status>Enabled</Status>
+                            <Expiration>
+                            <Days>1</Days>
+                            </Expiration>
+                        </Rule>
+                        </LifecycleConfiguration>
+
+                        '
+            id: 1
+            note: 已设置Lifecycle的返回示例
+        -   description: '
+                        HTTP/1.1 404
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Mon, 14 Apr 2014 01:17:29 GMT
+                        Connection: keep-alive
+                        Content-Length: 278
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Error>
+                        <BucketName>oss-example</BucketName>
+                        <Code>NoSuchLifecycle</Code>
+                        <Message>No Row found in Lifecycle Table.</Message>
+                        <RequestId>534B372974E88A4D89060099</RequestId>
+                        <HostId> oss-example.oss.aliyuncs.com</HostId> </Error>
+
+                        '
+            id: 2
+            note: 未设置Lifecycle的返回示例

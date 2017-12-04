@@ -1,0 +1,259 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/ListParts/?uploadId={UploadId}:
+        get:
+            description: List Parts命令可以罗列出指定Upload ID所属的所有已经上传成功Part。
+                    1.	List Parts支持max-parts和part-number-marker两种请求参数。
+                    2.	max-parts参数最大值为1000；默认值也为1000。
+                    3.	在OSS的返回结果按照Part号码升序排列。
+                    4.	由于网络传输可能出错，所以不推荐用List Part出来的结果（Part Number和ETag值）来生成最后Complete Multipart的Part列表。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters:
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  唯一标示此次Multipart Upload事件的ID。
+                in: path
+                name: UploadId
+                required: true
+                type: string
+            -   default: '1'
+                description:  规定在OSS响应中的最大Part数目。    类型：整数    默认值：1,000 
+                in: formData
+                maximum: 1000
+                name: max-parts
+                required: true
+                type: integer
+            -   default: None
+                description:  指定List的起始位置，只有Part   Number数目大于该参数的Part会被列出。    类型：整数    默认值：无 
+                in: formData
+                name: part-number-marker
+                required: true
+                type: integer
+            -   default: None
+                description:  指定对返回的内容进行编码，指定编码的类型。Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于Key中包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Key进行编码。 数据类型：字符串 默认值：无，可选值：url 
+                enum:
+                - url
+                in: formData
+                name: encoding-type
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            ListPartsResult:
+                                description:  保存List   Part请求结果的容器。    类型：容器    子节点：Bucket, Key, UploadId, PartNumberMarker, NextPartNumberMarker,   MaxParts, IsTruncated, Part    父节点：无 
+                                in: formData
+                                name: ListPartsResult
+                                type: object
+                                properties:
+                                    Bucket:
+                                        description:  Bucket名称。    类型：字符串    父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: Bucket
+                                        type: string
+                                    EncodingType:
+                                        description:  指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那返回的结果会对Delimiter、KeyMarker、Prefix、NextKeyMarker和Key这些元素进行编码。 类型：字符串 父节点：ListMultipartUploadsResult 
+                                        in: formData
+                                        name: EncodingType
+                                        type: string
+                                    IsTruncated:
+                                        default: 'false'
+                                        description:  标明是否本次返回的Multipart   Upload结果列表被截断。“true”表示本次没有返回全部结果；“false”表示本次已经返回了全部结果。    类型：枚举字符串   有效值：false、true    默认值：false    父节点：ListMultipartUploadsResult 
+                                        enum: 
+                                        - "false"
+                                        - "true"
+                                        in: formData
+                                        name: IsTruncated
+                                        type: string
+                                    Key:
+                                        description:  Object名称。    类型：字符串    父节点：ListPartsResult 
+                                        in: formData
+                                        name: Key
+                                        type: string
+                                    MaxParts:
+                                        description:  返回请求中最大的Part数目。    类型：整数    父节点：ListPartsResult 
+                                        in: formData
+                                        name: MaxParts
+                                        type: integer
+                                    NextPartNumberMarker:
+                                        description:  如果本次没有返回全部结果，响应请求中将包含NextPartNumberMarker元素，用于标明接下来请求的PartNumberMarker值。  类型：整数    父节点：ListPartsResult 
+                                        in: formData
+                                        name: NextPartNumberMarker
+                                        type: integer
+                                    Part:
+                                        description:  保存Part信息的容器。    类型：字符串    子节点：PartNumber,LastModified, ETag, Size    父节点：ListPartsResult 
+                                        in: formData
+                                        name: Part
+                                        type: object
+                                        properties:
+                                            ETag:
+                                                description:  已上传Part内容的ETag。    类型：字符串    父节点：ListPartsResult.Part 
+                                                in: formData
+                                                name: ETag
+                                                type: string
+                                            PartNumber:
+                                                description:  标示Part的数字。    类型：整数    父节点：ListPartsResult.Part 
+                                                in: formData
+                                                name: PartNumber
+                                                type: integer
+                                            Size:
+                                                description:  已上传Part大小。    类型：整数    父节点：ListPartsResult.Part 
+                                                in: formData
+                                                name: Size
+                                                type: integer
+                                            Size:
+                                                description:  已上传Part大小。    类型：整数    父节点：ListPartsResult.Part 
+                                                in: formData
+                                                name: Size
+                                                type: integer
+                                            LastModified:
+                                                description:  Part上传的时间。类型：日期 父节点：ListPartsResult.part
+                                                in: formData
+                                                name: PartNumberMarker
+                                                required: true
+                                                type: string
+                                    UploadId:
+                                        description:  Upload事件ID。    类型：字符串    父节点：ListPartsResult 
+                                        in: formData
+                                        name: UploadId
+                                        required: true
+                                        type: string
+        summary: 罗列出指定Upload ID所属的所有已经上传成功Part
+        host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}/oss-cn-hangzhou.aliyuncs.com/HeadObject/{ObjectName}:
+        description: Head Object只返回某个Object的meta信息，不返回文件内容。
+                1.	不论正常返回200 OK还是非正常返回，Head Object都不返回消息体。
+                2.	HeadObject支持在头中设定If-Modified-Since, If-Unmodified-Since, If-Match，If-None-Match的查询条件。具体规则请参见GetObject中对应的选项。如果没有修改，返回304 NotModified。
+                3.	如果用户在PutObject的时候传入以x-oss-meta-为开头的user meta，比如x-oss-metalocation，返回消息时，返回这些user meta。
+                4.	如果文件不存在返回404 Not Found错误。
+                5.	若该Object为进行服务器端熵编码加密存储的，则在Head请求响应头中，会返回x-oss-serverside-encryption，其值表明该Object的服务器端加密算法。
+                6.	如果文件类型为符号链接， 响应头中Content-Length、ETag、Content-Md5 均为目标文件的元信息；Last-Modified是目标文件和符号链接的最大值；其他均为符号链接元信息。
+                7.	如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。
+                8.	如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。 
+
+        head:
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  如果指定的时间早于实际修改时间，则正常传送文件，并返回200 OK；否则返回304 not modified 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT
+                in: header
+                name: If-Modified-Since
+                required: true
+                type: string
+            -   description:  如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT
+                in: header
+                name: If-Unmodified-Since
+                required: true
+                type: string
+            -   description:  如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412precondition failed错误 类型：字符串 默认值：无
+                in: header
+                name: If-Match
+                required: true
+                type: string
+            -   description:  如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified 类型：字符串 默认值：无
+                in: header
+                name: If-None-Match
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                304:
+                    description: 如果包含If-Modified-Since并且不符合或者包含If-None-Match并且不符合，返回304 NotModified。
+                                 If-None-Match如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified。
+                400:
+                    description: 如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。
+                404:
+                    description: 如果文件不存在返回404 Not Found错误。
+                                 如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。
+                412:
+                    description: 如果包含If-Unmodified-Since并且不符合或者包含If-Match并且不符合，返回412 precondition failed。
+                                 If-Match如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412。  
+        summary: 获得Object的meta信息
+        x-requestformat: '
+                        Get  /ObjectName?uploadId=UploadId HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: Signature
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Get  /multipart.data?uploadId=0004B999EF5A239BB9138C6227D69F95  HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Thu, 23 Feb 2012 07:13:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:4qOnUMc9UQWqkz8wDqD3lIsa9P8=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200
+                        Server: AliyunOSS
+                        Connection: keep-alive
+                        Content-length: 1221
+                        Content-type: application/xml
+                        x-oss-request-id: 106452c8-10ff-812d-736e-c865294afc1c Date: Thu, 23 Feb 2012 07:13:28 GMT
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <ListPartsResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                            <Bucket>multipart_upload</Bucket>
+                            <Key>multipart.data</Key>
+                            <UploadId>0004B999EF5A239BB9138C6227D69F95</UploadId>
+                            <NextPartNumberMarker>5</NextPartNumberMarker>
+                            <MaxParts>1000</MaxParts>
+                            <IsTruncated>false</IsTruncated>
+                            <Part>
+                                <PartNumber>1</PartNumber>
+                                <LastModified>2012-02-23T07:01:34.000Z</LastModified>
+                                <ETag>&quot;3349DC700140D7F86A078484278075A9&quot;</ETag>         <Size>6291456</Size>
+                            </Part>
+                            <Part>
+                                <PartNumber>2</PartNumber>
+                                <LastModified>2012-02-23T07:01:12.000Z</LastModified>
+                                <ETag>&quot;3349DC700140D7F86A078484278075A9&quot;</ETag>         <Size>6291456</Size>
+                            </Part>
+                            <Part>
+                                <PartNumber>5</PartNumber>
+                                <LastModified>2012-02-23T07:02:03.000Z</LastModified>
+                                <ETag>&quot;7265F4D211B56873A381D321F586E4A9&quot;</ETag>
+                                <Size>1024</Size>
+                            </Part>
+                        </ListPartsResult>
+
+                        '
+            id: 1

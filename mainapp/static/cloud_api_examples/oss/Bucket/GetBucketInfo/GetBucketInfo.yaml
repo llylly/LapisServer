@@ -1,0 +1,206 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucketInfo/?bucketinfo:
+        
+        get:
+            description: Get Bucket Info操作用于查看bucket的相关信息。 包括如下内容：
+                        创建时间
+                        外网访问Endpoint
+                        内网访问Endpoint
+                        bucket的拥有者信息
+                        bucket的ACL（AccessControlList）
+                    1.	如果Bucket不存在，返回404错误。错误码：NoSuchBucket。
+                    2.	只有Bucket的拥有者才能查看Bucket的信息，否则返回403 Forbidden错误,错误码：AccessDenied。
+                    3. 请求可以从任何一个OSS的Endpoint发起。
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            BucketInfo:
+                                description:  保存Bucket信息内容的容器    类型：容器     子节点：Bucket节点    父节点：无 
+                                in: formData
+                                name: BucketInfo
+                                type: object
+                                properties:
+                                    Bucket:
+                                        description:  保存Bucket具体信息的容器    类型：容器     子节点：Bucket节点    父节点：BucketInfo节点
+                                        in: formData
+                                        name: Bucket
+                                        type: object
+                                        properties:
+                                            AccessControlList:
+                                                description:  存储ACL信息的容器 类型：容器 父节点：BucketInfo.Bucket 
+                                                in: formData
+                                                name: AccessControlList
+                                                type: object
+                                                properties:
+                                                    Grant:
+                                                        description:  Bucket的ACL权限。 类型：枚举字符串 有效值：private、public-read、public-read-write 父节点：BucketInfo.Bucket.AccessControlList 
+                                                        enum: 
+                                                        - private
+                                                        - public-read
+                                                        - public-read-write
+                                                        in: formData
+                                                        name: Grant
+                                                        type: string
+                                            Location:
+                                                description:  Bucket所在数据中心的区域 类型：字符串 父节点：BucketInfo.Bucket
+                                                in: formData
+                                                name: Location
+                                                type: string
+                                            Name:
+                                                description:  Bucket名字 类型：字符串 父节点：BucketInfo.Bucket
+                                                in: formData
+                                                name: Location
+                                                type: string
+                                            Owner:
+                                                description:  用于存放Bucket拥有者信息的容器。类型：容器 父节点：BucketInfo.Bucket
+    
+                                                in: formData
+                                                name: Bucket
+                                        
+                                                type: object
+                                                properties:
+                                                    CreationDate:
+                                                        description:  Bucket创建时间。时间格式 2013-07-31T10:56:21.000Z    类型：时间 父节点：BucketInfo.Bucket 
+                                                        in: formData
+                                                        name: CreationDate
+                                                        type: string
+                                                    ID:
+                                                        description:  Bucket拥有者的用户ID。 类型：字符串 父节点：BucketInfo.Bucket.Owner 
+                                                        in: formData
+                                                        name: ID
+                                        
+                                                        type: string
+                                                    IntranetEndpoint:
+                                                        description:  同区域ECS访问Bucket的内网域名  类型：字符串 父节点：BucketInfo.Bucket 
+                                                        in: formData
+                                                        name: IntranetEndpoint
+                    
+                                                        type: string
+                                                    ExtranetEndpoint:
+                                                        description:  Bucket访问的外网域名 类型：字符串 父节点：BucketInfo.Bucket 
+                                                        in: formData
+                                                        name: IntranetEndpoint
+                                                        type: string
+                                                    Name:
+                                                        description:  Bucket名字  类型：字符串 父节点：BucketInfo.Bucket 
+                                                        in: formData
+                                                        name: Name
+                                                        type: string
+                403:
+                    description: 只有Bucket的拥有者才能查看Bucket的信息，否则返回403 Forbidden错误,错误码：AccessDenied。
+                404:
+                    description: 如果Bucket不存在，返回404错误。错误码：NoSuchBucket。
+        summary: 获取Bucket信息
+        x-requestformat: '
+                        GET /?bucketInfo HTTP/1.1
+                        Host: BucketName.oss.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        Get /?bucketInfo HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=
+                        '
+            id: 1
+        -   description: '
+                        Get /?bucketInfo HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=
+                        '
+            id: 2
+        -   description: '
+                        Get /?bucketInfo HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=
+                        '
+            id: 3
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200
+                        x-oss-request-id: 534B371674E88A4D8906008B
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Connection: keep-alive
+                        Content-Length: 531
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <BucketInfo>
+                        <Bucket>
+                            <CreationDate>2013-07-31T10:56:21.000Z</CreationDate>
+                            <ExtranetEndpoint>oss-cn-hangzhou.aliyuncs.com</ExtranetEndpoint>
+                            <IntranetEndpoint>oss-cn-hangzhou-internal.aliyuncs.com</IntranetEndpoint>
+                            <Location>oss-cn-hangzhou</Location>
+                            <Name>oss-example</Name>
+                            <Owner>
+                            <DisplayName>username</DisplayName>
+                            <ID>271834739143143</ID>
+                            </Owner>
+                            <AccessControlList>
+                            <Grant>private</Grant>
+                            </AccessControlList>
+                        </Bucket>
+                        </BucketInfo>
+
+                        '
+            id: 1
+            note: 成功获取Bucket信息的返回示例
+        -   description: '
+                        HTTP/1.1 404
+                        x-oss-request-id: 534B371674E88A4D8906009B
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Connection: keep-alive
+                        Content-Length: 308
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Error>
+                        <Code>NoSuchBucket</Code>
+                        <Message>The specified bucket does not exist.</Message>
+                        <RequestId>568D547F31243C673BA14274</RequestId>
+                        <HostId>nosuchbucket.oss.aliyuncs.com</HostId>
+                        <BucketName>nosuchbucket</BucketName> </Error>
+
+                        '
+            id: 2
+            note: 获取不存在的Bucket信息的返回示例
+        -   description: '
+                        HTTP/1.1 403
+                        x-oss-request-id: 534B371674E88A4D8906008C
+                        Date: Sat, 12 Sep 2015 07:51:28 GMT
+                        Connection: keep-alive
+                        Content-Length: 209
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Error>
+                        <Code>AccessDenied</Code>
+                        <Message>AccessDenied</Message>
+                        <RequestId>568D5566F2D0F89F5C0EB66E</RequestId>
+                        <HostId>test.oss.aliyuncs.com</HostId> </Error>
+
+                        '
+            id: 3
+            note: 获取没有权限访问的Bucket信息的返回示例

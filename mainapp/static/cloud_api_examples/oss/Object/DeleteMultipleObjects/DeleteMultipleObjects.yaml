@@ -1,0 +1,199 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/DeleteObject/?delete:
+        post:
+            description: Delete Multiple Objects操作支持用户通过一个HTTP请求删除同一个Bucket中的多个Object。Delete Multiple Objects操作支持一次请求内最多删除1000个Object，并提供两种返回模式：详细(verbose)模式和简单(quiet)模式：
+                          详细模式：OSS返回的消息体中会包含每一个删除Object的结果。
+                          简单模式：OSS返回的消息体中只包含删除过程中出错的Object结果；如果所有删除都成功的话，则没有消息体。
+                    1.	Delete Multiple Objects请求必须填Content-Length和Content-MD5字段。OSS会根据这些字段验证收到的消息体是正确的，之后才会执行删除操作。
+                    2.	生成Content-MD5字段内容方法：首先将Delete Multiple Object请求内容经过MD5加密后得到一个128位字节数组；再将该字节数组用base64算法编码；最后得到的字符串即是Content-MD5字段内容。
+                    3.	Delete Multiple Objects请求默认是详细(verbose)模式。
+                    4.	在Delete Multiple Objects请求中删除一个不存在的Object，仍然认为是成功的。
+                    5.	Delete Multiple Objects的消息体最大允许2MB的内容，超过2MB会返回MalformedXML错误码。
+                    6.	Delete Multiple Objects请求最多允许一次删除1000个Object；超过1000个Object会返回 MalformedXML错误码。
+                    7.	如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  指定对返回的Key进行编码，目前支持url编码。Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于Key中包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Key进行编码。 数据类型：字符串 默认值：无    可选值：url 
+                enum:
+                - url
+                in: query
+                name: encoding-type
+                required: true
+                type: string
+            -   description:  保存Delete   Multiple Object请求的容器。    类型：容器    子节点：一个或多个Object元素，可选的Quiet元素    父节点： None. 
+                in: formData
+                name: Delete
+                required: true
+                type: object
+                x-schema:
+                    type: object
+                    properties:
+                        Object:
+                            description:  保存一个Object信息的容器。    类型：容器    子节点：key    父节点：Delete 
+                            in: formData
+                            name: Object
+                            required: true
+                            type: object
+                            properties:
+                                Key:
+                                    description:  被删除Object的名字。    类型：字符串    父节点：Object 
+                                    in: formData
+                                    name: Key
+                                    required: true
+                                    type: string
+                        Quiet:
+                            default: 'false'
+                            description:  打开“简单”响应模式的开关。    类型：枚举字符串    有效值：true、false    默认值：false    父节点：Delete 
+                            enum:
+                            - 'true'
+                            - 'false'
+                            in: formData
+                            name: Quiet
+                            required: true
+                            type: string
+                    
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            DeleteResult:
+                                description:  保存Delete   Multiple Object请求结果的容器。    类型：容器    子节点：Deleted    父节点：None 
+                                in: formData
+                                name: DeleteResult
+                                type: object
+                                properties:
+                                    Deleted:
+                                        description:  保存被成功删除的Object的容器。    类型：容器    子节点：Key    父节点：DeleteResult 
+                                        in: formData
+                                        name: Deleted
+                                        type: object
+                                        properties:
+                                            Key:
+                                                description:  OSS执行删除操作的Object名字。    类型：字符串    父节点：Deleted 
+                                                in: formData
+                                                name: Key
+                                                type: string
+                            EncodingType:
+                                description:  指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那返回的结果会对Key进行编码。 类型：字符串 父节点：容器 
+                                in: formData
+                                name: EncodingType
+                                type: string
+                default:
+                    description: Delete Multiple Objects的消息体最大允许2MB的内容，超过2MB会返回MalformedXML错误码。
+                                 Delete Multiple Objects请求最多允许一次删除1000个Object；超过1000个Object会返回 MalformedXML错误码。
+                                 如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。
+
+        summary: 删除多个Object
+        x-requestformat: '
+                        POST /?delete HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date
+                        Content-Length: ContentLength
+                        Content-MD5: MD5Value
+                        Authorization: SignatureValue
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Delete>
+                        <Quiet>true</Quiet>
+                        <Object>
+                            <Key>key</Key>
+                        </Object>
+                        …
+                        </Delete>
+
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        POST /?delete HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Wed, 29 Feb 2012 12:26:16 GMT
+                        Content-Length:151
+                        Content-MD5: ohhnqLBJFiKkPSBO1eNaUA==
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:+z3gBfnFAxBcBDgx27Y/jEfbfu8=
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <Delete>
+                        <Quiet>false</Quiet>
+                        <Object>
+                            <Key>multipart.data</Key>
+                        </Object>
+                        <Object>
+                            <Key>test.jpg</Key>
+                        </Object>
+                        <Object>
+                            <Key>demo.jpg</Key>
+                        </Object> </Delete>
+
+                        '
+            id: 1
+        -   description: '
+                        POST /?delete HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Wed, 29 Feb 2012 12:33:45 GMT
+                        Content-Length:151
+                        Content-MD5: ohhnqLBJFiKkPSBO1eNaUA==
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:WuV0Jks8RyGSNQrBca64kEExJDs= <?xml version="1.0" encoding="UTF-8"?>
+                        <Delete>
+                        <Quiet>true</Quiet>
+                        <Object>
+                            <Key>multipart.data</Key>
+                        </Object>
+                        <Object>
+                            <Key>test.jpg</Key>
+                        </Object>
+                        <Object>
+                            <Key>demo.jpg</Key>
+                        </Object> </Delete>
+
+                        '
+            id: 2
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        x-oss-request-id: 78320852-7eee-b697-75e1-b6db0f4849e7
+                        Date: Wed, 29 Feb 2012 12:26:16 GMT
+                        Content-Length: 244
+                        Content-Type: application/xml
+                        Connection: keep-alive
+                        Server: AliyunOSS
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <DeleteResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                            <Deleted>
+                            <Key>multipart.data</Key>
+                            </Deleted>
+                            <Deleted>
+                            <Key>test.jpg</Key>
+                            </Deleted>
+                            <Deleted>
+                            <Key>demo.jpg</Key>
+                            </Deleted>
+                        </DeleteResult>
+
+                        '
+            id: 1
+        -   description: '
+                        HTTP/1.1 200 OK x-oss-request-id: 559CC9BDC755F95A64485981
+                        Date: Wed, 29 Feb 2012 12:33:45 GMT
+                        Content-Length: 0
+                        Connection: keep-alive
+                        Server: AliyunOSS
+
+                        '
+            id: 2

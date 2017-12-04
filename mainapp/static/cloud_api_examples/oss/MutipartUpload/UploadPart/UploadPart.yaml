@@ -1,0 +1,81 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/UploadPart/{ObjectName}?partNumber={PartNumber}&uploadId={UploadId}:
+        put:
+            description: 初始化一个Multipart Upload之后，可以根据指定的Object名和Upload ID来分块（Part）上传数据。每一个上传的Part都有一个标识它的号码（part number，范围是1~10,000）。对于同一个Upload ID，该号码不但唯一标识这一块数据，也标识了这块数据在整个文件内的相对位置。如果你用同一个part号码，上传了新的数据，那么OSS上已有的这个号码的Part数据将被覆盖。除了最后一块Part以外，其他的part最小为100KB；最后一块Part没有大小限制。
+                      1.	调用该接口上传Part数据前，必须调用Initiate Multipart Upload接口，获取一个OSS服务器颁发的 Upload ID。
+                      2.	Multipart Upload要求除最后一个Part以外，其他的Part大小都要大于100KB。但是Upload Part接口并不会立即校验上传Part的大小（因为不知道是否为最后一块）；只有当Complete Multipart Upload的时候才会校验。
+                      3.	OSS会将服务器端收到Part数据的MD5值放在ETag头内返回给用户。
+                      4.	Part号码的范围是1~10000。如果超出这个范围，OSS将返回InvalidArgument的错误码。
+                      5.	若调用Initiate Multipart Upload接口时，指定了x-oss-server-side-encryption请求头，则会对上传的Part进行加密编码，并在Upload Part响应头中返回x-oss-server-side-encryption头，其值表明该Part的服务器端加密算法，具体见Initiate Multipart Upload接口。
+                      6.  为了保证数据在网络传输过程中不出现错误，用户发送请求时携带Content-MD5，OSS会计算上传数据的MD5与用户上传的 MD5值比较，如果不一致返回InvalidDigest错误码。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  分块标识号
+                in: path
+                name: PartNumber
+                required: true
+                type: string
+            -   description:  唯一标示此次Multipart Upload事件的ID。
+                in: path
+                name: UploadId
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success respons
+                default:
+                    description: Part号码的范围是1~10000。如果超出这个范围，OSS将返回InvalidArgument的错误码。
+                                 为了保证数据在网络传输过程中不出现错误，用户发送请求时携带Content-MD5，OSS会计算上传数据的MD5与用户上传的 MD5值比较，如果不一致返回InvalidDigest错误码。
+        summary: 分块复制上传文件
+        x-requestformat: '
+                        PUT /ObjectName?partNumber=PartNumber&uploadId=UploadId HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com
+                        Date: GMT Date Content-Length: Size
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        PUT /multipart.data?partNumber=1&uploadId=0004B9895DBBB6EC98E36  HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Content-Length：6291456
+                        Date: Wed, 22 Feb 2012 08:32:21 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:J/lICfXEvPmmSW86bBAfMmUmWjI= x-oss-copy-source: /oss-example/ src-object x-oss-copy-source-range:bytes=100-6291756
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Server: AliyunOSS Connection: keep-alive
+                        x-oss-request-id: 3e6aba62-1eae-d246-6118-8ff42cd0c21a Date: Thu, 17 Jul 2014 06:27:54 GMT'
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <CopyPartResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”>
+                        <LastModified>2014-07-17T06:27:54.000Z </LastModified>
+                        <ETag>"5B3C1A2E053D763E1B002CC607C5A0FE"</ETag> </CopyPartResult>
+
+                        '
+            id: 1
+
+            

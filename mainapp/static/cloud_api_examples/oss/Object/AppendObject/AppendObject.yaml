@@ -1,0 +1,157 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/AppendObject/{ObjectName}:
+        post:
+            description: Append Object以追加写的方式上传文件。通过Append Object操作创建的Object类型为Appendable Object，而通过Put Object上传的Object是Normal Object。 
+                         和其他操作的关系
+                      1.	不能对一个非Appendable Object进行Append Object操作。例如，已经存在一个同名Normal Object时，Append Object调用返回409，错误码ObjectNotAppendable。
+                      2.	对一个已经存在的Appendable Object进行Put Object操作，那么该Appendable Object会被新的 Object覆盖，类型变为Normal Object。
+                      3.	Head Object操作会返回x-oss-object-type，用于表明Object的类型。对于Appendable Object来说，该值为Appendable。对Appendable Object，Head Object也会返回上述的x-oss-nextappend-position和x-oss-hash-crc64ecma。
+                      4.	Get Bucket（List Objects）请求的响应XML中，会把Appendable Object的Type设为 Appendable
+                      5.	不能使用Copy Object来拷贝一个Appendable Object，也不能改变它的服务器端加密的属性。可以使用Copy Object来改变用户自定义元信息。
+                         细节分析
+                      1.	URL参数append和position均为CanonicalizedResource，需要包含在签名中。
+                      2.	URL的参数必须包含append，用来指定这是一个Append Object操作。
+                      3.	URL查询参数还必须包含position，其值指定从何处进行追加。首次追加操作的position必须为 0，后续追加操作的position是Object的当前长度。例如，第一次Append Object请求指定 position值为0，content-length是65536；那么，第二次Append Object需要指定position为65536。每次操作成功后，响应头部x-oss-next-append-position也会标明下一次追加的 position。
+                      4.	如果position的值和当前Object的长度不一致，OSS会返回409错误，错误码为PositionNotEqualToLength。发生上述错误时，用户可以通过响应头部x-oss-next-appendposition来得到下一次position，并再次进行请求。
+                      5.	当Position值为0时，如果没有同名Appendable Object，或者同名Appendable Object长度为 0，该请求成功；其他情况均视为Position和Object长度不匹配的情形。
+                      6.	当Position值为0，且没有同名Object存在，那么Append Object可以和Put Object请求一样，设置诸如x-oss-server-side-encryption之类的请求Header。这一点和Initiate Multipart Upload是一样的。如果在Position为0的请求时，加入了正确的x-oss-server-side-encryption头，那么后续的 Append Object响应头部也会包含x-oss-server-side-encryption头，其值表明加密算法。后续如果需要更改meta，可以使用Copy Object请求。
+                      7.	由于并发的关系，即使用户把position的值设为了x-oss-next-append-position，该请求依然可能因为PositionNotEqualToLength而失败。
+                      8.	Append Object产生的Object长度限制和Put Object一样。
+                      9.	每次Append Object都会更新该Object的最后修改时间。
+                      10.	在position值正确的情况下，对已存在的Appendable Object追加一个长度为0的内容，该操作不会改变Object的状态。
+
+                        CRC64的计算方式
+ 
+                    Appendable Object的CRC采用ECMA-182标准，和XZ的计算方式一样。用Boost CRC模块的方式来定义则有
+                    ：
+                    
+                    typedef boost::crc_optimal<64, 0x42F0E1EBA9EA3693ULL, 0xffffffffffffffffULL, 0xffffffffffffffffULL, true, true> boost_ecma; uint64_t do_boost_crc(const char* buffer, int length)
+                    {
+                        boost_ecma crc;
+                        crc.process_bytes(buffer, length);     return crc.checksum();
+                    }
+                    或是用Python crcmod的方式为：
+                    
+                    do_crc64 = crcmod.mkCrcFun(0x142F0E1EBA9EA3693L, initCrc=0L, xorOut=0xffffffffffffffffL, rev=True) print do_crc64(“123456789”)
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            -   description:  指定该Object被下载时的网页的缓存行为；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Cache-Control
+                required: true
+                type: string
+            -   description:  指定该Object被下载时的名称；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Content-Disposition
+                required: true
+                type: string
+            -   description:  指定该Object被下载时的内容编码格式；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无 
+                in: header
+                name: Content-Encoding
+                required: true
+                type: string
+            -   description:  根据协议RFC 1864对消息内容（不包括头部）计算MD5值获得128比特位数字，对该数字进行base64编码为一个消息的Content-MD5值。该请求头可用于消息合法性的检查（消息内容是否与发送时一致）。虽然该请求头是可选项，OSS建议用户使用该请求头进行端到端检查。    类型：字符串    默认值：无    限制：无 
+                in: header
+                name: Content-MD5
+                required: true
+                type: string
+            -   description:  过期时间；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无    注意 ：OSS不会对这个值进行限制和验证 
+                in: header
+                name: Expires
+                required: true
+                type: string
+            -   description:  指定oss创建object时的服务器端加密编码算法。    类型：字符串    合法值：AES256 
+                enum:
+                - AES256
+                in: header
+                name: x-oss-server-side-encryption
+                required: true
+                type: string
+            -   description:  指定oss创建object时的访问权限。    类型：字符串    合法值：public-read，private，public-read-write 
+                in: header
+                enum:
+                - public-read
+                - public-read-write 
+                - private
+                name: x-oss-object-acl
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                    schema:
+                        type: object
+                        properties:
+                            x-oss-next-append-position:
+                                description:  指明下一次请求应当提供的position。实际上就是当前Object长度。当Append Object成功返回，或是因position和Object长度不匹配而引起的409错误时，会包含此header。类型：64位整型
+                                in: header
+                                name: x-oss-next-append-position
+                                type: integer
+                            x-oss-hash-crc64ecma:
+                                description:  表明Object的64位CRC值。该64位CRC根据 ECMA-182标准计算得出。类型：64位整型
+                                in: header
+                                name: x-oss-hash-crc64ecma
+                                type: integer
+                409:
+                    description: 不能对一个非Appendable Object进行Append Object操作。例如，已经存在一个同名Normal Object时，Append Object调用返回409，错误码ObjectNotAppendable。
+                                 如果position的值和当前Object的长度不一致，OSS会返回409错误，错误码为PositionNotEqualToLength。发生上述错误时，用户可以通过响应头部x-oss-next-appendposition来得到下一次position，并再次进行请求。
+
+        summary: 在Object尾追加上传数据
+        x-requestformat: '
+                        POST /ObjectName?append&position=Position HTTP/1.1
+                        Content-Length：ContentLength
+                        Content-Type: ContentType
+                        Host: BucketName.oss.aliyuncs.com
+                        Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        POST /oss.jpg?append&position=0 HTTP/1.1
+                        Host: oss-example.oss.aliyuncs.com
+                        Cache-control: no-cache
+                        Expires: Wed, 08 Jul 2015 16:57:01 GMT
+                        Content-Encoding: utf-8
+                        Content-Disposition: attachment;filename=oss_download.jpg
+                        Date: Wed, 08 Jul 2015 06:57:01 GMT
+                        Content-Type: image/jpg
+                        Content-Length: 1717
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:kZoYNv66bsmc10+dcGKw5x2PRrk=
+                        [1717 bytes of object data]
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        Date: Wed, 08 Jul 2015 06:57:01 GMT
+                        ETag: "0F7230CAA4BE94CCBDC99C5500000000"
+                        Connection: keep-alive
+                        Content-Length: 0 Server: AliyunOSS
+                        x-oss-hash-crc64ecma: 14741617095266562575 x-oss-next-append-position: 1717
+                        x-oss-request-id: 559CC9BDC755F95A64485981
+
+                        '
+            id: 1

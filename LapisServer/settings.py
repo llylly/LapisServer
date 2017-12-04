@@ -125,4 +125,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "mainapp/static")
 
 CLOUD_API_DIR = 'cloud_api_examples'
 
-WORKER_CMD = '/Users/lly/anaconda/bin/python'
+WORKER_CMD = 'python'
+# WORKER_CMD = '/Users/lly/anaconda/bin/python'

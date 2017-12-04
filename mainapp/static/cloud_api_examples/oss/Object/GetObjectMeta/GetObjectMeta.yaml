@@ -1,0 +1,64 @@
+host: ""
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。
+    title: aliyun oss api
+    version: '1.0'
+paths:
+    /{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetObjectMeta/{ObjectName}?objectMeta:
+        get:
+            description: Get Object Meta用来获取某个Bucket下的某个Object的基本meta信息，包括该Object的ETag、Size（文件大小）、LastModified，并不返回其内容。
+                      1.	无论正常返回还是非正常返回，Get Object Meta均不返回消息体。
+                      2.	Get Object Meta需包含objectMeta请求参数，否则表示Get Object请求。
+                      3.	如果文件不存在返回404 Not Found错误。
+                      4.	Get Object Meta相比Head Object更轻量，仅返回指定Object的少量基本meta信息，包括该 Object的ETag、Size（文件大小）、LastModified，其中Size由响应头Content-Length的数值表示。 
+                      5. 如果文件类型为符号链接，返回符号链接自身信息。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            parameters: 
+            -   description:  对象名
+                in: path
+                name: BucketName
+                required: true
+                type: string
+            -   description:  容器名
+                in: path
+                name: ObjectName
+                required: true
+                type: string
+            produces:
+            - application/x-www-form-urlencoded
+            responses:
+                200:
+                    description: success response
+                400:
+                    description: 如果文件不存在返回404 Not Found错误。
+        x-requestformat: '
+                        GET /ObjectName?objectMeta HTTP/1.1
+                        Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date
+                        Authorization: SignatureValue
+
+                        '
+        x-requestsample:  
+        -   description: '
+                        GET /oss.jpg?objectMeta HTTP/1.1
+                        Host: oss-example.oss-cn-hangzhou.aliyuncs.com
+                        Date: Wed, 29 Apr 2015 05:21:12 GMT
+                        Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:CTkuxpLAi4XZ+WwIfNm0FmgbrQ0=
+
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        x-oss-request-id: 559CC9BDC755F95A64485981 Date: Wed, 29 Apr 2015 05:21:12 GMT
+                        ETag: "5B3C1A2E053D763E1B002CC607C5A0FE"
+                        Last-Modified: Fri, 24 Feb 2012 06:07:48 GMT
+                        Content-Length: 344606
+                        Connection: keep-alive
+                        Server: AliyunOSS
+
+                        '
+            id: 1
