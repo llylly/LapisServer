@@ -123,7 +123,8 @@ def script_transform(request):
 def script_download(request):
     session = request.GET.get('session', None)
     if (session is None) or (str(session) not in sessions):
-        return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
+        return HttpResponse("")
+        # return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
     session = str(session)
     if status[session]['status'] < 1:
         return JsonResponse({'code': 203, 'msg': 'Not parsed.'})

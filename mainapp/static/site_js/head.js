@@ -110,6 +110,47 @@ $(function(){
         );
     });
 
+    $('#delete_all_nav').click(function() {
+        $('#delete_all_modal').modal('show');
+    });
+
+    $('#delete_all_btn').click(function() {
+        $.post(
+            '/api/user/clean_all',
+            {},
+            function(data, status) {
+                if (status != 'success') {
+                    alert('Unknown Error');
+                } else {
+                    data = eval(data);
+                    if (data.code != '200') {
+                        alert(data.msg);
+                    }
+                    $('#delete_all_modal').modal('hide');
+                    get_status();
+                }
+            }
+        );
+    });
+
+    $('#download_all_nav').click(function() {
+        $.post(
+            '/api/user/make_download_all',
+            {},
+            function(data, status) {
+               if (status != 'success') {
+                    alert('Unknown Error');
+                } else {
+                    data = eval(data);
+                    if (data.code != '200') {
+                        alert(data.msg);
+                    }
+                    $('#downloadallForm').submit();
+                }
+            }
+        );
+    });
+
     $('#changepwd_nav').click(function() {
         $('#changepasswd_modal').modal('show');
     });
@@ -257,6 +298,7 @@ function update_fileview() {
                         editor.setValue(data.script);
                         $('#filename_astar').hide();
                         change_flag = false;
+                        bold_update();
                     }
                 }
             }
@@ -274,4 +316,19 @@ function update_fileview() {
         $('#rename_input').val(name_tmp1);
         $('#rename_modal').modal('show');
     });
+
+    bold_update();
+}
+
+function bold_update() {
+    filename = $('#filename_span').html();
+    len = $('.mainpage-filediv .item').length;
+    for (i=0; i<len; ++i) {
+        now = $('.mainpage-filediv .item')[i];
+        if ($(now).find('.fload').data('filename') == filename) {
+            $(now).css({'font-weight': 'bold'})
+        } else {
+            $(now).css({'font-weight': ''});
+        }
+    }
 }

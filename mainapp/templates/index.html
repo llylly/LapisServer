@@ -18,6 +18,7 @@ $(function () {
         </div>
         <div class="row">
             <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="new_file_trigger_btn">New File</a>
+            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="import_trigger_btn">Import</a>
         </div>
         <div class="mainpage-filelist">
         </div>
@@ -25,31 +26,34 @@ $(function () {
 
     <div class="mainpage-leftdiv">
 
-        <div class="row" style="padding: 10pt">
-            <div class="span2 form-group">
-                <input class="input-file" style="display: inline" id="fileInput" type="file">
-            </div>
-            <div class="span2 text-center" id="filename_div">
+        <div class="row" style="padding: 10pt; margin-left: 0">
+{#            <div class="span2 form-group">#}
+{#                <input class="input-file" style="display: inline" id="fileInput" type="file">#}
+{#            </div>#}
+            <label class="btn btn-default btn-file" style="width: 40pt">
+                Upload <input type="file" style="display: none;" id="fileInput">
+            </label>
+            <span class="text-center" style="width: calc(100% - 65pt); display: inline-block" id="filename_div">
                 <a id="filename_span" href="#">Noname</a>
                 <span id="filename_astar">*</span>
-            </div>
-            <div class="span2 pull-right" style="margin-left: 0">
-                <a class="btn btn-primary btn-block" id="file_btn">Load</a>
-            </div>
+            </span>
+{#            <div class="span2 pull-right" style="margin-left: 0">#}
+{#                <a class="btn btn-primary btn-block" id="file_btn">Load</a>#}
+{#            </div>#}
         </div>
 
         <div id="script_area"></div>
 
         <div class="row" style="margin: 10pt">
-            <div class="span3" style="margin-left: 0">
+            <span style="float: left; margin-left: 0">
                 Script format: <br>
                 <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON
                 <input type="radio" name='format_type' id="XML-radio" style="margin-left: 20pt">&nbsp;XML
-            </div>
-            <div class="span2 pull-right" style="margin-right: 0">
+            </span>
+            <span class="span2 pull-right" style="margin-right: 0; margin-left: 0">
                 <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>
                 <a class="btn btn-success btn-block" id="save_btn">Save</a>
-            </div>
+            </span>
         </div>
 
 {#        <div class="row" style="margin: 10pt">#}
@@ -227,6 +231,41 @@ $(function () {
             <a href="#" class="btn" data-dismiss="modal">Close</a>
         </div>
     </div>
+
+    <div id="import_modal" class="modal hide fade in" style="display: none">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Import Files</h3>
+        </div>
+        <div class="modal-body">
+            We support XML, YAML format single files import and ZIP bundles import.
+            <br>
+            In bundle import, all XML and YAML files are extracted recursively.
+            <br>
+            Size limit: 10M
+            <br>
+            <span class="text-danger">
+                <strong>The existing files will be overwritten according to bare names of import files.</strong>
+            </span>
+            <hr>
+            <div class="btn-group">
+                <label class="input-group-btn" style="display: inline">
+                    <span class="btn btn-primary">
+                        Browse&hellip; <input type="file" style="display: none;" multiple id="import_fileInput">
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly id="import_fileInputShow">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-success" id="import_btn">Import</a>
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+
+    <form id="transForm" action="#" style="display: None" target="_blank" method="get">
+
+    </form>
 
 </div>
 

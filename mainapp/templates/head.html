@@ -66,6 +66,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" id="logout_nav">Logout</a></li>
                             <li class="divider"></li>
+                            <li><a href="#" id="delete_all_nav">Delete All Files</a></li>
+                            <li><a href="#" id="download_all_nav">Download All Files</a></li>
+                            <li class="divider"></li>
                             <li><a href="#" id="changepwd_nav">Change Password</a></li>
                         </ul>
                     </li>
@@ -97,3 +100,26 @@
             <a href="#" class="btn" data-dismiss="modal">Close</a>
         </div>
     </div>
+
+    <div id="delete_all_modal" class="modal hide fade in" style="display: none">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Delete All Files</h3>
+        </div>
+        <div class="modal-body">
+            <br>
+            <span class="text-danger">
+                <strong>Sure to delete all files? This operation is unrecoverable.</strong>
+            </span>
+            <br>
+            <br>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger" id="delete_all_btn">Delete</a>
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+
+    <form id="downloadallForm" action="/api/user/download_all" style="display: None" target="_blank">
+
+    </form>

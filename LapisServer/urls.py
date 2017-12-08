@@ -48,6 +48,10 @@ urlpatterns = [
     url(r'^api/user/save_file$', userapp.views.save_file),
     url(r'^api/user/rename_file$', userapp.views.rename_file),
     url(r'^api/user/del_file$', userapp.views.del_file),
+    url(r'^api/user/file_import$', userapp.views.file_import),
+    url(r'^api/user/clean_all$', userapp.views.clean_all),
+    url(r'^api/user/make_download_all$', userapp.views.make_download_all),
+    url(r'^api/user/download_all$', userapp.views.download_all),
 
     url(r'^$', mainapp.views.index),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

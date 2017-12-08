@@ -45,6 +45,7 @@ function save() {
                         } else {
                             bar_update();
                             $('#filename_astar').hide();
+                            bold_update();
                         }
                     }
                 }
@@ -68,6 +69,52 @@ $(function(){
     });
     $('#save_btn').click(function() {
         save();
+    });
+
+
+    $(document).on('change', ':file', function() {
+        var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1;
+        label = '';
+        for (i=0; i<numFiles; ++i) {
+            if (i>0) label += '; ';
+            label += input.get(0).files[i].name;
+        }
+        // label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+    $('#fileInput').on('fileselect', function(event, numFiles, label) {
+        if ($('#fileInput').prop('files').length <= 0) {
+            alert('Please select a file.');
+            return;
+        }
+        file = $('#fileInput').prop('files')[0];
+        var formData = new FormData();
+        formData.append("script", file);
+        $.ajax({
+            url: '/index_fileupload',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            res = eval(res);
+            if (res.code != "200") {
+                alert(res.msg);
+            } else {
+                editor.setValue(res.script);
+                $('#filename_span').html(res.name);
+                // save();
+                change_flag = true;
+                $('#filename_astar').show();
+            }
+        }).fail(function(res) {
+            alert('File upload failed.')
+        });
+    });
+    $('#import_fileInput').on('fileselect', function(event, numFiles, label) {
+       $('#import_fileInputShow').val(label);
     });
 
     editor = ace.edit("script_area");
@@ -129,7 +176,46 @@ $(function(){
        editor.setValue("");
        $('#filename_astar').hide();
        change_flag = false;
+       bold_update();
        $('#newfile_modal').modal('hide');
+    });
+
+    $('#import_trigger_btn').click(function() {
+       $('#import_modal').modal('show');
+    });
+
+    $('#import_btn').click(function() {
+        $('#waitDialog').modal('show');
+
+        files = $('#import_fileInput').prop('files');
+        num = files.length;
+
+        var formData = new FormData();
+        formData.append("num", num);
+        for (i=0; i<num; ++i)
+            formData.append("file" + String(i), files[i]);
+
+        $.ajax({
+            url: '/api/user/file_import',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            $('#waitDialog').modal('hide');
+            res = eval(res);
+            if (res.code != "200") {
+                alert(res.msg);
+                $('#import_modal').modal('hide');
+            } else {
+                get_status();
+                bold_update();
+                $('#import_modal').modal('hide');
+            }
+        }).fail(function(res) {
+            alert('File upload failed.')
+        });
     });
 
     $('#chgfilename_btn').click(function() {
@@ -165,6 +251,7 @@ $(function(){
                             alert(data.msg);
                         } else {
                             bar_update();
+                            bold_update();
                         }
                     }
                 }
@@ -197,8 +284,10 @@ $(function(){
                         alert(data.msg);
                     } else {
                         bar_update();
-                        if (name_tmp1 == $('#filename_span').html())
+                        if (name_tmp1 == $('#filename_span').html()) {
                             $('#filename_span').html(name_tmp2);
+                            bold_update();
+                        }
                         $('#rename_modal').modal('hide');
                     }
                 }
@@ -221,6 +310,7 @@ $(function(){
                         alert(data.msg);
                     } else {
                         bar_update();
+                        bold_update();
                         $('#delconfirm_modal').modal('hide');
                     }
                 }
@@ -228,35 +318,35 @@ $(function(){
         )
     });
 
-    $('#file_btn').click(function(){
-        if ($('#fileInput').prop('files').length <= 0) {
-            alert('Please select a file.');
-            return;
-        }
-        file = $('#fileInput').prop('files')[0];
-        var formData = new FormData();
-        formData.append("script", file);
-        $.ajax({
-            url: '/index_fileupload',
-            type: 'POST',
-            cache: false,
-            data: formData,
-            processData: false,
-            contentType: false
-        }).done(function(res) {
-            res = eval(res);
-            if (res.code != "200") {
-                alert(res.msg);
-            } else {
-                editor.setValue(res.script);
-                $('#filename_span').html(res.name);
-                save();
-                change_flag = false;
-            }
-        }).fail(function(res) {
-            alert('File upload failed.')
-        });
-    });
+    // $('#file_btn').click(function(){
+    //     if ($('#fileInput').prop('files').length <= 0) {
+    //         alert('Please select a file.');
+    //         return;
+    //     }
+    //     file = $('#fileInput').prop('files')[0];
+    //     var formData = new FormData();
+    //     formData.append("script", file);
+    //     $.ajax({
+    //         url: '/index_fileupload',
+    //         type: 'POST',
+    //         cache: false,
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false
+    //     }).done(function(res) {
+    //         res = eval(res);
+    //         if (res.code != "200") {
+    //             alert(res.msg);
+    //         } else {
+    //             editor.setValue(res.script);
+    //             $('#filename_span').html(res.name);
+    //             save();
+    //             change_flag = false;
+    //         }
+    //     }).fail(function(res) {
+    //         alert('File upload failed.')
+    //     });
+    // });
 
     $('#parse_btn').click(function(){
 
@@ -386,7 +476,7 @@ $(function(){
                                     if (data.code != "200") {
                                         alert(data.msg);
                                     } else {
-                                        window.open(data.link, 'Download');
+                                        gotourl(data.link);
                                     }
                                 }
                             }
@@ -747,6 +837,15 @@ function present(obj, idprefix, level, index) {
         var s = "<span id='" + idprefix + String(index) + "'>" + JSON.stringify(obj) + "</span>";
         return {text: s, index: index + 1};
     }
+}
+
+function gotourl(url){
+    var a = $('<a href="'+ url +'" target="_blank">link</a>');
+    var d = a.get(0);
+    var e = document.createEvent('MouseEvents');
+    e.initEvent( 'click', true, true );
+    d.dispatchEvent(e);
+    a.remove();
 }
 
 
