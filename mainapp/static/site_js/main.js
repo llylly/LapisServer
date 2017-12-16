@@ -324,7 +324,7 @@ $(function(){
     $('#rename_btn').click(function() {
         newname = $('#rename_input').val();
         if (newname == "") {
-            alert("New name should not be empty.");
+            alert("新名称不能为空。");
             return;
         }
         name_tmp2 = newname;
@@ -726,7 +726,7 @@ function api_detail_present(name, method, entity, no, prefix) {
 
     // --------
 
-    param_str = '<table class="table"><thead><tr><th>Name</th><th>In</th><th>Required</th><th>Description</th><th>Schema</th></tr></thead><tbody>';
+    param_str = '<table class="table"><thead><tr><th>名称</th><th>输入方式</th><th>是否必需</th><th>描述</th><th>数据体规范</th></tr></thead><tbody>';
     has_param = false;
     for (i in entity.parameters) {
         has_param = true;
@@ -746,12 +746,12 @@ function api_detail_present(name, method, entity, no, prefix) {
             param_str += present(now_param['x-schema'], prefix + 'param_' + String(i) + '_schema_', 0, 0).text;
         param_str += '</td></tr>';
     }
-    if (!has_param) param_str += '<tr><td>No Parameter</td></tr>';
+    if (!has_param) param_str += '<tr><td>无参数。</td></tr>';
     param_str += '</tbody></table>';
 
     // --------
 
-    response_str = '<table class="table"><thead><tr><th>Code</th><th>Description</th><th>Schema</th></tr></thead><tbody>';
+    response_str = '<table class="table"><thead><tr><th>响应码</th><th>描述</th><th>响应体规范</th></tr></thead><tbody>';
     has_resp = false;
     for (key in entity.responses)
         if (key != 'x-extension') {
@@ -765,14 +765,14 @@ function api_detail_present(name, method, entity, no, prefix) {
                 response_str += present(now_resp.schema, prefix + 'response_' + String(i) + '_schema_', 0, 0).text;
             response_str += '</td></tr>';
         }
-    if (!has_resp) response_str += '<tr><td>No Response Definition</td></tr>';
+    if (!has_resp) response_str += '<tr><td>无响应描述。</td></tr>';
     response_str += '</tbody></table>';
 
     // --------
 
     responseext_str = '';
     if (!entity.responses['x-extension'] == false) {
-        inner_str = '<table class="table"><thead><tr><th>Code</th><th>Name</th><th>Description</th><th>Field</th><th>Schema</th><th>Related Parameters</th></tr></thead><tbody>';
+        inner_str = '<table class="table"><thead><tr><th>响应码</th><th>名称</th><th>描述</th><th>域</th><th>数据体规范</th><th>相关参数</th></tr></thead><tbody>';
         has_ext = false;
         for (i in entity.responses['x-extension']) {
             has_ext = true;
@@ -794,7 +794,7 @@ function api_detail_present(name, method, entity, no, prefix) {
             }
             inner_str += '</td></tr>';
         }
-        if (!has_ext) inner_str += '<tr><td>No Response Extension Definition.</td></tr>';
+        if (!has_ext) inner_str += '<tr><td>无扩展响应描述。</td></tr>';
         inner_str += '</tbody></table>';
         responseext_str = '<div class="panel panel-info">\
                        <div class="panel-heading" style="font-size: 10pt">\
@@ -841,13 +841,13 @@ function api_detail_present(name, method, entity, no, prefix) {
                </table>\
                <div class="panel panel-info">\
                    <div class="panel-heading" style="font-size: 10pt">\
-                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_param' + '">Parameters</a>\
+                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_param' + '">参数</a>\
                    </div>\
                    <div class="panel-body collapse" id="' + prefix + String(no) + '_param' + '">' + param_str + '</div>\
                </div>\
                <div class="panel panel-info">\
                    <div class="panel-heading" style="font-size: 10pt">\
-                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_response' + '">Responses</a>\
+                       <a href="#" data-toggle="collapse" data-target="#' + prefix + String(no) + '_response' + '">响应</a>\
                    </div>\
                    <div class="panel-body collapse" id="' + prefix + String(no) + '_response' + '">' + response_str + '</div>\
                </div>' +

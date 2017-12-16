@@ -23,53 +23,53 @@
                     <li>
                         <img style="padding-top: 10px; padding-right: 10px; height: 25px" src="{% static "assets/mini-logo.png" %}">
                     </li>
-                    <li><a href="/">My APIs</a></li>
-                    <li><a href="/examples">Examples</a></li>
-                    <li><a href="/tutorial">Tutorial</a></li>
-                    <li><a href="/about">About</a></li>
+                    <li><a href="/">我的脚本</a></li>
+                    <li><a href="/examples">样例</a></li>
+                    <li><a href="/tutorial">帮助</a></li>
+                    <li><a href="/about">关于</a></li>
                 </ul>
                 <ul class="nav pull-right">
                     <li class="dropdown user_unlogin">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="reg_dropdown">
-                            Register
+                            注册
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div style="padding: 5px">
-                                    <input type="text" class="control-label" placeholder="Username" id="reg_username" />
-                                    <input type="password" class="control-label" placeholder="Password" id="reg_password" />
-                                    <input type="password" class="control-label" placeholder="Repeat Password" id="reg_password_repeat" />
-                                    <a href="#" class="btn btn-primary btn-block" id="register_btn">Register</a>
+                                    <input type="text" class="control-label" placeholder="用户名" id="reg_username" />
+                                    <input type="password" class="control-label" placeholder="密码" id="reg_password" />
+                                    <input type="password" class="control-label" placeholder="重复密码" id="reg_password_repeat" />
+                                    <a href="#" class="btn btn-primary btn-block" id="register_btn">注册</a>
                                 </div>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown user_unlogin">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="login_dropdown">
-                            Login
+                            登录
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div style="padding: 5px">
-                                    <input type="text" class="control-label" placeholder="Username" id="login_username" />
-                                    <input type="password" class="control-label" placeholder="Password" id="login_password" />
-                                    <a href="#" class="btn btn-primary btn-block" id="login_btn">Login</a>
+                                    <input type="text" class="control-label" placeholder="用户名" id="login_username" />
+                                    <input type="password" class="control-label" placeholder="密码" id="login_password" />
+                                    <a href="#" class="btn btn-primary btn-block" id="login_btn">登录</a>
                                 </div>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown user_login">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span id="username_span">Username</span>
+                            <span id="username_span">用户名</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="logout_nav">Logout</a></li>
+                            <li><a href="#" id="logout_nav">登出</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" id="delete_all_nav">Delete All Files</a></li>
-                            <li><a href="#" id="download_all_nav">Download All Files</a></li>
+                            <li><a href="#" id="delete_all_nav">删除所有脚本</a></li>
+                            <li><a href="#" id="download_all_nav">打包下载所有脚本</a></li>
                             <li class="divider"></li>
-                            <li><a href="#" id="changepwd_nav">Change Password</a></li>
+                            <li><a href="#" id="changepwd_nav">更改密码</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -80,43 +80,43 @@
     <div id="changepasswd_modal" class="modal hide fade in" style="display: none; ">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Change Password</h3>
+            <h3>更改密码</h3>
         </div>
         <div class="modal-body">
             <div class="form-group">
                 <div class="form-row">
-                    <input class='span5' type="password" id="change_oldpwd" placeholder="Old Password" />
+                    <input class='span5' type="password" id="change_oldpwd" placeholder="旧密码" />
                 </div>
                 <div class="form-row">
-                    <input class='span5' type="password" id="change_newpwd" placeholder="New Password" />
+                    <input class='span5' type="password" id="change_newpwd" placeholder="新密码" />
                 </div>
                 <div class="form-row">
-                    <input class='span5' type="password" id="change_newpwd_repeat" placeholder="New Password Repeat" />
+                    <input class='span5' type="password" id="change_newpwd_repeat" placeholder="重复新密码" />
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-danger" id="changepwd_btn">Change Password</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-danger" id="changepwd_btn">更改密码</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 
     <div id="delete_all_modal" class="modal hide fade in" style="display: none">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">x</a>
-            <h3>Delete All Files</h3>
+            <h3>删除所有脚本</h3>
         </div>
         <div class="modal-body">
             <br>
             <span class="text-danger">
-                <strong>Sure to delete all files? This operation is unrecoverable.</strong>
+                <strong>确定要删除所有脚本？此操作不可逆。</strong>
             </span>
             <br>
             <br>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-danger" id="delete_all_btn">Delete</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-danger" id="delete_all_btn">删除</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 

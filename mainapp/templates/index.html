@@ -14,12 +14,12 @@ $(function () {
 
     <div class="mainpage-filediv">
         <div class="row text-center">
-            <h4>My Files</h4>
+            <h4>我的脚本</h4>
         </div>
         <div class="row">
-            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="new_file_trigger_btn">New File</a>
-            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="import_trigger_btn">Import</a>
-            <input type="text" class="input-block-level search-query" style="margin:5pt;" placeholder="search" id="filelist_search">
+            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="new_file_trigger_btn">新脚本</a>
+            <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="import_trigger_btn">导入</a>
+            <input type="text" class="input-block-level search-query" style="margin:5pt;" placeholder="搜索" id="filelist_search">
         </div>
         <div class="mainpage-filelist">
         </div>
@@ -32,7 +32,7 @@ $(function () {
 {#                <input class="input-file" style="display: inline" id="fileInput" type="file">#}
 {#            </div>#}
             <label class="btn btn-default btn-file" style="width: 40pt">
-                Upload <input type="file" style="display: none;" id="fileInput">
+                上传 <input type="file" style="display: none;" id="fileInput">
             </label>
             <span class="text-center" style="width: calc(100% - 65pt); display: inline-block" id="filename_div">
                 <a id="filename_span" href="#">Noname</a>
@@ -53,7 +53,7 @@ $(function () {
                     <a href="#script_area" data-toggle="tab" class="codetabs">YAML</a>
                 </li>
                 <li id="xml_tab">
-                    <a href="#transed_script_area" data-toggle="tab" id="xml_toggle_btn" class="codetabs">XML (Read Only)</a>
+                    <a href="#transed_script_area" data-toggle="tab" id="xml_toggle_btn" class="codetabs">XML（只读）</a>
                 </li>
             </ul>
         </div>
@@ -65,8 +65,8 @@ $(function () {
 {#                <input type="radio" name='format_type' id="XML-radio" style="margin-left: 20pt">&nbsp;XML#}
 {#            </span>#}
             <span class="span2 pull-right" style="margin-right: 0; margin-left: 0">
-                <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>
-                <a class="btn btn-success btn-block" id="save_btn">Save</a>
+                <a class="btn btn-primary btn-block" id="parse_btn">解析</a>
+                <a class="btn btn-success btn-block" id="save_btn">保存</a>
             </span>
         </div>
 
@@ -107,16 +107,16 @@ $(function () {
 
         <div class="panel panel-null text-warning" id="change_div">
             <div class="panel-body">
-                Some changes happened. Please parse again.
+                检测到更改。请重新解析。
                 <hr>
             </div>
         </div>
 
         <div class="panel panel-null panel-body" id="error_panel">
-            <h5>Error</h5>
+            <h5>错误</h5>
             <div style="height: 5px"></div>
             <div id="error_list" style="color: darkred">
-                No error.
+                没有错误。
             </div>
         </div>
 
@@ -132,7 +132,7 @@ $(function () {
 
         <div class="panel panel-null" id="basic_info_panel">
             <div class="panel-heading">
-                <a href="#" data-toggle="collapse" data-target="#basic_info_body">Basic Info</a>
+                <a href="#" data-toggle="collapse" data-target="#basic_info_body">基本信息</a>
             </div>
             <div class="panel-body collapse in" id="basic_info_body">
                 <table class="table">
@@ -145,7 +145,7 @@ $(function () {
 
         <div class="panel panel-null" id="api_panel">
             <div class="panel-heading">
-                <a data-toggle="collapse" data-target="#api_list" href="#">API List</a>
+                <a data-toggle="collapse" data-target="#api_list" href="#">API列表</a>
             </div>
             <div class="panel-body">
                 <div id="api_list" class="collapse in">
@@ -159,34 +159,34 @@ $(function () {
     <div id="copy_modal" class="modal hide fade in" style="display: none; ">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Raw JSON Data</h3>
+            <h3>原始JSON数据</h3>
         </div>
         <div class="modal-body">
             <div id="json_area" style="max-height: 300pt; word-break:break-all; overflow-y: scroll"></div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn" data-dismiss="modal">关闭</a>
         </div>
     </div>
 
     <div id="chgfilename_modal" class="modal hide fade in" style="display: none; ">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Change Document Name</h3>
+            <h3>更改名称</h3>
         </div>
         <div class="modal-body">
             <input class="span5" type="text" id="chgfilename_input" placeholder="New Document Name" />
-            <div class="help-block">Extension name (.yaml/.xml) should NOT be contained.</div>
+            <div class="help-block">不需包含扩展名（.yaml/.xml）。</div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-success" id="chgfilename_btn">Change</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-success" id="chgfilename_btn">更改</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 
     <div class="modal hide" id="waitDialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-header">
-            <h1>Loading...</h1>
+            <h1>加载中...</h1>
         </div>
         <div class="modal-body">
             <div class="progress progress-striped active">
@@ -198,82 +198,82 @@ $(function () {
     <div id="delconfirm_modal" class="modal hide fade in" style="display: none; ">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Delete Confirm</h3>
+            <h3>删除确认</h3>
         </div>
         <div class="modal-body">
-            Are you sure to delele the file "<span class="text-error" id="delconfirm_filename"></span>"?
+            您确认要删除文件"<span class="text-error" id="delconfirm_filename"></span>"吗？
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-danger" id="delconfirm_btn">Delete</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-danger" id="delconfirm_btn">删除</a>
+            <a href="#" class="btn" data-dismiss="modal">关闭</a>
         </div>
     </div>
 
     <div id="rename_modal" class="modal hide fade in" style="display: none; ">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Rename</h3>
+            <h3>更改名称</h3>
         </div>
         <div class="modal-body">
             <input class="span5" type="text" id="rename_input" placeholder="New Document Name" />
-            <div class="help-block">Extension name (.yaml/.xml) should NOT be contained.</div>
+            <div class="help-block">不需包含扩展名（.yaml/.xml）。</div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-success" id="rename_btn">Change</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-success" id="rename_btn">更改</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 
     <div id="newfile_modal" class="modal hide fade in" style="display: none">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>New File</h3>
+            <h3>新脚本</h3>
         </div>
         <div class="modal-body">
             <div id="newfile_danger_div">
                 <span class="text-danger">
-                    <strong>There is existing script in the editor. Sure to overwrite it?</strong>
+                    <strong>编辑器中的脚本正在编辑。确定要覆盖吗？</strong>
                 </span>
             </div>
             <br>
-            New Document Name:<br>
+            新脚本名称：<br>
             <input class="span5" type="text" id="newfile_input" />
-            <div class="help-block">Extension name (.yaml/.xml) should NOT be contained.</div>
+            <div class="help-block">不需包含扩展名（.yaml/.xml）。</div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-success" id="newfile_btn">New</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-success" id="newfile_btn">新建</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 
     <div id="import_modal" class="modal hide fade in" style="display: none">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">x</a>
-            <h3>Import Files</h3>
+            <h3>导入</h3>
         </div>
         <div class="modal-body">
-            We support YAML format single files import and ZIP bundles import.
+            支持YAML格式单脚本导入和ZIP批量导入。
             <br>
-            In bundle import, all YAML files are extracted recursively.
+            批量导入时，递归提取包中所有YAML脚本。
             <br>
-            Size limit: 10M
+            大小限制：10
             <br>
             <span class="text-danger">
-                <strong>The existing files will be overwritten according to bare names of import files.</strong>
+                <strong>已有的重名脚本将被导入脚本覆盖。</strong>
             </span>
             <hr>
             <div class="btn-group">
                 <label class="input-group-btn" style="display: inline">
                     <span class="btn btn-primary">
-                        Browse&hellip; <input type="file" style="display: none;" multiple id="import_fileInput">
+                        浏览&hellip; <input type="file" style="display: none;" multiple id="import_fileInput">
                     </span>
                 </label>
                 <input type="text" class="form-control" readonly id="import_fileInputShow">
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-success" id="import_btn">Import</a>
-            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-success" id="import_btn">导入</a>
+            <a href="#" class="btn" data-dismiss="modal">取消</a>
         </div>
     </div>
 

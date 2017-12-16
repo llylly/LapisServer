@@ -274,8 +274,8 @@ function update_fileview() {
             fname = files[i];
             str += '<div class="item">' +
                 '<a href="#" class="fload" data-filename="' + fname + '">' + fname + '</a>' +
-                '<a href="#" class="btn btn-small btn-danger pull-right fdelete" data-filename="' + fname + '">Delete</a>' +
-                '<a href="#" class="btn btn-small btn-primary pull-right frename" data-filename="' + fname + '">Rename</a></div>';
+                '<a href="#" class="btn btn-small btn-danger pull-right fdelete" data-filename="' + fname + '">删除</a>' +
+                '<a href="#" class="btn btn-small btn-primary pull-right frename" data-filename="' + fname + '">重命名</a></div>';
         }
     $(".mainpage-filelist").html(str);
     $('.mainpage-filediv .item .btn-small').hide();
