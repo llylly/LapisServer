@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/oss.aliyuncs.com/GetService">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="对于服务地址作Get请求可以返回请求者拥有的所有Bucket，其中“/”表示根目录， GetService(ListBuckets)时，可以通过prefix，marker和max-keys对list做限定，返回部分结果。 1.&#9;GetService这个API只对验证通过的用户有效。 2.&#9;如果请求中没有用户验证信息（即匿名访问），返回403 Forbidden。错误码：AccessDenied。 3.&#9;当所有的bucket都返回时，返回的xml中不包含Prefix、Marker、MaxKeys、IsTruncated、NextMarker节点，如果还有部分结果未返回，则增加上述节点，其中NextMarker用于继续查询时给marker赋值。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="限定返回的bucket name必须以prefix作为前缀，可以不设定，不设定时不过滤前缀信息数据 类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="prefix"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设定结果从marker之后按字母排序的第一个开始返回，可以不设定，不设定时从头开始返回数据 类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="marker"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="100"/>
+            <description value="限定此次返回bucket的最大数，如果不设定，默认为100，max-keys取值不能大于1000数据 类型：字符串 默认值：100"/>
+            <in value="query"/>
+            <maxLength value="1000"/>
+            <name value="max-keys"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <ListAllMyBucketsResult>
+                  <description value="保存Get Service请求结果的容器。类型：容器, 子节点: Owner, Buckets,父节点：None"/>
+                  <in value="formData"/>
+                  <name value="ListAllMyBucketsResult"/>
+                  <properties>
+                    <Buckets>
+                      <description value="保存多个Bucket信息的容器。类型：容器 子节点：Bucket,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="Buckets"/>
+                      <properties>
+                        <Bucket>
+                          <description value="保存bucket信息的容器. 类型：容器 子节点：Name, CreationDate, Location 父节点：ListAllMyBucketsResult.Buckets"/>
+                          <in value="formData"/>
+                          <name value="Bucket"/>
+                          <properties>
+                            <CreateDate>
+                              <description value="Bucket创建时间,类型：时间 (格式：yyyy-mm-ddThh:mm:ss.timezone,   e.g.,   2011-12-01T12:27:13.000Z),父节点：ListAllMyBucketsResult.Buckets.Bucket,"/>
+                              <in value="formData"/>
+                              <name value="CreateDate"/>
+                              <type value="string"/>
+                            </CreateDate>
+                            <ExtranetEndpoint>
+                              <description value="Bucket访问的外网域名  类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket"/>
+                              <in value="formData"/>
+                              <name value="ExtranetEndpoint"/>
+                              <type value="string"/>
+                            </ExtranetEndpoint>
+                            <IntranetEndpoint>
+                              <description value="同区域ECS访问Bucket的内网域名, 类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket"/>
+                              <in value="formData"/>
+                              <name value="IntranetEndpoint"/>
+                              <type value="string"/>
+                            </IntranetEndpoint>
+                            <Location>
+                              <description value="Bucket所在的数据中心,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket"/>
+                              <in value="formData"/>
+                              <name value="Location"/>
+                              <type value="string"/>
+                            </Location>
+                            <Name>
+                              <description value="Bucket名称。,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket"/>
+                              <in value="formData"/>
+                              <name value="Name"/>
+                              <type value="string"/>
+                            </Name>
+                            <StorageClass>
+                              <description value="Bucket存储类型，支持“Standard”、“IA”、“Archive”。（目前只有部分区域支持“Archive”类型）,类型：字符串,父节点：ListAllMyBucketsResult.Buckets.Bucket,"/>
+                              <in value="formData"/>
+                              <name value="StorageClass"/>
+                              <type value="string"/>
+                            </StorageClass>
+                          </properties>
+                          <required value="true"/>
+                          <type value="object"/>
+                        </Bucket>
+                      </properties>
+                      <type value="object"/>
+                    </Buckets>
+                    <IsTruncated>
+                      <description value="指明是否所有的结果都已经返回：“true”表示本次没有返回全部结果；“false”表示本次已经返回了全部结果。当bucket未全部返回时才有此节点。,类型：枚举字符串,有效值：true、false,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="IsTruncated"/>
+                      <type value="string"/>
+                    </IsTruncated>
+                    <Marker>
+                      <description value="标明这次GetService(ListBucket)的起点，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="Marker"/>
+                      <type value="string"/>
+                    </Marker>
+                    <MaxKeys>
+                      <description value="响应请求内返回结果的最大数目，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="MaxKeys"/>
+                      <type value="string"/>
+                    </MaxKeys>
+                    <NextMarker>
+                      <description value="表示下一次GetService(ListBucket)可以以此为marker，将未返回的结果返回。当bucket未全部返回时才有此节点。,类型：字符串,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="NextMarker"/>
+                      <type value="string"/>
+                    </NextMarker>
+                    <Owner>
+                      <description value="用于存放Bucket拥有者信息的容器。,类型：容器,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="Owner"/>
+                      <properties>
+                        <DisplayName>
+                          <description value="Bucket拥有者的名称 (目前和ID一致)。,类型：字符串,父节点：ListAllMyBucketsResult.Owner"/>
+                          <in value="formData"/>
+                          <name value="DisplayName"/>
+                          <type value="string"/>
+                        </DisplayName>
+                        <ID>
+                          <description value="Bucket拥有者的用户ID。,类型：字符串,父节点：ListAllMyBucketsResult.Owner"/>
+                          <in value="formData"/>
+                          <name value="ID"/>
+                          <type value="string"/>
+                        </ID>
+                      </properties>
+                      <type value="object"/>
+                    </Owner>
+                    <Prefix>
+                      <description value="本次查询结果的前缀，当bucket未全部返回时才有此节点,类型：字符串,父节点：ListAllMyBucketsResult"/>
+                      <in value="formData"/>
+                      <name value="Prefix"/>
+                      <type value="string"/>
+                    </Prefix>
+                  </properties>
+                  <type value="object"/>
+                </ListAllMyBucketsResult>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="403">
+            <description value="如果请求中没有用户验证信息（即匿名访问），返回403 Forbidden。错误码：AccessDenied。"/>
+          </node>
+        </responses>
+      </get>
+      <summary value="得到该账户下所有Bucket"/>
+      <x-othername value="ListBucket"/>
+      <x-requestformat value=" GET / HTTP/1.1 Host: oss.aliyuncs.com Date: GMT Date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET / HTTP/1.1 Date: Thu, 15 May 2014 11:18:32 GMT Host: oss-cn-hangzhou.aliyuncs.com Authorization: OSS nxj7dtl1c24jwhcyl5hpvnhi:COS3OQkfQPnKmYZTEHYv2qUl5jI=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" GET /?prefix=xz02tphky6fjfiuc&amp;max-keys=1 HTTP/1.1 Date: Thu, 15 May 2014 11:18:32 GMT Host: oss-cn-hangzhou.aliyuncs.com Authorization: OSS nxj7dtl1c24jwhcyl5hpvnhi:COS3OQkfQPnKmYZTEHYv2qUl5jI= "/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Date: Thu, 15 May 2014 11:18:32 GMT Content-Type: application/xml Content-Length: 556 Connection: keep-alive Server: AliyunOSS x-oss-request-id: 5374A2880232A65C23002D74 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;ListAllMyBucketsResult&gt; &lt;Owner&gt; &lt;ID&gt;51264&lt;/ID&gt; &lt;DisplayName&gt;51264&lt;/DisplayName&gt; &lt;/Owner&gt; &lt;Buckets&gt; &lt;Bucket&gt; &lt;CreationDate&gt;2015-12-17T18:12:43.000Z&lt;/CreationDate&gt; &lt;ExtranetEndpoint&gt;oss-cn-shanghai.aliyuncs.com&lt;/ExtranetEndpoint&gt; &lt;IntranetEndpoint&gt;oss-cn-shanghai-internal.aliyuncs.com&lt;/IntranetEndpoint&gt; &lt;Location&gt;oss-cn-shanghai&lt;/Location&gt; &lt;Name&gt;app-base-oss&lt;/Name&gt; &lt;/Bucket&gt; &lt;Bucket&gt; &lt;CreationDate&gt;2014-12-25T11:21:04.000Z&lt;/CreationDate&gt; &lt;ExtranetEndpoint&gt;oss-cn-hangzhou.aliyuncs.com&lt;/ExtranetEndpoint&gt; &lt;IntranetEndpoint&gt;oss-cn-hangzhou-internal.aliyuncs.com&lt;/IntranetEndpoint&gt; &lt;Location&gt;oss-cn-hangzhou&lt;/Location&gt; &lt;Name&gt;atestleo23&lt;/Name&gt; &lt;/Bucket&gt; &lt;/Buckets&gt; &lt;/ListAllMyBucketsResult&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Date: Thu, 15 May 2014 11:18:32 GMT Content-Type: application/xml Content-Length: 545 Connection: keep-alive Server: AliyunOSS x-oss-request-id: 5374A2880232A65C23002D75 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;ListAllMyBucketsResult&gt; &lt;Prefix&gt;xz02tphky6fjfiuc&lt;/Prefix&gt; &lt;Marker&gt;&lt;/Marker&gt; &lt;MaxKeys&gt;1&lt;/MaxKeys&gt; &lt;IsTruncated&gt;true&lt;/IsTruncated&gt; &lt;NextMarker&gt;xz02tphky6fjfiuc0&lt;/NextMarker&gt; &lt;Owner&gt; &lt;ID&gt;ut_test_put_bucket&lt;/ID&gt; &lt;DisplayName&gt;ut_test_put_bucket&lt;/DisplayName&gt; &lt;/Owner&gt; &lt;Buckets&gt; &lt;Bucket&gt; &lt;CreationDate&gt;2014-05-15T11:18:32.000Z&lt;/CreationDate&gt; &lt;ExtranetEndpoint&gt;oss-cn-hangzhou.aliyuncs.com&lt;/ExtranetEndpoint&gt; &lt;IntranetEndpoint&gt;oss-cn-hangzhou-internal.aliyuncs.com&lt;/IntranetEndpoint&gt; &lt;Location&gt;oss-cn-hangzhou&lt;/Location&gt; &lt;Name&gt;xz02tphky6fjfiuc0&lt;/Name&gt; &lt;/Bucket&gt; &lt;/Buckets&gt; &lt;/ListAllMyBucketsResult&gt;&#10;"/>
+          <id value="2"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <containers>
+    <description value="服务中所包含容器 key （容器id）/value（属性）"/>
+    <name value="containers"/>
+    <type value="map"/>
+  </containers>
+  <created>
+    <description value="服务创建时间"/>
+    <name value="created"/>
+    <type value="datetime"/>
+  </created>
+  <current_state>
+    <description value="当前状态"/>
+    <name value="current_state"/>
+    <type value="string"/>
+  </current_state>
+  <definition>
+    <description value="Compose 中服务定义 key/value"/>
+    <name value="definition"/>
+    <type value="map"/>
+  </definition>
+  <desired_state>
+    <description value="期望状态 （如果当前状态是中间状态时，期望状态指明变迁终态）"/>
+    <name value="desired_state"/>
+    <type value="string"/>
+  </desired_state>
+  <extensions>
+    <description value="容器服务 Compose 中服务扩展 key/value"/>
+    <name value="extensions"/>
+    <type value="map"/>
+  </extensions>
+  <id>
+    <description value="服务 ID"/>
+    <name value="id"/>
+    <type value="string"/>
+  </id>
+  <name>
+    <description value="服务名称"/>
+    <name value="name"/>
+    <type value="string"/>
+  </name>
+  <project>
+    <description value="应用名称"/>
+    <name value="project"/>
+    <type value="string"/>
+  </project>
+  <updated>
+    <description value="服务更新时间"/>
+    <name value="updated"/>
+    <type value="datetime"/>
+  </updated>
+</root>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="cs.aliyuncs.com"/>
+  <info>
+    <description value="容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。"/>
+    <title value="aliyun object api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/GetClusterById/clusters/{cluster_id}">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/xml"/>
+          <consumes value="application/json"/>
+        </consumes>
+        <description value="根据集群 ID，查看集群的详细信息"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="集群ID"/>
+            <in value="path"/>
+            <name value="cluster_id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="OK"/>
+            <schema>
+              <properties>
+                <agent_version>
+                  <description value="Agent 版本号。"/>
+                  <name value="agent_version"/>
+                  <type value="string"/>
+                </agent_version>
+                <cluster_id>
+                  <description value="集群 ID，集群的唯一标识。"/>
+                  <name value="cluster_id"/>
+                  <type value="string"/>
+                </cluster_id>
+                <created>
+                  <description value="集群的创建时间。"/>
+                  <name value="created"/>
+                  <type value="string"/>
+                </created>
+                <external_loadbalancer_id>
+                  <description value="集群负载均衡服务的 ID。"/>
+                  <name value="external_loadbalancer_id"/>
+                  <type value="string"/>
+                </external_loadbalancer_id>
+                <master_url>
+                  <description value="集群 Master 地址，您可以通过该地址连接您的集群进行相关操作。更多详细信息，参见 &lt;a href=&quot;/document_detail/25983.html&quot;&gt;通过 Docker 工具连接集群&lt;/a&gt;。"/>
+                  <name value="master_url"/>
+                  <type value="string"/>
+                </master_url>
+                <name>
+                  <description value="集群名称，由您在创建集群时指定，在每个用户下唯一。"/>
+                  <name value="name"/>
+                  <type value="string"/>
+                </name>
+                <network_mode>
+                  <description value="集群网络模式（经典网络: classic、VPC 网络: vpc）。"/>
+                  <name value="network_mode"/>
+                  <type value="string"/>
+                </network_mode>
+                <region_id>
+                  <description value="集群所在地域 ID。更多详细信息，参见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域&lt;/a&gt;。"/>
+                  <name value="region_id"/>
+                  <type value="string"/>
+                </region_id>
+                <security_group_id>
+                  <description value="安全组 ID。"/>
+                  <name value="security_group_id"/>
+                  <type value="string"/>
+                </security_group_id>
+                <size>
+                  <description value="节点数。"/>
+                  <name value="size"/>
+                  <type value="string"/>
+                </size>
+                <state>
+                  <description value="集群状态。更多详细信息，参见 &lt;a href=&quot;/document_detail/26005.html&quot;&gt;集群的生命周期&lt;/a&gt;。"/>
+                  <name value="state"/>
+                  <type value="string"/>
+                </state>
+                <updated>
+                  <description value="最后更新时间。"/>
+                  <name value="updated"/>
+                  <type value="string"/>
+                </updated>
+                <vpc_id>
+                  <description value="VPC ID。"/>
+                  <name value="vpc_id"/>
+                  <type value="string"/>
+                </vpc_id>
+                <vswitch_id>
+                  <description value="vswitch ID。"/>
+                  <name value="vswitch_id"/>
+                  <type value="string"/>
+                </vswitch_id>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查看集群实例"/>
+      <x-requestbody value="&#10;"/>
+      <x-requestheader value=" GET /clusters?name={name} HTTP/1.1 "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET /clusters/C5b5e80b0b64a4bf6939d2d8fbbc5ded7 HTTP/1.1 &lt;公共请求头&gt; "/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsebody value=" [ { &quot;agent_version&quot;: &quot;string&quot;, &quot;cluster_id&quot;: &quot;string&quot;, &quot;created&quot;: &quot;datetime&quot;, &quot;external_loadbalancer_id&quot;: &quot;string&quot;, &quot;master_url&quot;: &quot;string&quot;, &quot;name&quot;: &quot;string&quot;, &quot;network_mode&quot;: &quot;string&quot;, &quot;region_id&quot;: &quot;string&quot;, &quot;security_group_id&quot;: &quot;string&quot;, &quot;size&quot;: &quot;numbers&quot;, &quot;state&quot;: &quot;string&quot;, &quot;updated&quot;: &quot;datetime&quot;, &quot;vpc_id&quot;: &quot;string&quot;, &quot;vswitch_id&quot;: &quot;string&quot; } ] "/>
+      <x-responseheader value=" HTTP/1.1 200 OK "/>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 Ok &lt;公共响应头&gt; { &quot;agent_version&quot;: &quot;0.5-e56dab3&quot;, &quot;cluster_id&quot;: &quot;c978ca3eaacd3409a9437db07598f1f69&quot;, &quot;created&quot;: &quot;2015-12-11T03:52:40Z&quot;, &quot;external_loadbalancer_id&quot;: &quot;1518f2b7e4c-cn-beijing-btc-a01&quot;, &quot;master_url&quot;: &quot;https://182.92.245.56:17589&quot;, &quot;name&quot;: &quot;my-python-cluster-039de960&quot;, &quot;network_mode&quot;: &quot;classic&quot;, &quot;region_id&quot;: &quot;cn-beijing&quot;, &quot;security_group_id&quot;: &quot;sg-25yqjuxhz&quot;, &quot;size&quot;: 5, &quot;state&quot;: &quot;running&quot;, &quot;updated&quot;: &quot;2015-12-15T15:01:58Z&quot;, &quot;vpc_id&quot;: &quot;&quot;, &quot;vswitch_id&quot;: &quot;&quot; } "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Authorization"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Content-Length"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容类型。"/>
+            <in value="header"/>
+            <name value="Content-Type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Content-MD5"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Date"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="访问 Host 值，例如：diku.aliyuncs.com。"/>
+            <in value="header"/>
+            <name value="Host"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="客户端需要的返回值类型，支持application/json 和 application/xml。"/>
+            <enum nodeType="array">
+              <enum value="application/json"/>
+              <enum value="application/xml"/>
+            </enum>
+            <in value="header"/>
+            <name value="Accept"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。"/>
+            <in value="header"/>
+            <name value="x-acs-region-id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。"/>
+            <in value="header"/>
+            <name value="x-acs-signature-nonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用户签名方式，目前只支持HMAC-SHA1。"/>
+            <enum nodeType="array">
+              <enum value="HMAC-SHA1"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-acs-signature-method"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

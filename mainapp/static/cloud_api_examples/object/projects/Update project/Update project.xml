@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="cs.aliyuncs.com"/>
+  <info>
+    <description value="容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。"/>
+    <title value="aliyun object api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/Update project/projects/{name}/update">
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/json"/>
+          <consumes value="application/xml"/>
+        </consumes>
+        <description value="创建一个新的应用实例。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="应用实例名称。"/>
+            <in value="path"/>
+            <name value="name"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value=""/>
+            <in value="body"/>
+            <name value="Updateproject"/>
+            <required value="true"/>
+            <schema>
+              <properties>
+                <description>
+                  <description value="更新的应用描述。"/>
+                  <name value="description"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </description>
+                <environment>
+                  <description value="环境变量 key/value"/>
+                  <items>
+                    <x-schema>
+                      <properties>
+                        <key>
+                          <description value="key-value"/>
+                          <name value="key"/>
+                          <type value="string"/>
+                        </key>
+                      </properties>
+                      <type value="object"/>
+                    </x-schema>
+                  </items>
+                  <name value="environment"/>
+                  <type value="array"/>
+                </environment>
+                <latest_image>
+                  <description value="是否拉取最新镜像"/>
+                  <name value="latest_image"/>
+                  <required value="false"/>
+                  <type value="boolean"/>
+                </latest_image>
+                <template>
+                  <description value="更新的 Compose yaml 模板，注意需要按照 JSON 格式进行转义。"/>
+                  <name value="template"/>
+                  <required value="true"/>
+                  <type value="string"/>
+                </template>
+                <version>
+                  <description value="更新的应用版本，更新的版本应和原有版本不同，否则会返回 HTTP code 409。"/>
+                  <name value="version"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </version>
+              </properties>
+              <type value="object"/>
+            </schema>
+            <type value="object"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="202">
+            <description value="Accept"/>
+          </node>
+          <node nodeName="409">
+            <description value="version更新的应用版本，更新的版本应和原有版本不同，否则会返回 HTTP code 409。"/>
+          </node>
+        </responses>
+      </put>
+      <summary value="更新应用配置"/>
+      <x-requestbody value=" { &quot;description&quot;: &quot;string&quot;, &quot;template&quot;: &quot;string&quot;, &quot;version&quot;: &quot;string&quot;, &quot;latest_image&quot;: true, &quot;environment&quot;: { &quot;key&quot;: &quot;value&quot;, ... } } "/>
+      <x-requestheader value=" POST /projects/{name}/update HTTP/1.1 "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" POST /projects/test/update HTTP/1.1 Content-Type: application/json { &quot;description&quot;: &quot;This is a test application&quot;, &quot;template&quot;: &quot;web:\r\n  image: nginx&quot;, &quot;version&quot;: &quot;2.0&quot;, &quot;latest_image&quot;: true, &quot;environment&quot;: { &quot;USER&quot;: &quot;abc&quot;, &quot;PWD&quot;: &quot;newpwd&quot; } } "/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsebody value="&#10;"/>
+      <x-responseheader value=" HTTP/1.1 202 Accepted "/>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 202 Accepted "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Authorization"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Content-Length"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容类型。"/>
+            <in value="header"/>
+            <name value="Content-Type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Content-MD5"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Date"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="访问 Host 值，例如：diku.aliyuncs.com。"/>
+            <in value="header"/>
+            <name value="Host"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="客户端需要的返回值类型，支持application/json 和 application/xml。"/>
+            <enum nodeType="array">
+              <enum value="application/json"/>
+              <enum value="application/xml"/>
+            </enum>
+            <in value="header"/>
+            <name value="Accept"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。"/>
+            <in value="header"/>
+            <name value="x-acs-region-id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。"/>
+            <in value="header"/>
+            <name value="x-acs-signature-nonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用户签名方式，目前只支持HMAC-SHA1。"/>
+            <enum nodeType="array">
+              <enum value="HMAC-SHA1"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-acs-signature-method"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

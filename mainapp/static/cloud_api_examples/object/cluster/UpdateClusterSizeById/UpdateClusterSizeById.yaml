@@ -1,0 +1,195 @@
+host: "cs.aliyuncs.com"
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。
+    title: aliyun object api
+    version: '1.0'
+
+paths:
+    /public:
+        request:
+            parameters:
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Authorization
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Content-Length
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容类型。
+                in: header
+                name: Content-Type
+                required: true
+                type: string     
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Content-MD5
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Date
+                required: true
+                type: string
+            -   description:  访问 Host 值，例如：diku.aliyuncs.com。
+                in: header
+                name: Host
+                required: true
+                type: string 
+            -   description:  客户端需要的返回值类型，支持application/json 和 application/xml。
+                enum:
+                - application/json
+                - application/xml
+                in: header
+                name: Accept
+                required: true
+                type: string 
+            -   description:  地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。
+                in: header
+                name: x-acs-region-id
+                required: true
+                type: string 
+            -   description:  唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。
+                in: header
+                name: x-acs-signature-nonce
+                required: true
+                type: string 
+            -   description:  用户签名方式，目前只支持HMAC-SHA1。
+                enum:
+                - HMAC-SHA1
+                in: header
+                name: x-acs-signature-method
+                required: true
+                type: string        
+        response:
+            RequestId:
+                description:  您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string    
+    /UpdateClusterSizeById/clusters/{cluster_id}:
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        put:
+            description: 增加集群中节点的数量。
+
+            consumes:
+            - application/xml
+            - application/json
+            
+            parameters:
+            -   description: 集群ID
+                in: path
+                name: cluster_id
+                required: true
+                type: string
+            -   description: 请求body
+                in: body
+                name: UpdateClusterSizeById
+                required: true
+                type: object
+                schema:
+                    type: object
+                    properties:
+                        data_disk_category:
+                            description: ECS 使用的磁盘类型。更多详细信息，参见 <a href="/document_detail/25691.html">磁盘种类表</a>。
+                            name: data_disk_category
+                            required: false
+                            type: string
+                        data_disk_size:
+                            description: 节点共享磁盘大小（单位：GB）。
+                            name: data_disk_size
+                            required: false
+                            type: integer
+                        ecs_image_id:
+                            description: ECS 使用的系统镜像 ID。
+                                        如果您需要自定义集群的 ECS 镜像的 ID，需要保证 ECS 镜像满足以下条件：
+
+                                        操作系统：Ubuntu、CentOS。
+                                        Linux Kernel version ≥ 3.18，用于支持 overlayfs 以及 overlay network。
+                                        镜像中删除 /etc/docker/key.json 文件。
+                            enum:
+                            -   ubuntu_14_0405_64_40G_base_20170222.vhd
+                            -   centos_7_2_64_40G_base_20170222.vhd
+                            name: ecs_image_id
+                            required: false
+                            type: string
+                        instance_type:
+                            description: ECS 规格类型代码。更多详细信息，参见 <a href="/document_detail/25378.html">实例规格族</a>。
+                            name: instance_type
+                            required: true
+                            type: string
+                        io_optimized:
+                            description: 根据 ECS 实例规则来确定。取值为 none 或者 optimized。
+                            enum:
+                            - none
+                            - optimized
+
+                            name: io_optimized
+                            required: false
+                            type: string
+                        password:
+                            description: ECS 实例密码。
+                            name: password
+                            required: true
+                            type: string
+                        size:
+                            description: 节点的总数量，要大于现有节点数量。
+                            name: size
+                            required: true
+                            type: integer
+
+
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: OK
+                            
+        summary: 获取集群证书
+        x-requestheader: '
+                        PUT /clusters/{cluster_id} HTTP/1.1
+                        '
+        x-requestbody: '
+                        {
+                            "password": "string",
+                            "instance_type": "string",
+                            "size": "number",
+                            "data_disk_category": "number"
+                            "data_disk_size": "number",
+                            "ecs_image_id": "string",
+                            "io_optimized": "string"
+                        }
+                        '
+        x-responseheader: '
+                        HTTP/1.1 200 OK
+                        '
+        x-responsebody: '
+                        
+                        '
+        x-requestsample:  
+        -   description: '
+                        PUT /clusters/Cccfd68c474454665ace07efce924f75f HTTP/1.1
+                        <公共请求头>
+                        {
+                          "password": "password",
+                          "instance_type": "ecs.s3.large",
+                          "size": 2,       
+                          "data_disk_category": "cloud_ssd"
+                          "data_disk_size": 500,
+                          "ecs_image_id": "centos_7_2_64_40G_base_20170222.vhd",
+                          "io_optimized":"optimized"
+                        }
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 202 Accepted
+                        <公共响应头>
+                        '
+            id: 1

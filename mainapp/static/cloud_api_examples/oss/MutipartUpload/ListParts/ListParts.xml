@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}/oss-cn-hangzhou.aliyuncs.com/HeadObject/{ObjectName}">
+      <description value="Head Object只返回某个Object的meta信息，不返回文件内容。 1.&#9;不论正常返回200 OK还是非正常返回，Head Object都不返回消息体。 2.&#9;HeadObject支持在头中设定If-Modified-Since, If-Unmodified-Since, If-Match，If-None-Match的查询条件。具体规则请参见GetObject中对应的选项。如果没有修改，返回304 NotModified。 3.&#9;如果用户在PutObject的时候传入以x-oss-meta-为开头的user meta，比如x-oss-metalocation，返回消息时，返回这些user meta。 4.&#9;如果文件不存在返回404 Not Found错误。 5.&#9;若该Object为进行服务器端熵编码加密存储的，则在Head请求响应头中，会返回x-oss-serverside-encryption，其值表明该Object的服务器端加密算法。 6.&#9;如果文件类型为符号链接， 响应头中Content-Length、ETag、Content-Md5 均为目标文件的元信息；Last-Modified是目标文件和符号链接的最大值；其他均为符号链接元信息。 7.&#9;如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。 8.&#9;如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。"/>
+      <head>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果指定的时间早于实际修改时间，则正常传送文件，并返回200 OK；否则返回304 not modified 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT"/>
+            <in value="header"/>
+            <name value="If-Modified-Since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT"/>
+            <in value="header"/>
+            <name value="If-Unmodified-Since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412precondition failed错误 类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="If-Match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified 类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="If-None-Match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+          </node>
+          <node nodeName="304">
+            <description value="如果包含If-Modified-Since并且不符合或者包含If-None-Match并且不符合，返回304 NotModified。 If-None-Match如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified。"/>
+          </node>
+          <node nodeName="400">
+            <description value="如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。"/>
+          </node>
+          <node nodeName="404">
+            <description value="如果文件不存在返回404 Not Found错误。 如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。"/>
+          </node>
+          <node nodeName="412">
+            <description value="如果包含If-Unmodified-Since并且不符合或者包含If-Match并且不符合，返回412 precondition failed。 If-Match如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412。"/>
+          </node>
+        </responses>
+      </head>
+      <summary value="获得Object的meta信息"/>
+      <x-requestformat value=" Get  /ObjectName?uploadId=UploadId HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: Signature&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" Get  /multipart.data?uploadId=0004B999EF5A239BB9138C6227D69F95  HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Thu, 23 Feb 2012 07:13:28 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:4qOnUMc9UQWqkz8wDqD3lIsa9P8=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 Server: AliyunOSS Connection: keep-alive Content-length: 1221 Content-type: application/xml x-oss-request-id: 106452c8-10ff-812d-736e-c865294afc1c Date: Thu, 23 Feb 2012 07:13:28 GMT &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;ListPartsResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Bucket&gt;multipart_upload&lt;/Bucket&gt; &lt;Key&gt;multipart.data&lt;/Key&gt; &lt;UploadId&gt;0004B999EF5A239BB9138C6227D69F95&lt;/UploadId&gt; &lt;NextPartNumberMarker&gt;5&lt;/NextPartNumberMarker&gt; &lt;MaxParts&gt;1000&lt;/MaxParts&gt; &lt;IsTruncated&gt;false&lt;/IsTruncated&gt; &lt;Part&gt; &lt;PartNumber&gt;1&lt;/PartNumber&gt; &lt;LastModified&gt;2012-02-23T07:01:34.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;3349DC700140D7F86A078484278075A9&amp;quot;&lt;/ETag&gt;         &lt;Size&gt;6291456&lt;/Size&gt; &lt;/Part&gt; &lt;Part&gt; &lt;PartNumber&gt;2&lt;/PartNumber&gt; &lt;LastModified&gt;2012-02-23T07:01:12.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;3349DC700140D7F86A078484278075A9&amp;quot;&lt;/ETag&gt;         &lt;Size&gt;6291456&lt;/Size&gt; &lt;/Part&gt; &lt;Part&gt; &lt;PartNumber&gt;5&lt;/PartNumber&gt; &lt;LastModified&gt;2012-02-23T07:02:03.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;7265F4D211B56873A381D321F586E4A9&amp;quot;&lt;/ETag&gt; &lt;Size&gt;1024&lt;/Size&gt; &lt;/Part&gt; &lt;/ListPartsResult&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

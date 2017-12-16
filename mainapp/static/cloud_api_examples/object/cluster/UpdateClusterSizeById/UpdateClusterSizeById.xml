@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="cs.aliyuncs.com"/>
+  <info>
+    <description value="容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。"/>
+    <title value="aliyun object api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/UpdateClusterSizeById/clusters/{cluster_id}">
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/xml"/>
+          <consumes value="application/json"/>
+        </consumes>
+        <description value="增加集群中节点的数量。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="集群ID"/>
+            <in value="path"/>
+            <name value="cluster_id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="请求body"/>
+            <in value="body"/>
+            <name value="UpdateClusterSizeById"/>
+            <required value="true"/>
+            <schema>
+              <properties>
+                <data_disk_category>
+                  <description value="ECS 使用的磁盘类型。更多详细信息，参见 &lt;a href=&quot;/document_detail/25691.html&quot;&gt;磁盘种类表&lt;/a&gt;。"/>
+                  <name value="data_disk_category"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </data_disk_category>
+                <data_disk_size>
+                  <description value="节点共享磁盘大小（单位：GB）。"/>
+                  <name value="data_disk_size"/>
+                  <required value="false"/>
+                  <type value="integer"/>
+                </data_disk_size>
+                <ecs_image_id>
+                  <description value="ECS 使用的系统镜像 ID。 如果您需要自定义集群的 ECS 镜像的 ID，需要保证 ECS 镜像满足以下条件：&#10;操作系统：Ubuntu、CentOS。 Linux Kernel version ≥ 3.18，用于支持 overlayfs 以及 overlay network。 镜像中删除 /etc/docker/key.json 文件。"/>
+                  <enum nodeType="array">
+                    <enum value="ubuntu_14_0405_64_40G_base_20170222.vhd"/>
+                    <enum value="centos_7_2_64_40G_base_20170222.vhd"/>
+                  </enum>
+                  <name value="ecs_image_id"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </ecs_image_id>
+                <instance_type>
+                  <description value="ECS 规格类型代码。更多详细信息，参见 &lt;a href=&quot;/document_detail/25378.html&quot;&gt;实例规格族&lt;/a&gt;。"/>
+                  <name value="instance_type"/>
+                  <required value="true"/>
+                  <type value="string"/>
+                </instance_type>
+                <io_optimized>
+                  <description value="根据 ECS 实例规则来确定。取值为 none 或者 optimized。"/>
+                  <enum nodeType="array">
+                    <enum value="none"/>
+                    <enum value="optimized"/>
+                  </enum>
+                  <name value="io_optimized"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </io_optimized>
+                <password>
+                  <description value="ECS 实例密码。"/>
+                  <name value="password"/>
+                  <required value="true"/>
+                  <type value="string"/>
+                </password>
+                <size>
+                  <description value="节点的总数量，要大于现有节点数量。"/>
+                  <name value="size"/>
+                  <required value="true"/>
+                  <type value="integer"/>
+                </size>
+              </properties>
+              <type value="object"/>
+            </schema>
+            <type value="object"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="OK"/>
+          </node>
+        </responses>
+      </put>
+      <summary value="获取集群证书"/>
+      <x-requestbody value=" { &quot;password&quot;: &quot;string&quot;, &quot;instance_type&quot;: &quot;string&quot;, &quot;size&quot;: &quot;number&quot;, &quot;data_disk_category&quot;: &quot;number&quot; &quot;data_disk_size&quot;: &quot;number&quot;, &quot;ecs_image_id&quot;: &quot;string&quot;, &quot;io_optimized&quot;: &quot;string&quot; } "/>
+      <x-requestheader value=" PUT /clusters/{cluster_id} HTTP/1.1 "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /clusters/Cccfd68c474454665ace07efce924f75f HTTP/1.1 &lt;公共请求头&gt; { &quot;password&quot;: &quot;password&quot;, &quot;instance_type&quot;: &quot;ecs.s3.large&quot;, &quot;size&quot;: 2, &quot;data_disk_category&quot;: &quot;cloud_ssd&quot; &quot;data_disk_size&quot;: 500, &quot;ecs_image_id&quot;: &quot;centos_7_2_64_40G_base_20170222.vhd&quot;, &quot;io_optimized&quot;:&quot;optimized&quot; } "/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsebody value="&#10;"/>
+      <x-responseheader value=" HTTP/1.1 200 OK "/>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 202 Accepted &lt;公共响应头&gt; "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Authorization"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Content-Length"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容类型。"/>
+            <in value="header"/>
+            <name value="Content-Type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Content-MD5"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Date"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="访问 Host 值，例如：diku.aliyuncs.com。"/>
+            <in value="header"/>
+            <name value="Host"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="客户端需要的返回值类型，支持application/json 和 application/xml。"/>
+            <enum nodeType="array">
+              <enum value="application/json"/>
+              <enum value="application/xml"/>
+            </enum>
+            <in value="header"/>
+            <name value="Accept"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。"/>
+            <in value="header"/>
+            <name value="x-acs-region-id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。"/>
+            <in value="header"/>
+            <name value="x-acs-signature-nonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用户签名方式，目前只支持HMAC-SHA1。"/>
+            <enum nodeType="array">
+              <enum value="HMAC-SHA1"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-acs-signature-method"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

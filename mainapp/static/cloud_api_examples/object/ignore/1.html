@@ -1,0 +1,52 @@
+<tbody>
+    <tr>
+    <td>id</td>
+    <td>string</td>
+    <td>服务 ID</td>
+    </tr>
+    <tr>
+    <td>name</td>
+    <td>string</td>
+    <td>服务名称</td>
+    </tr>
+    <tr>
+    <td>project</td>
+    <td>string</td>
+    <td>应用名称</td>
+    </tr>
+    <tr>
+    <td>created</td>
+    <td>datetime</td>
+    <td>服务创建时间</td>
+    </tr>
+    <tr>
+    <td>updated</td>
+    <td>datetime</td>
+    <td>服务更新时间</td>
+    </tr>
+    <tr>
+    <td>desired_state</td>
+    <td>string</td>
+    <td>期望状态 （如果当前状态是中间状态时，期望状态指明变迁终态）</td>
+    </tr>
+    <tr>
+    <td>current_state</td>
+    <td>string</td>
+    <td>当前状态</td>
+    </tr>
+    <tr>
+    <td>definition</td>
+    <td>map</td>
+    <td>Compose 中服务定义 key/value</td>
+    </tr>
+    <tr>
+    <td>extensions</td>
+    <td>map</td>
+    <td>容器服务 Compose 中服务扩展 key/value</td>
+    </tr>
+    <tr>
+    <td>containers</td>
+    <td>map</td>
+    <td>服务中所包含容器 key （容器id）/value（属性）</td>
+    </tr>
+    </tbody>

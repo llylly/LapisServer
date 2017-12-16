@@ -161,7 +161,7 @@ function load_example(obj, indent, index) {
     for (key in son_dir) {
         compress = '';
         if ('compress' in son_dir[key])
-            compress = '&nbsp;<a class="pull-right" href="/download_cloud_api_examples?path=' + son_dir[key].compress + '">' + '[Download]' + '</a>';
+            compress = '&nbsp;<a class="pull-right" href="/download_cloud_api_examples?path=' + son_dir[key].compress + '">' + '[下载]' + '</a>';
 
         if (!son_dir[key].file) {
             ++index;

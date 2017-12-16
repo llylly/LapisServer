@@ -12,136 +12,202 @@
                 <li>
                     <a href="#s1">
                         <i class="icon-chevron-right"></i>
-                        Write API Specification Script
+                        查看脚本规范和样例
                     </a>
                 </li>
                 <li>
                     <a href="#s2">
                         <i class="icon-chevron-right"></i>
-                        Load Script From Your Computer
+                        脚本编辑与解析
                     </a>
                 </li>
                 <li>
                     <a href="#s3">
                         <i class="icon-chevron-right"></i>
-                        Parse
+                        从本地上传脚本
                     </a>
                 </li>
                 <li>
                     <a href="#s4">
                         <i class="icon-chevron-right"></i>
-                        Read Parse Result
+                        保存并管理您的脚本
                     </a>
                 </li>
-                <li>
-                    <a href="#s5">
-                        <i class="icon-chevron-right"></i>
-                        Register and Store Your Document
-                    </a>
-                </li>
+{#                <li>#}
+{#                    <a href="#s5">#}
+{#                        <i class="icon-chevron-right"></i>#}
+{#                        Register and Store Your Document#}
+{#                    </a>#}
+{#                </li>#}
             </ul>
         </div>
         <div class="span8">
 
             <section id="s1">
-                <h4>Write API Specification Script</h4>
+                <h4>查看脚本规范和样例</h4>
                 <hr>
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/code_editor.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s1.png" %}" class="img-rounded center-block" style="width: 400pt">
                 </div>
-                Following the specification documentation <a href="{% static "assets/Swagger-Compatible API & Scenario DSL.pdf" %}">PDF</a>, or
-                <a href="/examples">Examples</a>, you can document your APIs.
-                <br>
-                The specification is extended from Swagger (OpenAPI), so it's also OK to migrate from there.
-                Although you will miss our extended features.
-                <br>
-                The code editor is in left column of <a href="/">Front Page</a>.
-                <br>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/s2.png" %}" class="img-rounded center-block" style="width: 400pt">
+                </div>
+                在"关于"页面，您可以浏览脚本的详细格式规范和定义，它将帮助您撰写符合格式的文档。<br>
+                在"样例"页面，在左栏中，以文件树的形式展示了部分阿里云服务API的规范脚本，这是编写您的脚本的有用参考。在右栏中，我们展示了YAML和XML格式的脚本，其中部分分类和API有相应注释。<br>
                 <br>
             </section>
 
             <section id="s2">
-                <h4>Load Script From Your Computer</h4>
+                <h4>脚本编辑与解析</h4>
                 <hr>
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/from_local.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s3.png" %}" class="img-rounded center-block" style="width: 400pt">
                 </div>
-                You can load the script from local file system.<br>
-                After selected your script file, remember to click <strong>"Load"</strong> to load it to the code editor.
+                在"我的脚本"页面，在左侧的脚本编辑器中，可以编辑YAML格式的脚本。在XML选项卡中，可以查看实时转换的XML脚本，它是只读的。当编写完毕后，点击"解析"按钮。<br>
+                若解析失败，在右侧会出现具体错误信息。若解析成功，可以查看解析结果。解析结果由"基本信息"和"API列表"两部分组成。在"API列表"中，所有定义的API依次列出。您可以点击各栏，查看详细信息。<br>
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/s4.png" %}" class="img-rounded center-block" style="width: 300pt">
+                </div>
+                在解析结果中，"数据体规范"和"响应体规范"等是数据结构体，默认折叠为"Object"。您可以点击它，展开查看各个子域。
                 <br>
                 <br>
             </section>
 
             <section id="s3">
-                <h4>Parse</h4>
+                <h4>从本地上传脚本</h4>
                 <hr>
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/parse_btn.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s5.png" %}" class="img-rounded center-block" style="width: 300pt">
                 </div>
-                Choose the format of script. We support JSON, YAML and XML format script. Then click <strong>"Parse"</strong> to get the parse result.<br>
-                The parse process contains two stages: Document Parse, API Parse.<br>
-                In Document Parse, we check the format correctness. In API Parse, we check the meanings of each fields.<br>
-                When error detected, they are demonstrated in the right column.<br>
-                <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/error_example.png" %}" class="img-rounded center-block" style="width: 300pt">
-                </div>
+                在"我的脚本"页面，左侧上方有"上传"按钮，它让您从本地上传脚本。选择文件并确定后，脚本内容将出现在下方编辑器中。
                 <br>
                 <br>
             </section>
 
             <section id="s4">
-                <h4>Read Parse Result</h4>
+                <h4>保存并管理您的脚本</h4>
                 <hr>
-                The result contains 3 parts: basic info, API details, and request data generation.
-                <br>
-                <h5>Basic Info:</h5>
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/basic_info.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s6.png" %}" class="img-rounded center-block" style="width: 100pt">
                 </div>
-                The basic info section demonstrates essential info of the script.
-                <br>
-                <h5>API Detail:</h5>
+                在页面右上方，您可以点击"注册"或"登录"。登录后，您可以获得专有的脚本仓库。<br>
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/api_info_fold.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s7.png" %}" class="img-rounded center-block" style="width: 100pt">
                 </div>
-                Each API is shown in a panel. Click the API name, you can unfold the panel. The parameters and responses panel in it can also be unfolded for detail.
+                在"我的脚本"页面的左侧，会出现脚本仓库的管理栏。<br>
+                在管理栏中，您可以创建新脚本，导入脚本，编辑已有脚本。导入脚本功能支持单个YAML脚本导入和ZIP包的批量导入。您也可以使用搜索功能，检索脚本仓库中包含关键词的脚本。<br>
+
                 <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/api_info_unfold.png" %}" class="img-rounded center-block" style="width: 300pt">
+                    <img src="{% static "tutorial_imgs/s8.png" %}" class="img-rounded center-block" style="width: 400pt">
                 </div>
-                <br>
+                登录后，在脚本编辑器上方会出现当前编辑脚本的名称。点击该名称，可以重命名脚本。
+
+                <div class="text-center myimg">
+                    <img src="{% static "tutorial_imgs/s9.png" %}" class="img-rounded center-block" style="width: 400pt">
+                </div>
+                登录后，在脚本编辑器右下方会出现"保存"按钮，点击该按钮保存脚本。保存后，在脚本仓库中可看到刚刚编辑的脚本。
+            </section>
+
+
+{#            <section id="s1">#}
+{#                <h4>Write API Specification Script</h4>#}
+{#                <hr>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/code_editor.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                Following the specification documentation <a href="{% static "assets/Swagger-Compatible API & Scenario DSL.pdf" %}">PDF</a>, or#}
+{#                <a href="/examples">Examples</a>, you can document your APIs.#}
+{#                <br>#}
+{#                The specification is extended from Swagger (OpenAPI), so it's also OK to migrate from there.#}
+{#                Although you will miss our extended features.#}
+{#                <br>#}
+{#                The code editor is in left column of <a href="/">Front Page</a>.#}
+{#                <br>#}
+{#                <br>#}
+{#            </section>#}
+{##}
+{#            <section id="s2">#}
+{#                <h4>Load Script From Your Computer</h4>#}
+{#                <hr>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/from_local.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                You can load the script from local file system.<br>#}
+{#                After selected your script file, remember to click <strong>"Load"</strong> to load it to the code editor.#}
+{#                <br>#}
+{#                <br>#}
+{#            </section>#}
+{##}
+{#            <section id="s3">#}
+{#                <h4>Parse</h4>#}
+{#                <hr>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/parse_btn.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                Choose the format of script. We support JSON, YAML and XML format script. Then click <strong>"Parse"</strong> to get the parse result.<br>#}
+{#                The parse process contains two stages: Document Parse, API Parse.<br>#}
+{#                In Document Parse, we check the format correctness. In API Parse, we check the meanings of each fields.<br>#}
+{#                When error detected, they are demonstrated in the right column.<br>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/error_example.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                <br>#}
+{#                <br>#}
+{#            </section>#}
+{##}
+{#            <section id="s4">#}
+{#                <h4>Read Parse Result</h4>#}
+{#                <hr>#}
+{#                The result contains 3 parts: basic info, API details, and request data generation.#}
+{#                <br>#}
+{#                <h5>Basic Info:</h5>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/basic_info.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                The basic info section demonstrates essential info of the script.#}
+{#                <br>#}
+{#                <h5>API Detail:</h5>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/api_info_fold.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                Each API is shown in a panel. Click the API name, you can unfold the panel. The parameters and responses panel in it can also be unfolded for detail.#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/api_info_unfold.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                <br>#}
 {#                <h5>Request Data Generation:</h5>#}
 {#                <div class="text-center myimg">#}
 {#                    <img src="{% static "tutorial_imgs/data_gen.png" %}" class="img-rounded center-block" style="width: 300pt">#}
 {#                </div>#}
 {#                In Data Generation panel, select an API, then click <strong>"Generate Request Data"</strong> to get an example of request data generated.#}
 {#                <br>#}
-                <br>
-            </section>
-
-            <section id="s5">
-                <h4>Register and Store Your Document</h4>
-                <hr>
-                Register, then you will get a repository to store and retrieve your documents conveniently.<br>
-                The <strong>"Register"</strong> button is in the right side of top navigation bar.
-                <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/register.png" %}" class="img-rounded center-block" style="width: 300pt">
-                </div>
-                <br>
-                After login, in the left side, "My Files" column will show. Click each name, the saved document will be loaded to the code editor.<br>
-                Hover over the names, the <strong>"Rename"</strong> and <strong>"Delete"</strong> button will show.<br>
-                <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/files.png" %}" class="img-rounded center-block" style="width: 300pt">
-                </div>
-                <br>
-                To save the modified version, at first, you can click the filename at the top of code editor to change document name.<br>
-                <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/change_doc_name.png" %}" class="img-rounded center-block" style="width: 300pt">
-                </div>
-                After that, click <strong>"Save"</strong> button below the "Parse" button to save. As the result, the document will show immediately in the left column.
-                <div class="text-center myimg">
-                    <img src="{% static "tutorial_imgs/save_doc.png" %}" class="img-rounded center-block" style="width: 300pt">
-                </div>
-            </section>
+{#                <br>#}
+{#            </section>#}
+{##}
+{#            <section id="s5">#}
+{#                <h4>Register and Store Your Document</h4>#}
+{#                <hr>#}
+{#                Register, then you will get a repository to store and retrieve your documents conveniently.<br>#}
+{#                The <strong>"Register"</strong> button is in the right side of top navigation bar.#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/register.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                <br>#}
+{#                After login, in the left side, "My Files" column will show. Click each name, the saved document will be loaded to the code editor.<br>#}
+{#                Hover over the names, the <strong>"Rename"</strong> and <strong>"Delete"</strong> button will show.<br>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/files.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                <br>#}
+{#                To save the modified version, at first, you can click the filename at the top of code editor to change document name.<br>#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/change_doc_name.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#                After that, click <strong>"Save"</strong> button below the "Parse" button to save. As the result, the document will show immediately in the left column.#}
+{#                <div class="text-center myimg">#}
+{#                    <img src="{% static "tutorial_imgs/save_doc.png" %}" class="img-rounded center-block" style="width: 300pt">#}
+{#                </div>#}
+{#            </section>#}
         </div>
     </div>
 

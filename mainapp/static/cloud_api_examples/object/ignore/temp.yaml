@@ -1,0 +1,40 @@
+containers:
+    description: 服务中所包含容器 key （容器id）/value（属性）
+    name: containers
+    type: map
+created:
+    description: 服务创建时间
+    name: created
+    type: datetime
+current_state:
+    description: 当前状态
+    name: current_state
+    type: string
+definition:
+    description: Compose 中服务定义 key/value
+    name: definition
+    type: map
+desired_state:
+    description: 期望状态 （如果当前状态是中间状态时，期望状态指明变迁终态）
+    name: desired_state
+    type: string
+extensions:
+    description: 容器服务 Compose 中服务扩展 key/value
+    name: extensions
+    type: map
+id:
+    description: 服务 ID
+    name: id
+    type: string
+name:
+    description: 服务名称
+    name: name
+    type: string
+project:
+    description: 应用名称
+    name: project
+    type: string
+updated:
+    description: 服务更新时间
+    name: updated
+    type: datetime

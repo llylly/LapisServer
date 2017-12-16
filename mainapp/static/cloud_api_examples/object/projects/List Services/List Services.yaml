@@ -1,0 +1,258 @@
+host: "cs.aliyuncs.com"
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。
+    title: aliyun object api
+    version: '1.0'
+
+paths:
+    /public:
+        request:
+            parameters:
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Authorization
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Content-Length
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容类型。
+                in: header
+                name: Content-Type
+                required: true
+                type: string     
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Content-MD5
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Date
+                required: true
+                type: string
+            -   description:  访问 Host 值，例如：diku.aliyuncs.com。
+                in: header
+                name: Host
+                required: true
+                type: string 
+            -   description:  客户端需要的返回值类型，支持application/json 和 application/xml。
+                enum:
+                - application/json
+                - application/xml
+                in: header
+                name: Accept
+                required: true
+                type: string 
+            -   description:  地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。
+                in: header
+                name: x-acs-region-id
+                required: true
+                type: string 
+            -   description:  唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。
+                in: header
+                name: x-acs-signature-nonce
+                required: true
+                type: string 
+            -   description:  用户签名方式，目前只支持HMAC-SHA1。
+                enum:
+                - HMAC-SHA1
+                in: header
+                name: x-acs-signature-method
+                required: true
+                type: string        
+        response:
+            RequestId:
+                description:  您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string    
+    /List Services/services/:
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        get:
+            description: 查看您在容器集群中创建的所有应用实例列表。
+
+            consumes:
+            - application/xml
+            - application/json
+            
+            parameters:
+            -   description: 服务名称
+                in: query
+                name: q
+                required: false
+                type: string
+            -   description: 是否包含服务的容器信息，缺省值 true
+                default: 'true'
+                in: query
+                name: containers
+                required: false
+                type: boolean
+
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            x-schema:
+                                type: object
+                                properties:
+                                    containers:
+                                        description: 服务中所包含容器 key （容器id）/value（属性）
+                                        name: containers
+                                        type: array
+                                        items:
+                                            x-schema:
+                                                type: object
+                                                properties:
+                                                    key:
+                                                        description: key-value
+                                                        name: key
+                                                        type: string
+                                    created:
+                                        description: 服务创建时间
+                                        name: created
+                                        type: string
+                                    current_state:
+                                        description: 当前状态
+                                        name: current_state
+                                        type: string
+                                    definition:
+                                        description: Compose 中服务定义 key/value
+                                        name: definition
+                                        type: array
+                                        items:
+                                            x-schema:
+                                                type: object
+                                                properties:
+                                                    key:
+                                                        description: key-value
+                                                        name: key
+                                                        type: string
+                                    desired_state:
+                                        description: 期望状态 （如果当前状态是中间状态时，期望状态指明变迁终态）
+                                        name: desired_state
+                                        type: string
+                                    extensions:
+                                        description: 容器服务 Compose 中服务扩展 key/value
+                                        name: extensions
+                                        type: array
+                                        items:
+                                            x-schema:
+                                                type: object
+                                                properties:
+                                                    key:
+                                                        description: key-value
+                                                        name: key
+                                                        type: string
+                                    id:
+                                        description: 服务 ID
+                                        name: id
+                                        type: string
+                                    name:
+                                        description: 服务名称
+                                        name: name
+                                        type: string
+                                    project:
+                                        description: 应用名称
+                                        name: project
+                                        type: string
+                                    updated:
+                                        description: 服务更新时间
+                                        name: updated
+                                        type: string
+
+
+                                        
+        summary: 查看服务实例列表
+
+        x-requestheader: '
+                        GET /services/ HTTP/1.1
+                        '
+        x-requestbody: '
+                      
+                        '
+        x-responseheader: '
+                        HTTP/1.1 200 OK
+                        '
+        x-responsebody: '
+                        [
+                          {
+                              "id": "string",
+                              "name": "string",
+                              "project": "string",
+                              "description": "string",
+                              "created": "datetime",
+                              "updated": "datetime",
+                              "desired_state": "string",
+                              "current_state": "string",
+                              "definition": {
+                                "key": "value",
+                                ...
+                              },
+                              "extensions": {
+                                "key": "value",
+                                ...
+                              },
+                              "containers": {
+                                "key": "value",
+                                ...
+                              }
+                          },
+                          ...
+                        ]
+                        '
+        x-requestsample:  
+        -   description: '
+                        GET /services/ HTTP/1.1
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 Ok
+                        Content-Type:application/json;charset=UTF-8
+                        [
+                          {
+                            "id": "wordpress_db",
+                            "name": "db",
+                            "project": "wordpress",
+                            "definition": {
+                              "environment": [
+                                "MYSQL_ROOT_PASSWORD=password"
+                              ],
+                              "image": "mysql:5.7",
+                              "restart": "always"
+                            },
+                            "extensions": {
+                              "scale": 1,
+                              "logs": [
+                                "/var/log/mysql"
+                              ]
+                            },
+                            "created": "2016-04-21T13:36:32.440646459Z",
+                            "updated": "2016-04-21T13:36:33.270308958Z",
+                            "desired_state": "running",
+                            "current_state": "running",
+                            "containers": {
+                              "5616f05d27516b3502a391fd2ca9d312cabffa5ad431bf261ea81f4ceabd476e": {
+                                "name": "/wordpress_db_1",
+                                "node": "10.246.2.3",
+                                "ip": "10.0.0.2",
+                                "running": true,
+                                "status": "running",
+                                "health": "success"
+                              }
+                            }
+                          }
+                        ]
+                        '
+            id: 1

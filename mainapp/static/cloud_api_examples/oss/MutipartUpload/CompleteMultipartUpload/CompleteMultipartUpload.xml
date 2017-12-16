@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/CompleteMultipartUpload/{ObjectName}?uploadId={UploadId}">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="在将所有数据Part都上传完成后，必须调用Complete Multipart Upload API来完成整个文件的Multipart Upload。在执行该操作时，用户必须提供所有有效的数据Part的列表（包括part号码和ETAG）；OSS收到用户提交的Part列表后，会逐一验证每个数据Part的有效性。当所有的数据Part验证通过后，OSS将把这些数据 part组合成一个完整的Object。 1.&#9;Complete Multipart Upload时，会确认除最后一块以外所有块的大小都大于100KB，并检查用户提交的Partlist中的每一个Part号码和Etag。所以在上传Part时，客户端除了需要记录Part号码外，还需要记录每次上传Part成功后，服务器返回的ETag值。 2.&#9;OSS处理Complete Multipart Upload请求时，会持续一定的时间。在这段时间内，如果客户端和 OSS之间的链接断掉，OSS仍会继续将请求做完。 3.&#9;用户提交的Part List中,Part号码可以是不连续的。例如第一块的Part号码是1；第二块的Part号码是 5。 4.&#9;OSS处理Complete Multipart Upload请求成功后，该Upload ID就会变成无效。 5.&#9;同一个Object可以同时拥有不同的Upload Id，当Complete一个Upload ID后，该Object的其他 Upload ID不受影响。 6.&#9;若调用Initiate Multipart Upload接口时，指定了x-oss-server-side-encryption请求头，则在 Complete Multipart Upload的响应头中，会返回x-oss-server-side-encryption，其值表明该Object的服务器端加密算法。 7.&#9;如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一标示此次Multipart Upload事件的ID。"/>
+            <in value="path"/>
+            <name value="UploadId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定对返回的Key进行编码，目前支持url编码。Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于Key中包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Key进行编码。 数据类型：字符串 默认值：无,可选值：url"/>
+            <enum nodeType="array">
+              <enum value="url"/>
+            </enum>
+            <in value="formData"/>
+            <name value="encoding-type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="保存Complete Multipart Upload请求内容的容器。类型：容器 子节点：一个或多个Part元素父节点：无"/>
+            <in value="formData"/>
+            <name value="CompleteMultipartUpload"/>
+            <required value="true"/>
+            <type value="object"/>
+            <x-schema>
+              <properties>
+                <Part>
+                  <description value="保存已经上传Part信息的容器。    类型：容器    子节点：ETag,   PartNumber    父节点：InitiateMultipartUploadResult"/>
+                  <in value="formData"/>
+                  <name value="Part"/>
+                  <properties>
+                    <ETag>
+                      <description value="Part成功上传后，OSS返回的ETag值。    类型：字符串    父节点：Part"/>
+                      <in value="formData"/>
+                      <name value="ETag"/>
+                      <required value="true"/>
+                      <type value="string"/>
+                    </ETag>
+                    <PartNumber>
+                      <description value="Part数目。    类型：整数    父节点：Part"/>
+                      <in value="formData"/>
+                      <name value="PartNumber"/>
+                      <required value="true"/>
+                      <type value="integer"/>
+                    </PartNumber>
+                  </properties>
+                  <required value="true"/>
+                  <type value="object"/>
+                </Part>
+              </properties>
+              <type value="object"/>
+            </x-schema>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <CompleteMultipartUploadResult>
+                  <description value="保存Complete   Multipart Upload请求结果的容器。    类型：容器    子节点：Bucket, Key, ETag, Location    父节点：None"/>
+                  <in value="formData"/>
+                  <name value="CompleteMultipartUploadResult"/>
+                  <properties>
+                    <Bucket>
+                      <description value="Bucket名称。    类型：字符串    父节点：CompleteMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="Bucket"/>
+                      <type value="string"/>
+                    </Bucket>
+                    <ETag>
+                      <description value="ETag   (entity tag) 在每个Object生成的时候被创建，用于标示一个Object的内容。Complete   Multipart Upload请求创建的Object，ETag值是其内容的UUID。ETag值可以用于检查Object内容是否发生变化。.    类型：字符串    父节点：CompleteMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="ETag"/>
+                      <type value="string"/>
+                    </ETag>
+                    <Key>
+                      <description value="新创建Object的名字。    类型：字符串    父节点：CompleteMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="Key"/>
+                      <type value="string"/>
+                    </Key>
+                    <Location>
+                      <description value="新创建Object的URL。    类型：字符串    父节点：CompleteMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="Location"/>
+                      <type value="string"/>
+                    </Location>
+                  </properties>
+                  <type value="object"/>
+                </CompleteMultipartUploadResult>
+                <EncodingType>
+                  <description value="指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那返回的结果会对Key进行编码。 类型：字符串 父节点：容器"/>
+                  <in value="formData"/>
+                  <name value="EncodingType"/>
+                  <type value="string"/>
+                </EncodingType>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <default>
+            <description value="如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+          </default>
+        </responses>
+      </get>
+      <summary value="完成整个文件的Multipart Upload上传"/>
+      <x-requestformat value=" POST /ObjectName?uploadId=UploadId HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Content-Length: Size Authorization: Signature &lt;CompleteMultipartUpload&gt; &lt;Part&gt; &lt;PartNumber&gt;PartNumber&lt;/PartNumber&gt; &lt;ETag&gt;ETag&lt;/ETag&gt; &lt;/Part&gt; ... &lt;/CompleteMultipartUpload&gt;&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" POST /multipart.data? uploadId=0004B9B2D2F7815C432C9057C03134D4  HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Content-Length: 1056 Date: Fri, 24 Feb 2012 10:19:18 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:8VwFhFUWmVecK6jQlHlXMK/zMT0= &lt;CompleteMultipartUpload&gt; &lt;Part&gt; &lt;PartNumber&gt;1&lt;/PartNumber&gt; &lt;ETag&gt;&quot;3349DC700140D7F86A078484278075A9&quot;&lt;/ETag&gt;     &lt;/Part&gt; &lt;Part&gt; &lt;PartNumber&gt;5&lt;/PartNumber&gt; &lt;ETag&gt;&quot;8EFDA8BE206636A695359836FE0A0E0A&quot;&lt;/ETag&gt;     &lt;/Part&gt; &lt;Part&gt; &lt;PartNumber&gt;8&lt;/PartNumber&gt; &lt;ETag&gt;&quot;8C315065167132444177411FDA149B92&quot;&lt;/ETag&gt; &lt;/Part&gt; &lt;/CompleteMultipartUpload&gt;&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Server: AliyunOSS Content-Length: 329 Content-Type: Application/xml Connection: keep-alive x-oss-request-id: 594f0751-3b1e-168f-4501-4ac71d217d6e Date: Fri, 24 Feb 2012 10:19:18 GMT &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CompleteMultipartUploadResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Location&gt;http://oss-example.oss-cn-hangzhou.aliyuncs.com /multipart.data&lt;/Location&gt;     &lt;Bucket&gt;oss-example&lt;/Bucket&gt; &lt;Key&gt;multipart.data&lt;/Key&gt; &lt;ETag&gt;B864DB6A936D376F9F8D3ED3BBE540DD-3&lt;/ETag&gt; &lt;/CompleteMultipartUploadResult&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

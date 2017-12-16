@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucketcors/?cors">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Put Bucket cors操作将在指定的bucket上设定一个跨域资源共享(CORS)的规则，如果原规则存在则覆盖原规则。 1.&#9;默认bucket是不开启CORS功能，所有的跨域请求的origin都不被允许。 2.&#9;为了在应用程序中使用CORS功能，比如从一个www.a.com的网址通过浏览器的XMLHttpRequest功能来访问OSS，需要通过本接口手动上传CORS规则来开启。该规则由XML文档来描述。 3.&#9;每个bucket的CORS设定是由多条CORS规则指定的，每个bucket最多允许10条规则，上传的 XML文档最多允许16KB大小。 4.&#9;当OSS收到一个跨域请求（或者OPTIONS请求），会读取bucket对应的CORS规则，然后进行相应的权限检查。OSS会依次检查每一条规则，使用第一条匹配的规则来允许请求并返回对应的 header。如果所有规则都匹配失败则不附加任何CORS相关的header。 5.&#9;CORS规则匹配成功必须满足三个条件，首先，请求的Origin必须匹配一项AllowedOrigin项，其次，请求的方法（如GET，PUT等）或者OPTIONS请求的Access-Control-Request-Method头对应的方法必须匹配一项AllowedMethod项，最后，OPTIONS请求的Access-Control-RequestHeaders头包含的每个header都必须匹配一项AllowedHeader项。 6.&#9;如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="Bucket的CORS规则容器    类型：容器    父节点：无"/>
+            <enum nodeType="array">
+              <enum value="Bucket"/>
+            </enum>
+            <in value="formData"/>
+            <name value="CORSConfiguration"/>
+            <required value="true"/>
+            <type value="object"/>
+            <x-schema>
+              <properties>
+                <CORSRule>
+                  <description value="CORS规则的容器，每个bucket最多允许10条规则    类型：容器    父节点：CORSConfiguration"/>
+                  <in value="formData"/>
+                  <maximum value="10"/>
+                  <name value="CORSRule"/>
+                  <properties>
+                    <AllowedHeader>
+                      <description value="控制在OPTIONS预取指令中Access-Control-Request-Headers头中指定的header是否允许。在Access-Control-Request-Headers中指定的每个header都必须在AllowedHeader中有一条对应的项。允许使用最多一个“*”通配符    类型：字符串    父节点：CORSRule"/>
+                      <in value="formData"/>
+                      <name value="AllowedHeader"/>
+                      <required value="false"/>
+                      <type value="string"/>
+                    </AllowedHeader>
+                    <AllowedMethod>
+                      <description value="指定允许的跨域请求方法。    类型：枚举（GET,PUT,DELETE,POST,HEAD）    父节点：CORSRule"/>
+                      <enum nodeType="array">
+                        <enum value="GET"/>
+                        <enum value="PUT"/>
+                        <enum value="DELETE"/>
+                        <enum value="POST"/>
+                        <enum value="HEAD"/>
+                      </enum>
+                      <in value="formData"/>
+                      <name value="AllowedMethod"/>
+                      <required value="true"/>
+                      <type value="string"/>
+                    </AllowedMethod>
+                    <AllowedOrigin>
+                      <description value="指定允许的跨域请求的来源，允许使用多个元素来指定多个允许的来源。   允许使用最多一个“*”通配符。如果指定为“*”则表示允许所有的来源的跨域请求。    类型：字符串    父节点：CORSRule"/>
+                      <in value="formData"/>
+                      <name value="AllowedOrigin"/>
+                      <required value="true"/>
+                      <type value="string"/>
+                    </AllowedOrigin>
+                    <ExposeHeader>
+                      <description value="指定允许用户从应用程序中访问的响应头（例如一个Javascript的XMLHttpRequest对象。）不允许使用“*”通配符。    类型：字符串    父节点：CORSRule"/>
+                      <in value="formData"/>
+                      <name value="ExposeHeader"/>
+                      <required value="false"/>
+                      <type value="string"/>
+                    </ExposeHeader>
+                    <MaxAgeSeconds>
+                      <description value="指定浏览器对特定资源的预取（OPTIONS）请求返回结果的缓存时间，单位为秒。   一个CORSRule里面最多允许出现一个。    类型：整型    父节点：CORSRule"/>
+                      <in value="formData"/>
+                      <name value="MaxAgeSeconds"/>
+                      <required value="false"/>
+                      <type value="integer"/>
+                    </MaxAgeSeconds>
+                  </properties>
+                  <required value="true"/>
+                  <type value="object"/>
+                </CORSRule>
+              </properties>
+              <type value="object"/>
+            </x-schema>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success respons"/>
+          </node>
+          <default>
+            <description value="如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+          </default>
+        </responses>
+      </put>
+      <summary value="在指定Bucket设定一个CORS的规则"/>
+      <x-requestformat value=" PUT /?cors HTTP/1.1 Date: GMT Date Content-Length：ContentLength Content-Type: application/xml Host: BucketName.oss-cn-hangzhou.aliyuncs.com Authorization: SignatureValue &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CORSConfiguration&gt; &lt;CORSRule&gt; &lt;AllowedOrigin&gt;the origin you want allow CORS request from&lt;/AllowedOrigin&gt; &lt;AllowedOrigin&gt;…&lt;/AllowedOrigin&gt; &lt;AllowedMethod&gt;HTTP method&lt;/AllowedMethod&gt; &lt;AllowedMethod&gt;…&lt;/AllowedMethod&gt; &lt;AllowedHeader&gt; headers that allowed browser to send&lt;/AllowedHeader&gt; &lt;AllowedHeader&gt;…&lt;/AllowedHeader&gt; &lt;ExposeHeader&gt; headers in response that can access from client app&lt;/ExposeHeader&gt; &lt;ExposeHeader&gt;…&lt;/ExposeHeader&gt; &lt;MaxAgeSeconds&gt;time to cache pre-fight response&lt;/MaxAgeSeconds&gt;     &lt;/CORSRule&gt; &lt;CORSRule&gt; … &lt;/CORSRule&gt; … &lt;/CORSConfiguration &gt;&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /?cors HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Content-Length: 186 Date: Fri, 04 May 2012 03:21:12 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA= &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CORSConfiguration&gt; &lt;CORSRule&gt; &lt;AllowedOrigin&gt;*&lt;/AllowedOrigin&gt; &lt;AllowedMethod&gt;PUT&lt;/AllowedMethod&gt; &lt;AllowedMethod&gt;GET&lt;/AllowedMethod&gt; &lt;AllowedHeader&gt;Authorization&lt;/AllowedHeader&gt; &lt;/CORSRule&gt; &lt;CORSRule&gt; &lt;AllowedOrigin&gt;http://www.a.com&lt;/AllowedOrigin&gt; &lt;AllowedOrigin&gt;http://www.b.com&lt;/AllowedOrigin&gt; &lt;AllowedMethod&gt;GET&lt;/AllowedMethod&gt; &lt;AllowedHeader&gt; Authorization&lt;/AllowedHeader&gt; &lt;ExposeHeader&gt;x-oss-test&lt;/ExposeHeader&gt; &lt;ExposeHeader&gt;x-oss-test1&lt;/ExposeHeader&gt; &lt;MaxAgeSeconds&gt;100&lt;/MaxAgeSeconds&gt; &lt;/CORSRule&gt; &lt;/CORSConfiguration &gt;&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 50519080C4689A033D00235F Date: Fri, 04 May 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="cs.aliyuncs.com"/>
+  <info>
+    <description value="容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。"/>
+    <title value="aliyun object api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/List Services/services/">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/xml"/>
+          <consumes value="application/json"/>
+        </consumes>
+        <description value="查看您在容器集群中创建的所有应用实例列表。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="服务名称"/>
+            <in value="query"/>
+            <name value="q"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="true"/>
+            <description value="是否包含服务的容器信息，缺省值 true"/>
+            <in value="query"/>
+            <name value="containers"/>
+            <required value="false"/>
+            <type value="boolean"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="OK"/>
+            <schema>
+              <items>
+                <x-schema>
+                  <properties>
+                    <containers>
+                      <description value="服务中所包含容器 key （容器id）/value（属性）"/>
+                      <items>
+                        <x-schema>
+                          <properties>
+                            <key>
+                              <description value="key-value"/>
+                              <name value="key"/>
+                              <type value="string"/>
+                            </key>
+                          </properties>
+                          <type value="object"/>
+                        </x-schema>
+                      </items>
+                      <name value="containers"/>
+                      <type value="array"/>
+                    </containers>
+                    <created>
+                      <description value="服务创建时间"/>
+                      <name value="created"/>
+                      <type value="string"/>
+                    </created>
+                    <current_state>
+                      <description value="当前状态"/>
+                      <name value="current_state"/>
+                      <type value="string"/>
+                    </current_state>
+                    <definition>
+                      <description value="Compose 中服务定义 key/value"/>
+                      <items>
+                        <x-schema>
+                          <properties>
+                            <key>
+                              <description value="key-value"/>
+                              <name value="key"/>
+                              <type value="string"/>
+                            </key>
+                          </properties>
+                          <type value="object"/>
+                        </x-schema>
+                      </items>
+                      <name value="definition"/>
+                      <type value="array"/>
+                    </definition>
+                    <desired_state>
+                      <description value="期望状态 （如果当前状态是中间状态时，期望状态指明变迁终态）"/>
+                      <name value="desired_state"/>
+                      <type value="string"/>
+                    </desired_state>
+                    <extensions>
+                      <description value="容器服务 Compose 中服务扩展 key/value"/>
+                      <items>
+                        <x-schema>
+                          <properties>
+                            <key>
+                              <description value="key-value"/>
+                              <name value="key"/>
+                              <type value="string"/>
+                            </key>
+                          </properties>
+                          <type value="object"/>
+                        </x-schema>
+                      </items>
+                      <name value="extensions"/>
+                      <type value="array"/>
+                    </extensions>
+                    <id>
+                      <description value="服务 ID"/>
+                      <name value="id"/>
+                      <type value="string"/>
+                    </id>
+                    <name>
+                      <description value="服务名称"/>
+                      <name value="name"/>
+                      <type value="string"/>
+                    </name>
+                    <project>
+                      <description value="应用名称"/>
+                      <name value="project"/>
+                      <type value="string"/>
+                    </project>
+                    <updated>
+                      <description value="服务更新时间"/>
+                      <name value="updated"/>
+                      <type value="string"/>
+                    </updated>
+                  </properties>
+                  <type value="object"/>
+                </x-schema>
+              </items>
+              <type value="array"/>
+            </schema>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查看服务实例列表"/>
+      <x-requestbody value="&#10;"/>
+      <x-requestheader value=" GET /services/ HTTP/1.1 "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET /services/ HTTP/1.1 "/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsebody value=" [ { &quot;id&quot;: &quot;string&quot;, &quot;name&quot;: &quot;string&quot;, &quot;project&quot;: &quot;string&quot;, &quot;description&quot;: &quot;string&quot;, &quot;created&quot;: &quot;datetime&quot;, &quot;updated&quot;: &quot;datetime&quot;, &quot;desired_state&quot;: &quot;string&quot;, &quot;current_state&quot;: &quot;string&quot;, &quot;definition&quot;: { &quot;key&quot;: &quot;value&quot;, ... }, &quot;extensions&quot;: { &quot;key&quot;: &quot;value&quot;, ... }, &quot;containers&quot;: { &quot;key&quot;: &quot;value&quot;, ... } }, ... ] "/>
+      <x-responseheader value=" HTTP/1.1 200 OK "/>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 Ok Content-Type:application/json;charset=UTF-8 [ { &quot;id&quot;: &quot;wordpress_db&quot;, &quot;name&quot;: &quot;db&quot;, &quot;project&quot;: &quot;wordpress&quot;, &quot;definition&quot;: { &quot;environment&quot;: [ &quot;MYSQL_ROOT_PASSWORD=password&quot; ], &quot;image&quot;: &quot;mysql:5.7&quot;, &quot;restart&quot;: &quot;always&quot; }, &quot;extensions&quot;: { &quot;scale&quot;: 1, &quot;logs&quot;: [ &quot;/var/log/mysql&quot; ] }, &quot;created&quot;: &quot;2016-04-21T13:36:32.440646459Z&quot;, &quot;updated&quot;: &quot;2016-04-21T13:36:33.270308958Z&quot;, &quot;desired_state&quot;: &quot;running&quot;, &quot;current_state&quot;: &quot;running&quot;, &quot;containers&quot;: { &quot;5616f05d27516b3502a391fd2ca9d312cabffa5ad431bf261ea81f4ceabd476e&quot;: { &quot;name&quot;: &quot;/wordpress_db_1&quot;, &quot;node&quot;: &quot;10.246.2.3&quot;, &quot;ip&quot;: &quot;10.0.0.2&quot;, &quot;running&quot;: true, &quot;status&quot;: &quot;running&quot;, &quot;health&quot;: &quot;success&quot; } } } ] "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Authorization"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Content-Length"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容类型。"/>
+            <in value="header"/>
+            <name value="Content-Type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。"/>
+            <in value="header"/>
+            <name value="Content-MD5"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="RFC 2616 中定义的 HTTP 请求内容长度。"/>
+            <in value="header"/>
+            <name value="Date"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="访问 Host 值，例如：diku.aliyuncs.com。"/>
+            <in value="header"/>
+            <name value="Host"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="客户端需要的返回值类型，支持application/json 和 application/xml。"/>
+            <enum nodeType="array">
+              <enum value="application/json"/>
+              <enum value="application/xml"/>
+            </enum>
+            <in value="header"/>
+            <name value="Accept"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。"/>
+            <in value="header"/>
+            <name value="x-acs-region-id"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。"/>
+            <in value="header"/>
+            <name value="x-acs-signature-nonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用户签名方式，目前只支持HMAC-SHA1。"/>
+            <enum nodeType="array">
+              <enum value="HMAC-SHA1"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-acs-signature-method"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

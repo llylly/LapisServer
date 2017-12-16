@@ -1,0 +1,145 @@
+host: "cs.aliyuncs.com"
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 容器服务（Container Service）提供高性能可伸缩的容器应用管理服务，支持用 Docker 容器进行应用生命周期管理，提供多种应用发布方式和持续交付能力并支持微服务架构。容器服务简化了容器管理集群的搭建工作，整合了阿里云虚拟化、存储、网络和安全能力，打造 Docker 云端最佳运行环境。
+    title: aliyun object api
+    version: '1.0'
+
+paths:
+    /public:
+        request:
+            parameters:
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Authorization
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Content-Length
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容类型。
+                in: header
+                name: Content-Type
+                required: true
+                type: string     
+            -   description:  用于验证请求合法性的认证信息，采用 AccessKeyId:Signature 的形式。
+                in: header
+                name: Content-MD5
+                required: true
+                type: string
+            -   description:  RFC 2616 中定义的 HTTP 请求内容长度。
+                in: header
+                name: Date
+                required: true
+                type: string
+            -   description:  访问 Host 值，例如：diku.aliyuncs.com。
+                in: header
+                name: Host
+                required: true
+                type: string 
+            -   description:  客户端需要的返回值类型，支持application/json 和 application/xml。
+                enum:
+                - application/json
+                - application/xml
+                in: header
+                name: Accept
+                required: true
+                type: string 
+            -   description:  地域（Region）指的是 ECS 实例所在的物理位置。更多详细信息参见 地域概念 和 ECS查询可用地域列表。
+                in: header
+                name: x-acs-region-id
+                required: true
+                type: string 
+            -   description:  唯一随机数，用于防止网络重放攻击。您在不同请求间要使用不同的随机数值。
+                in: header
+                name: x-acs-signature-nonce
+                required: true
+                type: string 
+            -   description:  用户签名方式，目前只支持HMAC-SHA1。
+                enum:
+                - HMAC-SHA1
+                in: header
+                name: x-acs-signature-method
+                required: true
+                type: string        
+        response:
+            RequestId:
+                description:  您发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string    
+    /Delete project/projects/{name}:
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        delete:
+            description: 根据应用名称，删除应用实例。
+
+            consumes:
+            - application/xml
+            - application/json
+            
+            parameters:
+            -   description: 应用实例名称。
+                name: name
+                in: path
+                required: true
+                type: string
+            -   description: 是否强制删除，可选值为 true、1 或 false、0，缺省为 false。
+                enum:
+                - 'true'
+                - 'false'
+                - '1'
+                - '0'
+                default: 'false'
+                name: force
+                in: query
+                required: false
+                type: string
+            -   description: 是否删除容器卷，可选值为 true、1 或 false、0，缺省为 false。
+                enum:
+                - 'true'
+                - 'false'
+                - '1'
+                - '0'
+                default: 'false'
+                name: volume
+                in: query
+                required: false
+                type: string
+
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: ok
+                                    
+
+        summary: 删除应用实例
+
+        x-requestheader: '
+                        DELETE /projects/{name}?force={force}&v={volume} HTTP/1.1
+
+                        '
+        x-requestbody: '
+                        
+                        '
+        x-responseheader: '
+                        HTTP/1.1 200 OK
+                        '
+        x-responsebody: '
+                       
+                        '
+        x-requestsample:  
+        -   description: '
+                        DELETE /projects/test HTTP/1.1
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        HTTP/1.1 200 OK
+                        '
+            id: 1

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/InitiateMultipartUpload/{ObjectName}?uploads">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="使用Multipart Upload模式传输数据前，必须先调用该接口来通知OSS初始化一个Multipart Upload事件。该接口会返回一个OSS服务器创建的全局唯一的Upload ID，用于标识本次Multipart Upload事件。用户可以根据这个ID来发起相关的操作，如中止Multipart Upload、查询Multipart Upload等。 1.&#9;该操作计算认证签名的时候，需要加“?uploads”到CanonicalizedResource中。 2.&#9;初始化Multipart Upload请求，支持如下标准的HTTP请求头：Cache-Control，ContentDisposition，Content-Encoding，Content-Type，Expires，以及以“x-oss-meta-”开头的用户自定义Headers。具体含义请参见PUT Object接口。 3.&#9;初始化Multipart Upload请求，并不会影响已经存在的同名object。 4.&#9;服务器收到初始化Multipart Upload请求后，会返回一个XML格式的请求体。该请求体内有三个元素：Bucket，Key和UploadID。请记录下其中的UploadID，以用于后续的Multipart相关操作。 5.&#9;初始化Multipart Upload请求时，若设置了x-oss-server-side-encryption Header，则在响应头中会返回该Header，并且在上传的每个part时，服务端会自动对每个part进行熵编码加密存储，目前OSS服务器端只支持256位高级加密标准（AES256），指定其他值会返回400和相应的错误提示：InvalidEncryptionAlgorithmError；在上传每个part时不必再添加x-oss-server-sideencryption 请求头，若指定该请求头则OSS会返回400和相应的错误提示：InvalidArgument。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定对返回的Key进行编码，目前支持url编码。Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于Key中包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Key进行编码。 数据类型：字符串 默认值：无,可选值：url"/>
+            <enum nodeType="array">
+              <enum value="url"/>
+            </enum>
+            <in value="query"/>
+            <name value="encoding-type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定该Object被下载时的网页的缓存行为；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="Cache-Control"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定该Object被下载时的名称；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="Content-Disposition"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定该Object被下载时的内容编码格式；更详细描述请参照 RFC2616 。    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="Content-Encoding"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="过期时间（milliseconds）；更详细描述请参照 RFC2616 。    类型：整数    默认值：无"/>
+            <in value="header"/>
+            <name value="Expires"/>
+            <required value="true"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <description value="指定上传该Object每个part时使用的服务器端加密编码算法，OSS会对上传的每个part采用服务器端加密编码进行存储。    类型：字符串    合法值：AES256"/>
+            <enum nodeType="array">
+              <enum value="AES256"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-oss-server-side-encryption"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <EncodingType>
+                  <description value="指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那返回的结果会对Key进行编码。类型：字符串 父节点：容器"/>
+                  <in value="formData"/>
+                  <name value="EncodingType"/>
+                  <type value="string"/>
+                </EncodingType>
+                <InitiateMultipartUploadResult>
+                  <description value="保存Initiate   Multipart Upload请求结果的容器。    类型：容器    子节点：Bucket,   Key, UploadId    父节点：None"/>
+                  <in value="formData"/>
+                  <name value="InitiateMultipartUploadResult"/>
+                  <properties>
+                    <Bucket>
+                      <description value="初始化一个Multipart   Upload事件的Bucket名称。    类型：字符串    父节点：InitiateMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="Bucket"/>
+                      <type value="string"/>
+                    </Bucket>
+                    <Key>
+                      <description value="初始化一个Multipart   Upload事件的Object名称。    类型：字符串    父节点：InitiateMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="Key"/>
+                      <type value="string"/>
+                    </Key>
+                    <UploadId>
+                      <description value="唯一标示此次Multipart   Upload事件的ID。    类型：字符串    父节点：InitiateMultipartUploadResult"/>
+                      <in value="formData"/>
+                      <name value="UploadId"/>
+                      <type value="string"/>
+                    </UploadId>
+                  </properties>
+                  <type value="object"/>
+                </InitiateMultipartUploadResult>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+        </responses>
+      </get>
+      <summary value="初始化MultipartUpload事件"/>
+      <x-requestformat value=" POST /ObjectName?uploads HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" POST /multipart.data?uploads HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Wed, 22 Feb 2012 08:32:21 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:/cluRFtRwMTZpC2hTj4F67AGdM4=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Content-Length: 230 Server: AliyunOSS Connection: keep-alive x-oss-request-id: 42c25703-7503-fbd8-670a-bda01eaec618 Date: Wed, 22 Feb 2012 08:32:21 GMT Content-Type: application/xml &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;InitiateMultipartUploadResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Bucket&gt; multipart_upload&lt;/Bucket&gt; &lt;Key&gt;multipart.data&lt;/Key&gt; &lt;UploadId&gt;0004B9894A22E5B1888A1E29F8236E2D&lt;/UploadId&gt; &lt;/InitiateMultipartUploadResult&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>
