@@ -19,6 +19,7 @@ $(function () {
         <div class="row">
             <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="new_file_trigger_btn">New File</a>
             <a href="#" class="btn btn-primary btn-block" style="margin:5pt;" id="import_trigger_btn">Import</a>
+            <input type="text" class="input-block-level search-query" style="margin:5pt;" placeholder="search" id="filelist_search">
         </div>
         <div class="mainpage-filelist">
         </div>
@@ -42,14 +43,27 @@ $(function () {
 {#            </div>#}
         </div>
 
-        <div id="script_area"></div>
+        <div class="tabbable tabs-below" id="script_area_frame">
+            <div class="tab-content" id="script_area_subframe">
+                <div class="tab-pane active" id="script_area"></div>
+                <div class="tab-pane" id="transed_script_area"></div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#script_area" data-toggle="tab" class="codetabs">YAML</a>
+                </li>
+                <li id="xml_tab">
+                    <a href="#transed_script_area" data-toggle="tab" id="xml_toggle_btn" class="codetabs">XML (Read Only)</a>
+                </li>
+            </ul>
+        </div>
 
         <div class="row" style="margin: 10pt">
-            <span style="float: left; margin-left: 0">
-                Script format: <br>
-                <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON
-                <input type="radio" name='format_type' id="XML-radio" style="margin-left: 20pt">&nbsp;XML
-            </span>
+{#            <span style="float: left; margin-left: 0">#}
+{#                Script format: <br>#}
+{#                <input type="radio" name='format_type' id="YAML-radio" checked>&nbsp;YAML or JSON#}
+{#                <input type="radio" name='format_type' id="XML-radio" style="margin-left: 20pt">&nbsp;XML#}
+{#            </span>#}
             <span class="span2 pull-right" style="margin-right: 0; margin-left: 0">
                 <a class="btn btn-primary btn-block" id="parse_btn">Parse</a>
                 <a class="btn btn-success btn-block" id="save_btn">Save</a>
@@ -106,15 +120,15 @@ $(function () {
             </div>
         </div>
 
-        <div class="panel panel-null" id="transform_ops">
-            <div class="panel-body">
-                <div class="row">
-                    <div style="width: 30%; margin-left: 70%">
-                        <a id="transform_btn" class="btn btn-primary btn-block btn-success">Transform to Another Format</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+{#        <div class="panel panel-null" id="transform_ops">#}
+{#            <div class="panel-body">#}
+{#                <div class="row">#}
+{#                    <div style="width: 30%; margin-left: 70%">#}
+{#                        <a id="transform_btn" class="btn btn-primary btn-block btn-success">Transform to Another Format</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 
         <div class="panel panel-null" id="basic_info_panel">
             <div class="panel-heading">
@@ -238,9 +252,9 @@ $(function () {
             <h3>Import Files</h3>
         </div>
         <div class="modal-body">
-            We support XML, YAML format single files import and ZIP bundles import.
+            We support YAML format single files import and ZIP bundles import.
             <br>
-            In bundle import, all XML and YAML files are extracted recursively.
+            In bundle import, all YAML files are extracted recursively.
             <br>
             Size limit: 10M
             <br>

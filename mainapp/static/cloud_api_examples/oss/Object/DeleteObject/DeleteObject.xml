@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/DeleteObject/{ObjectName}">
+      <delete>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="DeleteObject用于删除某个Object。 1.&#9;DeleteObject要求对该Object要有写权限。 2.&#9;如果要删除的Object不存在，OSS也返回状态码204（ No Content）。 3.&#9;如果Bucket不存在，返回404 Not Found。 4.&#9;如果文件类型为符号链接，只删除符号链接自身。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+          </node>
+          <node nodeName="204">
+            <description value="如果要删除的Object不存在，OSS也返回状态码204（ No Content）"/>
+          </node>
+          <node nodeName="400">
+            <description value="如果Bucket不存在，返回404 Not Found。"/>
+          </node>
+        </responses>
+      </delete>
+      <summary value="在Object尾追加上传数据"/>
+      <x-requestformat value=" DELETE /ObjectName HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" DELETE /copy_oss.jpg HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 07:45:28 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:zUglwRPGkbByZxm1+y4eyu+NIUs=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 204 NoContent x-oss-request-id: 559CC9BDC755F95A64485981 Date: Fri, 24 Feb 2012 07:45:28 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

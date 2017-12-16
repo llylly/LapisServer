@@ -201,6 +201,11 @@ $(function(){
             }
         )
     });
+
+    $('#filelist_search').keyup(function() {
+        console.log($('#filelist_search').val());
+        update_fileview();
+    });
 });
 
 function get_status() {
@@ -263,13 +268,15 @@ function bar_update() {
 
 function update_fileview() {
     str = "";
-    for (i in files) {
-        fname = files[i];
-        str += '<div class="item">' +
-            '<a href="#" class="fload" data-filename="' + fname + '">' + fname + '</a>' +
-            '<a href="#" class="btn btn-small btn-danger pull-right fdelete" data-filename="' + fname + '">Delete</a>' +
-            '<a href="#" class="btn btn-small btn-primary pull-right frename" data-filename="' + fname + '">Rename</a></div>';
-    }
+    search_text = $('#filelist_search').val();
+    for (i in files)
+        if ((files[i].toLowerCase().indexOf(search_text.toLowerCase()) != -1) || (search_text == '')) {
+            fname = files[i];
+            str += '<div class="item">' +
+                '<a href="#" class="fload" data-filename="' + fname + '">' + fname + '</a>' +
+                '<a href="#" class="btn btn-small btn-danger pull-right fdelete" data-filename="' + fname + '">Delete</a>' +
+                '<a href="#" class="btn btn-small btn-primary pull-right frename" data-filename="' + fname + '">Rename</a></div>';
+        }
     $(".mainpage-filelist").html(str);
     $('.mainpage-filediv .item .btn-small').hide();
     $('.mainpage-filediv .item').hover(
@@ -297,6 +304,8 @@ function update_fileview() {
                         $('#filename_span').html(filename);
                         editor.setValue(data.script);
                         $('#filename_astar').hide();
+                        editor.resize();
+                        realtime_transform();
                         change_flag = false;
                         bold_update();
                     }

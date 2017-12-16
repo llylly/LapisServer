@@ -113,9 +113,50 @@ def script_transform(request):
     with open(transres_path, str('r')) as f:
         result = json.load(f)
     if result['success']:
+        with open(out_path) as f:
+            transed_script = f.read()
         return JsonResponse({'code': 200,
                              'link': '/api/script_download?session={}&format={}'
-                            .format(session, out_file.rsplit('.', 1)[1].upper())})
+                            .format(session, out_file.rsplit('.', 1)[1].upper()),
+                             'script': transed_script})
+    else:
+        return JsonResponse({'code': 204, 'msg': 'Transform error.', 'result': result})
+
+
+def realtime_script_transform(request):
+    '''
+        Only for YAML -> XML
+    '''
+    session = request.POST.get('session', None)
+    if (session is None) or (str(session) not in sessions):
+        return JsonResponse({'code': 201, 'msg': 'Illegal session.'})
+    session = str(session)
+    text = request.POST.get('text', None)
+    if text is None:
+        return JsonResponse({'code': 203, 'msg': 'No \'text\' sepcified.'})
+
+    dir_name = os.path.join(swap_dir, session)
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+    script_path = os.path.join(dir_name, 'realtime_script.yaml')
+    transres_path = os.path.join(dir_name, 'realtime_script.json')
+    out_path = os.path.join(dir_name, 'realtime_script.xml')
+    with open(script_path, str('w')) as f:
+        f.write(text.encode('utf-8'))
+
+    outs = os.popen(
+        str('{} {}/transformer.py --source {} --msgpath {} --out {}'.format(settings.WORKER_CMD, worker_dir,
+                                                                            script_path, transres_path, out_path))
+    )
+    for o in outs:
+        print(o)
+    with open(transres_path, str('r')) as f:
+        result = json.load(f)
+    if result['success']:
+        with open(out_path) as f:
+            transed_script = f.read()
+        return JsonResponse({'code': 200,
+                             'script': transed_script})
     else:
         return JsonResponse({'code': 204, 'msg': 'Transform error.', 'result': result})
 

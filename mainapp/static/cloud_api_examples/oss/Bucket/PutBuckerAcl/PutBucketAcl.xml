@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucketAcl/?acl">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Put Bucket ACL接口用于修改Bucket访问权限。目前Bucket有三种访问权限：public-read-write，publicread和private。Put Bucket ACL操作通过Put请求中的“x-oss-acl”头来设置。这个操作只有该Bucket的创建者有权限执行。如果操作成功，则返回200；否则返回相应的错误码和提示信息。 1.&#9;如果bucket存在，发送时带的权限和已有权限不一样，并且请求发送者是bucket拥有者时。该请求不会改变bucket内容，但是会更新权限。 2.&#9;如果用户发起Put Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。 3.&#9;如果请求中没有，“x-oss-acl”头，并且该bucket已存在，并属于该请求发起者，则维持原 bucket权限不变。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <properties/>
+          </node>
+          <node nodeName="400">
+            <description value="如果该设置的权限不存在，示例400 Bad Request消息"/>
+          </node>
+          <node nodeName="403">
+            <description value="如果用户发起Put Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。"/>
+          </node>
+        </responses>
+      </put>
+      <summary value="设置Bucket访问权限"/>
+      <x-requestformat value=" PUT / HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date x-oss-acl: Permission Authorization: SignatureValue &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CreateBucketConfiguration&gt; &lt;LocationConstraint&gt;BucketRegion&lt;/LocationConstraint&gt; &lt;/CreateBucketConfiguration&gt; "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="1"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 400 Bad Request x-oss-request-id: 56594298207FB304438516F9 Date: Fri, 24 Feb 2012 03:55:00 GMT Content-Length: 309 Content-Type: text/xml; charset=UTF-8 Connection: keep-alive Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;Error&gt; &lt;Code&gt;InvalidArgument&lt;/Code&gt; &lt;Message&gt;no such bucket access control exists&lt;/Message&gt; &lt;RequestId&gt;56594298207FB304438516F9&lt;/RequestId&gt; &lt;HostId&gt;leo.oss-test.aliyun-inc.com&lt;/HostId&gt; &lt;ArgumentName&gt;x-oss-acl&lt;/ArgumentName&gt; &lt;ArgumentValue&gt;error-acl&lt;/ArgumentValue&gt; &lt;/Error&gt;&#10;"/>
+          <id value="2"/>
+          <note value="如果该设置的权限不存在，示例400 Bad Request消息"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

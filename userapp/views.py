@@ -144,6 +144,7 @@ def get_filelist(request):
     for f in files:
         if os.path.exists(os.path.join(user_dir, userid, f, 'meta.txt')):
             legal_files.append(f)
+    legal_files = sorted(legal_files)
     return JsonResponse({'code': '200', 'result': legal_files})
 
 
@@ -281,7 +282,8 @@ def file_import(request):
     _traverse_move(origin_dir, decompressed_dir, ['.yaml', '.xml'])
     dec_files = os.listdir(decompressed_dir)
     for fname in dec_files:
-        if fname.endswith('.yaml') or fname.endswith('.xml'):
+        # if fname.endswith('.yaml') or fname.endswith('.xml'):
+        if fname.endswith('.yaml'):
             with open(os.path.join(decompressed_dir, fname)) as f:
                 script = f.read().decode('utf-8')
             _save_file(user_dir, userid, fname.rsplit('.', 2)[0], script)

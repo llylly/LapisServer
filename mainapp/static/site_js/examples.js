@@ -3,6 +3,7 @@
  */
 
 example = null;
+var yamlEditor = null, xmlEditor = null, mdEditor = null;
 var vEditor = null, sEditor = null;
 
 $(function(){
@@ -21,19 +22,60 @@ $(function(){
         }
     );
 
-    vEditor = ace.edit("example_view_area");
-    vEditor.setTheme("ace/theme/xcode");
-    vEditor.getSession().setMode("ace/mode/yaml");
-    vEditor.setHighlightActiveLine(true);
-    vEditor.getSession().setUseWrapMode(true);
-    vEditor.setReadOnly(true);
+    yamlEditor = ace.edit("yaml_content");
+    yamlEditor.setTheme("ace/theme/xcode");
+    yamlEditor.getSession().setMode("ace/mode/yaml");
+    yamlEditor.setHighlightActiveLine(true);
+    yamlEditor.getSession().setUseWrapMode(true);
+    yamlEditor.setReadOnly(true);
 
-    sEditor = ace.edit("example_sup_area");
-    sEditor.setTheme("ace/theme/xcode");
-    sEditor.getSession().setMode("ace/mode/yaml");
-    sEditor.setHighlightActiveLine(true);
-    sEditor.getSession().setUseWrapMode(true);
-    sEditor.setReadOnly(true);
+    xmlEditor = ace.edit("xml_content");
+    xmlEditor.setTheme("ace/theme/xcode");
+    xmlEditor.getSession().setMode("ace/mode/xml");
+    xmlEditor.setHighlightActiveLine(true);
+    xmlEditor.getSession().setUseWrapMode(true);
+    xmlEditor.setReadOnly(true);
+
+    mdEditor = ace.edit("md_content");
+    mdEditor.setTheme("ace/theme/xcode");
+    mdEditor.getSession().setMode("ace/mode/yaml");
+    mdEditor.setHighlightActiveLine(true);
+    mdEditor.getSession().setUseWrapMode(true);
+    mdEditor.setReadOnly(true);
+
+    yamlEditor.setShowPrintMargin(false);
+    xmlEditor.setShowPrintMargin(false);
+    mdEditor.setShowPrintMargin(false);
+
+    // vEditor = ace.edit("example_view_area");
+    // vEditor.setTheme("ace/theme/xcode");
+    // vEditor.getSession().setMode("ace/mode/yaml");
+    // vEditor.setHighlightActiveLine(true);
+    // vEditor.getSession().setUseWrapMode(true);
+    // vEditor.setReadOnly(true);
+    //
+    // sEditor = ace.edit("example_sup_area");
+    // sEditor.setTheme("ace/theme/xcode");
+    // sEditor.getSession().setMode("ace/mode/yaml");
+    // sEditor.setHighlightActiveLine(true);
+    // sEditor.getSession().setUseWrapMode(true);
+    // sEditor.setReadOnly(true);
+
+    $('#yaml_tab').removeClass('active').hide();
+    $('#xml_tab').removeClass('active').hide();
+    $('#md_tab').removeClass('active').hide();
+    $('#yaml_content').removeClass('active').addClass('fade');
+    $('#xml_content').removeClass('active').addClass('fade');
+    $('#md_content').removeClass('active').addClass('fade');
+
+    $('.codetabs').click(function() {
+        func = function() {
+            yamlEditor.resize();
+            xmlEditor.resize();
+            mdEditor.resize();
+        };
+        setTimeout(func, 10);
+    })
 });
 
 function refresh_loadlink() {
@@ -49,14 +91,56 @@ function refresh_loadlink() {
                         alert(data.msg);
                     else {
                         $("#example_name_div").html(data.path);
-                        vEditor.setValue(data.script, 1);
-                        if (data.format == 'yaml')
-                            vEditor.getSession().setMode("ace/mode/yaml");
-                        if (data.format == 'xml')
-                            vEditor.getSession().setMode("ace/mode/xml");
-                        if (data.format == 'md')
-                            vEditor.getSession().setMode("ace/mode/yaml");
-                        sEditor.setValue(data.supplement, 1);
+
+                        $('#yaml_tab').removeClass('active').hide();
+                        $('#xml_tab').removeClass('active').hide();
+                        $('#md_tab').removeClass('active').hide();
+                        $('#yaml_content').removeClass('active').addClass('fade');
+                        $('#xml_content').removeClass('active').addClass('fade');
+                        $('#md_content').removeClass('active').addClass('fade');
+
+                        avail = '';
+
+                        if ('yaml' in data) {
+                            if (avail == '') avail = 'yaml';
+                            yamlEditor.getSession().setValue(data.yaml);
+                            $('#yaml_tab').show();
+                            $('#yaml_content').removeClass('fade');
+                        }
+                        if ('xml' in data) {
+                            if (avail == '') avail = 'xml';
+                            xmlEditor.getSession().setValue(data.xml);
+                            $('#xml_tab').show();
+                            $('#xml_content').removeClass('fade');
+                        }
+                        if ('md' in data) {
+                            if (avail == '') avail = 'md';
+                            mdEditor.getSession().setValue(data.md);
+                            $('#md_tab').show();
+                            $('#md_content').removeClass('fade');
+                        }
+
+                        if (avail == 'yaml') {
+                            $('#yaml_tab').addClass('active');
+                            $('#yaml_content').addClass('active');
+                        }
+                        if (avail == 'xml') {
+                            $('#xml_tab').addClass('active');
+                            $('#xml_content').addClass('active');
+                        }
+                        if (avail == 'md') {
+                            $('#md_tab').addClass('active');
+                            $('#md_content').addClass('active');
+                        }
+
+                        // vEditor.setValue(data.script, 1);
+                        // if (data.format == 'yaml')
+                        //     vEditor.getSession().setMode("ace/mode/yaml");
+                        // if (data.format == 'xml')
+                        //     vEditor.getSession().setMode("ace/mode/xml");
+                        // if (data.format == 'md')
+                        //     vEditor.getSession().setMode("ace/mode/yaml");
+                        // sEditor.setValue(data.supplement, 1);
                     }
                 }
             }
@@ -75,20 +159,23 @@ function load_example(obj, indent, index) {
     var ans = '';
     var son_dir = obj.sondir;
     for (key in son_dir) {
-        if (typeof(son_dir[key]) == 'object') {
-            compress = '';
-            if ('compress' in son_dir[key])
-                compress = '&nbsp;<a class="pull-right" href="/download_cloud_api_examples?path=' + son_dir[key].compress + '">' + '[Download]' + '</a>';
+        compress = '';
+        if ('compress' in son_dir[key])
+            compress = '&nbsp;<a class="pull-right" href="/download_cloud_api_examples?path=' + son_dir[key].compress + '">' + '[Download]' + '</a>';
+
+        if (!son_dir[key].file) {
             ++index;
-            ans += get_indent(indent) + '<i class="icon-th-list"></i>&nbsp;' + '<span class="btn-link" data-toggle="collapse" data-target="#example_' + String(index) + '">' + key+ '</span>'+ compress;
+            ans += '<div>' + get_indent(indent) + '<i class="icon-th-list"></i>&nbsp;' +
+                '<a class="btn-link load_example" href="#" data-toggle="collapse" data-path="'+ son_dir[key].name + '"data-target="#example_' + String(index) + '">' + key+ '</a>'+ compress
+                + '</div>';
             ans += '<div id="example_' + String(index) + '" class="collapse">';
             tmp = load_example(son_dir[key], indent + 1, index);
             ans += tmp.text;
             ans += '</div>';
             index = tmp.index;
         } else {
-            ans += get_indent(indent) + '<a class="btn-link load_example" href="#" data-path="'+ son_dir[key] + '">' + key + '</a>' +
-                '&nbsp;<a class="pull-right" href="/download_cloud_api_examples?path=' + son_dir[key] + '">' + '[Download]' + '</a><br>';
+            ans += '<div>' + get_indent(indent) + '<a class="btn-link load_example" href="#" data-path="'+ son_dir[key].name + '">' + key + '</a>' + compress
+                + '</div>';
         }
 
     }

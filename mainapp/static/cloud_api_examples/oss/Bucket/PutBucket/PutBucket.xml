@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucket">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="PutBucket用于创建Bucket（不支持匿名访问）。默认情况下，创建的Bucket所在的Region和发送请求的Endpoint所对应的Region一致，用户可以在请求的body中显式指定Bucket位于的数据中心，从而最优化延迟，最小化费用或者满足监管要求等。Bucket所在的数据中心确定后，该Bucket下的所有Object将一直存放在对应的地区。更多内容参见Bucket和数据中心。 1.&#9;可以Put请求中的“x-oss-acl”头来设置Bucket 访问权限。目前Bucket有三种访问权限：publicread-write，public-read和private。 2.&#9;当用户通过oss默认的域名创建Bucket时，可以不指定Bucket的数据中心（请求body为空），这时 oss将为其指定默认的数据中心oss-cn-hangzhou。另外，此时用户还可以设置该Bucket所在的数据中心为合法数据中心值中的任意一个。 3.&#9;若创建Bucket时指定的数据中心值非法，返回400，错误码 InvalidLocationConstraint。 4.&#9;若指定的数据中心与请求的终端域名不一致，返回400，错误码：IllegalLocationConstraintException。 5.&#9;已经存在的Bucket不允许修改数据中心，否则会返回409 Conflict，错误信息：Bucket already exists can't modify location。 6.&#9;如果请求的Bucket已经存在，并且请求者是所有者，同样返回200 OK成功。 7.&#9;如果请求的Bucket已经存在，但是不是请求者所拥有的，返回409 Conflict。错误码：BucketAlreadyExists。 8.&#9;如果想创建的Bucket不符合命名规范，返回400 Bad Request消息。错误码：InvalidBucketName。 9.&#9;如果用户发起PUT Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。 10.&#9;如果PutBucket的时候发现已经超过bucket最大创建数——10时，返回400 Bad Request消息。错误码：TooManyBuckets。 11.&#9;创建的Bucket，如果没有指定访问权限，则默认使用“Private”权限。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="限定返回的bucket name必须以prefix作为前缀，可以不设定，不设定时不过滤前缀信息数据 类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="CreateBucketConfiguration"/>
+            <required value="false"/>
+            <type value="object"/>
+            <x-schema>
+              <properties>
+                <LocationConstraint>
+                  <default value="oss-cn-hangzhou"/>
+                  <description value="指定Bucket所在的数据中心，关于数据中心和终端域名的更多内容，参见访问域名和数据中心。类型：枚举 合法值：oss-cn-hangzhou、oss-cn-qingdao、 oss-cn-beijing、oss-cn-hongkong、oss-cnshenzhen、oss-cn-shanghai、oss-us-west-1、oss-ap-southeast-1 默认值：oss-cn-hangzhou 父节点：CreateBucketConfiguration"/>
+                  <enum nodeType="array">
+                    <enum value="oss-cn-hangzhou"/>
+                    <enum value="oss-cn-qingdao"/>
+                    <enum value="oss-cn-beijing"/>
+                    <enum value="oss-cn-hongkong"/>
+                    <enum value="oss-cnshenzhen"/>
+                    <enum value="oss-cn-shanghai"/>
+                    <enum value="oss-us-west-1"/>
+                    <enum value="oss-ap-southeast-1"/>
+                  </enum>
+                  <in value="query"/>
+                  <name value="CreateBucketConfiguration"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </LocationConstraint>
+              </properties>
+              <type value="object"/>
+            </x-schema>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <properties/>
+          </node>
+          <node nodeName="400">
+            <description value="若创建Bucket时指定的数据中心值非法，返回400，错误码 InvalidLocationConstraint; 如果想创建的Bucket不符合命名规范，返回400 Bad Request消息。错误码：InvalidBucketName; 如果PutBucket的时候发现已经超过bucket最大创建数——10时，返回400 Bad Request消息。错误码：TooManyBuckets。"/>
+          </node>
+          <node nodeName="403">
+            <description value="如果用户发起PUT Bucket请求的时候，没有传入用户验证信息，返回403 Forbidden消息。错误码：AccessDenied。"/>
+          </node>
+          <node nodeName="409">
+            <description value="已经存在的Bucket不允许修改数据中心，否则会返回409 Conflict，错误信息：Bucket already exists can't modify location; 如果请求的Bucket已经存在，但是不是请求者所拥有的，返回409 Conflict。错误码：BucketAlreadyExists。"/>
+          </node>
+        </responses>
+      </put>
+      <summary value="创建Bucket"/>
+      <x-requestformat value=" PUT / HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date x-oss-acl: Permission Authorization: SignatureValue &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CreateBucketConfiguration&gt; &lt;LocationConstraint&gt;BucketRegion&lt;/LocationConstraint&gt; &lt;/CreateBucketConfiguration&gt; "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT / HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 03:15:40 GMT x-oss-acl: private Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:77Dvh5wQgIjWjwO/KyRt8dOPfo8= &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CreateBucketConfiguration &gt; &lt;LocationConstraint &gt;oss-cn-hangzhou&lt;/LocationConstraint &gt; &lt;/CreateBucketConfiguration &gt;&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 03:15:40 GMT Location: /oss-example Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

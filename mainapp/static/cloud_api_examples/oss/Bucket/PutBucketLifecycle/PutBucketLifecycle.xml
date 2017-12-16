@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <describe value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucketLifecycle/?lifecycle">
+      <produces nodeType="array">
+        <produces value="text/xml"/>
+      </produces>
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <describe value="Bucket的拥有者可以通过Put Bucket Lifecycle来设置Bucket的Lifecycle配置。Lifecycle开启后，OSS将按照配置，定期自动删除与Lifecycle规则相匹配的Object。 1.&#9;只有Bucket的拥有者才能发起Put Bucket Lifecycle请求，否则返回403 Forbidden消息。错误码：AccessDenied。 2.&#9;如果此前没有设置过Lifecycle，此操作会创建一个新的Lifecycle配置；否则，就覆写先前的配置。 3.&#9;可以对Object设置过期时间，也可以对Part设置过期时间。这里的Part指的是以分片上传方式上传，但最后未提交的分片。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <describe value="Lifecycle配置的容器，最多可容纳1000条规则。  类型：容器  子节点：Rule  父节点：无"/>
+            <in value="formData"/>
+            <maximum value="1000"/>
+            <name value="LifecycleConfiguration"/>
+            <required value="true"/>
+            <schema>
+              <properties>
+                <Rule>
+                  <describe value="表述一条规则  类型：容器  子节点：ID，Prefix，Status，Expiration  父节点：LifecycleConfiguration"/>
+                  <enum nodeType="array">
+                    <enum value="Prefix"/>
+                  </enum>
+                  <in value="formData"/>
+                  <name value="Rule"/>
+                  <required value="true"/>
+                  <schema>
+                    <properties>
+                      <AbortMultipartUpload>
+                        <describe value="指定未完成的Part规则的过期属性。  类型：容器  子节点：Days或CreatedBeforeDate   父节点：Rule"/>
+                        <in value="formData"/>
+                        <name value="AbortMultipartUpload"/>
+                        <required value="false"/>
+                        <schema>
+                          <properties>
+                            <CreatedBeforeDate>
+                              <describe value="指定规则何时之前生效。日期必需服从ISO8601的格式，并且总是UTC的零点。 例如：2002-10-11T00:00:00.000Z 类型：字符串 父节点：Expiration或者AbortMultipartUpload"/>
+                              <in value="formData"/>
+                              <name value="CreatedBeforeDate"/>
+                              <required value="false"/>
+                              <type value="string"/>
+                            </CreatedBeforeDate>
+                            <Days>
+                              <describe value="指定规则在对象最后修改时间过后多少天生效。  类型：正整数  父节点：Expiration"/>
+                              <in value="formData"/>
+                              <name value="Days"/>
+                              <required value="false"/>
+                              <type value="integer"/>
+                            </Days>
+                          </properties>
+                        </schema>
+                        <type value="object"/>
+                      </AbortMultipartUpload>
+                      <Expiration>
+                        <describe value="指定Object规则的过期属性。  类型：容器  子节点：Days或CreatedBeforeDate  父节点：Rule"/>
+                        <in value="formData"/>
+                        <name value="Expiration"/>
+                        <required value="false"/>
+                        <schema>
+                          <properties>
+                            <CreatedBeforeDate>
+                              <describe value="指定规则何时之前生效。日期必需服从ISO8601的格式，并且总是UTC的零点。 例如：2002-10-11T00:00:00.000Z 类型：字符串 父节点：Expiration或者AbortMultipartUpload"/>
+                              <in value="formData"/>
+                              <name value="CreatedBeforeDate"/>
+                              <required value="false"/>
+                              <type value="string"/>
+                            </CreatedBeforeDate>
+                            <Days>
+                              <describe value="指定规则在对象最后修改时间过后多少天生效。  类型：正整数  父节点：Expiration"/>
+                              <in value="formData"/>
+                              <name value="Days"/>
+                              <required value="false"/>
+                              <type value="integer"/>
+                            </Days>
+                          </properties>
+                        </schema>
+                        <type value="object"/>
+                      </Expiration>
+                      <ID>
+                        <describe value="规则唯一的ID。最多由255字节组成。当用户没有指定，或者该值为空时，OSS会为用户生成一个唯一值。  类型：字符串  子节点：无  父节点：Rule"/>
+                        <in value="formData"/>
+                        <maxLength value="255"/>
+                        <name value="ID"/>
+                        <required value="false"/>
+                        <type value="string"/>
+                      </ID>
+                      <Prefix>
+                        <describe value="指定规则所适用的前缀。只有匹配前缀的对象才可能被该规则所影响。不可重叠。  类型：字符串  子节点：无  父节点：Rule"/>
+                        <in value="formData"/>
+                        <name value="Prefix"/>
+                        <required value="true"/>
+                        <type value="string"/>
+                      </Prefix>
+                      <Status>
+                        <describe value="如果其值为Enabled，那么OSS会定期执行该规则；如果是Disabled，那么OSS会忽略该规则。  类型：字符串  父节点：Rule  有效值：Enabled，Disabled"/>
+                        <enum nodeType="array">
+                          <enum value="Enabled"/>
+                          <enum value="Disabled"/>
+                          <enum value="Enabled"/>
+                          <enum value="Disabled"/>
+                        </enum>
+                        <in value="formData"/>
+                        <name value="Status"/>
+                        <required value="true"/>
+                        <type value="string"/>
+                      </Status>
+                    </properties>
+                    <type value="object"/>
+                  </schema>
+                  <type value="object"/>
+                </Rule>
+              </properties>
+              <type value="object"/>
+            </schema>
+            <type value="object"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <properties/>
+          </node>
+          <node nodeName="403">
+            <description value="只有Bucket的拥有者才能发起Put Bucket Lifecycle请求，否则返回403 Forbidden消息。错误码：AccessDenied。"/>
+          </node>
+        </responses>
+      </put>
+      <summary value="设置Bucket中Object的生命周期规则"/>
+      <x-requestformat value=" PUT /?lifecycle HTTP/1.1 Date: GMT Date Content-Length：ContentLength Content-Type: application/xml Authorization: SignatureValue Host: BucketName.oss.aliyuncs.com &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;LifecycleConfiguration&gt; &lt;Rule&gt; &lt;ID&gt;RuleID&lt;/ID&gt; &lt;Prefix&gt;Prefix&lt;/Prefix&gt; &lt;Status&gt;Status&lt;/Status&gt; &lt;Expiration&gt; &lt;Days&gt;Days&lt;/Days&gt; &lt;/Expiration&gt; &lt;AbortMultipartUpload&gt; &lt;Days&gt;Days&lt;/Days&gt; &lt;/AbortMultipartUpload&gt; &lt;/Rule&gt; &lt;/LifecycleConfiguration&gt;&#10;&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /?lifecycle HTTP/1.1 Host: oss-example.oss.aliyuncs.com Content-Length: 443 Date: Mon, 14 Apr 2014 01:08:38 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA= &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;/LifecycleConfiguration&gt; &lt;Rule&gt; &lt;ID&gt;delete objects and parts after one day&lt;/ID&gt; &lt;Prefix&gt;logs/&lt;/Prefix&gt; &lt;Status&gt;Enabled&lt;/Status&gt; &lt;Expiration&gt; &lt;Days&gt;1&lt;/Days&gt; &lt;/Expiration&gt; &lt;AbortMultipartUpload&gt; &lt;Days&gt;1&lt;/Days&gt; &lt;/AbortMultipartUpload&gt; &lt;/Rule&gt; &lt;Rule&gt; &lt;ID&gt;delete created before date&lt;/ID&gt; &lt;Prefix&gt;backup/&lt;/Prefix&gt; &lt;Status&gt;Enabled&lt;/Status&gt; &lt;Expiration&gt; &lt;CreatedBeforeDate&gt;2014-10-11T00:00:00.000Z&lt;/CreatedBeforeDate&gt; &lt;/Expiration&gt; &lt;AbortMultipartUpload&gt; &lt;CreatedBeforeDate&gt;2014-10-11T00:00:00.000Z&lt;/CreatedBeforeDate&gt; &lt;/AbortMultipartUpload&gt; &lt;/Rule&gt; &lt;/LifecycleConfiguration&gt;&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Mon, 14 Apr 2014 01:17:10 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

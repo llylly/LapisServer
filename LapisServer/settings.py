@@ -25,7 +25,7 @@ SECRET_KEY = '9c+k)b(@35ulol--$^c2atosdvzl#v1iv67+(klm!*z(bo*l5i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['123.56.78.41', '127.0.0.1']
+ALLOWED_HOSTS = ['123.56.78.41', '39.104.64.27', '127.0.0.1']
 
 
 # Application definition
@@ -126,5 +126,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "mainapp/static")
 
 CLOUD_API_DIR = 'cloud_api_examples'
 
-WORKER_CMD = 'python'
-# WORKER_CMD = '/Users/lly/anaconda/bin/python'
+# WORKER_CMD = 'python'
+WORKER_CMD = '/Users/lly/anaconda/bin/python'

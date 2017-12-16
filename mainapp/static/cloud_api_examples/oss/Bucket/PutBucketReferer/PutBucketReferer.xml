@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutBucketReferer/?referer">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Put Bucket Referer操作可以设置一个bucket的referer访问白名单和是否允许referer字段为空的请求访问。 Bucket Referer防盗链具体见OSS防盗链。 1.&#9;只有Bucket的拥有者才能发起Put Bucket Referer请求，否则返回403 Forbidden消息。错误码：AccessDenied。 2.&#9;AllowEmptyReferer中指定的配置将替换之前的AllowEmptyReferer配置，该字段为必填项，系统中默认的AllowEmptyReferer配置为true。 3.&#9;此操作将用RefererList中的白名单列表覆盖之前配置的白名单列表，当用户上传的RefererList为空时（不包含Referer请求元素），此操作会覆盖已配置的白名单列表，即删除之前配置的RefererList。 4.&#9;如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="保存Referer配置内容的容器  类型：容器  子节点：AllowEmptyReferer节点、RefererList节点  父节点：无"/>
+            <in value="formData"/>
+            <name value="RefererConfiguration"/>
+            <required value="true"/>
+            <type value="object"/>
+            <x-schema>
+              <properties>
+                <AllowEmptyReferer>
+                  <default value="true"/>
+                  <description value="指定是否允许referer字段为空的请求访问。  类型：枚举字符串  有效值：true或false 默认值：true  父节点：RefererConfiguration"/>
+                  <enum nodeType="array">
+                    <enum value="true"/>
+                    <enum value="false"/>
+                  </enum>
+                  <in value="formData"/>
+                  <name value="AllowEmptyReferer"/>
+                  <required value="true"/>
+                  <type value="string"/>
+                </AllowEmptyReferer>
+                <RefererList>
+                  <description value="保存referer访问白名单的容器。  类型：容器  父节点：RefererConfiguration  子节点：Referer"/>
+                  <in value="formData"/>
+                  <name value="RefererList"/>
+                  <properties>
+                    <Referer>
+                      <description value="指定一条referer访问白名单。  类型：字符串  父节点：RefererList"/>
+                      <in value="formData"/>
+                      <name value="Referer"/>
+                      <required value="false"/>
+                      <type value="string"/>
+                    </Referer>
+                  </properties>
+                  <required value="true"/>
+                  <type value="object"/>
+                </RefererList>
+              </properties>
+              <type value="object"/>
+            </x-schema>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <properties/>
+          </node>
+          <node nodeName="403">
+            <description value="只有Bucket的拥有者才能发起Put Bucket Referer请求，否则返回403 Forbidden消息。错误码：AccessDenied。"/>
+          </node>
+          <default>
+            <description value="如果用户上传了Content-MD5请求头，OSS会计算body的Content-MD5并检查一致性，如果不一致，将返回InvalidDigest错误码。"/>
+          </default>
+        </responses>
+      </put>
+      <summary value="设置Bucket的防盗链规则"/>
+      <x-requestformat value=" PUT /?referer HTTP/1.1 Date: GMT Date Content-Length：ContentLength Content-Type: application/xml Host: BucketName.oss.aliyuncs.com Authorization: SignatureValue &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;RefererConfiguration&gt; &lt;AllowEmptyReferer&gt;true&lt;/AllowEmptyReferer &gt; &lt;RefererList&gt; &lt;Referer&gt; http://www.aliyun.com&lt;/Referer&gt; &lt;Referer&gt; https://www.aliyun.com&lt;/Referer&gt; &lt;Referer&gt; http://www.*.com&lt;/Referer&gt; &lt;Referer&gt; https://www.?.aliyuncs.com&lt;/Referer&gt; &lt;/RefererList&gt; &lt;/RefererConfiguration&gt;&#10;&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /?referer HTTP/1.1 Host: oss-example.oss.aliyuncs.com Content-Length: 247 Date: Fri, 04 May 2012 03:21:12 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA= &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;RefererConfiguration&gt; &lt;AllowEmptyReferer&gt;true&lt;/AllowEmptyReferer &gt; &lt; RefererList /&gt; &lt;/RefererConfiguration&gt;&#10;"/>
+          <id value="1"/>
+          <note value="不包含Referer的请求示例"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" PUT /?referer HTTP/1.1 Host: oss-example.oss.aliyuncs.com Content-Length: 247 Date: Fri, 04 May 2012 03:21:12 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA= &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;RefererConfiguration&gt; &lt;AllowEmptyReferer&gt;true&lt;/AllowEmptyReferer &gt; &lt; RefererList&gt; &lt;Referer&gt; http://www.aliyun.com&lt;/Referer&gt; &lt;Referer&gt; https://www.aliyun.com&lt;/Referer&gt; &lt;Referer&gt; http://www.*.com&lt;/Referer&gt; &lt;Referer&gt; https://www.?.aliyuncs.com&lt;/Referer&gt; &lt;/ RefererList&gt; &lt;/RefererConfiguration&gt; "/>
+          <id value="2"/>
+          <note value="包含Referer的请求示例"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 04 May 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 04 May 2012 03:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS "/>
+          <id value="2"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

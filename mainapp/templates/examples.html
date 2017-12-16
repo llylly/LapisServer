@@ -18,9 +18,25 @@
 
         <div class="viewpage-rightdiv">
             <div id="example_name_div" class="text-center">&nbsp;</div>
-            <div id="example_view_area"></div>
-            <div class="text-info">Comments</div>
-            <div id="example_sup_area"></div>
+                <ul class="nav nav-pills">
+                    <li id="yaml_tab" class="active">
+                        <a href="#yaml_content" data-toggle="tab" class="codetabs">YAML</a>
+                    </li>
+                    <li id="xml_tab">
+                        <a href="#xml_content" data-toggle="tab" class="codetabs">XML</a>
+                    </li>
+                    <li id="md_tab">
+                        <a href="#md_content" data-toggle="tab" class="codetabs">Comment</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="code_content">
+                    <div class="tab-pane active" id="yaml_content"></div>
+                    <div class="tab-pane" id="xml_content"></div>
+                    <div class="tab-pane" id="md_content"></div>
+                </div>
+{#            <div id="example_view_area"></div>#}
+{#            <div class="text-info">Comments</div>#}
+{#            <div id="example_sup_area"></div>#}
         </div>
     </div>
 

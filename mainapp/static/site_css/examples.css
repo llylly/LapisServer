@@ -41,14 +41,24 @@
     background: #f5f5f5;
 }
 
-#example_view_area {
-    height: calc(70% - 15pt);
+#code_content {
+    height: calc(100% - 55pt);
     margin-right: 2px;
 }
 
-#example_sup_area {
-    height: calc(30% - 15pt);
+#yaml_content, #xml_content, #md_content {
+    height: 100%;
     margin-right: 2px;
 }
+
+/*#example_view_area {*/
+    /*height: calc(70% - 15pt);*/
+    /*margin-right: 2px;*/
+/*}*/
+/**/
+/*#example_sup_area {*/
+    /*height: calc(30% - 15pt);*/
+    /*margin-right: 2px;*/
+/*}*/
 
 /* view page end */

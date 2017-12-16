@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^api/session_verify$', coreapp.views.session_verify),
     url(r'^api/script_parse$', coreapp.views.script_parse),
     url(r'^api/script_transform$', coreapp.views.script_transform),
+    url(r'^api/realtime_script_transform$', coreapp.views.realtime_script_transform),
     url(r'^api/script_download$', coreapp.views.script_download),
     url(r'^api/apidata_gen$', coreapp.views.apidata_gen),
     # url(r'^api/single_test$', coreapp.views.single_test),

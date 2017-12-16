@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutObjectAcl/{ObjectName}?acl">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Put Object ACL接口用于修改Object的访问权限。目前Object有三种访问权限：private, public-read, public-read-write。Put Object ACL操作通过Put请求中的“x-oss-object-acl”头来设置，这个操作只有Bucket Owner有权限执行。如果操作成功，则返回200；否则返回相应的错误码和提示信息。 1.&#9;Object的读操作包括：GetObject，HeadObject，CopyObject和UploadPartCopy中的对source object的读；Object的写操作包括：PutObject，PostObject，AppendObject，DeleteObject，DeleteMultipleObjects，Complet eMultipartUpload以及CopyObject对新的Object的写。 2.&#9;x-oss-object-acl中权限的值必须在上述3种权限中。如果有不属于上述3种的权限，OSS返回400 Bad Request消息，错误码：InvalidArgument。 3.&#9;用户不仅可以通过PutObjectACL接口来设置Object ACL，还可以在Object的写操作时，在请求头中带上x-oss-object-acl来设置Object ACL，效果与PutObjectA ACL等同。例如PutObject时在请求头中带上x-oss-object-acl可以在上传一个Object的同时设置某个Object的ACL。 4.&#9;对某个Object没有读权限的用户读取某个Object时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have read permission on this object. 5.&#9;对某个Object没有写权限的用户写某个Object时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have write permission on this object. 6.&#9;只有Bucket Owner采用权限调用PutObjectACL来修改该Bucket下某个Object的ACL。非BucketOwner调用PutObjectACL时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have write acl permission on this object. 7.&#9;Object ACL优先级高于Bucket ACL。例如Bucket ACL是private的，而Object ACL是public-readwrite的，则访问这个Object时，先判断Object的ACL，所以所有用户都拥有这个Object的访问权限，即使这个Bucket是private bucket。如果某个Object从来没设置过ACL，则访问权限遵循Bucket ACL。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+          </node>
+          <node nodeName="400">
+            <description value="x-oss-object-acl中权限的值必须在上述3种权限中。如果有不属于上述3种的权限，OSS返回400 Bad Request消息，错误码：InvalidArgument。"/>
+          </node>
+          <node nodeName="403">
+            <description value="对某个Object没有读权限的用户读取某个Object时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have read permission on this object. 对某个Object没有写权限的用户写某个Object时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have write permission on this object. 只有Bucket Owner采用权限调用PutObjectACL来修改该Bucket下某个Object的ACL。非Bucket Owner调用PutObjectACL时，OSS返回 403 Forbidden消息，错误码：AccessDenied，提示：You do not have write acl permission on this object."/>
+          </node>
+        </responses>
+      </put>
+      <summary value="设置Object ACL"/>
+      <x-requestformat value=" PUT /ObjectName?acl HTTP/1.1 x-oss-object-acl: Permission Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /test-object?acl HTTP/1.1 x-oss-object-acl: public-read Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Wed, 29 Apr 2015 05:21:12 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:KU5h8YMUC78M30dXqf3JxrTZHiA=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 559CC9BDC755F95A64485981 Date: Wed, 29 Apr 2015 05:21:12 GMT Content-Length: 0 Connection: keep-alive Server: AliyunOSS&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

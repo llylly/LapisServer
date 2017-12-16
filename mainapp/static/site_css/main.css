@@ -35,8 +35,13 @@
     overflow-y: hidden;
 }
 
-#script_area {
+#script_area_frame {
     height: calc(100% - 153px);
+    margin-right: 2px;
+}
+
+#script_area_subframe, #script_area, #transed_script_area {
+    height: 100%;
     margin-right: 2px;
 }
 
@@ -76,7 +81,7 @@
 }
 
 .mainpage-filelist {
-    height: calc(100% - 67px);
+    height: calc(100% - 193px);
     padding-top: 10pt;
     padding-bottom: 10pt;
     overflow-x: auto;

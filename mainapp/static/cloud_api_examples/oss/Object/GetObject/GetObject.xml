@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetObject/{ObjectName}">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="用于获取某个Object，此操作要求用户对该Object有读权限。 1.&#9;GetObject通过range参数可以支持断点续传，对于比较大的Object建议使用该功能。 2.&#9;如果在请求头中使用Range参数；则返回消息中会包含整个文件的长度和此次返回的范围，例如：Content-Range： bytes 0-9/44，表示整个文件长度为44，此次返回的范围为0-9。如果不符合范围规范，则传送整个文件，并且不在结果中提及Content-Range。 3.&#9;如果“If-Modified-Since”元素中设定的时间不符合规范，直接返回文件，并返回200 OK。 4.&#9;If-Modified-Since和If-Unmodified-Since可以同时存在，If-Match和If-None-Match也可以同时存在。 5.&#9;如果包含If-Unmodified-Since并且不符合或者包含If-Match并且不符合，返回412 precondition failed 6.&#9;如果包含If-Modified-Since并且不符合或者包含If-None-Match并且不符合，返回304 NotModified 7.&#9;如果文件不存在返回404 Not Found错误。错误码：NoSuchKey。 8.&#9;OSS不支持在匿名访问的GET请求中，通过请求参数来自定义返回请求的header。 9.&#9;在自定义OSS返回请求中的一些Header时，只有请求处理成功（即返回码为200时），OSS才会将请求的header设置成用户GET请求参数中指定的值。 10.&#9;若该Object为进行服务器端熵编码加密存储的，则在GET请求时会自动解密返回给用户，并且在响应头中，会返回x-oss-server-side-encryption，其值表明该Object的服务器端加密算法。 11.&#9;需要将返回内容进行 GZIP压缩传输的用户，需要在请求的Header中显示方式加入 AcceptEncoding:gzip，OSS会根据文件的Content-Type和文件大小，判断是否返回给用户经过GZIP 压缩的数据。如果采用了GZIP压缩则不会附带etag 信息。目前OSS支持GZIP压缩的ContentType为HTML、Javascript、CSS、XML、RSS、Json，文件大小需不小于1k。 12.&#9;如果文件类型为符号链接，返回目标文件的内容。并且， 响应头中Content-Length、ETag、 Content-Md5 均为目标文件的元信息；Last-Modified是目标文件和符号链接的最大值；其他均为符号链接的元信息。 13.&#9;如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。 14.&#9;如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的content-type头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-content-type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的content-language头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-content-language"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的expires头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-expires"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的cache-control头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-cache-control"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的content-disposition头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-content-disposition"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置OSS返回请求的content-encoding头    类型：字符串    默认值：无"/>
+            <in value="header"/>
+            <name value="response-content-encoding"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定文件传输的范围。如，设定 bytes=0-9，表示传送第0到第9这10个字符。 类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="Range"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果指定的时间早于实际修改时间，则正常传送文件，并返回200 OK；否则返回304 not modified 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT"/>
+            <in value="header"/>
+            <name value="If-Modified-Since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误 类型：字符串 默认值：无 时间格式：GMT时间，例如Fri, 13 Nov 2015 14:47:53 GMT"/>
+            <in value="header"/>
+            <name value="If-Unmodified-Since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412precondition failed错误 类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="If-Match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified 类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="If-None-Match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response 如果“If-Modified-Since”元素中设定的时间不符合规范，直接返回文件，并返回200 OK。"/>
+          </node>
+          <node nodeName="304">
+            <description value="如果包含If-Modified-Since并且不符合或者包含If-None-Match并且不符合，返回304 NotModified。 If-None-Match如果传入的ETag值和Object的ETag不匹配，则正常传输文件,并返回200 OK；否则返回304 NotModified。"/>
+          </node>
+          <node nodeName="400">
+            <description value="如果文件类型为符号链接，并且目标文件类型是符号链接，返回400 Bad request错误。错误码：InvalidTargetType。"/>
+          </node>
+          <node nodeName="404">
+            <description value="如果文件不存在返回404 Not Found错误。错误码：NoSuchKey。 如果文件类型为符号链接，并且目标文件不存在，返回404 Not Found错误。错误码：SymlinkTargetNotExist。"/>
+          </node>
+          <node nodeName="412">
+            <description value="如果包含If-Unmodified-Since并且不符合或者包含If-Match并且不符合，返回412 precondition failed。 If-Match如果传入期望的ETag和object的 ETag匹配，则正常传输文件，并返回200 OK；否则返回412。"/>
+          </node>
+        </responses>
+      </get>
+      <summary value="获取Object"/>
+      <x-requestformat value=" GET /ObjectName HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue  Range: bytes=ByteRange(可选)&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET /oss.jpg HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 06:38:30 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:UNQDb7GapEgJCZkcde6OhZ9Jfe8=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" GET //oss.jpg HTTP/1.1 Host:oss-example. oss-cn-hangzhou.aliyuncs.com Date: Fri, 28 Feb 2012 05:38:42 GMT Range: bytes=100-900 Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:qZzjF3DUtd+yK16BdhGtFcCVknM=&#10;"/>
+          <id value="2"/>
+          <note value="Range请求示例"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" GET /oss.jpg?response-expires=Thu%2C%2001%20Feb%202012%2017%3A00%3A00%20GMT&amp; response-contenttype=text&amp;response-cache-control=No-cache&amp;response-content-disposition=attachment%253B%2520filename%253Dtesting.txt&amp;response-content-encoding=utf-8&amp;responsecontent-language=%E4%B8%AD%E6%96%87 HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com: Date: Fri, 24 Feb 2012 06:09:48 GMT&#10;"/>
+          <id value="3"/>
+          <note value="自定义返回消息头的请求示例"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" GET /link-to-oss.jpg HTTP/1.1 Accept-Encoding: identity Date: Tue, 08 Nov 2016 03:17:58 GMT Host: oss-example.oss-cn-hangzhou.aliyuncs.com Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:qZzjF3DUtd+yK16BdhGtFcCVknM=&#10;"/>
+          <id value="4"/>
+          <note value="符号链接的请求示例"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 3a89276f-2e2d-7965-3ff9-51c875b99c41 x-oss-object-type: Normal Date: Fri, 24 Feb 2012 06:38:30 GMT Last-Modified: Fri, 24 Feb 2012 06:07:48 GMT ETag: &quot;5B3C1A2E053D763E1B002CC607C5A0FE &quot; Content-Type: image/jpg Content-Length: 344606 Server: AliyunOSS [344606 bytes of object data]&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 206 Partial Content x-oss-request-id: 28f6508f-15ea-8224-234e-c0ce40734b89 x-oss-object-type: Normal Date: Fri, 28 Feb 2012 05:38:42 GMT Last-Modified: Fri, 24 Feb 2012 06:07:48 GMT ETag: &quot;5B3C1A2E053D763E1B002CC607C5A0FE &quot; Accept-Ranges: bytes Content-Range: bytes 100-900/344606 Content-Type: image/jpg Content-Length: 801 Server: AliyunOSS [801 bytes of object data]&#10;"/>
+          <id value="2"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 559CC9BDC755F95A64485981 x-oss-object-type: Normal Date: Fri, 24 Feb 2012 06:09:48 GMT Last-Modified: Fri, 24 Feb 2012 06:07:48 GMT ETag: &quot;5B3C1A2E053D763E1B002CC607C5A0FE &quot; Content-Length: 344606 Connection: keep-alive Content-disposition: attachment; filename:testing.txt Content-language: 中文 Content-encoding: utf-8 Content-type: text Cache-control: no-cache Expires: Fri, 24 Feb 2012 17:00:00 GMT Server: AliyunOSS [344606 bytes of object data]&#10;"/>
+          <id value="3"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Server: AliyunOSS Date: Tue, 08 Nov 2016 03:17:58 GMT Content-Type: application/octet-stream Content-Length: 20 Connection: keep-alive x-oss-request-id: 582143E6D3436A212ADCC87D Accept-Ranges: bytes ETag: &quot;8086265EFC0211ED1F9A2F09BF462227&quot; Last-Modified: Tue, 08 Nov 2016 03:17:58 GMT x-oss-object-type: Symlink Content-MD5: gIYmXvwCEe0fmi8Jv0YiJw==&#10;"/>
+          <id value="4"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

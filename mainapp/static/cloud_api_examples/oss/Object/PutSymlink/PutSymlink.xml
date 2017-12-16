@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/PutSymlink/{ObjectName}?symlink">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Put Symlink用于创建符号链接。 1.&#9;TargetObjectName同ObjectName一样，需要URL encode。 2.&#9;符号链接的目标文件类型不能为符号链接。 3.&#9;创建符号链接时, 不检查目标文件是否存在 不检查目标文件类型是否合法 不检查目标文件是否有权限访问以上检查，都推迟到GetObject等需要访问目标文件的API。 4.&#9;如果试图添加的文件已经存在，并且有访问权限。新添加的文件将覆盖原来的文件，成功返回200 OK。 5.&#9;如果在PutSymlink的时候，携带以x-oss-meta-为前缀的参数，则视为user meta，比如x-ossmeta-location。一个Object可以有多个类似的参数，但所有的user meta总大小不能超过8k。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="容器名"/>
+            <in value="path"/>
+            <name value="ObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+          </node>
+        </responses>
+      </put>
+      <x-requestformat value=" PUT /ObjectName?symlink HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue x-oss-symlink-target: TargetObjectName&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" PUT /link-to-oss?symlink HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Cache-control: no-cache Content-Disposition: attachment;filename=oss_download.jpg Date: Tue, 08 Nov 2016 02:00:25 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:kZoYNv66bsmc10+dcGKw5x2PRrk= x-oss-symlink-target: oss.jpg&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK Server: AliyunOSS Date: Tue, 08 Nov 2016 02:00:25 GMT Content-Length: 0 Connection: keep-alive x-oss-request-id: 582131B9109F4EE66CDE56A5 ETag: &quot;0A477B89B4602AA8DECB8E19BFD447B6&quot;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/CopyObject/{DestObjectName}">
+      <put>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="拷贝一个在OSS上已经存在的object成另外一个object，可以发送一个PUT请求给OSS，并在PUT请求头中添加元素“x-oss-copy-source”来指定拷贝源。OSS会自动判断出这是一个Copy操作，并直接在服务器端执行该操作。如果拷贝成功，则返回新的object信息给用户。该操作适用于拷贝小于1GB的文件，当拷贝一个大于1GB的文件时，必须使用Multipart Upload操作，具体见Upload Part Copy。 1.&#9;可以通过拷贝操作来实现修改已有Object的meta信息。 2.&#9;如果拷贝操作的源Object地址和目标Object地址相同，则无论x-oss-metadata-directive为何值，都会直接替换源Object的meta信息。 3.&#9;OSS支持拷贝操作的四个预判断Header任意个同时出现，相应逻辑参见Get Object操作的细节分析。 4.&#9;拷贝操作需要请求者对源Object有读权限。 5.&#9;源Object和目标Object必须属于同一个数据中心，否则返回403 AccessDenied，错误信息为：Target object does not reside in the same data center as source object。 6.&#9;拷贝操作的计费统计会对源Object所在的Bucket增加一次Get请求次数，并对目标Object所在的 Bucket增加一次Put请求次数，以及相应的新增存储空间。 7.&#9;拷贝操作涉及到的请求头，都是以“x-oss-”开头的，所以要加入签名字符串中。 8.&#9;若在拷贝操作中指定了x-oss-server-side-encryption请求头，并且请求值合法（为AES256），则无论源Object是否进行过服务器端加密编码，拷贝之后的目标Object都会进行服务器端加密编码。并且拷贝操作的响应头中会包含x-oss-server-side-encryption，值被设置成目标Object的加密算法。在这个目标Object被下载时，响应头中也会包含x-oss-server-side-encryption，值被设置成该 Object的加密算法；若拷贝操作中未指定x-oss-server-side-encryption请求头，则无论源Object是否进行过服务器端加密编码，拷贝之后的目标Object都是未进行过服务器端加密编码加密的数据。 9.&#9;拷贝操作中x-oss-metadata-directive请求头为COPY（默认值）时，并不拷贝源Object的x-ossserver-side-encryption值，即目标Object是否进行服务器端加密编码只根据COPY操作是否指定了 x-oss-server-side-encryption请求头来决定。 10.&#9;若在拷贝操作中指定了x-oss-server-side-encryption请求头，并且请求值非AES256，则返回 400和相应的错误提示：InvalidEncryptionAlgorithmError。 11.&#9;如果拷贝的文件大小大于1GB，会返回400和错误提示：EntityTooLarge。 12.&#9;该操作不能拷贝通过Append追加上传方式产生的object。 13. 如果文件类型为符号链接，只拷贝符号链接。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="复制后的容器名"/>
+            <in value="path"/>
+            <name value="DestObjectName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="复制源地址（必须有可读权限）类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="x-oss-copy-source"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果源Object的ETag值和用户提供的ETag相等，则执行拷贝操作，并返回200；否则返回412HTTP错误码（预处理失败）。类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="x-oss-copy-source-if-match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果源Object的ETag值和用户提供的ETag不相等，则执行拷贝操作，并返回200；否则返回304HTTP错误码（预处理失败）。类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="x-oss-copy-source-if-none-match"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误。类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="x-oss-copy-source-if-unmodified-since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="如果源Object自从用户指定的时间以后被修改过，则执行拷贝操作；否则返回304 HTTP错误码（预处理失败）。类型：字符串 默认值：无"/>
+            <in value="header"/>
+            <name value="x-oss-copy-source-if-modified-since"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="COPY"/>
+            <description value="有效值为COPY和REPLACE。如果该值设为COPY，则新的Object的meta都从源Object复制过来；如果设为REPLACE，则忽视所有源 Object的meta值，而采用用户这次请求中指定的 meta值；其他值则返回400 HTTP错误码。注意该值为COPY时，源Object的x-oss-server-sideencryption的meta值不会进行拷贝。类型：字符串 默认值：COPY 有效值：COPY、REPLACE"/>
+            <enum nodeType="array">
+              <enum value="COPY"/>
+              <enum value="REPLACE"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-oss-metadata-directive"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定oss创建目标object时的服务器端熵编码加密算法 类型：字符串 有效值：AES256"/>
+            <enum nodeType="array">
+              <enum value="AES256"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-oss-server-side-encryption"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定oss创建object时的访问权限。类型：字符串 合法值：public-read，private，public-readwrite"/>
+            <enum nodeType="array">
+              <enum value="public-read"/>
+              <enum value="private"/>
+              <enum value="public-readwrite"/>
+            </enum>
+            <in value="header"/>
+            <name value="x-oss-object-acl"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <CopyObjectResult>
+                  <default value="None"/>
+                  <description value="Copy   Object结果 类型：字符串 默认值：无"/>
+                  <in value="formData"/>
+                  <name value="CopyObjectResult"/>
+                  <properties>
+                    <ETag>
+                      <description value="新Object的ETag值。 类型：字符串 父元素：CopyObjectResult"/>
+                      <in value="formData"/>
+                      <name value="ETag"/>
+                      <type value="string"/>
+                    </ETag>
+                    <LastModified>
+                      <description value="新Object最后更新时间。 类型：字符串 父元素：CopyObjectResult"/>
+                      <in value="formData"/>
+                      <name value="LastModified"/>
+                      <type value="string"/>
+                    </LastModified>
+                  </properties>
+                  <type value="string"/>
+                </CopyObjectResult>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="304">
+            <description value="x-oss-copy-source-if-none-match如果源Object的ETag值和用户提供的ETag不相等，则执行拷贝操作，并返回200；否则返回304HTTP错误码（预处理失败）。 x-oss-copy-source-if-modified-since如果源Object自从用户指定的时间以后被修改过，则执行拷贝操作；否则返回304 HTTP错误码（预处理失败）。"/>
+          </node>
+          <node nodeName="400">
+            <description value="若在拷贝操作中指定了x-oss-server-side-encryption请求头，并且请求值非AES256，则返回 400和相应的错误提示：InvalidEncryptionAlgorithmError。 如果拷贝的文件大小大于1GB，会返回400和错误提示：EntityTooLarge。 x-oss-metadata-directive有效值为COPY和REPLACE。如果该值设为COPY，则新的Object的meta都从源Object复制过来；如果设为REPLACE，则忽视所有源 Object的meta值，而采用用户这次请求中指定的 meta值；其他值则返回400 HTTP错误码。"/>
+          </node>
+          <node nodeName="403">
+            <description value="源Object和目标Object必须属于同一个数据中心，否则返回403 AccessDenied，错误信息为：Target object does not reside in the same data center as source object。"/>
+          </node>
+          <node nodeName="412">
+            <description value="x-oss-copy-source-if-match如果源Object的ETag值和用户提供的ETag相等，则执行拷贝操作，并返回200；否则返回412HTTP错误码（预处理失败）。 x-oss-copy-source-if-unmodified-since如果传入参数中的时间等于或者晚于文件实际修改时间，则正常传输文件，并返回200 OK；否则返回412 precondition failed错误。"/>
+          </node>
+        </responses>
+        <summary value="拷贝一个object成另外一个object"/>
+        <x-requestformat value=" PUT /DestObjectName HTTP/1.1 Host: DestBucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue x-oss-copy-source: /SourceBucketName/SourceObjectName&#10;"/>
+        <x-requestsample nodeType="array">
+          <x-requestsample>
+            <description value=" PUT /copy_oss.jpg HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 07:18:48 GMT x-oss-copy-source: /oss-example/oss.jpg Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:gmnwPKuu20LQEjd+iPkL259A+n0=&#10;"/>
+            <id value="1"/>
+          </x-requestsample>
+        </x-requestsample>
+        <x-responsesample nodeType="array">
+          <x-responsesample>
+            <description value=" HTTP/1.1 200 OK x-oss-request-id: 559CC9BDC755F95A64485981 Content-Type: application/xml Content-Length: 193 Connection: keep-alive Date: Fri, 24 Feb 2012 07:18:48 GMT Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;CopyObjectResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;LastModified&gt;Fri, 24 Feb 2012 07:18:48 GMT&lt;/LastModified&gt; &lt;ETag&gt;&quot;5B3C1A2E053D763E1B002CC607C5A0FE&quot;&lt;/ETag&gt; &lt;/CopyObjectResult&gt;&#10;"/>
+            <id value="1"/>
+          </x-responsesample>
+        </x-responsesample>
+      </put>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

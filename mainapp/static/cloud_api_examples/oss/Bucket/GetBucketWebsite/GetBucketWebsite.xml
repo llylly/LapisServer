@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucketWebsite/?website">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Get Bucket Website操作用于查看bucket的静态网站托管状态。 1.&#9;如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。 2.&#9;只有Bucket的拥有者才能查看Bucket的静态网站托管状态，否则返回403 Forbidden错误,错误码：AccessDenied。 3.&#9;如果源Bucket未设置静态网站托管功能，OSS会返回404错误，错误码为：NoSuchWebsiteConfiguration。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <WebsiteConfiguration>
+                  <description value=" 请求的容器  类型：容器 父元素: 无 "/>
+                  <in value="formData"/>
+                  <name value="WebsiteConfiguration"/>
+                  <properties>
+                    <ErrorDocument>
+                      <description value=" 子元素Key的父元素 类型: 容器 父元素: WebsiteConfiguration "/>
+                      <in value="formData"/>
+                      <name value="ErrorDocument"/>
+                      <properties>
+                        <Key>
+                          <description value=" 返回404错误时使用的文件名  类型:字符串  父元素: WebsiteConfiguration.ErrorDocument 有条件：当ErrorDocument设置时，必需 "/>
+                          <in value="formData"/>
+                          <name value="Key"/>
+                          <type value="string"/>
+                        </Key>
+                      </properties>
+                      <type value="object"/>
+                    </ErrorDocument>
+                    <IndexDocument>
+                      <description value=" 子元素Suffix的父元素.  类型: 容器 父元素: WebsiteConfiguration "/>
+                      <in value="formData"/>
+                      <name value="IndexDocument"/>
+                      <properties>
+                        <Suffix>
+                          <description value=" 返回目录URL时添加的索引文件名，不要为空，也不要包含&quot;/&quot;。例如索引文件设置为index.html，则访问:oss-cn-hangzhou.aliyuncs.com/mybucket/mydir/这样请求的时候默认都相当于访问oss-cn-hangzhou.aliyuncs.com/mybucket/index.html  类型:字符串 父元素: WebsiteConfiguration.IndexDocument "/>
+                          <in value="formData"/>
+                          <name value="Suffix"/>
+                          <required value="true"/>
+                          <type value="string"/>
+                        </Suffix>
+                      </properties>
+                      <type value="object"/>
+                    </IndexDocument>
+                  </properties>
+                  <type value="object"/>
+                </WebsiteConfiguration>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="403">
+            <description value="只有Bucket的拥有者才能查看Bucket的静态网站托管状态，否则返回403 Forbidden错误,错误码：AccessDenied。"/>
+          </node>
+          <node nodeName="404">
+            <description value="如果Bucket不存在，返回404 no content错误。错误码：NoSuchBucket。 如果源Bucket未设置静态网站托管功能，OSS会返回404错误，错误码为：NoSuchWebsiteConfiguration。"/>
+          </node>
+        </responses>
+      </get>
+      <summary value="查看Bucket的静态网站托管状态"/>
+      <x-requestformat value=" GET /?referer HTTP/1.1 Host: BucketName.oss.aliyuncs.com Date: GMT Date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" Get /?referer HTTP/1.1 Host: oss-example.oss.aliyuncs.com Date: Thu, 13 Sep 2012 07:51:28 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw= "/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" Get /?website HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Thu, 13 Sep 2012 07:51:28 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc: BuG4rRK+zNhH1AcF51NNHD39zXw=&#10;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 x-oss-request-id: 534B371674E88A4D8906008B Date: Thu, 13 Sep 2012 07:51:28 GMT Connection: keep-alive Content-Length: 218 Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;WebsiteConfiguration xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;IndexDocument&gt; &lt;Suffix&gt;index.html&lt;/Suffix&gt; &lt;/IndexDocument&gt; &lt;ErrorDocument&gt; &lt;Key&gt;error.html&lt;/Key&gt; &lt;/ErrorDocument&gt; &lt;/WebsiteConfiguration&gt;&#10;&#10;"/>
+          <id value="1"/>
+          <note value="已设置LOG规则的返回示例"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 404 x-oss-request-id: 534B371674E88A4D8906008B Date: Thu, 13 Sep 2012 07:56:46 GMT Connection: keep-alive Content-Length: 308 Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;Error xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Code&gt;NoSuchWebsiteConfiguration&lt;/Code&gt; &lt;Message&gt;The specified bucket does not have a website configuration.&lt;/Message&gt; &lt;BucketName&gt;oss-example&lt;/BucketName&gt; &lt;RequestId&gt;505191BEC4689A033D00236F&lt;/RequestId&gt; &lt;HostId&gt;oss-example.oss-cn-hangzhou.aliyuncs.com&lt;/HostId&gt; &lt;/Error&gt;&#10;"/>
+          <id value="2"/>
+          <note value="未设置LOG规则的返回示例"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

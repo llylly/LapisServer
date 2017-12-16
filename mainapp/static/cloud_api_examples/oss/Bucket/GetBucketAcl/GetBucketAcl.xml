@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucketAcl/?acl">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="Get Bucket ACL用来获取某个Bucket的访问权限。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <AccessControlPolicy>
+                  <description value="保存Get   Bucket ACL结果的容器 类型：容器 父节点：None"/>
+                  <in value="formData"/>
+                  <name value="AccessControlPolicy"/>
+                  <properties>
+                    <AccessControlList>
+                      <description value="存储ACL信息的容器 类型：容器 父节点：AccessControlPolicy"/>
+                      <in value="formData"/>
+                      <name value="AccessControlList"/>
+                      <properties>
+                        <Grant>
+                          <description value="Bucket的ACL权限。 类型：枚举字符串 有效值：private、public-read、public-read-write 父节点：AccessControlPolicy.AccessControlList"/>
+                          <enum nodeType="array">
+                            <enum value="private"/>
+                            <enum value="public-read"/>
+                            <enum value="public-read-write"/>
+                          </enum>
+                          <in value="formData"/>
+                          <name value="Grant"/>
+                          <type value="string"/>
+                        </Grant>
+                      </properties>
+                      <type value="object"/>
+                    </AccessControlList>
+                    <Owner>
+                      <description value="保存Bucket拥有者信息的容器。 类型：容器 父节点：AccessControlPolicy"/>
+                      <in value="formData"/>
+                      <name value="Owner"/>
+                      <properties>
+                        <DisplayName>
+                          <description value="Bucket拥有者的名称.。(目前和ID一致) 类型：字符串 父节点：AccessControlPolicy.Owner"/>
+                          <in value="formData"/>
+                          <name value="DisplayName"/>
+                          <type value="string"/>
+                        </DisplayName>
+                        <ID>
+                          <description value="Bucket拥有者的用户ID 类型：字符串 父节点：AccessControlPolicy.Owner"/>
+                          <in value="formData"/>
+                          <name value="ID"/>
+                          <type value="string"/>
+                        </ID>
+                      </properties>
+                      <type value="object"/>
+                    </Owner>
+                  </properties>
+                  <type value="object"/>
+                </AccessControlPolicy>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+        </responses>
+      </get>
+      <summary value="获得Bucket访问权限"/>
+      <x-requestformat value=" GET /?acl HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue&#10;"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET /?acl HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 04:11:23 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:CTkuxpLAi4XZ+WwIfNm0FmgbrQ0=&#10;"/>
+          <id value="1"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 04:11:23 GMT Content-Length: 253 Content-Tupe: application/xml Connection: keep-alive Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; ?&gt; &lt;AccessControlPolicy&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user_example&lt;/DisplayName&gt; &lt;/Owner&gt; &lt;AccessControlList&gt; &lt;Grant&gt;public-read&lt;/Grant&gt; &lt;/AccessControlList&gt; &lt;/AccessControlPolicy&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

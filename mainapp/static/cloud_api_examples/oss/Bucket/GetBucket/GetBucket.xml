@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value=""/>
+  <info>
+    <description value="阿里云对象存储服务（Object Storage Service，简称OSS），是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过本文档提供的简单的REST接口，在任何时间、任何地点、任何互联网设备上进行上传和下载数据。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人和企业数据备份等基于大规模数据的服务。"/>
+    <title value="aliyun oss api"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/{BucketName}.oss-cn-hangzhou.aliyuncs.com/GetBucket">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="GetBucket（ListObject）时，可以通过prefix，marker，delimiter和max-keys对list做限定，返回部分结果。另外，可以通过encoding-type对返回结果中的Delimiter、Marker、Prefix、NextMarker和Key这些元素进行编码。 1.&#9;Object中用户自定义的meta，在GetBucket请求时不会返回。 2.&#9;如果访问的Bucket不存在，包括试图访问因为命名不规范无法创建的Bucket，返回404 Not Found错误，错误码：NoSuchBucket。 3.&#9;如果没有访问该Bucket的权限，返回403 Forbidden错误，错误码：AccessDenied。 4.&#9;如果因为max-keys的设定无法一次完成listing，返回结果会附加一个&lt;NextMarker&gt;，提示继续 listing可以以此为marker。NextMarker中的值仍在list结果之中。 5.&#9;在做条件查询时，即使marker实际在列表中不存在，返回也从符合marker字母排序的下一个开始打印。如果max-keys小于0或者大于1000，将返回400 Bad Request错误。错误码：InvalidArgument。 6.&#9;若prefix，marker，delimiter参数不符合长度要求，返回400 Bad Request。错误码：InvalidArgument。 7.&#9;prefix，marker用来实现分页显示效果，参数的长度必须小于1024字节。 8.&#9;如果把prefix设为某个文件夹名，就可以罗列以此prefix开头的文件，即该文件夹下递归的所有的文件和子文件夹。如果再把delimiter设置为 / 时，返回值就只罗列该文件夹下的文件，该文件夹下的子文件名返回在CommonPrefixes部分，子文件夹下递归的文件和文件夹不被显示。如一个bucket存在三个object：fun/test.jpg， fun/movie/001.avi， fun/movie/007.avi。 若设定 prefix为”fun/” ，则返回三个object；如果增加设定delimiter为“/”，则返回文件 ”fun/test.jpg”和前缀”fun/movie/”；即实现了文件夹的逻辑。"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="是一个用于对Object名字进行分组的字符。所有名字包含指定的前缀且第一次出现delimiter字符之间的object作为一组元素——CommonPrefixes。 数据类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="delimiter"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="对象名"/>
+            <in value="path"/>
+            <name value="BucketName"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设定结果从marker之后按字母排序的第一个开始返回。 数据类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="marker"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="100"/>
+            <description value="限定此次返回object的最大数，如果不设定，默认为100，max-keys取值不能大于1000。 数据类型：字符串 默认值：100"/>
+            <in value="query"/>
+            <maxLength value="1000"/>
+            <name value="max-keys"/>
+            <required value="true"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <description value="限定返回的object   key必须以prefix作为前缀。注意使用prefix查询时，返回的key中仍会包含prefix。 数据类型：字符串 默认值：无"/>
+            <in value="query"/>
+            <name value="prefix"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="None"/>
+            <description value="指定对返回的内容进行编码，指定编码的类型。Delimiter、Marker、Prefix、NextMarker和Key使用UTF-8字符，但xml 1.0标准不支持解析一些控制字符，比如ascii值从0到10的字符。对于包含xml 1.0标准不支持的控制字符，可以通过指定encoding-type对返回的Delimiter、Marker、Prefix、NextMarker和Key进行编码。 数据类型：字符串 默认值：无，可选值：url"/>
+            <enum nodeType="array">
+              <enum value="url"/>
+            </enum>
+            <in value="query"/>
+            <name value="encoding-type"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/x-www-form-urlencoded"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="success response"/>
+            <schema>
+              <properties>
+                <CommonPrefixes>
+                  <description value="如果请求中指定了delimiter参数，则在OSS返回的响应中包含CommonPrefixes元素。该元素标明那些以delimiter结尾，并有共同前缀的object名称的集合。 类型：字符串 父节点：ListBucketResult"/>
+                  <in value="formData"/>
+                  <name value="CommonPrefixes"/>
+                  <type value="string"/>
+                </CommonPrefixes>
+                <ETag>
+                  <description value="ETag   (entity tag) 在每个Object生成的时候被创建，用于标示一个Object的内容。对于Put Object请求创建的Object，ETag值是其内容的MD5值；对于其他方式创建的Object，ETag值是其内容的UUID。ETag值可以用于检查Object内容是否发生变化。不建议用户使用ETag来作为Object内容的MD5校验数据完整性。 类型：字符串 父节点：ListBucketResult.Contents"/>
+                  <in value="formData"/>
+                  <name value="ETag"/>
+                  <type value="string"/>
+                </ETag>
+                <EncodingType>
+                  <description value="指明返回结果中编码使用的类型。如果请求的参数中指定了encoding-type，那会对返回结果中的Delimiter、Marker、Prefix、NextMarker和Key这些元素进行编码。 类型：字符串 父节点：ListBucketResult"/>
+                  <in value="formData"/>
+                  <name value="EncodingType"/>
+                  <type value="string"/>
+                </EncodingType>
+                <IsTruncated>
+                  <description value="指明是否所有的结果都已经返回； “true”表示本次没有返回全部结果；“false”表示本次已经返回了全部结果。 类型：枚举字符串 有效值：true、false 父节点：ListBucketResult"/>
+                  <enum nodeType="array">
+                    <enum value="true"/>
+                    <enum value="false"/>
+                  </enum>
+                  <in value="formData"/>
+                  <name value="IsTruncated"/>
+                  <type value="string"/>
+                </IsTruncated>
+                <LastModified>
+                  <description value="Object最后被修改的时间。 类型：时间 父节点：ListBucketResult.Contents"/>
+                  <in value="formData"/>
+                  <name value="LastModified"/>
+                  <type value="string"/>
+                </LastModified>
+                <ListBucketResult>
+                  <description value="保存Get   Bucket请求结果的容器. 类型：容器   子节点：Name,   Prefix, Marker, MaxKeys, Delimiter, IsTruncated, Nextmarker, Contents 父节点：None"/>
+                  <in value="formData"/>
+                  <name value="ListBucketResult"/>
+                  <properties>
+                    <Contents>
+                      <description value="保存每个返回Object   meta的容器。 类型：容器 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Contents"/>
+                      <properties>
+                        <Key>
+                          <description value="Object的Key. 类型：字符串 父节点：ListBucketResult.Contents"/>
+                          <in value="formData"/>
+                          <name value="Key"/>
+                          <type value="string"/>
+                        </Key>
+                        <Size>
+                          <description value="Object的字节数。 类型：字符串 父节点：ListBucketResult.Contents"/>
+                          <in value="formData"/>
+                          <name value="Size"/>
+                          <type value="string"/>
+                        </Size>
+                        <StorageClass>
+                          <description value="Object的存储类型，支持“Standard”、“IA”、“Archive”。（目前只有部分区域支持“Archive”类型） 类型：字符串 父节点：ListBucketResult.Contents"/>
+                          <in value="formData"/>
+                          <name value="StorageClass"/>
+                          <type value="string"/>
+                        </StorageClass>
+                      </properties>
+                      <type value="object"/>
+                    </Contents>
+                    <Delimiter>
+                      <description value="是一个用于对Object名字进行分组的字符。所有名字包含指定的前缀且第一次出现delimiter字符之间的object作为一组元素——CommonPrefixes。 类型：字符串 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Delimiter"/>
+                      <type value="string"/>
+                    </Delimiter>
+                    <Marker>
+                      <description value="标明这次Get   Bucket（List   Object）的起点。 类型：字符串 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Marker"/>
+                      <type value="string"/>
+                    </Marker>
+                    <MaxKeys>
+                      <description value="响应请求内返回结果的最大数目。 类型：字符串 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="MaxKeys"/>
+                      <type value="string"/>
+                    </MaxKeys>
+                    <Name>
+                      <description value="Bucket名字 类型：字符串 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Name"/>
+                      <type value="string"/>
+                    </Name>
+                    <Owner>
+                      <description value="保存Bucket拥有者信息的容器。 类型：容器   子节点：DisplayName,   ID 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Owner"/>
+                      <properties>
+                        <DisplayName>
+                          <description value="Object   拥有者的名字。 类型：字符串 父节点：ListBucketResult.Contents.Owner"/>
+                          <in value="formData"/>
+                          <name value="DisplayName"/>
+                          <type value="string"/>
+                        </DisplayName>
+                        <ID>
+                          <description value="Bucket拥有者的用户ID。 类型：字符串 父节点：ListBucketResult.Contents.Owner"/>
+                          <in value="formData"/>
+                          <name value="ID"/>
+                          <type value="string"/>
+                        </ID>
+                      </properties>
+                      <type value="object"/>
+                    </Owner>
+                    <Prefix>
+                      <description value="本次查询结果的开始前缀。 类型：字符串 父节点：ListBucketResult"/>
+                      <in value="formData"/>
+                      <name value="Prefix"/>
+                      <type value="string"/>
+                    </Prefix>
+                  </properties>
+                  <type value="object"/>
+                </ListBucketResult>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="在做条件查询时，即使marker实际在列表中不存在，返回也从符合marker字母排序的下一个开始打印。如果max-keys小于0或者大于1000，将返回400 Bad Request错误。错误码：InvalidArgument。 若prefix，marker，delimiter参数不符合长度要求，返回400 Bad Request。错误码：InvalidArgument。"/>
+          </node>
+          <node nodeName="403">
+            <description value="如果没有访问该Bucket的权限，返回403 Forbidden错误，错误码：AccessDenied。"/>
+          </node>
+          <node nodeName="404">
+            <description value="如果访问的Bucket不存在，包括试图访问因为命名不规范无法创建的Bucket，返回404 Not Found错误，错误码：NoSuchBucket。"/>
+          </node>
+        </responses>
+      </get>
+      <summary value="获得Bucket中所有Object的信息"/>
+      <x-othername value="ListObject"/>
+      <x-requestformat value=" GET / HTTP/1.1 Host: BucketName.oss-cn-hangzhou.aliyuncs.com Date: GMT Date Authorization: SignatureValue "/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value=" GET / HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 08:43:27 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:BC+oQIXVR2/ZghT7cGa0ykboO4M= "/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value=" GET /?prefix=fun HTTP/1.1 Host: oss-example.oss-cn-hangzhou.aliyuncs.com Date: Fri, 24 Feb 2012 08:43:27 GMT Authorization: OSS qn6qrrqxo2oawuk53otfjbyc:BC+oQIXVR2/ZghT7cGa0ykboO4M= "/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 08:43:27 GMT Content-Type: application/xml Content-Length: 1866 Connection: keep-alive Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;ListBucketResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Name&gt;oss-example&lt;/Name&gt; &lt;Prefix&gt;&lt;/Prefix&gt; &lt;Marker&gt;&lt;/Marker&gt; &lt;MaxKeys&gt;100&lt;/MaxKeys&gt; &lt;Delimiter&gt;&lt;/Delimiter&gt; &lt;IsTruncated&gt;false&lt;/IsTruncated&gt; &lt;Contents&gt; &lt;Key&gt;fun/movie/001.avi&lt;/Key&gt; &lt;LastModified&gt;2012-02-24T08:43:07.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;5B3C1A2E053D763E1B002CC607C5A0FE&amp;quot;&lt;/ETag&gt; &lt;Type&gt;Normal&lt;/Type&gt; &lt;Size&gt;344606&lt;/Size&gt; &lt;StorageClass&gt;Standard&lt;/StorageClass&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user-example&lt;/DisplayName&gt; &lt;/Owner&gt;     &lt;/Contents&gt; &lt;Contents&gt; &lt;Key&gt;fun/movie/007.avi&lt;/Key&gt; &lt;LastModified&gt;2012-02-24T08:43:27.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;5B3C1A2E053D763E1B002CC607C5A0FE&amp;quot;&lt;/ETag&gt; &lt;Type&gt;Normal&lt;/Type&gt; &lt;Size&gt;344606&lt;/Size&gt; &lt;StorageClass&gt;Standard&lt;/StorageClass&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user-example&lt;/DisplayName&gt; &lt;/Owner&gt; &lt;/Contents&gt; &lt;Contents&gt; &lt;Key&gt;fun/test.jpg&lt;/Key&gt; &lt;LastModified&gt;2012-02-24T08:42:32.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;5B3C1A2E053D763E1B002CC607C5A0FE&amp;quot;&lt;/ETag&gt; &lt;Type&gt;Normal&lt;/Type&gt; &lt;Size&gt;344606&lt;/Size&gt; &lt;StorageClass&gt;Standard&lt;/StorageClass&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user-example&lt;/DisplayName&gt; &lt;/Owner&gt;     &lt;/Contents&gt; &lt;Contents&gt; &lt;Key&gt;oss.jpg&lt;/Key&gt; &lt;LastModified&gt;2012-02-24T06:07:48.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;5B3C1A2E053D763E1B002CC607C5A0FE&amp;quot;&lt;/ETag&gt; &lt;Type&gt;Normal&lt;/Type&gt; &lt;Size&gt;344606&lt;/Size&gt; &lt;StorageClass&gt;Standard&lt;/StorageClass&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user-example&lt;/DisplayName&gt; &lt;/Owner&gt;     &lt;/Contents&gt; &lt;/ListBucketResult&gt;&#10;"/>
+          <id value="1"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value=" HTTP/1.1 200 OK x-oss-request-id: 534B371674E88A4D8906008B Date: Fri, 24 Feb 2012 08:43:27 GMT Content-Type: application/xml Content-Length: 712 Connection: keep-alive Server: AliyunOSS &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;ListBucketResult xmlns=”http://doc.oss-cn-hangzhou.aliyuncs.com”&gt; &lt;Name&gt;oss-example&lt;/Name&gt; &lt;Prefix&gt;fun/&lt;/Prefix&gt; &lt;Marker&gt;&lt;/Marker&gt; &lt;MaxKeys&gt;100&lt;/MaxKeys&gt; &lt;Delimiter&gt;/&lt;/Delimiter&gt; &lt;IsTruncated&gt;false&lt;/IsTruncated&gt; &lt;Contents&gt; &lt;Key&gt;fun/test.jpg&lt;/Key&gt; &lt;LastModified&gt;2012-02-24T08:42:32.000Z&lt;/LastModified&gt; &lt;ETag&gt;&amp;quot;5B3C1A2E053D763E1B002CC607C5A0FE&amp;quot;&lt;/ETag&gt; &lt;Type&gt;Normal&lt;/Type&gt; &lt;Size&gt;344606&lt;/Size&gt; &lt;StorageClass&gt;Standard&lt;/StorageClass&gt; &lt;Owner&gt; &lt;ID&gt;00220120222&lt;/ID&gt; &lt;DisplayName&gt;user_example&lt;/DisplayName&gt; &lt;/Owner&gt;     &lt;/Contents&gt; &lt;CommonPrefixes&gt; &lt;Prefix&gt;fun/movie/&lt;/Prefix&gt; &lt;/CommonPrefixes&gt; &lt;/ListBucketResult&gt;&#10;"/>
+          <id value="2"/>
+        </x-responsesample>
+      </x-responsesample>
+      <x-schemasaple value=" 在bucket“my_oss”内有4个object，名字分别为：&#10;-&#9;oss.jpg -&#9;fun/test.jpg -&#9;fun/movie/001.avi -&#9;fun/movie/007.avi&#10;"/>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

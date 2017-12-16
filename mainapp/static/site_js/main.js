@@ -3,6 +3,7 @@
  */
 
 var editor = null;
+var transed_editor = null;
 session = "-1";
 
 datagen_cpystr = "";
@@ -54,6 +55,48 @@ function save() {
             alert('There is no change.');
         }
     }
+    realtime_transform();
+}
+
+function realtime_transform() {
+    $.get(
+        "/api/session_verify?id=" + session,
+        function(data, status) {
+            if (status != 'success') {
+                alert('Unknown error.');
+            } else {
+                data = eval(data);
+                if (data.code != '200') {
+                    // alert('Unknown error.');
+                } else {
+                    session = data.id;
+                    $.post(
+                        "/api/realtime_script_transform",
+                        {
+                            session: session,
+                            text: editor.getValue()
+                        },
+                        function(data, status) {
+                            if (status != 'success') {
+                                // alert('Unknown Error');
+                                transed_editor.getSession().setValue("JSON format error. Cannot transform to XML document.");
+                            } else {
+                                data = eval(data);
+                                if (data.code != "200") {
+                                    // alert(data.msg);
+                                    transed_editor.getSession().setValue("JSON format error. Cannot transform to XML document.");
+                                } else {
+                                    transed_editor.getSession().setValue(data.script);
+                                    // gotourl(data.link);
+                                }
+                            }
+                            transed_editor.resize();
+                        }
+                    )
+                }
+            }
+        }
+   );
 }
 
 $(function(){
@@ -123,12 +166,28 @@ $(function(){
     editor.setHighlightActiveLine(true);
     editor.getSession().setUseWrapMode(true);
 
+    transed_editor = ace.edit("transed_script_area");
+    transed_editor.setTheme("ace/theme/xcode");
+    transed_editor.getSession().setMode("ace/mode/xml");
+    transed_editor.setHighlightActiveLine(true);
+    transed_editor.getSession().setUseWrapMode(true);
+    transed_editor.setReadOnly(true);
+
     editor.getSession().on('change', function(e) {
         if (session != "-1")
                 $('#change_div').show();
         $('#filename_astar').show();
         change_flag = true;
     });
+
+    $('.codetabs').click(function() {
+       func = function() {
+            editor.resize();
+            transed_editor.resize();
+        };
+        setTimeout(func, 10);
+    });
+
     $('#YAML-radio').change(function() {
         if (session != "-1")
             $('#change_div').show();
@@ -318,6 +377,10 @@ $(function(){
         )
     });
 
+    $('#xml_toggle_btn').click(function() {
+        realtime_transform();
+    });
+
     // $('#file_btn').click(function(){
     //     if ($('#fileInput').prop('files').length <= 0) {
     //         alert('Please select a file.');
@@ -363,11 +426,12 @@ $(function(){
                         alert('Unknown Error');
                     } else {
                         session = data.id;
-                        type_str = '';
-                        if ($('#YAML-radio').is(':checked'))
-                            type_str = 'YAML';
-                        if ($('#XML-radio').is(':checked'))
-                            type_str = 'XML';
+                        // type_str = '';
+                        // if ($('#YAML-radio').is(':checked'))
+                        //     type_str = 'YAML';
+                        // if ($('#XML-radio').is(':checked'))
+                        //     type_str = 'XML';
+                        type_str = 'YAML';
                         $.post(
                             '/api/script_parse',
                             {
@@ -412,7 +476,19 @@ $(function(){
                                         editor.gotoLine(min_line);
                                         $('#error_list').html(error_str);
                                     }
-                                    if (result.apiParse) {
+
+                                    if (result.docParse) {
+                                        if ($('#YAML-radio').is(':checked')) {
+                                            $('#transform_btn').text('Transform to XML Format');
+                                        }
+                                        if ($('#XML-radio').is(':checked')) {
+                                            $('#transform_btn').text('Transform to YAML Format');
+                                        }
+                                        $("#transform_ops").show();
+
+                                        realtime_transform();
+                                    }
+                                    if (result.docParse && result.apiParse) {
                                         $('#basic_info_table').html(basic_info_present(result));
                                         api_str = "";
                                         for (index in result.apiNames) {
@@ -424,22 +500,16 @@ $(function(){
 
                                         $('#basic_info_panel').show();
                                         $('#api_panel').show();
-                                    }
-                                    if (result.docParse && result.apiParse) {
+
                                         for (index in result.apiNames) {
                                             now_item = result.apiNames[index];
                                             text = '[' + now_item.method + '] ' + now_item.name;
                                             val = now_item.method + '_' + now_item.name;
                                             $("#api_select").append($("<option>").val(val).text(text));
                                         }
-                                        if ($('#YAML-radio').is(':checked')) {
-                                            $('#transform_btn').text('Transform to XML Format');
-                                        }
-                                        if ($('#XML-radio').is(':checked')) {
-                                            $('#transform_btn').text('Transform to YAML Format');
-                                        }
+
                                         $("#api_ops").show();
-                                        $("#transform_ops").show();
+
                                         editor.resize();
                                     }
                                 }
