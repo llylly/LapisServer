@@ -751,7 +751,7 @@ function api_detail_present(name, method, entity, no, prefix) {
 
     // --------
 
-    response_str = '<table class="table"><thead><tr><th>响应码</th><th>描述</th><th>响应体规范</th></tr></thead><tbody>';
+    response_str = '<table class="table"><thead><tr><th>响应码</th><th>描述</th><th>响应体规范</th><th>响应头规范</th></tr></thead><tbody>';
     has_resp = false;
     for (key in entity.responses)
         if (key != 'x-extension') {
@@ -763,6 +763,9 @@ function api_detail_present(name, method, entity, no, prefix) {
             response_str += '</td><td>';
             if (!now_resp.schema == false)
                 response_str += present(now_resp.schema, prefix + 'response_' + String(i) + '_schema_', 0, 0).text;
+            response_str += '</td><td>';
+            if (!now_resp.headers == false)
+                response_str += present(now_resp.headers, prefix + 'responseheader_' + String(i) + '_schema_', 0, 0).text;
             response_str += '</td></tr>';
         }
     if (!has_resp) response_str += '<tr><td>无响应描述。</td></tr>';
