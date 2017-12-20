@@ -1,0 +1,212 @@
+host: vpc.aliyuncs.com
+info:
+    description: 专有网络VPC（Virtual Private Cloud）是用户基于阿里云创建的自定义私有网络, 不同的专有网络之间二层逻辑隔离，用户可以在自己创建的专有网络内创建和管理云产品实例，比如ECS、负载均衡、RDS等。
+    title: VPC
+    version: '1.0'
+paths:
+    /CreateRouterInterface:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2--em-em-"><a name="<em>描述</em>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p>创建一个路由器接口（RouterInterface）。</p><ul><li>该API仅用于生成一个RouterInterface，并未触发连接动作。若要真的实现路由器接口的互联，需要使用后面的“发起路由器接口连接”操作。</li><li>路由器接口之间的“互连”，表示两个路由器通过一根虚拟的“链路”连接起来。若要在链路上正确的实现消息的传递，还需要在两边的路由器上正确地配置路由表，以及在实际通信的对象上正确的配置访问控制规则；</li><li>任意两个路由器之间，最多只能存在一对互连的RouterInterface。</li><li>一个路由器上可以最多创建5个路由器接口。</li><li>一个用户名下最多可以同时拥有5个路由器接口。</li><li>若用户名下有RI处于欠费状态，则不允许新建更多的路由器接口。</li><li>OppositeRouterType、OppositeRouterId、OppositeInterfaceId、OppositeInterfaceOwnerId四个参数，用于两个路由器接口互连时进行校验。在发起连接时必须事先填好。所以，您可以选择在创建时就填好，或者创建出路由器接口之后调用ModifyRouterInterfaceAttribute来修改。</li></ul><p>对于创建本端或对端是VBR上的Router Interface时：</p><ul><li>增加AccessPointId和OppositeAccessPointId参数，描述和限制见以下参数表</li><li>新增HealthCheckSourceIp和HealthCheckTargetIp参数，描述和限制见以下参数表</li><li>VBR只能是发起端，此时对端（接收端）只能是VRouter，具体的限制如下：<ul><li>如果RouterType（本端）是VBR，Role必须是InitiatingSide，而且OppositeRouterType只能是VRouter并且不能修改</li><li>对端是VBR的Router
+                Interface只能是接收端，在创建时必须指定对端的RouterType（VBR）和AccessPointId，而且创建后不能修改这两个属性，具体的限制如下：</li><li>OppositeRouterType不允许从其他值（VRouter或空）改为VBR，或从VBR改为其他值（VRouter或空）</li><li>OppositeRouterType是VBR时Role（本端）必须是AcceptingSide，而且OppositeAccessPointId是必填并且不可改</li></ul></li><li>在VBR上创建Router Interface要求VBR必须当时必须处于Enabled状态</li></ul><p><strong>注意：</strong> 使用API创建的路由器接口只支持按天计费，不支持包年包月的计费方式。如果您要购买包年包月的路由器接口，可以在控制台进行操作。详情参考<a href="/document_detail/49316.html">创建路由器接口</a>。</p>
+            parameters:
+            -   description: 操作接口名，系统规定参数，取值：CreateRouterInterface
+                enum:
+                - CreateRouterInterface
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 实例所在的地域
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   description: 所属的路由器类型。<br>可选值：VRouter，VBR
+                enum:
+                - VRouter
+                - VBR
+                in: query
+                name: RouterType
+                required: true
+                type: string
+            -   description: 所属的接入点ID。在RouterType是VBR时必填，而且创建后不允许修改。在RouterType是VRouter时不能填。
+                in: query
+                name: AccessPointId
+                required: false
+                type: string
+            -   description: 所属的路由器Id，在RouterType是VBR时RouterId所指定的VBR必须在AccessPointId所指定的接入点内。
+                in: query
+                name: RouterId
+                required: true
+                type: string
+            -   description: 连接中扮演的角色，即，是连接发起端还是连接接受端。<br>可选值：InitiatingSide|AcceptingSide；
+                enum:
+                - InitiatingSide
+                - AcceptingSide
+                in: query
+                name: Role
+                required: true
+                type: string
+            -   description: 规格，详见<a href="/document_detail/52412.html">路由器接口</a>
+                in: query
+                name: Spec
+                required: true
+                type: string
+            -   description: 要连接的对端所在的Region.
+                in: query
+                name: OppositeRegionId
+                required: true
+                type: string
+            -   description: 对端所属的接入点ID。在OppositeRouterType是VBR时必填，而且创建后不允许修改。在OppositeRouterType是VRouter时不能填。在OppositeRouterType是VBR时OppositeRouterId所指定的VBR必须在OppositeAccessPointId所指定的接入点内。在创建/修改RouterInterface时不会做对端OppositeRouterId，OppositeAccessPointId等的校验，在进行连接操作时会出错。
+                in: query
+                name: OppositeAccessPointId
+                required: false
+                type: string
+            -   default: VRouter
+                description: 要连接的对端路由器接口所属的路由器类型。可选值：VRouter，VBR；缺省为VRouter类型。
+                enum:
+                - VRouter
+                - VBR
+                in: query
+                name: OppositeRouterType
+                required: false
+                type: string
+            -   description: 要连接的对端的路由器的ID。在OppositeRouterType是VBR时OppositeRouterId所指定的VBR必须在OppositeAccessPointId所指定的接入点内。在创建/修改RouterInterface时不会做对端OppositeRouterId，OppositeAccessPointId等的校验，在进行连接操作时会出错。
+                in: query
+                name: OppositeRouterId
+                required: false
+                type: string
+            -   description: 要连接的对端RouterInterface的Id
+                in: query
+                name: OppositeInterfaceId
+                required: false
+                type: string
+            -   description: 连接对端路由器接口的持有者账号ID。您可以登录阿里云官网以后，在 控制台-用户中心-账号管理 中看到您的账号ID。
+                in: query
+                name: OppositeInterfaceOwnerId
+                required: false
+                type: string
+            -   description: '实例的显示名称，[2, 128] 英文或中文字符，必须以大小字母或中文开头，可包含数字，“.”，“_”或“-”。<br>实例名称会显示在控制台。<br>如果没有指定该参数，默认值为实例的 InstanceId<br>不能以 http:// 和 https:// 开头。<br> '
+                in: query
+                maxLength: 128
+                minLength: 2
+                name: Name
+                required: false
+                type: string
+            -   default: ""
+                description: 自定义描述[[2, 256] 个字符，实例描述会显示在控制台。不填则为空，默认为空。不能以 http:// 和 https:// 开头
+                in: query
+                maxLength: 256
+                minLength: 2
+                name: Description
+                required: false
+                type: string
+            -   description: 专线容灾和ECMP场景下用来做专线HealthCheck的Packet的Source IP。只对本端是VRouter而且对端是VBR的Router Interface有效。必须是本端VRouter所在的VPC内的一个未被使用的IP。HealthCheckSourceIp与HealthCheckTargetIp必须同时指定或同时不指定。
+                in: query
+                name: HealthCheckSourceIp
+                required: false
+                type: string
+            -   description: 专线容灾和ECMP场景下用来做专线HealthCheck的Packet的Target IP。只对本端是VRouter而且对端是VBR的Router Interface有效。通常可以用专线用户端CPE的IP（也就是对端RI所在的VBR上的PeerGatewayIp），用户也可以指定专线用户端的其他可以用来做HealthCheck Target的IP。HealthCheckSourceIp与HealthCheckTargetIp必须同时指定或同时不指定。
+                in: query
+                name: HealthCheckTargetIp
+                required: false
+                type: string
+            -   description: 用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不值过64个ASCII字符。<br>具体参见附录：<a href="/document_detail/36569.html">如何保证幂等性</a>。
+                in: query
+                maxLength: 64
+                name: ClientToken
+                required: false
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            RouterInterfaceId:
+                                description: 路由器接口的实例ID，由系统生成，全局唯一。是操作路由器接口实例的唯一标识
+                                name: RouterInterfaceId
+                                type: string
+                        type: object
+                400:
+                    description: '{code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied, describecn: 缺少 Action 字段}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied, describecn: 缺少 AccessKeyId 字段}, {code: MissingParameter, describeen: An input parameter “Signature” that is mandatory for processing the request is not supplied., describecn: 缺少 Signature 字段}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied, describecn: 缺少 Timestamp 字段}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied, describecn: 缺少 Version 字段}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid., describecn: 无效的 Action 值（该 API 不存在）}, {code: InvalidAccessKeyId.NotFound,
+                        describeen: The Access Key ID provided does not exist in our records., describecn: 无效的 AccessKeyId 值（该 key 不存在）}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards., describecn: 无效的 Signature 取值（签名结果错误）}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid., describecn: 无效的 SignatureMethod 取值}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid., describecn: 无效的 SignatureVersion 取值}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied., describecn: 无效的 Timestamp 取值（Timestamp 与服务器时间相差超过了 1 个小时）}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used., describecn: 无效的 SignatureNonce（该 SignatureNonce 值已被使用过）}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid., describecn: 无效的 Version 取值}, {code:
+                        InvalidOwnerId, describeen: The specified OwnerId is not valid., describecn: 无效的 OwnerId 取值}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid., describecn: 无效的 OwnerAccount 取值}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access., describecn: 同时使用了 OwnerId 和 OwnerAccount}, {code: Throttling, describeen: Request was denied due to request throttling., describecn: 因系统流控拒绝访问}, {code: Throttling, describeen: Request was denied due to request throttling., describecn: 该 key 的调用 quota 已用完}, {code: UnsupportedParameter, describeen: The parameter ”&lt;parameter name&gt;” is not supported., describecn: 使用了无效的参数}, {code: UnsupportedParameter, describeen: The parameter ”&lt;parameter name&gt;” is not supported., describecn: 该参数无权使用}, {code: InsufficientBalance, describeen: Your account does not have enough balance., describecn: 余额不足}, {code: IdempotentParameterMismatch, describeen: Request uses a client token
+                        in a previous request but is not identical to that request., describecn: 使用了一个已经使用过的 ClientToken，但此次请求内容却又与上一次使用该 Token 的 request 不一样.}, {code: InvalidParameter, describeen: The specified parameter is not valid, describecn: 参数校验失败},{code: InvalidRegionPair.NotReachable, describeen: The specified OppositeRegion is not reachable by ExpressConnect from that region specified by ‘RegionId’, describecn:  用户指定的两个region是无法通过高速通道产品进行连接的。}, {code: InvalidRole.ValueNotSupported, describeen: The specified Role is not valid., describecn: 指定的 Role 不合法}, {code: InvalidSpec.ValudNotSupported, describeen: The specified Spec is not supported., describecn: 指定的 Spec 不支持}, {code: InvalidRouterType.ValueNotSupported, describeen: The specified RouterType is not valid, describecn: 指定的 RouterType 不合法}, {code: InvalidOppositeRouterType.ValueNotSupported, describeen: The specified OppositeRouterType is not valid., describecn: 指定的 OppositeRouterType 不合法}, {code: ParameterMismatch.Role-Spec,
+                        describeen: The specified Spec and Role mismatch., describecn: 指定的 Spec 和 Role 不匹配}, {code: ParameterMismatch.RegionId-OppositeRegionId-Spec, describeen: The specified Spec is not supported between the specified RegionId and OppositeRegionId., describecn:  该规格在这两个Region之间不支持。}, {code: InvalidName.Malformed, describeen: The specified ‘Name’ is not valid., describecn: 指定的 Name 不合法}, {code: InvalidDescription.Malformed, describeen: The specifid ‘Description’ is not valid., describecn: 指定的 Description 不合法}, {code: Forbidden.BillsOutstanding, describeen: You cannot create more RouterInterface because you have bills outstanding., describecn:  有未结清的账单，因而拒绝创建更多的后付费资源；}, {code: QuotaExceed.RouterInterface, describeen: Living RouterInterface quota exceeded., describecn: 已有路由器接口数量超过配额}, {code: LimitationExceed.InterfaceNumberOnRouter, describeen: Total number of RouterInterfaces on a Router exceeded., describecn: 单个路由器上存在的路由器接口数量超过配额}, {code: InvalidParam.NotFound, describeen:
+                        Parameter must not be null,uid, bid,regionNo, remoteRegionNo or routerId, describecn: ‘uid’, ‘bid’, ‘regionNo’, ‘remoteRegionNo’ 或者 ‘routerId’不能为空}, {code: InvalidAccessPoint.NotMatch, describeen: The accessPoint id is not matched, describecn: 接入点Id 不匹配}, {code: InvalidAccessPoint.NotExist, describeen: The accessPoint not exit, describecn: 接入点Id 不存在}'
+                403:
+                    description: '{code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled., describecn: 该 AccessKey 处于禁用状态}, {code: InvalidAction, describeen: Specified action is not valid., describecn: 该 key 无权调用该 API}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported., describecn: 用户使用了不支持的 Http Method（当前 TOP 只支持 post 和 get）}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied., describecn: 调用该接口没有指定 OwnerId}, {code: Forbidden.SubUser, describeen: The specified action is not available for you。, describecn: 无权调用订单类接口}, {code: Forbidden.RAM, describeen: User not authorized to operate the specified resource, or this API doesn’t support RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次操作没有被正确的授权}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode., describecn: 该接口不允许使用 RAM 方式进行访问}, {code: RealNameAuthenticationError, describeen:
+                        Your account has not passed the real-name authentication yet., describecn: 用户未进行实名认证}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before, describecn: 幂等参数不匹配}, {code: LastTokenProcessing, describeen: The last token request is processing, describecn: 上一次请求还在处理中}'
+                404:
+                    description: '{code: Forbidden.InstanceNotFound, describeen: The specified Instance is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问，但是本次访问涉及到的 Instance 不存在}, {code: Forbidden.DiskNotFound, describeen: The specified Disk is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Disk 不存在}, {code: Forbidden.SecurityGroupNotFound, describeen: The specified SecurityGroup is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 SecurityGroup 不存在}, {code: Forbidden.SnapshotNotFound, describeen: The specified Snapshot is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Snapshot 不存在}, {code: Forbidden.ImageNotFound, describeen: The specified Image is not found, so we cann’t get enough information to check permission in
+                        RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Image 不存在},{code: InvalidRegionId.NotFound, describeen: The RegionId provided does not exist in our records., describecn: 指定的 RegionId 不存在}, {code: InvalidOppositeRegionId.NotFound, describeen: The OppositeRegionId provided does not exist in our records., describecn:  用户填写的OppositeRegionId是一个不存在的regionId}, {code: InvalidRouterId.NotFound, describeen: The specified RouterId does not exist in our recored., describecn: 指定的 RouterId 不存在}'
+                500:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server., describecn: 服务不可用}, {code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure., describecn: 其他情况},{code: Forbidden.NotInRouterInterfaceCreateWhitelist, describeen: Not in router interface create whitelist., describecn: 帐号不在创建路由器接的白名单中}, {code: RI_CREATE_ONE_LIMIT_BY_SYNC, describeen: Create ri only one limit by sync., describecn: }, {code: InvalidAccessPoint.ValueNotAllowed, describeen: The non-vbr router interface cannot have access point configured., describecn: 非 VBR 路由器接口不能指定接入点信息}, {code: InvalidAccessPoint.ValueNotAllowed, describeen: The non-vbr opposite router interface cannot have opposite access point configured., describecn: 非 VBR 对端路由器接口不能指定接入点信息}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 新建路由器接口
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

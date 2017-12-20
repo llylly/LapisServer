@@ -1,0 +1,8 @@
+错误代码
+MissingParameter
+MissingParameter
+RegionId.NotFound
+InvalidTaskId.NotFo und
+IncorrectTaskStatus
+TaskActionNotSupp ort
+CancelTaskFailed

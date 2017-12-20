@@ -1,0 +1,16 @@
+CpuCoreCount:
+    description: CPU的内核数目
+    name: CpuCoreCount
+    type: integer
+InstanceTypeFamily:
+    description: 实例规格族
+    name: InstanceTypeFamily
+    type: string
+InstanceTypeId:
+    description: 实例规格的ID
+    name: InstanceTypeId
+    type: string
+MemorySize:
+    description: 内存大小，单位GB
+    name: MemorySize
+    type: number

@@ -1,0 +1,338 @@
+-   description: 系统规定参数。取值：CreateInstance
+    enum:
+    - CreateInstance
+    in: query
+    name: Action
+    required: true
+    type: string
+-   description: 实例所属的 Region ID。Region ID 的列表详见                        <a href="/document_detail/40654.html">地域与可用区</a>。
+    in: query
+    name: RegionId
+    required: true
+    type: string
+-   description: 镜像文件 ID，启动实例时选择的镜像资源。
+    in: query
+    name: ImageId
+    required: true
+    type: string
+-   description: 实例的资源规格。取值参见                        <a href="/document_detail/25378.html">实例规格族</a>，也可以调用                        <a href="/document_detail/25620.html">DescribeInstanceTypes</a> 接口获得最新的规格表。
+    in: query
+    name: InstanceType
+    required: true
+    type: string
+-   description: 指定新创建实例所属于的安全组代码，同一个安全组内的实例之间可以互相访问。
+    in: query
+    name: SecurityGroupId
+    required: true
+    type: string
+-   default: 空
+    description: 实例所属的可用区编号，您可以调用                        <a href="/document_detail/25610.html">DescribeZones</a> 获取可用区列表。                        <br>空表示由系统选择，默认值：空。
+    in: query
+    name: ZoneId
+    required: false
+    type: string
+-   default: 实例的 InstanceId
+    description: '实例的名称。                        <ul>                            <li>长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可包含数字，点号（.），下划线（_）或短横线（-）。</li>                            <li>实例名称会显示在控制台。</li>                            <li>如果没有指定该参数，默认值为实例的 InstanceId。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                        </ul>                    '
+    in: query
+    maxLength: '128'
+    minLength: '2'
+    name: InstanceName
+    required: false
+    type: string
+-   default: 空
+    description: '实例的描述。                        <ul>                            <li>长度为 [2, 256] 个字符。</li>                            <li>实例描述会显示在控制台。</li>                            <li>不填则为空，默认值为空。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                        </ul>                    '
+    in: query
+    maxLength: '256'
+    minLength: '2'
+    name: Description
+    required: false
+    type: string
+-   default: PayByTraffic
+    description: 网络计费类型。取值范围：                        <ul>                            <li>PayByBandwidth：按固定带宽计费</li>                            <li>PayByTraffic：按使用流量计费</li>                        </ul> 默认值：PayByTraffic
+    enum:
+    - PayByBandwidth
+    - PayByTraffic
+    in: query
+    name: InternetChargeType
+    required: false
+    type: string
+-   default: '200'
+    description: 公网入带宽最大值，单位为 Mbps (Megabit per second)。取值范围：                        <ul>                            <li>[1,200]</li>                        </ul> 默认值： 200 Mbps
+    in: query
+    maxLength: '200'
+    minLength: '1'
+    name: InternetMaxBandwidthIn
+    required: false
+    type: string
+-   default: '0'
+    description: 公网出带宽最大值，单位为：Mbps (Megabit per second)。取值范围：                        <ul>                            <li>按带宽计费：[0, 100]</li>                            <li>按流量计费：[0, 100]</li>                        </ul> 默认值： 0                        <br> 您可以                        <a href="https://selfservice.console.aliyun.com/ticket/createIndex.htm" title="提交工单">提交工单</a> 申请将带宽范围设置成 [0, 200] Mbps。
+    in: query
+    maxLength: '200'
+    minLength: '0'
+    name: InternetMaxBandwidthOut
+    required: false
+    type: string
+-   description: '云服务器的主机名。                        <ul>                            <li>点号（.）和短横线（-）不能作为 HostName 的首尾字符，不能连续使用。</li>                            <li>Windows 系统主机名字符长度为 [2, 15]，允许字母（不限制大小写）、数字和短横线（-）组成，不支持点号（.），不能全是数字。</li>                            <li>其他（Linux 等）平台字符长度为 [2, 128]，允许支持多个点号，点之间为一段，每段允许字母（不限制大小写）、数字和短横线（-）组成。</li>                        </ul>                    '
+    enum:
+    - Windows
+    in: query
+    maxLength: '128'
+    minLength: '2'
+    name: HostName
+    required: false
+    type: string
+-   description: '实例的密码。                        <ul>                            <li>长度为 [8, 30] 个字符，必须同时包含三类不同的字符（大、小写字母，数字和特殊符号）。</li>                            <li>支持以下特殊字符：( ) ` ~ ! @ # $ % ^ &amp; * - + = | { } [ ] : ; ‘ &lt; &gt; , . ? /</li>                        </ul> 如果传入 Password 参数，请务必使用 HTTPS 协议调用 API，避免密码泄露。'
+    in: query
+    maxLength: '30'
+    minLength: '8'
+    name: Password
+    required: false
+    type: string
+-   default: optimized
+    description: '是否为 I/O 优化实例。取值范围：                        <ul>                            <li>none：非 I/O 优化</li>                            <li>optimized：I/O 优化</li>                        </ul> InstanceType 为系列 I 的规格默认值：none                        <br>InstanceType为非系列I的规格默认值：optimized '
+    enum:
+    - none
+    - optimized
+    in: query
+    name: IoOptimized
+    required: false
+    type: string
+-   default: cloud
+    description: 系统盘的磁盘种类。取值范围：                        <ul>                            <li>cloud：普通云盘</li>                            <li>cloud_efficiency：高效云盘</li>                            <li>cloud_ssd：SSD 云盘</li>                            <li>ephemeral_ssd：本地 SSD 盘</li>                        </ul> InstanceType 为系列 I 的规格且 I/O 优化类型为 none 默认值：cloud                        <br>否则，默认值：cloud_efficiency
+    enum:
+    - cloud
+    - cloud_efficiency
+    - cloud_ssd
+    - ephemeral_ssd
+    in: query
+    name: SystemDisk.Category
+    required: false
+    type: string
+-   description: 系统盘大小，单位为 GB。取值范围：[40, 500] 该参数的取值必须大于等于 max{40, ImageSize}。                        <br> 默认值：max{40，ImageSize}
+    in: query
+    maximum: '500'
+    minimum: '40'
+    name: SystemDisk.Size
+    required: false
+    type: integer
+-   default: 空
+    description: '系统盘名称。                        <ul>                            <li>长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可以包含数字，下划线（_）或者连字符（-）。</li>                            <li>磁盘名称会展示在控制台。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                            <li>不填则为空，默认值为空。</li>                        </ul>                    '
+    in: query
+    maxLength: '128'
+    minLength: '2'
+    name: SystemDisk.DiskName
+    required: false
+    type: string
+-   default: 空
+    description: '系统盘描述。                        <ul>                            <li>长度为 [2, 256] 个英文或中文字符。</li>                            <li>实例描述会显示在控制台。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                            <li>不填则为空，默认值为空。</li>                        </ul>                    '
+    in: query
+    maxLength: '256'
+    minLength: '2'
+    name: SystemDisk.Description
+    required: false
+    type: string
+-   description: 第 n 个数据盘的容量大小，n 的取值范围为 [1, 16]，内存单位为 GB。取值范围：                        <ul>                            <li>cloud：[5, 2000]</li>                            <li>cloud_efficiency：[20, 32768]</li>                            <li>cloud_ssd：[20, 32768]</li>                            <li>ephemeral_ssd：[5, 800]</li>                        </ul>该参数的取值必须大于等于参数                        <code>SnapshotId</code> 指定的快照的大小。
+    enum:
+    - cloud
+    - cloud_efficiency
+    - cloud_ssd
+    - ephemeral_ssd
+    - SnapshotId
+    in: query
+    maxItems: '800'
+    minItems: '5'
+    name: DataDisk.n.Size
+    required: false
+    type: integer
+-   default: cloud
+    description: 数据盘n的磁盘种类。取值范围：                        <ul>                            <li>cloud：普通云盘</li>                            <li>cloud_efficiency：高效云盘</li>                            <li>cloud_ssd：SSD 云盘</li>                            <li>ephemeral_ssd：本地 SSD 盘</li>                        </ul> 默认值：cloud
+    enum:
+    - cloud
+    - cloud_efficiency
+    - cloud_ssd
+    - ephemeral_ssd
+    in: query
+    name: DataDisk.n.Category
+    required: false
+    type: string
+-   default: 'false'
+    description: '数据盘 n 是否加密。取值范围：                        <ul>                            <li>true：加密。</li>                            <li>false：不加密。</li>                        </ul> 默认值：false '
+    enum:
+    - 'true'
+    - 'false'
+    in: query
+    name: DataDisk.n.Encrypted
+    required: false
+    type: boolean
+-   description: 创建数据盘 n 使用的快照。                        <br> 指定参数                        <code>DataDisk.n.SnapshotId</code> 后， 参数                        <code>DataDisk.n.Size</code> 会被忽略，实际创建的磁盘大小为参数                        <code>SnapshotId</code> 的大小。                        <br>若                        <code>SnapshotId</code> 的创建时间早于 2013 年 7 月 15 日（含），该次请求会被拒绝，且返回错误                        <code>InvalidSnapshot.TooOld</code>。
+    enum:
+    - SnapshotId
+    - SnapshotId
+    in: query
+    name: DataDisk.n.SnapshotId
+    required: false
+    type: string
+-   default: 空
+    description: '数据盘名称。                        <ul>                            <li>长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可包含数字，下划线（_）或者连字符（-）。</li>                            <li>磁盘名称会展示在控制台。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                            <li>不填则为空，默认值为空。</li>                        </ul>                    '
+    in: query
+    maxLength: '128'
+    minLength: '2'
+    name: DataDisk.n.DiskName
+    required: false
+    type: string
+-   default: 空
+    description: '数据盘描述。                        <ul>                            <li>长度为 [2, 256] 个英文或中文字符。</li>                            <li>磁盘描述会展示在控制台。</li>                            <li>不能以 http:// 和 https:// 开头。</li>                            <li>不填则为空，默认值为空。</li>                        </ul>                    '
+    in: query
+    maxLength: '256'
+    minLength: '2'
+    name: DataDisk.n.Description
+    required: false
+    type: string
+-   default: 'true'
+    description: 表示数据盘是否随实例释放。取值范围：                        <ul>                            <li>true：实例释放时，这块磁盘随实例一起释放。</li>                            <li>false：实例释放时，这块磁盘保留不释放。</li>                        </ul> 默认值：true                        <br> 这个参数只对独立云盘有效，即，参数                        <code>DataDisk.n.Category</code> 取值为                        <code>cloud</code>、                        <code>cloud_efficiency</code> 或                        <code>cloud_ssd</code> 的云盘，否则会报错。
+    enum:
+    - 'true'
+    - 'false'
+    - cloud
+    - cloud_ssd
+    in: query
+    name: DataDisk.n.DeleteWithInstance
+    required: false
+    type: string
+-   description: 如果是创建 VPC 类型的实例，需要指定虚拟交换机 ID。
+    in: query
+    name: VSwitchId
+    required: false
+    type: string
+-   description: 实例私网 IP 地址，不能单独指定。
+    in: query
+    name: PrivateIpAddress
+    required: false
+    type: ''
+-   default: PostPaid
+    description: '实例的付费方式。取值范围：                        <ul>                            <li>PrePaid：预付费，即包年包月。选择该类付费方式的用户必须确认自己的账号支持余额支付/信用支付，否则将返回 InvalidPayMethod 的错误提示。</li>                            <li>PostPaid：后付费，即按量付费。</li>                        </ul> 默认值：PostPaid '
+    enum:
+    - PrePaid
+    - PostPaid
+    in: query
+    name: InstanceChargeType
+    required: false
+    type: string
+-   default: NoSpot
+    description: 后付费实例的竞价策略。                        <br>当参数                        <code>InstanceChargeType</code> 取值为                        <code>PostPaid</code> 时为生效。                        <br>取值范围：                        <ul>                            <li>NoSpot：正常按量付费实例</li>                            <li>SpotWithPriceLimit：设置上限价格的竞价实例</li>                            <li>SpotAsPriceGo：系统自动出价，最高按量付费价格。</li>                        </ul>默认值：NoSpot
+    enum:
+    - InstanceChargeType
+    - PostPaid
+    - NoSpot
+    - SpotWithPriceLimit
+    - SpotAsPriceGo
+    in: query
+    name: SpotStrategy
+    required: false
+    type: string
+-   description: 设置实例的每小时最高价格。支持最大 3 位小数，参数                        <code>SpotStrategy</code> 取值为                        <code>SpotWithPriceLimit</code> 时生效。
+    enum:
+    - SpotStrategy
+    - SpotWithPriceLimit
+    in: query
+    name: SpotPriceLimit
+    required: false
+    type: float
+-   description: '购买资源的时长，单位为：月。当参数                        <code>InstanceChargeType</code> 取值为                        <code>PrePaid</code> 时才生效且为必选值。取值范围：                        <ul>                            <li>1 - 9</li>                            <li>12</li>                            <li>24</li>                            <li>36</li>                            <li>48</li>                            <li>60</li>                        </ul>                    '
+    enum:
+    - InstanceChargeType
+    - PrePaid
+    - '48'
+    - '60'
+    in: query
+    maximum: '36'
+    minimum: '1'
+    name: Period
+    required: false
+    type: integer
+-   default: Month
+    description: '购买资源的时长。可选值 Week／Month。                        <br> PeriodUnit 为 Week 时，                        <ul>                            <li>Period 取值 {“1”, “2”, “3”, “4”}</li>                            <li>AutoRenewPeriod 取值 {“1”, “2”, “3”} </li>                        </ul> PeriodUnit 为 Month 时,                        <ul>                            <li> Period 取值 { “1”, “2”, “3”, “4”, “5”, “6”, “7”, “8”, “9”, “12”, “24”, “36”,”48”,”60”} </li>                            <li>AutoRenewPeriod 取值 {“1”, “2”, “3”, “6”, “12”}</li>                        </ul> 默认值：Month '
+    enum:
+    - PeriodUnit
+    - Period
+    - AutoRenewPeriod
+    - Period
+    - AutoRenewPeriod
+    in: query
+    name: PeriodUnit
+    required: false
+    type: string
+-   default: 'False'
+    description: 是否要自动续费。当参数                        <code>InstanceChargeType</code> 取值                        <code>PrePaid</code> 时才生效。取值范围：                        <ul>                            <li>True：自动续费。</li>                            <li>False：不自动续费。</li>                        </ul> 默认值：False
+    enum:
+    - InstanceChargeType
+    - PrePaid
+    - 'True'
+    - 'False'
+    in: query
+    name: AutoRenew
+    required: false
+    type: string
+-   description: '每次自动续费的时长，当参数                        <code>AutoRenew</code> 取值                        <code>True</code> 时为必填。取值范围：                        <ul>                            <li>1</li>                            <li>2</li>                            <li>3</li>                            <li>6</li>                            <li>12</li>                        </ul>                    '
+    enum:
+    - AutoRenew
+    - 'True'
+    in: query
+    name: AutoRenewPeriod
+    required: false
+    type: integer
+-   description: 实例自定义数据，需要以 Base64 方式编码，原始数据最多为 16 KB。
+    in: query
+    maxLength: '16'
+    name: UserData
+    required: false
+    type: string
+-   description: 用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不超过 64 个 ASCII 字符。                        <br> 具体参见附录：                        <a href="/document_detail/25693.html">如何保证幂等性</a>。
+    in: query
+    maxLength: '64'
+    name: ClientToken
+    required: false
+    type: string
+-   default: 空
+    description: '密钥对名称。                        <ul>                            <li>Windows ECS 实例，忽略该参数。默认为空。即使填写了该参数，仍旧只执行                                <code>Password</code> 的内容。</li>                            <li>Linux ECS 实例的密码登录方式会被初始化成禁止。</li>                        </ul>                    '
+    enum:
+    - Password
+    - Linux
+    in: query
+    name: KeyPairName
+    required: false
+    type: string
+-   description: 部署集 ID。如果用户不填写，则采用 1 的方式。
+    in: query
+    name: DeploymentSetId
+    required: false
+    type: string
+-   description: 实例 RAM 角色名称。您可以使用                        <i>RAM</i> API                        <a href="/document_detail/28713.html">ListRoles</a> 查询实例 RAM 角色名称。参考相关 API                        <a href="/document_detail/28710.html">CreateRole</a> 和                        <a href="/document_detail/28713.html">ListRoles</a>。
+    enum:
+    - RAM
+    in: query
+    name: RamRoleName
+    required: false
+    type: string
+-   description: '是否开启安全加固。取值范围：                        <ul>                            <li>Active：启用安全加固，只对系统镜像生效。</li>                            <li>Deactive：不启用安全加固，对所有镜像类型生效。</li>                        </ul>                    '
+    enum:
+    - Active
+    - Deactive
+    in: query
+    name: SecurityEnhancementStrategy
+    required: false
+    type: string
+-   description: ' 标签 key，n 的取值范围：[1, 5]                        <br> 最多支持 64 个字符。                        <br> 不支持 aliyun 开头。                        <br> 不支持 http:// 和 https:// 开头。                        <br> 不允许为空字符串。 '
+    in: query
+    maxLength: '64'
+    minLength: '1'
+    name: Tag.n.Key
+    required: false
+    type: string
+-   description: ' 标签 value，n 的取值范围：[1, 5]                        <br> 最多支持 128 个字符。                        <br> 不支持 aliyun 开头。                        <br> 不支持 http:// 和 https:// 开头。                        <br> 允许为空字符串。 '
+    in: query
+    maxLength: '128'
+    minLength: '1'
+    name: Tag.n.Value
+    required: false
+    type: string

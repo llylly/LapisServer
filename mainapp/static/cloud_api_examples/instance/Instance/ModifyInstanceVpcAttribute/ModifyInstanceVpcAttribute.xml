@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/ModifyInstanceVpcAttribute">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2--em-em-&quot;&gt;&lt;a name=&quot;&lt;em&gt;描述&lt;/em&gt;&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;&lt;em&gt;描述&lt;/em&gt;&lt;/h2&gt;&lt;p&gt;修改 ECS 实例的 VPC 属性。&lt;/p&gt;&lt;ul&gt;&lt;li&gt;专有网络相关的接口，参见 &lt;a href=&quot;/document_detail/34962.html&quot;&gt;专有网络 VPC 的 API 参考&lt;/a&gt;。&lt;/li&gt;&lt;li&gt;指定 VSwitchId 修改 VPC 属性时，指定的 VSwitchId，必须属于当前的专有网络。&lt;/li&gt;&lt;li&gt;指定实例的当前交换机和新的交换机必须要属于同一个可用区。&lt;/li&gt;&lt;li&gt;指定 VSwitchId 不指定 PrivateIpAddress 时，系统自动为云服务器实例分配一个空闲的私网 IP。&lt;/li&gt;&lt;li&gt;同时指定 VSwitchId 和 PrivateIpAddress 时，私网 IP 要属于指定交换机的网段。&lt;/li&gt;&lt;li&gt;PrivateIpAddress 依赖于 VSwitchId，不能单独指定 PrivateIpAddress。&lt;/li&gt;&lt;li&gt;进行修改操作的云服务器实例必须是 Stopped 状态，新创建的云服务器实例必须要经过一次启动 / 停止才能更改所属的交换机。&lt;/li&gt;&lt;/ul&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数，取值：ModifyInstanceVpcAttribute"/>
+            <enum nodeType="array">
+              <enum value="ModifyInstanceVpcAttribute"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定的实例 ID"/>
+            <in value="query"/>
+            <name value="InstanceId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="新的交换机 ID，不能跨可用区修改实例的交换机"/>
+            <in value="query"/>
+            <name value="VSwitchId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="新的私网 IP 地址，不能单独指定"/>
+            <in value="query"/>
+            <name value="PrivateIpAddress"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties/>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidVSwitchId.Mismatch, describeen: Specified instance and virtual switch are not in the same zone., describecn: 指定的实例和指定的交换机不属于同一个可用区}, {code: InvalidPrivateIpAddress.Mismatch, describeen: Specified private IP address is not in the CIDR block of virtual switch., describecn: 指定的私网 IP 不在指定交换机的网段中}, {code: InvalidPrivateIpAddress.Malformed, describeen: Specified private IP address is malformed., describecn: 指定的私有 IP 不合法}, {code: InvalidPrivateIpAddress.Duplicated, describeen: Specified private IP address is duplicated., describecn: 指定的私网 IP 已经被使用}, {code: InvalidPrivateIp.Changing, describeen: Previous action is not finished yet., describecn: 实例修改私网 IP 未完成，不能再进行在修改}, {code: IncorrectInstanceStatus, describeen: The current status of instance does not support this operation., describecn: 不在已停止状态的实例不能进行此操作。}, {code: OperationDenied, describeen: Specified operation is denied as your instance is not in VPC., describecn: 实例不是 VPC 类型}, {code: InvalidPrivateIp.Changing, describeen: Specified private IP address is not in the CIDR block of virtual switch., describecn: 实例正在修改私网 IP 过程中（实例一次 stop 只能修改一次私网 IP）}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidVSwitchId.NotFound, describeen: Specified virtual switch does not exist., describecn: 指定的交换机 ID 不存在}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist., describecn: 指定的 ECS 实例不存在}, {code: InvalidVSwitchId.NotFound, describeen: Specified virtual switch is not found in current VPC., describecn: 不能跨 VPC 修改实例的交换机。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="修改 ECS 实例的 VPC 属性"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=ModifyInstanceVpcAttribute&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;InstanceId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;35F20777&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;0DFF&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;C152&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;41FA&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;BCE0EA0B2FD7&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;VSwitchId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=[&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vswitchid&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=ModifyInstanceVpcAttribute&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;InstanceId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;35F20777&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;0DFF&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;C152&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;41FA&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;BCE0EA0B2FD7&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;VSwitchId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=[&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vswitchid&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ModifyInstanceAttributeResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ModifyInstanceAttributeResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="        ResourceOwnerAccount    "/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

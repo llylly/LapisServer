@@ -1,0 +1,38 @@
+AccessPointId:
+    description: 接入点（AP）ID
+    name: AccessPointId
+    type: string
+AttachedRegionId:
+    description: 接入点物理上所在的Region ID，不填表示接入点物理上不属于任何Region
+    name: AttachedRegionId
+    type: string
+Description:
+    description: 专线接入点（AP）的描述
+    name: Description
+    type: string
+HostOperator:
+    description: 专线接入点（AP）机房所属的运营商
+    name: HostOperator
+    type: string
+Location:
+    description: 专线接入点（AP）所处物理位置
+    name: Location
+    type: string
+Name:
+    description: 专线接入点（AP）的名称
+    name: Name
+    type: string
+Status:
+    description: 专线接入点状态，可选值：<ul><li>Recommended - 状态良好，推荐接入</li><li>Hot - 接入客户较多，状态正常</li><li>Full - 接入客户已满，无法接入</li></ul>
+    enum:
+    - Recommended
+    - Hot
+    - Full
+    name: Status
+    type: string
+Type:
+    description: 专线接入点（AP）类型，可选值：<ul><li>VPC - VPC接入点，可接受访问VPC类型网络的专线接入</li></ul>
+    enum:
+    - VPC
+    name: Type
+    type: string

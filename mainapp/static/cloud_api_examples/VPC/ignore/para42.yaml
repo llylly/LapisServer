@@ -1,0 +1,25 @@
+-   description: 操作接口名，系统规定参数，取值:DescribeAccessPoints
+    in: query
+    name: Action
+    required: true
+    type: string
+-   description: 所在地域（管理实例的Region ID）
+    in: query
+    name: RegionId
+    required: true
+    type: string
+-   description: 专线接入点（AP）类型，不指定表示返回所有类型的AP。 可选值：<br><li>VPC - VPC接入点，可接受访问VPC类型网络的专线接入</li>
+    in: query
+    name: Type
+    required: false
+    type: string
+-   description: 查询结果的页码；不指定时，默认为1；<br>取值范围：正整数；若PageNumber大于实际结果的最大页码，则返回最后一页的内容。
+    in: query
+    name: PageNumber
+    required: false
+    type: integer
+-   description: 查询结果的分页大小。取值范围为[1,100]，默认为10。
+    in: query
+    name: PageSize
+    required: false
+    type: integer

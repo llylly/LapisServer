@@ -1,3 +1,6 @@
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 import click
 import json
 import os
@@ -5,7 +8,7 @@ from LapisParser import *
 
 @click.command()
 @click.option('--source')
-@click.option('--msgpath')
+@click.option('--msgpath', default='')
 @click.option('--out')
 def main(source, msgpath, out):
     stat = dict()
@@ -16,8 +19,11 @@ def main(source, msgpath, out):
     out = str(out)
 
     stat['errors'] = [{'line': 1, 'col': 1, 'errno': 0, 'msg': 'Format Error'}]
-    with open(msgpath, 'w') as f:
-        json.dump(stat, f)
+    if msgpath != '':
+        with open(msgpath, 'w') as f:
+            json.dump(stat, f)
+    else:
+        print(stat)
 
     ret1 = addDocFromFile(source, 'default')
     if ret1 is not True:
@@ -34,8 +40,11 @@ def main(source, msgpath, out):
             ret2 = True
         stat['success'] = ret2
 
-        with open(msgpath, 'w') as f:
-            json.dump(stat, f)
+        if msgpath != '':
+            with open(msgpath, 'w') as f:
+                json.dump(stat, f)
+        else:
+            print(stat)
 
 
 if __name__ == '__main__':

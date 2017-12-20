@@ -1,0 +1,192 @@
+host: vpc.aliyuncs.com
+x-vee: 2.0 AS
+swagger: '2.0'
+info:
+    description: 专有网络VPC（Virtual Private Cloud）是用户基于阿里云创建的自定义私有网络, 不同的专有网络之间二层逻辑隔离，用户可以在自己创建的专有网络内创建和管理云产品实例，比如ECS、负载均衡、RDS等。
+    title: VPC
+    version: '1.0'
+
+paths:
+    /public:
+        request:
+            parameters:
+            -   description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                default: XML
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+
+        response:
+            RequestId:
+                description:  用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string    
+    /sample:
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        get:
+            description: 创建一个新的集群实例，并新建指定数量的节点。
+
+            consumes:
+            - application/x-www-form-urlencoded
+            
+            parameters:
+            -   description: 
+                in: body
+                name: ClusterCreation 
+                required: true
+                type: object
+                schema:
+                    type: object
+                    properties:
+                        data_disk_category:
+                            description: ECS 使用的磁盘类型。更多详细信息，参见 <a href="/document_detail/25691.html">磁盘种类表</a>。
+                            name: data_disk_category
+                            required: true
+                            type: string
+                        data_disk_size:
+                            description: 节点共享磁盘大小。
+                            name: data_disk_size
+                            required: true
+                            type: integer
+                        ecs_image_id:
+                            description: ECS 使用的系统镜像 ID。
+                                        如果您需要自定义集群的 ECS 镜像的 ID，需要保证 ECS 镜像满足以下条件：
+
+                                        操作系统：Ubuntu、CentOS。
+                                        Linux Kernel version ≥ 3.18，用于支持 overlayfs 以及 overlay network。
+                                        镜像中删除 /etc/docker/key.json 文件。
+                            enum:
+                            -   ubuntu_14_0405_64_40G_base_20170222.vhd
+                            -   centos_7_2_64_40G_base_20170222.vhd
+                            name: ecs_image_id
+                            required: false
+                            type: string
+                        instance_type:
+                            description: ECS 规格类型代码。更多详细信息，参见 <a href="/document_detail/25378.html">实例规格族</a>。
+                            name: instance_type
+                            required: true
+                            type: string
+                        io_optimized:
+                            description: 根据 ECS 实例规则来确定。取值为 none 或者 optimized。
+                            enum:
+                            -   none
+                            -   optimized。
+                            name: io_optimized
+                            required: false
+                            type: string
+                        name:
+                            description: 集群名称, 集群名称可以使用大小写英文字母、中文、数字、中划线。
+                            name: name
+                            required: true
+                            type: string
+                        network_mode:
+                            description: '集群网络模式（经典网络: classic、VPC 网络: vpc）。'
+                            name: network_mode
+                            required: true
+                            type: string
+                        password:
+                            description: root 账号密码。
+                            name: password
+                            required: true
+                            type: string
+                        size:
+                            description: 集群 ECS 节点数量。
+                            name: size
+                            required: true
+                            type: integer
+                        subnet_cidr:
+                            description: 集群可以使用的网络地址块，例如：192.168.24.0/22。只有网络模式为 vpc 的时候，才需要设置该字段。
+                            name: subnet_cidr
+                            required: true
+                            type: string
+                        vpc_id:
+                            description: VPC 网络 ID。只有网络模式为 vpc 的时候，才需要设置该字段。更多详细信息，参见 <a href="/document_detail/27708.html">VPC 网络介绍</a>。
+                            name: vpc_id
+                            required: true
+                            type: string
+                        vswitch_id:
+                            description: VPC 网络的交换机 ID。只有网络模式为 vpc 的时候，才需要设置该字段。
+                            name: vswitch_id
+                            required: true
+                            type: string
+    
+
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        type: object
+                        properties:
+                            cluster_id:
+                                description: 集群 ID，集群的唯一标识。
+                                name: cluster_id
+                                type: string
+                            request_id:
+                                description: 请求 ID
+                                name: request_id
+                                type: string
+                            task_id:
+                                description: 任务 ID
+                                name: task_id
+                                type: string
+                        
+        summary: 创建集群实例
+        x-requestsample:  
+        -   description: '
+                        
+                        '
+            id: 1
+        x-responsesample:
+        -   description: '
+                        
+                        '
+            id: 1

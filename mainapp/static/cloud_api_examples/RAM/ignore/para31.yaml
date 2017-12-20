@@ -1,0 +1,20 @@
+MinimumPasswordLength:
+    description: 最小密码长度
+    name: MinimumPasswordLength
+    type: integer
+RequireLowercaseCharacters:
+    description: 必须包含小写字母
+    name: RequireLowercaseCharacters
+    type: boolean
+RequireNumbers:
+    description: 必须包含数字
+    name: RequireNumbers
+    type: boolean
+RequireSymbols:
+    description: 必须包含字符
+    name: RequireSymbols
+    type: boolean
+RequireUppercaseCharacters:
+    description: 必须包含大写字母
+    name: RequireUppercaseCharacters
+    type: boolean

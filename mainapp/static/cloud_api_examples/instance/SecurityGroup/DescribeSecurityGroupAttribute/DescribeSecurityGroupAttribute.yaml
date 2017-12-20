@@ -1,0 +1,241 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /DescribeSecurityGroupAttribute:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2--em-em-"><a name="<em>描述</em>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p>查询安全组详情，包括安全权限控制。</p>
+            parameters:
+            -   description: 系统规定参数，取值：DescribeSecurityGroupAttribute。
+                enum:
+                - DescribeSecurityGroupAttribute
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 目标安全组 ID
+                in: query
+                name: SecurityGroupId
+                required: true
+                type: string
+            -   description: 目标安全组所属 Region ID。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   default: internet
+                description: 网络类型，取值：internet | intranet，默认值为 internet。
+                enum:
+                - internet
+                - intranet
+                in: query
+                name: NicType
+                required: false
+                type: string
+            -   default: all
+                description: 授权方向，取值：egress | ingress | all，默认值为all。
+                enum:
+                - egress
+                - ingress
+                - all
+                in: query
+                name: Direction
+                required: false
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            Description:
+                                description: 安全组描述信息
+                                name: Description
+                                type: string
+                            InnerAccessPolicy:
+                                description: 安全组内网络连通策略，Accept：互通；Drop：隔离
+                                name: InnerAccessPolicy
+                                type: string
+                            Permissions:
+                                description: 由 PermissionType 组成的集合，表示安全组中的权限规则
+                                name: Permissions
+                                type: object
+                                properties:
+                                    CreateTime:
+                                        description: 创建时间，UTC时间
+                                        name: CreateTime
+                                        type: string
+                                    Description:
+                                        description: 描述信息
+                                        name: Description
+                                        type: string
+                                    DestCidrIp:
+                                        description: 目标IP地址段，用于Egress授权
+                                        name: DestCidrIp
+                                        type: string
+                                    DestGroupId:
+                                        description: 目标安全组，用于Egress授权
+                                        name: DestGroupId
+                                        type: string
+                                    DestGroupOwnerAccount:
+                                        description: 目标安全组所属阿里云账户Id
+                                        name: DestGroupOwnerAccount
+                                        type: string
+                                    Direction:
+                                        description: 授权方向
+                                        name: Direction
+                                        type: string
+                                    IpProtocol:
+                                        description: IP协议
+                                        name: IpProtocol
+                                        type: string
+                                    NicType:
+                                        description: 网络类型
+                                        name: NicType
+                                        type: string
+                                    Policy:
+                                        description: 授权策略
+                                        name: Policy
+                                        type: string
+                                    PortRange:
+                                        description: 端口范围
+                                        name: PortRange
+                                        type: string
+                                    Priority:
+                                        description: 规则优先级
+                                        name: Priority
+                                        type: string
+                                    SourceCidrIp:
+                                        description: 源IP地址段，用于Ingress授权
+                                        name: SourceCidrIp
+                                        type: string
+                                    SourceGroupId:
+                                        description: 源安全组，用于Ingress授权
+                                        name: SourceGroupId
+                                        type: string
+                                    SourceGroupOwnerAccount:
+                                        description: 源安全组所属阿里云账户Id
+                                        name: SourceGroupOwnerAccount
+                                        type: string
+
+                            RegionId:
+                                description: 地域 Id
+                                name: RegionId
+                                type: string
+                            SecurityGroupId:
+                                description: 目标安全组 Id
+                                name: SecurityGroupId
+                                type: string
+                            SecurityGroupName:
+                                description: 目标安全组名称
+                                name: SecurityGroupName
+                                type: string
+                            VpcId:
+                                description: VpcId，如果有，表示这个安全组是 Vpc 类型的安全组，没有则表示是经典网络里的安全组。
+                                name: VpcId
+                                type: string
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidNicType.ValueNotSupported, describeen: The specified NicType does not   exist., describecn: NicType 参数指定的值不支持}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidRegionId.NotFound, describeen: The specified RegionId does not   exist., describecn: 指定 RegionId 未找到或者无权使用。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist., describecn: 指定的 SecurityGroupId 未找到}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 查询安全组详情，包括安全权限控制
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=DescribeSecurityGroupAttribute</span></code></li><li class="L1"><code><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="pln">F876FF7BA</span></code></li><li class="L2"><code><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L3"><code><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=DescribeSecurityGroupAttribute</span></code></li><li class="L1"><code><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="pln">F876FF7BA</span></code></li><li class="L2"><code><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L3"><code><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;DescribeSecurityGroupAttributeResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">1651FBB6-4FBF-49FF-A9F5-DF5D696C7EC6</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;RegionId&gt;</span><span class="pln">cn-hangzhou</span><span class="tag">&lt;/RegionId&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;SecurityGroupId&gt;</span><span class="pln">C0003E8B-B930-4F59-ADC0-0E209A9012B0</span><span class="tag">&lt;/SecurityGroupId&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;Description&gt;</span><span
+                class="pln">for demo</span><span class="tag">&lt;/Description&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;InnerAccessPolicy&gt;</span><span class="pln">Accept</span><span class="tag">&lt;/InnerAccessPolicy&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;Permissions&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">         </span><span class="tag">&lt;Permission&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;IpProtocol&gt;</span><span class="pln">ALL</span><span class="tag">&lt;/IpProtocol&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;PortRange&gt;</span><span class="pln">-1/-1</span><span class="tag">&lt;/PortRange&gt;</span></code></li><li class="L0"><code class="lang-xml"><span
+                class="tag">&lt;SourceGroupId&gt;</span><span class="pln">8dsmf982</span><span class="tag">&lt;/SourceGroupId&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="tag">&lt;SourceGroupOwnerAccount&gt;</span><span class="pln">test@aliyun.com</span><span class="tag">&lt;/SourceGroupOwnerAccount&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;Policy&gt;</span><span class="pln">Accept</span><span class="tag">&lt;/Policy&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;NicType&gt;</span><span class="pln">intranet</span><span class="tag">&lt;/NicType&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">         </span><span class="tag">&lt;/Permission&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">          </span><span class="tag">&lt;Permission&gt;</span></code></li><li
+                class="L6"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;IpProtocol&gt;</span><span class="pln">tcp</span><span class="tag">&lt;/IpProtocol&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;PortRange&gt;</span><span class="pln">1/65535</span><span class="tag">&lt;/PortRange&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;SourceCidrIp&gt;</span><span class="pln">0.0.0.0/0</span><span class="tag">&lt;/SourceCidrIp&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;Policy&gt;</span><span class="pln">accept</span><span class="tag">&lt;/Policy&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">              </span><span class="tag">&lt;NicType&gt;</span><span class="pln">internet</span><span class="tag">&lt;/NicType&gt;</span></code></li><li
+                class="L1"><code class="lang-xml"><span class="pln">         </span><span class="tag">&lt;/Permission&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;/Permissions&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="tag">&lt;/DescribeSecurityGroupAttributeResponse&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">    </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"1651FBB6-4FBF-49FF-A9F5-DF5D696C7EC6"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">    </span><span class="str">"RegionId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-hangzhou"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">    </span><span class="str">"SecurityGroupId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"C0003E8B-B930-4F59-ADC0-0E209A9012B0"</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-json"><span class="pln">    </span><span
+                class="str">"Description"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"for demo"</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">    </span><span class="str">"Permissions"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"Permission"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[{</span></code></li><li class="L7"><code class="lang-json"><span class="pln">            </span><span class="str">"IpProtocol"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"ALL"</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">            </span><span class="str">"PortRange"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"-1/-1"</span><span
+                class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="str">"SourceGroupId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"8dsmf982"</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="str">"SourceGroupOwnerAccount"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"test@aliyun.com"</span></code></li><li class="L1"><code class="lang-json"><span class="pln">            </span><span class="str">"Policy"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Accept"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">            </span><span class="str">"NicType"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"intranet"</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="pun">},</span></code></li><li
+                class="L4"><code class="lang-json"><span class="pln">        </span><span class="pun">{</span></code></li><li class="L5"><code class="lang-json"><span class="pln">            </span><span class="str">"IpProtocol"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"tcp"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">            </span><span class="str">"PortRange"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"1/65535"</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">            </span><span class="str">"SourceCidrIp"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"0.0.0.0/0"</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">            </span><span class="str">"Policy"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"accept"</span><span
+                class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">            </span><span class="str">"NicType"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"internet"</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="pun">}]</span></code></li><li class="L1"><code class="lang-json"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L2"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

@@ -1,0 +1,453 @@
+<div class="markdown-body">
+    <h2 id="h2--ip-">
+        <a name="弹性公网IP 相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>弹性公网IP 相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>AllocateEipAddress</td>
+                    <td>申请 1 个弹性公网 IP</td>
+                </tr>
+                <tr>
+                    <td>AssociateEipAddress</td>
+                    <td>将弹性公网 IP 绑定到相同地域的云服务器实例上</td>
+                </tr>
+                <tr>
+                    <td>DescribeEipAddresses</td>
+                    <td>查询指定地域的弹性公网 IP 列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyEipAddressAttribute</td>
+                    <td>修改指定弹性公网 IP 的属性，目前主要用于修改弹性公网 IP 的带宽限速</td>
+                </tr>
+                <tr>
+                    <td>UnassociateEipAddress</td>
+                    <td>解除一个弹性公网 IP 和云服务器实例的绑定关系</td>
+                </tr>
+                <tr>
+                    <td>ReleaseEipAddress</td>
+                    <td>释放弹性公网 IP</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h2 id="h2-u4E13u6709u7F51u7EDCu76F8u5173u63A5u53E3">
+        <a name="专有网络相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>专有网络相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreateVpc</td>
+                    <td>在指定的地域创建 1 个 VPC</td>
+                </tr>
+                <tr>
+                    <td>DeleteVpc</td>
+                    <td>删除指定的 VPC</td>
+                </tr>
+                <tr>
+                    <td>DescribeVpcs</td>
+                    <td>查询指定地域的专有网络列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyVpcAttribute</td>
+                    <td>修改指定 VPC 的属性</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u8DEFu7531u5668u76F8u5173u63A5u53E3">
+        <a name="路由器相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>路由器相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>DescribeVRouters</td>
+                    <td>查询指定地域的路由器列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyVRouterAttribute</td>
+                    <td>修改指定路由器的属性</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u4EA4u6362u673Au76F8u5173u63A5u53E3">
+        <a name="交换机相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>交换机相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreateVSwitch</td>
+                    <td>在指定专有网络内创建1个新的交换机</td>
+                </tr>
+                <tr>
+                    <td>DeleteVSwitch</td>
+                    <td>删除指定的交换机</td>
+                </tr>
+                <tr>
+                    <td>DescribeVSwitches</td>
+                    <td>查询指定地域内用户的交换机列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyVSwitchAttribute</td>
+                    <td>修改指定交换机的属性</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u8DEFu7531u8868u76F8u5173u63A5u53E3">
+        <a name="路由表相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>路由表相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreateRouteEntry</td>
+                    <td>新建自定义路由条目</td>
+                </tr>
+                <tr>
+                    <td>DeleteRouteEntry</td>
+                    <td>删除指定的自定义路由</td>
+                </tr>
+                <tr>
+                    <td>DescribeRouteTables</td>
+                    <td>查询用户名下路由表的列表</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-nat-">
+        <a name="NAT网关相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>NAT网关相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreaeNatGateway</td>
+                    <td>创建NAT网关</td>
+                </tr>
+                <tr>
+                    <td>DescribeNatGateways</td>
+                    <td>查询NAT网关列表</td>
+                </tr>
+                <tr>
+                    <td>DeleteNatGateway</td>
+                    <td>删除NAT网关</td>
+                </tr>
+                <tr>
+                    <td>DescribeBandwidthPackages</td>
+                    <td>查询NAT带宽包列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyBandwidthPackageSpec</td>
+                    <td>修改NAT带宽包带宽</td>
+                </tr>
+                <tr>
+                    <td>AddBandwidthPackageIps</td>
+                    <td>修改NAT带宽包-增加公网IP</td>
+                </tr>
+                <tr>
+                    <td>RemoveBandwidthPackageIps</td>
+                    <td>修改NAT带宽包-减少公网IP</td>
+                </tr>
+                <tr>
+                    <td>DeleteBandwidthPackage</td>
+                    <td>删除NAT带宽包</td>
+                </tr>
+                <tr>
+                    <td>CreateForwardEntry</td>
+                    <td>添加端口转发规则</td>
+                </tr>
+                <tr>
+                    <td>DeleteForwardEntry</td>
+                    <td>删除端口转发规则</td>
+                </tr>
+                <tr>
+                    <td>ModifyForwardEntry</td>
+                    <td>修改端口转发规则</td>
+                </tr>
+                <tr>
+                    <td>DescribeForwordTableEntries</td>
+                    <td>查询端口转发规则列表</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-vpn-">
+        <a name="VPN网关相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>VPN网关相关接口</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API接口名称</th>
+                <th>描述</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CreateVpnGateway</td>
+                <td>创建VPN网关</td>
+            </tr>
+            <tr>
+                <td>DescribeVpnGateways</td>
+                <td>查询VPN网关列表</td>
+            </tr>
+            <tr>
+                <td>DescribeVpnGateway</td>
+                <td>查询VPN网关详细信息</td>
+            </tr>
+            <tr>
+                <td>ModifyVpnGatewayAttribute</td>
+                <td>修改VPN网关</td>
+            </tr>
+            <tr>
+                <td>DeleteVpnGateway</td>
+                <td>删除VPN网关</td>
+            </tr>
+            <tr>
+                <td>CreateCustomerGateway</td>
+                <td>创建用户网关</td>
+            </tr>
+            <tr>
+                <td>DescribeCustomerGateways</td>
+                <td>查询用户网关列表</td>
+            </tr>
+            <tr>
+                <td>DescribeCustomerGateway</td>
+                <td>查询用户网关详细信息</td>
+            </tr>
+            <tr>
+                <td>DeleteCustomerGateway</td>
+                <td>删除用户网关</td>
+            </tr>
+            <tr>
+                <td>ModifyCustomerGatewayAttribute</td>
+                <td>修改用户网关</td>
+            </tr>
+            <tr>
+                <td>CreateVpnConnection</td>
+                <td>创建VPN连接</td>
+            </tr>
+            <tr>
+                <td>DescribeVpnConnections</td>
+                <td>查询VPN连接列表</td>
+            </tr>
+            <tr>
+                <td>DescribeVpnConnection</td>
+                <td>查询VPN连接详细信息</td>
+            </tr>
+            <tr>
+                <td>ModifyVpnConnectionAttribute</td>
+                <td>修改VPN连接</td>
+            </tr>
+            <tr>
+                <td>DeleteVpnConnection</td>
+                <td>删除VPN连接</td>
+            </tr>
+            <tr>
+                <td>DownloadVpnConnectionConfig</td>
+                <td>下载VPN连接配置</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2 id="h2-u5730u57DFu76F8u5173u63A5u53E3">
+        <a name="地域相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>地域相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>DescribeRegions</td>
+                    <td>查询可用地域列表</td>
+                </tr>
+                <tr>
+                    <td>DescribeZones</td>
+                    <td>查询可用区</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u76D1u63A7u76F8u5173u63A5u53E3">
+        <a name="监控相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>监控相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>DescribeEipMonitorData</td>
+                    <td>查看弹性公网 IP 的监控信息</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u7269u7406u4E13u7EBFu76F8u5173u63A5u53E3">
+        <a name="物理专线相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>物理专线相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreatePhysicalConnection</td>
+                    <td>申请物理专线接入</td>
+                </tr>
+                <tr>
+                    <td>CancelPhysicalConnection</td>
+                    <td>取消物理专线接入</td>
+                </tr>
+                <tr>
+                    <td>DeletePhysicalConnection</td>
+                    <td>删除物理专线</td>
+                </tr>
+                <tr>
+                    <td>DescribePhysicalConnections</td>
+                    <td>查询物理专线列表</td>
+                </tr>
+                <tr>
+                    <td>EnablePhysicalConnection</td>
+                    <td>开通物理专线</td>
+                </tr>
+                <tr>
+                    <td>ModifyPhysicalConnection</td>
+                    <td>修改物理专线属性</td>
+                </tr>
+                <tr>
+                    <td>TerminatePhysicalConnection</td>
+                    <td>物理专线接入终止</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u865Au62DFu8FB9u754Cu8DEFu7531u5668u76F8u5173u63A5u53E3">
+        <a name="虚拟边界路由器相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>虚拟边界路由器相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>CreateVirtualBorderRouter</td>
+                    <td>新建虚拟边界路由器</td>
+                </tr>
+                <tr>
+                    <td>DescribeVirtualBorderRouters</td>
+                    <td>查询虚拟边界路由器列表</td>
+                </tr>
+                <tr>
+                    <td>DescribeVirtualBorderRoutersForPhysicalConnection</td>
+                    <td>查看物理专线下的边界路由器列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyVirtualBorderRouter</td>
+                    <td>修改虚拟边界路由器信息</td>
+                </tr>
+                <tr>
+                    <td>RecoverVirtualBorderRouter</td>
+                    <td>恢复虚拟边界路由器</td>
+                </tr>
+                <tr>
+                    <td>TerminateVirtualBorderRouter</td>
+                    <td>终止虚拟边界路由器</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="h2-u8DEFu7531u5668u63A5u53E3u76F8u5173u63A5u53E3">
+        <a name="路由器接口相关接口" class="reference-link"></a>
+        <span class="header-link octicon octicon-link"></span>路由器接口相关接口</h2>
+    <div>
+        <table class="ecs ecs_overview">
+            <tbody>
+                <tr>
+                    <th style="width: 35%;">API</th>
+                    <th style="width: 65%;">描述</th>
+                </tr>
+                <tr>
+                    <td>ActivateRouterInterface</td>
+                    <td>将路由器接口置为激活</td>
+                </tr>
+                <tr>
+                    <td>ConnectRouterInterface</td>
+                    <td>发起路由器接口连接</td>
+                </tr>
+                <tr>
+                    <td>CreateRouterInterface</td>
+                    <td>新建路由器接口</td>
+                </tr>
+                <tr>
+                    <td>DeactivateRouterInterface</td>
+                    <td>将路由器接口置为非激活</td>
+                </tr>
+                <tr>
+                    <td>DeleteRouterInterface</td>
+                    <td>删除路由器接口</td>
+                </tr>
+                <tr>
+                    <td>DescribeRouterInterfaces</td>
+                    <td>查询路由器接口列表</td>
+                </tr>
+                <tr>
+                    <td>ModifyRouterInterfaceAttribute</td>
+                    <td>修改路由器接口属性</td>
+                </tr>
+                <tr>
+                    <td>ModifyRouterInterfaceSpec</td>
+                    <td>修改路由器接口规格</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

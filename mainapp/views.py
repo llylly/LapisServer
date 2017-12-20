@@ -103,6 +103,8 @@ def _walk(cur_dir, prefix, support_format, compress_format):
     files = os.listdir(cur_dir)
     raw_names = list()
     for f in files:
+        if f == 'ignore':
+            continue
         # if os.path.isfile(os.path.join(cur_dir, f)):
         #     if str(f).rsplit('.', 1)[-1] in support_format and str(f).rsplit('.', 1)[-1] != 'md':
         #         ans[f] = os.path.join(prefix, f)

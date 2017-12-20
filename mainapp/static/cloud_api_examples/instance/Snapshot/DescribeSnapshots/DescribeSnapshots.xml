@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/DescribeSnapshots">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2--em-em-&quot;&gt;&lt;a name=&quot;&lt;em&gt;描述&lt;/em&gt;&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;&lt;em&gt;描述&lt;/em&gt;&lt;/h2&gt;&lt;p&gt;查询某个 ECS 实例磁盘设备所有的快照列表。&lt;/p&gt;&lt;p&gt;&lt;code&gt;InstanceId&lt;/code&gt;，&lt;code&gt;DiskId&lt;/code&gt; 和 &lt;code&gt;SnapshotIds&lt;/code&gt; 不再作为必选参数，而是作为 Filter 进行使用，为逻辑与（&lt;code&gt;And&lt;/code&gt;）关系。&lt;/p&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数。取值：DescribeSnapshots"/>
+            <enum nodeType="array">
+              <enum value="DescribeSnapshots"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="磁盘所属于的 Region ID。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定的实例 ID。"/>
+            <in value="query"/>
+            <name value="InstanceId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定的磁盘设备 ID。"/>
+            <in value="query"/>
+            <name value="DiskId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="false"/>
+            <description value="过滤加密快照。取值范围：&lt;ul&gt;&lt;li&gt;true：只筛选出加密快照&lt;/li&gt;&lt;li&gt;false：不做加密属性的筛选&lt;/li&gt;&lt;/ul&gt;默认值：False"/>
+            <enum nodeType="array">
+              <enum value="true"/>
+              <enum value="false"/>
+            </enum>
+            <in value="query"/>
+            <name value="Encrypted"/>
+            <required value="false"/>
+            <type value="boolean"/>
+          </parameters>
+          <parameters>
+            <description value="快照标识编码。一个带有格式的 Json Array：[“s-xxxxxxxxx”, ”s-yyyyyyyyy”, … “s-zzzzzzzzz”]，最多 100 个 ID，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <maxLength value="100"/>
+            <name value="SnapshotIds"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="快照名称。"/>
+            <in value="query"/>
+            <name value="SnapshotName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="all"/>
+            <description value="快照状态。取值范围：&lt;ul&gt;&lt;li&gt;progressing &lt;/li&gt;&lt;li&gt; accomplished&lt;/li&gt;&lt;li&gt;failed&lt;/li&gt;&lt;li&gt; all&lt;/li&gt;&lt;/ul&gt;默认值：all"/>
+            <enum nodeType="array">
+              <enum value="progressing"/>
+              <enum value="accomplished"/>
+              <enum value="failed"/>
+              <enum value="all"/>
+            </enum>
+            <in value="query"/>
+            <name value="Status"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="all"/>
+            <description value="快照类型。取值范围：&lt;ul&gt;&lt;li&gt;auto&lt;/li&gt;&lt;li&gt;user &lt;/li&gt;&lt;li&gt; all&lt;/li&gt;&lt;/ul&gt;默认值：all"/>
+            <enum nodeType="array">
+              <enum value="auto"/>
+              <enum value="user"/>
+              <enum value="all"/>
+            </enum>
+            <in value="query"/>
+            <name value="SnapshotType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="快照源磁盘的磁盘类型。取值范围：&lt;ul&gt;&lt;li&gt;System&lt;/li&gt;&lt;li&gt;Data&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="System"/>
+              <enum value="Data"/>
+            </enum>
+            <in value="query"/>
+            <name value="SourceDiskType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="有引用关系的资源类型。取值范围：&lt;ul&gt;&lt;li&gt;image&lt;/li&gt;&lt;li&gt;disk&lt;/li&gt;&lt;li&gt;image_disk&lt;/li&gt;&lt;li&gt;none&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="image"/>
+              <enum value="disk"/>
+              <enum value="image_disk"/>
+              <enum value="none"/>
+            </enum>
+            <in value="query"/>
+            <name value="Usage"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="标签"/>
+            <in value="query"/>
+            <items>
+              <x-schema>
+                <properties>
+                  <Key>
+                    <description value="标签键，n 的取值范围为 [1, 5]。&lt;br&gt;不允许为空字符串。"/>
+                    <minLength value="1"/>
+                    <name value="Tag.n.Key"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Key>
+                  <Value>
+                    <description value="标签值，n 的取值范围为 [1, 5]。&lt;br&gt;允许为空字符串。"/>
+                    <name value="Tag.n.Value"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Value>
+                </properties>
+                <type value="object"/>
+              </x-schema>
+            </items>
+            <maxItems value="5"/>
+            <minItems value="1"/>
+            <name value="Tag"/>
+            <required value="false"/>
+            <type value="array"/>
+          </parameters>
+          <parameters>
+            <default value="1"/>
+            <description value="磁盘状态列表的页码，起始值为 1。&lt;br&gt;默认值：1"/>
+            <in value="query"/>
+            <name value="PageNumber"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="10"/>
+            <description value="分页查询时设置的每页行数，最大值 100 行。&lt;br&gt;默认值：10"/>
+            <in value="query"/>
+            <maximum value="100"/>
+            <name value="PageSize"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <PageNumber>
+                  <description value="快照列表的页码"/>
+                  <name value="PageNumber"/>
+                  <type value="integer"/>
+                </PageNumber>
+                <PageSize>
+                  <description value="输入时设置的每页行数"/>
+                  <name value="PageSize"/>
+                  <type value="integer"/>
+                </PageSize>
+                <Snapshots>
+                  <description value="快照详情 SnapshotType 组成的集合"/>
+                  <name value="Snapshots"/>
+                  <properties>
+                    <CreationTime>
+                      <description value="创建时间。按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为：&lt;br&gt;YYYY-MM-DDThh:mmZ"/>
+                      <name value="CreationTime"/>
+                      <type value="string"/>
+                    </CreationTime>
+                    <Description>
+                      <description value="描述信息。"/>
+                      <name value="Description"/>
+                      <type value="string"/>
+                    </Description>
+                    <Encrypted>
+                      <description value="该快照是否加密。"/>
+                      <name value="Encrypted"/>
+                      <type value="boolean"/>
+                    </Encrypted>
+                    <ProductCode>
+                      <description value="从镜像市场继承的产品编号。 "/>
+                      <name value="ProductCode"/>
+                      <type value="string"/>
+                    </ProductCode>
+                    <Progress>
+                      <description value="快照创建进度，单位为百分比。"/>
+                      <name value="Progress"/>
+                      <type value="string"/>
+                    </Progress>
+                    <RetentionDays>
+                      <description value="自动快照保留天数。"/>
+                      <name value="RetentionDays"/>
+                      <type value="integer"/>
+                    </RetentionDays>
+                    <SnapshotId>
+                      <description value="快照 ID。"/>
+                      <name value="SnapshotId"/>
+                      <type value="string"/>
+                    </SnapshotId>
+                    <SnapshotName>
+                      <description value="快照显示名称。如果创建时指定了快照显示名称，则返回。"/>
+                      <name value="SnapshotName"/>
+                      <type value="string"/>
+                    </SnapshotName>
+                    <SourceDiskId>
+                      <description value="源磁盘ID，如果快照的源磁盘已经被删除，该字段仍旧保留。"/>
+                      <name value="SourceDiskId"/>
+                      <type value="string"/>
+                    </SourceDiskId>
+                    <SourceDiskSize>
+                      <description value="源磁盘容量，单位：GB。"/>
+                      <name value="SourceDiskSize"/>
+                      <type value="integer"/>
+                    </SourceDiskSize>
+                    <SourceDiskType>
+                      <description value="源磁盘属性。取值范围：&lt;ul&gt;&lt;li&gt;System&lt;/li&gt;&lt;li&gt;Data&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="System"/>
+                        <enum value="Data"/>
+                      </enum>
+                      <name value="SourceDiskType"/>
+                      <type value="string"/>
+                    </SourceDiskType>
+                    <Status>
+                      <description value="快照状态。取值范围：&lt;ul&gt;&lt;li&gt;progressing&lt;/li&gt;&lt;li&gt;accomplished&lt;/li&gt;&lt;li&gt;failed&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="progressing"/>
+                        <enum value="accomplished"/>
+                        <enum value="failed"/>
+                      </enum>
+                      <name value="Status"/>
+                      <type value="string"/>
+                    </Status>
+                    <Usage>
+                      <description value="有引用关系的资源类型。取值范围：&lt;ul&gt;&lt;li&gt;image&lt;/li&gt;&lt;li&gt;disk&lt;/li&gt;&lt;li&gt;image_disk&lt;/li&gt;&lt;li&gt;none&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="image"/>
+                        <enum value="disk"/>
+                        <enum value="image_disk"/>
+                        <enum value="none"/>
+                      </enum>
+                      <name value="Usage"/>
+                      <type value="string"/>
+                    </Usage>
+                  </properties>
+                  <type value="object"/>
+                </Snapshots>
+                <TotalCount>
+                  <description value="快照总个数"/>
+                  <name value="TotalCount"/>
+                  <type value="integer"/>
+                </TotalCount>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidTag.Mismatch, describeen: The specified Tag.n.Key and Tag.n.Value are not match., describecn: 指定的 Tag.n.Key 和 Tag.n.Value 不匹配。}, {code: InvalidTagCount, describeen: The specified tags are beyond the permitted range., describecn: 指定的 Tag 数超过了 5 个。}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: InvalidSnapshotIds.Malformed, describeen: The amount of specified specified snapshot Ids exceeds the limit., describecn: SnapshotIds 参数格式不正确。}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidStatus.NotFound, describeen: The specified Status is not found., describecn: 指定的 Status 不存在。}, {code: InvalidSnapshotType.NotFound, describeen: The specfied SnapshotType is not found., describecn: 指定的 SnapshotType 不存在。}, {code: InvalidUsage, describeen: The specifed Usage is not valid., describecn: 指定的 Usage 不合法。}, {code: InvalidSourceDiskType, describeen: The specifed SourceDiskType is not valid., describecn: SourceDiskType 不合法。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查询针对云服务器的某个磁盘设备所有的快照列表"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeSnapshots&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeSnapshots&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DescribeSnapshotsResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Snapshots&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Snapshot&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2014-07-24T13:00:52Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Description&amp;gt;&amp;lt;/Description&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;d-23x0r79qy&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;DATA&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ProductCode&amp;gt;&amp;lt;/ProductCode&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SnapshotName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;auto_20140724_2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SnapshotName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Progress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Progress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Status&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;accomplished&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Status&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SnapshotId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;s-23f2i9s4t&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SnapshotId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Usage&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Usage&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Snapshot&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Snapshot&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2014-07-24T13:00:42Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Description&amp;gt;&amp;lt;/Description&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;101-70105379&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;DATA&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ProductCode&amp;gt;&amp;lt;/ProductCode&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SnapshotName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;auto_20140724_2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SnapshotName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Progress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Progress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SourceDiskSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SourceDiskSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Status&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;accomplished&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Status&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SnapshotId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;s-23izto5qm&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SnapshotId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Usage&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Usage&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Snapshot&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Snapshots&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageNumber&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageNumber&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TotalCount&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TotalCount&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2F409D67-329A-4405-B924-2FC28566B366&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DescribeSnapshotsResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageNumber&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;659F91C6-1949-43B0-90C4-B6342CA757D5&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Snapshots&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Snapshot&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-07-30T05:00:14Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Progress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;100%&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SnapshotId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;s-943ypfgic&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SnapshotName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;auto_20150730_3&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;d-944qyqjfa&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;system&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Status&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;accomplished&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Usage&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-07-30T05:00:14Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Progress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;100%&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SnapshotId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;s-94osg320e&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SnapshotName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;auto_20150730_3&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;d-94j355jsq&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SourceDiskType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;system&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Status&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;accomplished&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Usage&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;none&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TotalCount&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;36&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="ResourceOwnerAccount"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

@@ -1,0 +1,16 @@
+AccessPointSet:
+    description: 专线接入点信息AccessPointType组成的集合
+    name: AccessPointSet
+    type: accesspointsettype
+PageNumber:
+    description: 实例列表的页码
+    name: PageNumber
+    type: integer
+PageSize:
+    description: 查询结果的分页大小
+    name: PageSize
+    type: integer
+TotalCount:
+    description: 实例总个数
+    name: TotalCount
+    type: integer

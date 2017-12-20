@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/DescribeImages">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2-u63CFu8FF01&quot;&gt;&lt;a name=&quot;描述&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;描述&lt;/h2&gt;&lt;p&gt;查询用户可以使用的镜像列表。显示出的镜像资源列表包括用户自定义的镜像，阿里云提供的公共镜像，第三方镜像市场的镜像和其他用户主动共享给您的共享镜像。镜像市场的镜像需要先到镜像市场的网站上订阅后才能进行创建ECS实例。此接口支持分页查询，查询结果包括可使用的镜像资源的总数和当前页的镜像资源。每页的数量默认为10条。&lt;/p&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数，取值：DescribeImages。"/>
+            <enum nodeType="array">
+              <enum value="DescribeImages"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例所属于的 Region ID。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="镜像 ID，最多 100 个 ID，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <name value="ImageId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="镜像状态。&lt;br&gt;取值： &lt;ul&gt;&lt;li&gt;Creating 创建中&lt;/li&gt;&lt;li&gt;Available 可用（默认值）&lt;/li&gt;&lt;li&gt;UnAvailable 不可用&lt;/li&gt;&lt;li&gt;CreateFailed 创建失败&lt;/li&gt;&lt;/ul&gt;可以取多个值，值之间以半角逗号隔开。"/>
+            <enum nodeType="array">
+              <enum value="Creating"/>
+              <enum value="Available"/>
+              <enum value="UnAvailable"/>
+              <enum value="CreateFailed"/>
+            </enum>
+            <in value="query"/>
+            <name value="Status"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="创建镜像的快照 ID。"/>
+            <in value="query"/>
+            <name value="SnapshotId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="镜像的名称。"/>
+            <in value="query"/>
+            <name value="ImageName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="空"/>
+            <description value="镜像所有者别名。取值范围：&lt;ul&gt;&lt;li&gt;system：阿里云官方提供镜像&lt;/li&gt;&lt;li&gt;self：用户自定义镜像&lt;/li&gt;&lt;li&gt;others：其他阿里云用户共享给您的镜像&lt;/li&gt;&lt;li&gt;marketplace：镜像市场提供的镜像&lt;/li&gt;&lt;/ul&gt;默认值：空，空表示返回 &lt;code&gt;system&lt;/code&gt;、&lt;code&gt;self&lt;/code&gt;以及&lt;code&gt;others&lt;/code&gt;参数的结果。"/>
+            <enum nodeType="array">
+              <enum value="system"/>
+              <enum value="self"/>
+              <enum value="others"/>
+              <enum value="marketplace"/>
+            </enum>
+            <in value="query"/>
+            <name value="ImageOwnerAlias"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="有引用关系的资源类型。取值范围：&lt;ul&gt;&lt;li&gt;instance：镜像处于运行状态，有 ECS 实例使用。&lt;/li&gt;&lt;li&gt;none：镜像处于闲置状态，暂无 ECS 实例使用。&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="instance"/>
+              <enum value="none"/>
+            </enum>
+            <in value="query"/>
+            <name value="Usage"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="标签"/>
+            <in value="query"/>
+            <items>
+              <x-schema>
+                <properties>
+                  <Key>
+                    <description value="标签key，n 的取值范围为 [1, 5]。&lt;br&gt;不允许为空字符串。"/>
+                    <minLength value="1"/>
+                    <name value="Tag.n.Key"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Key>
+                  <Value>
+                    <description value="标签value，n 的取值范围为 [1, 5]。&lt;br&gt;允许为空字符串。"/>
+                    <name value="Tag.n.Value"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Value>
+                </properties>
+                <type value="object"/>
+              </x-schema>
+            </items>
+            <maxItems value="5"/>
+            <minItems value="1"/>
+            <name value="Tag"/>
+            <required value="false"/>
+            <type value="array"/>
+          </parameters>
+          <parameters>
+            <default value="1"/>
+            <description value="实例状态列表的页码，起始值为 1，默认值为 1。"/>
+            <in value="query"/>
+            <name value="PageNumber"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="10"/>
+            <description value="分页查询时设置的每页行数，最大值 50 行，默认值为 10。"/>
+            <in value="query"/>
+            <maximum value="50"/>
+            <name value="PageSize"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <Images>
+                  <description value="镜像信息 ImageType 组成的集合。"/>
+                  <name value="Images"/>
+                  <properties>
+                    <Architecture>
+                      <description value="镜像系统类型：i386 | x86_64"/>
+                      <enum nodeType="array">
+                        <enum value="i386"/>
+                        <enum value="x86_64"/>
+                      </enum>
+                      <name value="Architecture"/>
+                      <type value="string"/>
+                    </Architecture>
+                    <CreationTime>
+                      <description value="创建时间。按照&lt;a href=&quot;/document_detail/25696.html?spm=5176.doc25628.2.5.WGOxfV&quot; data-spm-anchor-id=&quot;5176.doc25628.2.5&quot;&gt;ISO8601&lt;/a&gt;标准表示，并需要使用UTC时间。格式为：&lt;br&gt;YYYY-MM-DDThh:mmZ"/>
+                      <name value="CreationTime"/>
+                      <type value="string"/>
+                    </CreationTime>
+                    <Description>
+                      <description value="描述信息"/>
+                      <name value="Description"/>
+                      <type value="string"/>
+                    </Description>
+                    <DiskDeviceMappings>
+                      <description value="镜像下包含磁盘和快照的系统描述"/>
+                      <name value="DiskDeviceMappings"/>
+                      <properties>
+                        <Device>
+                          <description value="生成磁盘的Device信息：比如/dev/xvdb"/>
+                          <name value="Device"/>
+                          <type value="string"/>
+                        </Device>
+                        <Format>
+                          <description value="镜像格式"/>
+                          <name value="Format"/>
+                          <type value="string"/>
+                        </Format>
+                        <ImportOSSBucket>
+                          <description value="导入镜像的oss的bucket"/>
+                          <name value="ImportOSSBucket"/>
+                          <type value="string"/>
+                        </ImportOSSBucket>
+                        <ImportOSSObject>
+                          <description value="导入镜像文件的所属OSS的object"/>
+                          <name value="ImportOSSObject"/>
+                          <type value="string"/>
+                        </ImportOSSObject>
+                        <Size>
+                          <description value="生成磁盘的大小 "/>
+                          <name value="Size"/>
+                          <type value="string"/>
+                        </Size>
+                        <SnapshotId>
+                          <description value="快照ID"/>
+                          <name value="SnapshotId"/>
+                          <type value="string"/>
+                        </SnapshotId>
+                      </properties>
+                      <type value="object"/>
+                    </DiskDeviceMappings>
+                    <ImageId>
+                      <description value="镜像编码 "/>
+                      <name value="ImageId"/>
+                      <type value="string"/>
+                    </ImageId>
+                    <ImageName>
+                      <description value="镜像的名称 "/>
+                      <name value="ImageName"/>
+                      <type value="string"/>
+                    </ImageName>
+                    <ImageOwnerAlias>
+                      <description value="镜像所有者别名&lt;br&gt;有效值：&lt;ul&gt;&lt;li&gt;system – 系统公共镜像&lt;/li&gt;&lt;li&gt;self – 用户的自定义镜像&lt;/li&gt;&lt;li&gt;others – 其他用户的公开镜像&lt;/li&gt;&lt;li&gt;marketplace -镜像市场镜像&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="system"/>
+                        <enum value="self"/>
+                        <enum value="others"/>
+                        <enum value="marketplace"/>
+                      </enum>
+                      <name value="ImageOwnerAlias"/>
+                      <type value="string"/>
+                    </ImageOwnerAlias>
+                    <ImageVersion>
+                      <description value="镜像版本"/>
+                      <name value="ImageVersion"/>
+                      <type value="string"/>
+                    </ImageVersion>
+                    <IsCopied>
+                      <description value="是否是拷贝的镜像，true | false"/>
+                      <enum nodeType="array">
+                        <enum value="true"/>
+                        <enum value="false"/>
+                      </enum>
+                      <name value="IsCopied"/>
+                      <type value="string"/>
+                    </IsCopied>
+                    <IsSubscribed>
+                      <description value="用户是否订阅了该镜像的ProductCode对应的镜像商品的服务条款. &lt;ul&gt;&lt;li&gt;true：表示已经订阅&lt;/li&gt;&lt;li&gt;false：表示未订阅&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="true"/>
+                        <enum value="false"/>
+                      </enum>
+                      <name value="IsSubscribed"/>
+                      <type value="string"/>
+                    </IsSubscribed>
+                    <OSName>
+                      <description value="操作系统的显示名称"/>
+                      <name value="OSName"/>
+                      <type value="string"/>
+                    </OSName>
+                    <OSType>
+                      <description value="操作系统类型，可选值有：&lt;ul&gt;&lt;li&gt;windows&lt;/li&gt;&lt;li&gt;linux&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="windows"/>
+                        <enum value="linux"/>
+                      </enum>
+                      <name value="OSType"/>
+                      <type value="string"/>
+                    </OSType>
+                    <Platform>
+                      <description value="操作系统平台"/>
+                      <name value="Platform"/>
+                      <type value="string"/>
+                    </Platform>
+                    <ProductCode>
+                      <description value="镜像市场的镜像商品标示"/>
+                      <name value="ProductCode"/>
+                      <type value="string"/>
+                    </ProductCode>
+                    <Progress>
+                      <description value="镜像完成的进度，单位为百分比"/>
+                      <name value="Progress"/>
+                      <type value="string"/>
+                    </Progress>
+                    <Size>
+                      <description value="镜像大小"/>
+                      <name value="Size"/>
+                      <type value="integer"/>
+                    </Size>
+                    <Status>
+                      <description value="镜像的状态，可能的值有：&lt;ul&gt;&lt;li&gt;UnAvailable 不可用&lt;/li&gt;&lt;li&gt;Available 可用&lt;/li&gt;&lt;li&gt;Creating 创建中&lt;/li&gt;&lt;li&gt;CreateFailed 创建失败&lt;/li&gt;&lt;/ul&gt;"/>
+                      <enum nodeType="array">
+                        <enum value="UnAvailable"/>
+                        <enum value="Available"/>
+                        <enum value="Creating"/>
+                        <enum value="CreateFailed"/>
+                      </enum>
+                      <name value="Status"/>
+                      <type value="string"/>
+                    </Status>
+                    <Usage>
+                      <description value="有引用关系的资源类型，instance | none"/>
+                      <enum nodeType="array">
+                        <enum value="instance"/>
+                        <enum value="none"/>
+                      </enum>
+                      <name value="Usage"/>
+                      <type value="string"/>
+                    </Usage>
+                  </properties>
+                  <type value="object"/>
+                </Images>
+                <PageNumber>
+                  <description value="当前页码。"/>
+                  <name value="PageNumber"/>
+                  <type value="integer"/>
+                </PageNumber>
+                <PageSize>
+                  <description value="当前分页包含多少条目。"/>
+                  <name value="PageSize"/>
+                  <type value="integer"/>
+                </PageSize>
+                <RegionId>
+                  <description value="镜像所属地域 ID。"/>
+                  <name value="RegionId"/>
+                  <type value="string"/>
+                </RegionId>
+                <TotalCount>
+                  <description value="列表条条目数。"/>
+                  <name value="TotalCount"/>
+                  <type value="integer"/>
+                </TotalCount>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidImageOwnerAlias.ValueNotSupported, describeen: The specified ImageOwnerAlias value is not supported., describecn: 无效的 ImageOwnerAlias 取值。}, {code: InvalidTag.Mismatch, describeen: The specified Tag.n.Key and Tag.n.Value are not match., describecn: 指定的Tag.n.Key和Tag.n.Value不匹配。}, {code: InvalidTagCount, describeen: The specified tags are beyond the permitted range., describecn: 指定的 Tag 数超过了 5 个。}, {code: InvalidInstanceType.ValueNotSupported, describeen: The specified InstanceType beyond the permitted range., describecn: 指定的InstanceType不合法（超出可选范围）。}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidUsage, describeen: The specifed Usage is not valid, describecn: 指定的 Usage 不合法。}, {code: InvalidOSType, describeen: The specifed OSType is not valid, describecn: 指定的 OSType 不合法。}, {code: InvalidArchitecture, describeen: The specifed Architecture is not valid, describecn: 指定的平台架构不合法。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查询用户可以使用的镜像列表"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeImages&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeImages&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DescribeImagesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Images&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Image&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Architecture&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;i386&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Architecture&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2014-07-22T09:53:44Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Description&amp;gt;&amp;lt;/Description&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DiskDeviceMappings&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DiskDeviceMapping&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Device&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;/dev/xvda&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Device&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Size&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Size&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SnapshotId&amp;gt;&amp;lt;/SnapshotId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DiskDeviceMapping&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DiskDeviceMappings&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ImageId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;suse11sp3_64_20G_aliaegis_20150428.vhd&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ImageId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ImageName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;suse11sp3_64_20G_aliaegis_20150428.vhd&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ImageName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ImageOwnerAlias&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ImageOwnerAlias&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ImageVersion&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ImageVersion&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IsCopied&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/IsCopied&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IsSubscribed&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/IsSubscribed&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;OSName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;SUSE Linux  Enterprise Server 11 SP3 64位&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/OSName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ProductCode&amp;gt;&amp;lt;/ProductCode&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;OSType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;linux&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/OSType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Platform&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;SUSE&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Platform&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Progress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Progress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Size&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Size&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Status&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Available&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Status&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Usage&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Usage&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Image&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Images&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageNumber&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageNumber&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RegionId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-hangzhou&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RegionId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TotalCount&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TotalCount&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;7871BB26-3002-4950-B2E6-98D333077EA5&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DescribeImagesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Images&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Image&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Architecture&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;x86_64&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-05-06T09:01:32Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;DiskDeviceMappings&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;DiskDeviceMapping&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;              &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Device&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;/dev/xvda&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;              &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Size&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;20&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImageId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;suse11sp3_64_20G_aliaegis_20150428.vhd&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImageName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;suse11sp3_64_20G_aliaegis_20150428.vhd&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImageOwnerAlias&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;system&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImageVersion&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IsCopied&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IsSubscribed&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;OSName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SUSE Linux  Enterprise Server 11 SP3 64位&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;OSType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;linux&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Platform&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SUSE&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Progress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;100%&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Size&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Status&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Available&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Usage&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;instance&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageNumber&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RegionId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-hangzhou&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;49CBCED4-C9B9-4851-BEB5-8FB5E5169E30&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TotalCount&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;24&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="ResourceOwnerAccount"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

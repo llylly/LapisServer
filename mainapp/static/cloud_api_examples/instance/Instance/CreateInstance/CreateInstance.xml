@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/CreateInstance">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2-u63CFu8FF0&quot;&gt;&lt;a name=&quot;描述&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;描述&lt;/h2&gt;&lt;p&gt;创建实例需要通过实名认证。您可以参阅 &lt;a href=&quot;https://help.aliyun.com/knowledge_list/37170.html&quot; title=&quot;单击查看实名认证相关文档&quot;&gt;账号实名认证相关文档&lt;/a&gt; 完成认证。&lt;/p&gt;&lt;p&gt;根据请求参数创建云服务器 ECS 实例。注意以下几类请求参数的使用说明。&lt;/p&gt;&lt;h3 id=&quot;h3-u5B9Eu4F8Bu89C4u683C&quot;&gt;&lt;a name=&quot;实例规格&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;实例规格&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;创建实例时，可以通过参数 &lt;code&gt;IoOptimized&lt;/code&gt; 指定是否创建 I/O 优化实例。&lt;/li&gt;&lt;li&gt;如果选择创建本地 SSD 盘（&lt;code&gt;ephemeral_ssd&lt;/code&gt;）的实例，一旦创建就不能修改实例规格。&lt;/li&gt;&lt;/ul&gt;&lt;h3 id=&quot;h3-u955Cu50CF&quot;&gt;&lt;a name=&quot;镜像&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;镜像&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;在创建实例时，必须要选择镜像，用来确定新创建实例的系统盘配置。镜像包含操作系统以及应用软件配置。基于镜像创建实例后，实例的系统盘即为此镜像的完全克隆。&lt;/li&gt;&lt;li&gt;实例内存为 512 MB 时不能使用 Windows 操作系统。&lt;/li&gt;&lt;li&gt;实例内存为 4 GB 以上时不能使用 32 位操作系统。&lt;/li&gt;&lt;/ul&gt;&lt;h3 id=&quot;h3-u7F51u7EDCu914Du7F6E&quot;&gt;&lt;a name=&quot;网络配置&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;网络配置&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;专有网络类型实例只能在创建时指定，这类实例必须且只能属于一个交换机。&lt;/li&gt;&lt;li&gt;指定 &lt;code&gt;VSwitchId&lt;/code&gt; 创建实例时，&lt;code&gt;SecurityGroupId&lt;/code&gt; 和 &lt;code&gt;VSwitchId&lt;/code&gt; 要属于同一个专有网络。&lt;/li&gt;&lt;li&gt;&lt;code&gt;VSwitchId&lt;/code&gt; 和 &lt;code&gt;PrivateIpAddress&lt;/code&gt; 同时指定时，&lt;code&gt;PrivateIpAddress&lt;/code&gt; 要包含在交换机的 CidrBlock 之内。&lt;/li&gt;&lt;li&gt;&lt;code&gt;PrivateIpAddress&lt;/code&gt; 依赖于 &lt;code&gt;VSwitchId&lt;/code&gt;，不能单独指定 &lt;code&gt;PrivateIpAddress&lt;/code&gt;。&lt;/li&gt;&lt;li&gt;使用本接口创建的实例将不会分配公网 IP，如有需要可以调用 &lt;a href=&quot;/document_detail/25544.html&quot;&gt;AllocatePublicIpAddress&lt;/a&gt; 分配公网 IP。&lt;/li&gt;&lt;li&gt;在创建实例时，&lt;code&gt;InternetChargeType&lt;/code&gt; 和 &lt;code&gt;InternetMaxBandwidthOut&lt;/code&gt; 的设置决定可能发生的带宽费用。&lt;code&gt;InternetMaxBandwidthIn&lt;/code&gt; 的值在任何情况下都与计费无关，实例的入数据流量是免费的。&lt;/li&gt;&lt;li&gt;参数 &lt;code&gt;InternetChargeType&lt;/code&gt; 与 &lt;code&gt;InternetMaxBandwidthOut&lt;/code&gt; 之间的关系如下表所示。  &lt;table&gt;      &lt;tbody&gt;&lt;tr&gt;          &lt;td&gt;&lt;strong&gt;参数&lt;/strong&gt;&lt;/td&gt;          &lt;td&gt;&lt;code&gt;InternetChargeType&lt;/code&gt;&lt;/td&gt;          &lt;td&gt;&lt;code&gt;InternetMaxBandwidthOut&lt;/code&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;          &lt;td rowspan=&quot;2&quot;&gt;&lt;strong&gt;参数取值&lt;/strong&gt;&lt;/td&gt;          &lt;td&gt;&lt;code&gt;PayByBandwidth&lt;/code&gt;&lt;/td&gt;          &lt;td&gt;按固定带宽付费。&lt;br&gt;为所选的固定带宽值。&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;          &lt;td&gt;&lt;code&gt;PayByTraffic&lt;/code&gt;&lt;/td&gt;          &lt;td&gt;按使用流量付费。&lt;br&gt;带宽的上限设置，计费以实际使用的网络流量为依据。&lt;/td&gt;      &lt;/tr&gt;  &lt;/tbody&gt;&lt;/table&gt;&lt;/li&gt;&lt;/ul&gt;&lt;h3 id=&quot;h3-u5B89u5168u7EC4&quot;&gt;&lt;a name=&quot;安全组&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;安全组&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;一个实例创建时必须指定加入一个安全组。&lt;/li&gt;&lt;li&gt;安全组需要预先创建，可通过 &lt;a href=&quot;/document_detail/25553.html&quot;&gt;CreateSecurityGroup&lt;/a&gt; 创建。&lt;/li&gt;&lt;li&gt;可以在新创建实例时指定安全组，也可通过 &lt;a href=&quot;/document_detail/25503.html&quot;&gt;ModifyInstanceAttribute&lt;/a&gt; 的接口变更实例所属安全组。&lt;/li&gt;&lt;li&gt;在同一个安全组内的实例内网可以相互访问。不同安全组之间默认有防火墙隔离，不可相互访问，但是可以通过安全组授权（API 通过 &lt;a href=&quot;/document_detail/25554.html&quot;&gt;AuthorizeSecurityGroup&lt;/a&gt; 和 &lt;a href=&quot;/document_detail/25560.html&quot;&gt;AuthorizeSecurityGroupEgress&lt;/a&gt;实现）来设置此安全组的防火墙权限。&lt;/li&gt;&lt;li&gt;同一个安全组内的实例数量不能超过 1000 个，若组内实例数量超出限制，创建实例时若指定该安全组，会提示失败。&lt;/li&gt;&lt;/ul&gt;&lt;h3 id=&quot;h3-u5B58u50A8&quot;&gt;&lt;a name=&quot;存储&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;存储&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;不同类型云盘的最大容量不同：&lt;ul&gt;&lt;li&gt;单块普通云盘（&lt;code&gt;cloud&lt;/code&gt;）容量最大不能超过 2000 GB。&lt;/li&gt;&lt;li&gt;单块高效云盘（&lt;code&gt;cloud_efficiency&lt;/code&gt;）容量最大不超过 32 TB（32768 GB）。&lt;/li&gt;&lt;li&gt;单块 SSD 云盘（&lt;code&gt;cloud_ssd&lt;/code&gt;）容量最大不能超过 32 TB（32768 GB）。&lt;/li&gt;&lt;li&gt;单块本地 SSD 盘（&lt;code&gt;ephemeral_ssd&lt;/code&gt;）容量最大不能超过 800 GB。&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;实例创建时，系统会根据用户所指定镜像为实例分配一个相应大小的系统盘，系统盘容量等于 max{40,ImageSize}，也可以指定系统盘的容量 SystemDisk.size 参数，该参数必须大于等于 max{40,ImageSize}。同时，可以指定系统盘的种类：普通云盘（&lt;code&gt;cloud&lt;/code&gt;）、高效云盘（&lt;code&gt;cloud_efficiency&lt;/code&gt;）、SSD云盘（&lt;code&gt;cloud_ssd&lt;/code&gt;）、本地 SSD 盘（&lt;code&gt;ephemeral_ssd&lt;/code&gt;）。&lt;/li&gt;&lt;li&gt;当系统盘是普通云盘（&lt;code&gt;cloud&lt;/code&gt;）、高效云盘（&lt;code&gt;cloud_efficiency&lt;/code&gt;）或 SSD 云盘（&lt;code&gt;cloud_ssd&lt;/code&gt;）时，数据盘不能是本地 SSD 盘 &lt;code&gt;ephemeral_ssd&lt;/code&gt;。&lt;/li&gt;&lt;li&gt;当实例选择为 I/O 优化实例时，系统盘只能选择高效云盘（&lt;code&gt;cloud_efficiency&lt;/code&gt;）及 SSD 云盘（&lt;code&gt;cloud_ssd&lt;/code&gt;）。&lt;/li&gt;&lt;li&gt;一个实例最多添加 16 块数据盘。数据盘挂载点由系统默认顺序分配，/dev/xvdb 开始到 /dev/xvdz。数据盘选择本地 SSD 盘 &lt;code&gt;ephemeral_ssd&lt;/code&gt;时，系统盘必须为本地 SSD 盘，同时一个实例的本地 SSD 盘总容量不超过 1 TB（1024 GB，不包括系统盘）。&lt;/li&gt;&lt;li&gt;ECS 实例不支持单独创建或者添加本地 SSD 盘 &lt;code&gt;ephemeral_ssd&lt;/code&gt;，因此本地 SSD 盘必须在创建实例时指定，实例创建完成后不能再添加。各个实例规格对不同磁盘种类大小的限制见 &lt;a href=&quot;/document_detail/25378.html&quot;&gt;实例规格族&lt;/a&gt;。&lt;/li&gt;&lt;li&gt;随实例创建的系统盘，其 &lt;code&gt;Portable&lt;/code&gt; 属性为 &lt;code&gt;false&lt;/code&gt;，即不支持卸载和挂载操作。系统盘随实例的释放而释放，所以系统盘的 &lt;code&gt;DeleteWithInstance&lt;/code&gt; 的属性为 &lt;code&gt;True&lt;/code&gt;。&lt;/li&gt;&lt;li&gt;随实例创建的类型为普通云盘（&lt;code&gt;cloud&lt;/code&gt;）、高效云盘（&lt;code&gt;cloud_efficiency&lt;/code&gt;）或 SSD 云盘（&lt;code&gt;cloud_ssd&lt;/code&gt;）的数据盘，其 &lt;code&gt;Portable&lt;/code&gt; 属性为 &lt;code&gt;true&lt;/code&gt;，即支持卸载和挂载操作。如果数据盘随实例的释放而释放，则 &lt;code&gt;DeleteWithInstance&lt;/code&gt; 的属性的默认值为 &lt;code&gt;True&lt;/code&gt;；反之，如果数据盘不随实例的释放而释放，则 &lt;code&gt;DeleteWithInstance&lt;/code&gt; 的属性的默认值为 &lt;code&gt;False&lt;/code&gt;。&lt;/li&gt;&lt;li&gt;随实例创建的本地 SSD 盘（&lt;code&gt;ephemeral_ssd&lt;/code&gt;），其 &lt;code&gt;Portable&lt;/code&gt; 属性为 &lt;code&gt;false&lt;/code&gt;，即不支持卸载和挂载操作。本地 SSD 盘随实例的释放而释放，所以其 &lt;code&gt;DeleteWithInstance&lt;/code&gt; 的属性为 &lt;code&gt;True&lt;/code&gt;。&lt;/li&gt;&lt;/ul&gt;&lt;h3 id=&quot;h3-u81EAu5B9Au4E49u6570u636E&quot;&gt;&lt;a name=&quot;自定义数据&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;自定义数据&lt;/h3&gt;&lt;p&gt;若实例满足使用 &lt;a href=&quot;/document_detail/49121.html&quot;&gt;实例自定义数据&lt;/a&gt; 的限制，您可传入 UserData 信息。UserData 以 Base64 的方式编码。UserData 将以不加密的方式传入，所以请不要以明文方式传入机密的信息（比如密码、私钥数据等），如果必须传入，建议加密后，然后以 Base64 的方式编码后再传入，在实例内部以同样的方式反解密。&lt;/p&gt;&lt;h3 id=&quot;h3-u5176u4ED6&quot;&gt;&lt;a name=&quot;其他&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;其他&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;若实例付费类型为预付费的包年包月实例（&lt;code&gt;PrePaid&lt;/code&gt;）,则在执行付款时默认会使用该账号下可用的优惠券（0 折账号除外）。&lt;/li&gt;&lt;li&gt;创建完成后，实例状态为已停止（&lt;code&gt;Stopped&lt;/code&gt;）。&lt;/li&gt;&lt;li&gt;在阿里云 CLI 及 SDK 中使用该 API 时，部分带点号（.）的入参需要去掉点号（.）再使用，包括：&lt;code&gt;SystemDisk.Category&lt;/code&gt;、&lt;code&gt;SystemDisk.Size&lt;/code&gt;、&lt;code&gt;SystemDisk.Description&lt;/code&gt;、&lt;code&gt;DataDisk.n.Size&lt;/code&gt;、&lt;code&gt;DataDisk.n.Category&lt;/code&gt;、&lt;code&gt;DataDisk.n.SnapshotId&lt;/code&gt;、&lt;code&gt;DataDisk.n.DiskName&lt;/code&gt;、&lt;code&gt;DataDisk.n.Description&lt;/code&gt;、&lt;code&gt;DataDisk.n.DeleteWithInstance&lt;/code&gt;。比如：在阿里云 CLI 及 SDK 中使用 &lt;code&gt;SystemDiskCategory&lt;/code&gt; 表示入参 &lt;code&gt;SystemDisk.Category&lt;/code&gt;。&lt;/li&gt;&lt;/ul&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数。取值：CreateInstance"/>
+            <enum nodeType="array">
+              <enum value="CreateInstance"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例所属的 Region ID。Region ID 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域与可用区&lt;/a&gt;。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="镜像文件 ID，启动实例时选择的镜像资源。"/>
+            <in value="query"/>
+            <name value="ImageId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的资源规格。取值参见&lt;a href=&quot;/document_detail/25378.html&quot;&gt;实例规格族&lt;/a&gt;，也可以调用 &lt;a href=&quot;/document_detail/25620.html&quot;&gt;DescribeInstanceTypes&lt;/a&gt; 接口获得最新的规格表。"/>
+            <in value="query"/>
+            <name value="InstanceType"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="指定新创建实例所属于的安全组代码，同一个安全组内的实例之间可以互相访问。"/>
+            <in value="query"/>
+            <name value="SecurityGroupId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例所属的可用区编号，您可以调用 &lt;a href=&quot;/document_detail/25610.html&quot;&gt;DescribeZones&lt;/a&gt; 获取可用区列表。&lt;br&gt;空表示由系统选择，默认值：空。"/>
+            <in value="query"/>
+            <name value="ZoneId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的名称。&lt;ul&gt;&lt;li&gt;长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可包含数字，点号（.），下划线（_）或短横线（-）。&lt;/li&gt;&lt;li&gt;实例名称会显示在控制台。&lt;/li&gt;&lt;li&gt;如果没有指定该参数，默认值为实例的 InstanceId。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;/ul&gt;"/>
+            <in value="query"/>
+            <maxLength value="128"/>
+            <minLength value="2"/>
+            <name value="InstanceName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的描述。&lt;ul&gt;&lt;li&gt;长度为 [2, 256] 个字符。&lt;/li&gt;&lt;li&gt;实例描述会显示在控制台。&lt;/li&gt;&lt;li&gt;不填则为空，默认值为空。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;/ul&gt;"/>
+            <in value="query"/>
+            <maxLength value="256"/>
+            <minLength value="2"/>
+            <name value="Description"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="PayByTraffic"/>
+            <description value="网络计费类型。取值范围：&lt;ul&gt;&lt;li&gt;PayByBandwidth：按固定带宽计费&lt;/li&gt;&lt;li&gt;PayByTraffic：按使用流量计费&lt;/li&gt;&lt;/ul&gt;默认值：PayByTraffic"/>
+            <enum nodeType="array">
+              <enum value="PayByBandwidth"/>
+              <enum value="PayByTraffic"/>
+            </enum>
+            <in value="query"/>
+            <name value="InternetChargeType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="200"/>
+            <description value="公网入带宽最大值，单位为 Mbps (Megabit per second)。取值范围：&lt;ul&gt;&lt;li&gt;[1,200]&lt;/li&gt;&lt;/ul&gt; 默认值： 200 Mbps"/>
+            <in value="query"/>
+            <maximum value="200"/>
+            <minimum value="1"/>
+            <name value="InternetMaxBandwidthIn"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="0"/>
+            <description value="公网出带宽最大值，单位为：Mbps (Megabit per second)。取值范围：&lt;ul&gt;&lt;li&gt;按带宽计费：[0, 100]&lt;/li&gt;&lt;li&gt;按流量计费：[0, 100]&lt;/li&gt;&lt;/ul&gt;默认值： 0&lt;br&gt;您可以 &lt;a href=&quot;https://selfservice.console.aliyun.com/ticket/createIndex.htm&quot; title=&quot;提交工单&quot;&gt;提交工单&lt;/a&gt; 申请将带宽范围设置成 [0, 200] Mbps。"/>
+            <in value="query"/>
+            <maximum value="0"/>
+            <name value="InternetMaxBandwidthOut"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <description value="云服务器的主机名。&lt;ul&gt;&lt;li&gt;点号（.）和短横线（-）不能作为 HostName 的首尾字符，不能连续使用。&lt;/li&gt;&lt;li&gt;Windows 系统主机名字符长度为 [2, 15]，允许字母（不限制大小写）、数字和短横线（-）组成，不支持点号（.），不能全是数字。&lt;/li&gt;&lt;li&gt;其他（Linux 等）平台字符长度为 [2, 128]，允许支持多个点号，点之间为一段，每段允许字母（不限制大小写）、数字和短横线（-）组成。&lt;/li&gt;&lt;/ul&gt;"/>
+            <in value="query"/>
+            <maxLength value="128"/>
+            <minLength value="2"/>
+            <name value="HostName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的密码。&lt;ul&gt;&lt;li&gt;长度为 [8, 30] 个字符，必须同时包含三类不同的字符（大、小写字母，数字和特殊符号）。&lt;/li&gt;&lt;li&gt;支持以下特殊字符：( ) ` ~ ! @ # $ % ^ &amp;amp; * - + = |{ } [ ] : ;‘ &amp;lt; &amp;gt; , . ? /&lt;/li&gt;&lt;/ul&gt;如果传入 Password 参数，请务必使用 HTTPS 协议调用 API，避免密码泄露。"/>
+            <in value="query"/>
+            <maxLength value="30"/>
+            <minLength value="8"/>
+            <name value="Password"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="是否为 I/O 优化实例。取值范围：&lt;ul&gt;&lt;li&gt;none：非 I/O 优化&lt;/li&gt;&lt;li&gt;optimized：I/O 优化&lt;/li&gt;&lt;/ul&gt;InstanceType 为系列 I 的规格默认值：none&lt;br&gt;InstanceType为非系列I的规格默认值：optimized"/>
+            <enum nodeType="array">
+              <enum value="none"/>
+              <enum value="optimized"/>
+            </enum>
+            <in value="query"/>
+            <name value="IoOptimized"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="系统盘参数"/>
+            <in value="query"/>
+            <name value="SystemDisk"/>
+            <required value="false"/>
+            <type value="object"/>
+            <x-schema>
+              <properties>
+                <Category>
+                  <description value="系统盘的磁盘种类。取值范围：&lt;ul&gt;&lt;li&gt;cloud：普通云盘&lt;/li&gt;&lt;li&gt;cloud_efficiency：高效云盘&lt;/li&gt;&lt;li&gt;cloud_ssd：SSD 云盘&lt;/li&gt;&lt;li&gt;ephemeral_ssd：本地 SSD 盘&lt;/li&gt;&lt;/ul&gt;InstanceType 为系列 I 的规格且 I/O 优化类型为 none 默认值：cloud&lt;br&gt;否则，默认值：cloud_efficiency"/>
+                  <enum nodeType="array">
+                    <enum value="cloud"/>
+                    <enum value="cloud_efficiency"/>
+                    <enum value="cloud_ssd"/>
+                    <enum value="ephemeral_ssd"/>
+                  </enum>
+                  <name value="SystemDisk.Category"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </Category>
+                <Description>
+                  <description value="系统盘描述。&lt;ul&gt;&lt;li&gt;长度为 [2, 256] 个英文或中文字符。&lt;/li&gt;&lt;li&gt;实例描述会显示在控制台。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;li&gt;不填则为空，默认值为空。&lt;/li&gt;&lt;/ul&gt;"/>
+                  <maxLength value="256"/>
+                  <minLength value="2"/>
+                  <name value="SystemDisk.Description"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </Description>
+                <DiskName>
+                  <default value="空"/>
+                  <description value="系统盘名称。&lt;ul&gt;&lt;li&gt;长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可以包含数字，下划线（_）或者连字符（-）。&lt;/li&gt;&lt;li&gt;磁盘名称会展示在控制台。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;li&gt;不填则为空，默认值为空。&lt;/li&gt;&lt;/ul&gt;"/>
+                  <maxLength value="128"/>
+                  <minLength value="2"/>
+                  <name value="SystemDisk.DiskName"/>
+                  <required value="false"/>
+                  <type value="string"/>
+                </DiskName>
+                <Size>
+                  <description value="系统盘大小，单位为 GB。取值范围：[40, 500]该参数的取值必须大于等于 max{40, ImageSize}。&lt;br&gt;默认值：max{40，ImageSize}"/>
+                  <maximum value="500"/>
+                  <minimum value="40"/>
+                  <name value="SystemDisk.Size"/>
+                  <required value="false"/>
+                  <type value="integer"/>
+                </Size>
+              </properties>
+              <type value="object"/>
+            </x-schema>
+          </parameters>
+          <parameters>
+            <description value="数据盘"/>
+            <in value="query"/>
+            <items>
+              <x-schema>
+                <properties>
+                  <Category>
+                    <default value="cloud"/>
+                    <description value="数据盘n的磁盘种类。取值范围：&lt;ul&gt;&lt;li&gt;cloud：普通云盘&lt;/li&gt;&lt;li&gt;cloud_efficiency：高效云盘&lt;/li&gt;&lt;li&gt;cloud_ssd：SSD 云盘&lt;/li&gt;&lt;li&gt;ephemeral_ssd：本地 SSD 盘&lt;/li&gt;&lt;/ul&gt;默认值：cloud"/>
+                    <enum nodeType="array">
+                      <enum value="cloud"/>
+                      <enum value="cloud_efficiency"/>
+                      <enum value="cloud_ssd"/>
+                      <enum value="ephemeral_ssd"/>
+                    </enum>
+                    <name value="DataDisk.n.Category"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Category>
+                  <DeleteWithInstance?>
+                    <default value="true"/>
+                    <description value="表示数据盘是否随实例释放。取值范围：&lt;ul&gt;&lt;li&gt;true：实例释放时，这块磁盘随实例一起释放。&lt;/li&gt;&lt;li&gt;false：实例释放时，这块磁盘保留不释放。&lt;/li&gt;&lt;/ul&gt;默认值：true &lt;br&gt;这个参数只对独立云盘有效，即，参数&lt;code&gt;DataDisk.n.Category&lt;/code&gt; 取值为 &lt;code&gt;cloud&lt;/code&gt;、&lt;code&gt;cloud_efficiency&lt;/code&gt; 或 &lt;code&gt;cloud_ssd&lt;/code&gt; 的云盘，否则会报错。"/>
+                    <enum nodeType="array">
+                      <enum value="true"/>
+                      <enum value="false"/>
+                    </enum>
+                    <name value="DataDisk.n.DeleteWithInstance"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </DeleteWithInstance?>
+                  <Description>
+                    <description value="数据盘描述。&lt;ul&gt;&lt;li&gt;长度为 [2, 256] 个英文或中文字符。&lt;/li&gt;&lt;li&gt;磁盘描述会展示在控制台。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;li&gt;不填则为空，默认值为空。&lt;/li&gt;&lt;/ul&gt;"/>
+                    <maxLength value="256"/>
+                    <minLength value="2"/>
+                    <name value="DataDisk.n.Description"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Description>
+                  <DiskName>
+                    <description value="数据盘名称。&lt;ul&gt;&lt;li&gt;长度为 [2, 128] 个英文或中文字符，必须以大小字母或中文开头，可包含数字，下划线（_）或者连字符（-）。&lt;/li&gt;&lt;li&gt;磁盘名称会展示在控制台。&lt;/li&gt;&lt;li&gt;不能以 http:// 和 https:// 开头。&lt;/li&gt;&lt;li&gt;不填则为空，默认值为空。&lt;/li&gt;&lt;/ul&gt;"/>
+                    <maxLength value="128"/>
+                    <minLength value="2"/>
+                    <name value="DataDisk.n.DiskName"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </DiskName>
+                  <Encrypted>
+                    <default value="false"/>
+                    <description value="数据盘 n 是否加密。取值范围：&lt;ul&gt;&lt;li&gt;true：加密。&lt;/li&gt;&lt;li&gt;false：不加密。&lt;/li&gt;&lt;/ul&gt;默认值：false"/>
+                    <enum nodeType="array">
+                      <enum value="true"/>
+                      <enum value="false"/>
+                    </enum>
+                    <name value="DataDisk.n.Encrypted"/>
+                    <required value="false"/>
+                    <type value="boolean"/>
+                  </Encrypted>
+                  <Size>
+                    <description value="第 n 个数据盘的容量大小，n 的取值范围为 [1, 16]，内存单位为 GB。取值范围：&lt;ul&gt;&lt;li&gt;cloud：[5, 2000]&lt;/li&gt;&lt;li&gt;cloud_efficiency：[20, 32768]&lt;/li&gt;&lt;li&gt;cloud_ssd：[20, 32768]&lt;/li&gt;&lt;li&gt;ephemeral_ssd：[5, 800]&lt;/li&gt;&lt;/ul&gt;该参数的取值必须大于等于参数 &lt;code&gt;SnapshotId&lt;/code&gt; 指定的快照的大小。"/>
+                    <in value="query"/>
+                    <name value="DataDisk.n.Size"/>
+                    <required value="false"/>
+                    <type value="integer"/>
+                  </Size>
+                  <SnapshotId>
+                    <description value="创建数据盘 n 使用的快照。 &lt;br&gt;指定参数 &lt;code&gt;DataDisk.n.SnapshotId&lt;/code&gt; 后， 参数 &lt;code&gt;DataDisk.n.Size&lt;/code&gt; 会被忽略，实际创建的磁盘大小为参数 &lt;code&gt;SnapshotId&lt;/code&gt; 的大小。 &lt;br&gt;若 &lt;code&gt;SnapshotId&lt;/code&gt; 的创建时间早于 2013 年 7 月 15 日（含），该次请求会被拒绝，且返回错误 &lt;code&gt;InvalidSnapshot.TooOld&lt;/code&gt;。"/>
+                    <enum nodeType="array">
+                      <enum value="SnapshotId"/>
+                      <enum value="SnapshotId"/>
+                    </enum>
+                    <name value="DataDisk.n.SnapshotId"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </SnapshotId>
+                </properties>
+                <type value="object"/>
+              </x-schema>
+            </items>
+            <maxItems value="16"/>
+            <minItems value="1"/>
+            <name value="DataDisk"/>
+            <required value="false"/>
+            <type value="array"/>
+          </parameters>
+          <parameters>
+            <description value="如果是创建 VPC 类型的实例，需要指定虚拟交换机 ID。"/>
+            <in value="query"/>
+            <name value="VSwitchId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例私网 IP 地址，不能单独指定。"/>
+            <in value="query"/>
+            <name value="PrivateIpAddress"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="PostPaid"/>
+            <description value="实例的付费方式。取值范围：&lt;ul&gt;&lt;li&gt;PrePaid：预付费，即包年包月。选择该类付费方式的用户必须确认自己的账号支持余额支付/信用支付，否则将返回 InvalidPayMethod 的错误提示。&lt;/li&gt;&lt;li&gt;PostPaid：后付费，即按量付费。&lt;/li&gt;&lt;/ul&gt;默认值：PostPaid"/>
+            <enum nodeType="array">
+              <enum value="PrePaid"/>
+              <enum value="PostPaid"/>
+            </enum>
+            <in value="query"/>
+            <name value="InstanceChargeType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="NoSpot"/>
+            <description value="后付费实例的竞价策略。&lt;br&gt;当参数 &lt;code&gt;InstanceChargeType&lt;/code&gt; 取值为 &lt;code&gt;PostPaid&lt;/code&gt; 时为生效。&lt;br&gt;取值范围：&lt;ul&gt;&lt;li&gt;NoSpot：正常按量付费实例&lt;/li&gt;&lt;li&gt;SpotWithPriceLimit：设置上限价格的竞价实例&lt;/li&gt;&lt;li&gt;SpotAsPriceGo：系统自动出价，最高按量付费价格。&lt;/li&gt;&lt;/ul&gt;默认值：NoSpot"/>
+            <enum nodeType="array">
+              <enum value="NoSpot"/>
+              <enum value="SpotWithPriceLimit"/>
+              <enum value="SpotAsPriceGo"/>
+            </enum>
+            <in value="query"/>
+            <name value="SpotStrategy"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="设置实例的每小时最高价格。支持最大 3 位小数，参数 &lt;code&gt;SpotStrategy&lt;/code&gt; 取值为 &lt;code&gt;SpotWithPriceLimit&lt;/code&gt; 时生效。"/>
+            <in value="query"/>
+            <name value="SpotPriceLimit"/>
+            <required value="false"/>
+            <type value="number"/>
+          </parameters>
+          <parameters>
+            <description value="购买资源的时长，单位为：月。当参数 &lt;code&gt;InstanceChargeType&lt;/code&gt; 取值为 &lt;code&gt;PrePaid&lt;/code&gt; 时才生效且为必选值。取值范围：&lt;ul&gt;&lt;li&gt;1 - 9&lt;/li&gt;&lt;li&gt;12&lt;/li&gt;&lt;li&gt;24&lt;/li&gt;&lt;li&gt;36&lt;/li&gt;&lt;li&gt;48&lt;/li&gt;&lt;li&gt;60&lt;/li&gt;&lt;/ul&gt;"/>
+            <in value="query"/>
+            <name value="Period"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="Month"/>
+            <description value="购买资源的时长。可选值 Week／Month。&lt;br&gt;PeriodUnit 为 Week 时，&lt;ul&gt;&lt;li&gt;Period 取值 {“1”, “2”, “3”, “4”}&lt;/li&gt;&lt;li&gt;AutoRenewPeriod 取值 {“1”, “2”, “3”} &lt;/li&gt; &lt;/ul&gt;PeriodUnit 为 Month 时,&lt;ul&gt; &lt;li&gt; Period 取值 { “1”, “2”, “3”, “4”, “5”, “6”, “7”, “8”, “9”, “12”, “24”, “36”,”48”,”60”} &lt;/li&gt;&lt;li&gt;AutoRenewPeriod 取值 {“1”, “2”, “3”, “6”, “12”}&lt;/li&gt;&lt;/ul&gt;默认值：Month"/>
+            <enum nodeType="array">
+              <enum value="Week"/>
+              <enum value="Month"/>
+            </enum>
+            <in value="query"/>
+            <name value="PeriodUnit"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="False"/>
+            <description value="是否要自动续费。当参数 &lt;code&gt;InstanceChargeType&lt;/code&gt; 取值 &lt;code&gt;PrePaid&lt;/code&gt; 时才生效。取值范围：&lt;ul&gt;&lt;li&gt;True：自动续费。&lt;/li&gt;&lt;li&gt;False：不自动续费。&lt;/li&gt;&lt;/ul&gt; 默认值：False"/>
+            <enum nodeType="array">
+              <enum value="True"/>
+              <enum value="False"/>
+            </enum>
+            <in value="query"/>
+            <name value="AutoRenew"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="每次自动续费的时长，当参数 &lt;code&gt;AutoRenew&lt;/code&gt; 取值 &lt;code&gt;True&lt;/code&gt; 时为必填。取值范围：&lt;ul&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;li&gt;3&lt;/li&gt;&lt;li&gt;6&lt;/li&gt;&lt;li&gt;12&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="1"/>
+              <enum value="2"/>
+              <enum value="3"/>
+              <enum value="6"/>
+              <enum value="12"/>
+            </enum>
+            <in value="query"/>
+            <name value="AutoRenewPeriod"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <description value="实例自定义数据，需要以 Base64 方式编码，原始数据最多为 16 KB。"/>
+            <in value="query"/>
+            <maxLength value="16384"/>
+            <name value="UserData"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不超过 64 个 ASCII 字符。&lt;br&gt;具体参见附录：&lt;a href=&quot;/document_detail/25693.html&quot;&gt;如何保证幂等性&lt;/a&gt;。"/>
+            <in value="query"/>
+            <maxLength value="64"/>
+            <name value="ClientToken"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="密钥对名称。&lt;ul&gt; &lt;li&gt;Windows ECS 实例，忽略该参数。默认为空。即使填写了该参数，仍旧只执行 &lt;code&gt;Password&lt;/code&gt; 的内容。&lt;/li&gt; &lt;li&gt;Linux ECS 实例的密码登录方式会被初始化成禁止。&lt;/li&gt;&lt;/ul&gt;"/>
+            <in value="query"/>
+            <name value="KeyPairName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="部署集 ID。如果用户不填写，则采用 1 的方式。"/>
+            <in value="query"/>
+            <name value="DeploymentSetId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例 RAM 角色名称。您可以使用 &lt;i&gt;RAM&lt;/i&gt; API &lt;a href=&quot;/document_detail/28713.html&quot;&gt;ListRoles&lt;/a&gt; 查询实例 RAM 角色名称。参考相关 API &lt;a href=&quot;/document_detail/28710.html&quot;&gt;CreateRole&lt;/a&gt; 和 &lt;a href=&quot;/document_detail/28713.html&quot;&gt;ListRoles&lt;/a&gt;。"/>
+            <in value="query"/>
+            <name value="RamRoleName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="是否开启安全加固。取值范围：&lt;ul&gt;&lt;li&gt;Active：启用安全加固，只对系统镜像生效。&lt;/li&gt;&lt;li&gt;Deactive：不启用安全加固，对所有镜像类型生效。&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="Active"/>
+              <enum value="Deactive"/>
+            </enum>
+            <in value="query"/>
+            <name value="SecurityEnhancementStrategy"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="标签"/>
+            <in value="query"/>
+            <items>
+              <x-schema>
+                <properties>
+                  <Key>
+                    <description value="标签 key，n 的取值范围：[1, 5]&lt;br&gt;最多支持 64 个字符。 &lt;br&gt;不支持 aliyun 开头。&lt;br&gt;不支持 http:// 和 https:// 开头。&lt;br&gt;不允许为空字符串。"/>
+                    <maxLength value="64"/>
+                    <name value="Tag.n.Key"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Key>
+                  <Value>
+                    <description value="标签 value，n 的取值范围：[1, 5]&lt;br&gt;最多支持 128 个字符。 &lt;br&gt;不支持 aliyun 开头。 &lt;br&gt;不支持 http:// 和 https:// 开头。 &lt;br&gt;允许为空字符串。"/>
+                    <maxLength value="128"/>
+                    <name value="Tag.n.Value"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Value>
+                </properties>
+                <type value="object"/>
+              </x-schema>
+            </items>
+            <maxItems value="5"/>
+            <minItems value="1"/>
+            <name value="Tag"/>
+            <required value="false"/>
+            <type value="array"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <InstanceId>
+                  <description value="实例 ID，由系统生成，全局唯一。是访问实例的唯一标识"/>
+                  <name value="InstanceId"/>
+                  <type value="string"/>
+                </InstanceId>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: Account.Arrearage, describeen: Your account has an outstanding payment., describecn: 账号已经欠费。}, {code: IncorrectVSwitchStatus, describeen: The current status of virtual switch does not support this operation., describecn: 指定的 VSwitch 状态不正确。}, {code: InstanceDiskCategoryLimitExceed, describeen: The specified DataDisk.n.Size beyond the permitted range, or the capacity of snapshot exceeds the size limit of the specified disk category., describecn: 指定的磁盘大小超过了该类型磁盘上限。}, {code: InstanceDiskNumber.LimitExceed, describeen: The total number of specified disk in an instance exceeds., describecn: 镜像中包含的数据盘和数据盘参数合并后，数据盘的总数超出限制。}, {code: InvalidAutoRenewPeriod.ValueNotSupported, describeen: The specified autoRenewPeriod is not valid., describecn: 指定的 autoRenewPeriod 不合法。}, {code: InvalidDataDiskCategory.ValueNotSupported, describeen: The specified parameter DataDisk.n.Category is not valid., describecn: 指定的 DataDisk.n.Category 不合法。}, {code: InvalidDataDiskCategory.ValueNotSupported, describeen: The specified parameter DataDisk.n.Category is not valid., describecn: 指定的 DataDisk.n.Category 不合法。}, {code: InvalidDataDiskSize.ValueNotSupported, describeen: The specified DataDisk.n.Size beyond the permitted range, or the capacity of snapshot exceeds the size limit of the specified disk category., describecn: 指定的 DataDisk.n.Size 不合法（超出范围）。}, {code: InvalidDescription.Malformed, describeen: The specified parameter Description is not valid., describecn: 指定的 Description 格式不合法。}, {code: InvalidDiskCategory.Mismatch, describeen: The specified disk categories’ combination is not supported., describecn: 指定的磁盘类型组合不支持。}, {code: InvalidDiskCategory.ValueNotSupported, describeen: The specified parameter DiskCategory is not valid., describecn: 指定的 DiskCategory 不合法。}, {code: InvalidDiskDescription.Malformed, describeen: The specified parameter SystemDisk.DiskDescription or DataDisk.n.Description is not valid., describecn: 指定的 SystemDisk.DiskDescription 或 DataDisk.n.Description 不合法。}, {code: InvalidDiskDescription.Malformed, describeen: The specified parameter SystemDisk.DiskDescription or DataDisk.n.Description is not valid., describecn: 指定的 SystemDisk.DiskDescription 或 DataDisk.n.Description 不合法。}, {code: InvalidDiskName.Malformed, describeen: The specified parameter SystemDisk.DiskName or DataDisk.n.DiskName is not valid., describecn: 指定的 SystemDisk.DiskName 或 DataDisk.n.DiskName 不合法。}, {code: InvalidHostName.Malformed, describeen: The specified parameter HostName is not valid., describecn: 指定的 HostName 格式不合法。}, {code: InvalidInstanceName.Malformed, describeen: The specified parameter InstanceName is not valid., describecn: 指定的 InstanceName 格式不合法。}, {code: InvalidInstanceType.ValueNotSupported, describeen: The specified InstanceType beyond the permitted range., describecn: 指定的 InstanceType 不合法（超出可选范围）。}, {code: InvalidInstanceType.ValueUnauthorized, describeen: The specified InstanceType is not authorized., describecn: 指定的 InstanceType 未授权使用。}, {code: InvalidInternetChargeType.ValueNotSupported, describeen: The specified InternetChargeType is not valid., describecn: 指定的 InternetChargeType 不存在。}, {code: InvalidIoOptimizedValue.ValueNotSupported, describeen: IoOptimized value not supported., describecn: 指定的 IoOptimized 参数不支持。}, {code: InvalidIPAddress.AlreadyUsed, describeen: The specified IPAddress is already used by other resource., describecn: 指定的 IPAddress 已经被使用。}, {code: InvalidNetworkType.Mismatch, describeen: Specified parameter InternetMaxBandwidthIn or InternetMaxBandwidthOut conflict with instance network type., describecn: 指定的 InternetMaxBandwidthIn 或 InternetMaxBandwidthOut 与实例网络类型不符合。}, {code: InvalidSpotStrategy, describeen: The specified SpotStrategy is not valid., describecn: SpotStrategy 参数不合法。}, {code: InvalidSpotPriceLimit, describeen: The specified SpotPriceLimitis not valid., describecn: SpotPriceLimit 参数不合法。}, {code: InvalidSpotAuthorized, describeen: The specified Spot param is unauthorized., describecn: 该账号没有授权创建竞价实例。}, {code: InvalidSpotPrepaid, describeen: The specified Spot type is not support PrePay Instance., describecn: 竞价实例不支持预付费。}, {code: InvalidSpotPriceLimit.LowerThanPublicPrice, describeen: The specified parameter spotPriceLimit can’t be lower than current public price., describecn: 出价低于当前系统公允价格。}, {code: InvalidNetworkType.Mismatch, describeen: Specified parameter InternetChargeType conflict with instance network type., describecn: 指定的 InternetChargeType 与实例网络类型不符合。}, {code: InvalidNodeControllerId.Malformed, describeen: The specified parameter NodeControllerId is not valid., describecn: 指定的 NodeControllerId 不合法。}, {code: InvalidParameter, describeen: The specified parameter InternetMaxBandwidthOut is not valid., describecn: 指定的 InternetMaxBandwidthOut 不合法（不是数字或超出范围）。}, {code: InvalidParameter, describeen: The specified instance bandwidth is not valid., describecn: 指定的带宽值不合法。}, {code: InvalidParameter.Bandwidth, describeen: The specified parameter Bandwidth is not valid., describecn: 指定的带宽值不合法。}, {code: EncryptedOption.Conflict, describeen: Encryption value of disk and snapshot conflict., describecn: 磁盘的加密属性和快照的加密属性不一致。}, {code: InvalidParameter.Conflict, describeen: The specified image does not support the specified instance type., describecn: 指定的 InstanceType 上不允许使用该指定的镜像。}, {code: InvalidParameter.Encrypted.KmsNotEnabled, describeen: The encrypted disk need enable KMS., describecn: 账户未开通 KMS 服务（需用户主动开通 KMS 服务）。}, {code: InvalidParameter.EncryptedIllegal, describeen: The value of parameter Encrypted is illegal., describecn: 传入的参数 Encrypted 非法。}, {code: InvalidParameter.EncryptedNotSupported, describeen: Encrypted disk is not support in this region., describecn: 所选择的 region 不支持加密特性。}, {code: InvalidParameter.EncryptedNotSupported, describeen: Corresponding data disk category does not support encryption., describecn: 对应的磁盘 category 不支持加密。}, {code: InvalidParameter.Mismatch, describeen: Specified security group and virtual switch are not in the same VPC., describecn: 指定安全组与 VSwitch 不属于同一个 VPC。}, {code: InvalidParameter.Mismatch, describeen: Specified virtual switch is not in the specified zone., describecn: 指定的 VSwitch 不在指定 Zone。}, {code: InvalidPassword.Malformed, describeen: The specified parameter Password is not valid., describecn: 指定的 Password 格式不合法。}, {code: InvalidPeriod, describeen: The specified period is not valid., describecn: 指定的 period 参数格式不合法（不是数字或超出范围）。}, {code: InvalidPrivateIpAddress, describeen: Specified private IP address is not in the CIDR block of virtual switch., describecn: 指定的 IP 不属于该 VSwitch。}, {code: InvalidPrivateIpAddress.Duplicated, describeen: Specified private IP address is duplicated., describecn: 指定的 PrivateIpAddress 重复。}, {code: InvalidPrivateIpAddress.Malformed, describeen: Specified private IP address is malformed., describecn: 指定的私有 IP 不合法。}, {code: InvalidSnapshotId.BasedSnapshotTooOld, describeen: The specified snapshot is created before 2013-07-15., describecn: 使用了 2013-07-15 之前创建的 Snapshot。}, {code: InvalidSpotAliUid, describeen: The specified UID is not authorized to use SPOT instance., describecn: 该账号不能使用 spot instance。}, {code: InvalidSystemDiskCategory.ValueNotSupported, describeen: The specified parameter SystemDisk.Category is not valid., describecn: 指定的 SystemDisk.Category 不合法。}, {code: InvalidUserData.NotSupported, describeen: The specified parameter UserData only support the vpc and IoOptimized Instance., describecn: UserData 只能使用在 VPC 和 I/O 优化实例上。}, {code: InvalidUserData.SizeExceeded, describeen: The specified parameter UserData exceeds the size., describecn: 指定的 UserData 过长。}, {code: MissingParameter, describeen: The input parameter VSwitchId that is mandatory for processing this request is not supplied., describecn: 缺少必填参数 VSwitchId。}, {code: MissingParamter, describeen: The specified parameter Period is not null., describecn: Period 不能为空。}, {code: QuotaExceed.AfterpayInstance, describeen: The maximum number of Pay-As-You-Go instances is exceeded., describecn: 用户的按量付费 Instance 个数达到上限。}, {code: QuotaExceeded, describeen: Living instances quota exceeded in this VPC., describecn: VPC 中实例数量超限。}, {code: QuotaExceeded.PrivateIpAddress, describeen: Don’t have enough private IPs in this switch., describecn: 私有 IP 数量不足。}, {code: ResourceNotAvailable, describeen: Resource you requested is not available in this region or zone., describecn: 指定 Region 或 Zone 内该资源不可用。}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: CategoryNotSupported, describeen: The specified zone does not offer the specified disk category., describecn: 该可用区无权创建指定种类的磁盘。}, {code: DeleteWithInstance.Conflict, describeen: The specified disk is not a portable disk and cannot be set to DeleteWithInstance attribute., describecn: 该磁盘不支持挂载与卸载。}, {code: DependencyViolation.WindowsInstance, describeen: The instance creating is window, cannot use ssh key pair to login., describecn: Windows 实例不能使用 SSH 密钥对。}, {code: DeploymentSet.NoRoom, describeen: There is no room for more instance creation in the specified DeploymentSet., describecn: 指定的 DeploymentSet 中不能创建更多的实例。}, {code: Forbbiden, describeen: User not authorized to operate on the specified resource., describecn: 用户没有权限操作。}, {code: ImageNotSubscribed, describeen: The specified image has not be subscribed., describecn: 没有订阅镜像市场的镜像。}, {code: ImageNotSupportInstanceType, describeen: The specified image don’t support the InstanceType instance., describecn: 指定镜像不支持该实例类型。}, {code: ImageRemovedInMarket, describeen: The specified market image is not available, or the specified custom image includes product code because it is based on an image subscribed from marketplace, and that image in marketplace including exact the same product code has been removed., describecn: 镜像市场的镜像已下架，或者自定义镜像中包含的 product code 对应的镜像市场镜像已经下架。}, {code: InstanceDiskCategoryLimitExceed, describeen: The total size of specified disk category in an instance exceeds., describecn: 指定的磁盘种类超过了单实例的最大容量。}, {code: InstanceDiskNumLimitExceed, describeen: The number of specified disk in an instance exceeds., describecn: 指定实例已经达到可挂载磁盘的最大值。}, {code: InvalidDiskCategory.Mismatch, describeen: The specified disk categories combination is not supported., describecn: 指定的磁盘类型组合不支持。}, {code: InvalidDiskCategory.NotSupported, describeen: The specified disk category is not support the specified instance type., describecn: 指定的磁盘类型不支持该实例类型。}, {code: InvalidDiskSize.TooSmall, describeen: Specified disk size is less than the size of snapshot., describecn: 指定的磁盘小于指定快照大小。}, {code: InvalidInstanceType.ZoneNotSupported, describeen: The specified zone does not support this InstanceType., describecn: 指定 Zone 不支持该实例类型。}, {code: InvalidNetworkType.MismatchRamRole, describeen: Ram role cannot be attached to instances of Classic network type., describecn: 实例 RAM 角色不能被用于经典网络。}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid., describecn: 指定的 ResourceOwnerAccount 不合法。}, {code: InvalidPayMethod, describeen: The specified billing method is not valid., describecn: 指定的付费类型不存在。}, {code: InvalidResourceType.NotSupported, describeen: This resource type is not supported; please try other resource types., describecn: 创建实例的配置暂无可用区支持，请选择其他配置创建。}, {code: InvalidSnapshotId.NotDataDiskSnapshot, describeen: The specified snapshot is system disk snapshot., describecn: 系统盘快照不能创建数据盘。}, {code: InvalidSnapshotId.NotReady, describeen: The specified snapshot has not completed yet., describecn: 快照没有完成。}, {code: InvalidSystemDiskCategory.ValueUnauthorized, describeen: The disk category is not authorized., describecn: 磁盘种类未被授权使用。}, {code: InvalidUser.PassRoleForbidden, describeen: The RAM user does not have the privilege to pass a role., describecn: RAM 用户不具有 PassRole 的权限。}, {code: InvalidUserData.Forbidden, describeen: User not authorized to input the parameter UserData, please apply for permission UserData., describecn: 用户没有权限使用 UserData。}, {code: InvalidVSwitchId.NotFound, describeen: The VSwitchId provided does not exist in our records., describecn: 指定的 VSwitchId 不存在。}, {code: IoOptimized.NotSupported, describeen: The specified image is not support IoOptimized Instance., describecn: 指定的镜像不支持 I/O 优化实例。}, {code: IoOptimized.NotSupported, describeen: Vpc is not support IoOptimized instance., describecn: VPC 不支持 I/O 优化实例。}, {code: OperationDenied, describeen: The specified snapshot is not allowed to create disk., describecn: 特定磁盘的快照不能创建磁盘或者快照不能创建磁盘。}, {code: OperationDenied, describeen: The creation of Instance to the specified Zone is not allowed., describecn: 该可用区无权创建实例或者 Zone 和 Region 不匹配。}, {code: OperationDenied, describeen: The specified Image is disabled or is deleted., describecn: 指定的镜像找不到。}, {code: OperationDenied, describeen: Sales of this resource are temporarily suspended in the specified region; please try again later., describecn: Region 暂时停售按量实例。}, {code: OperationDenied, describeen: The capacity of snapshot exceeds the size limit of the specified disk category or the specified category is not authorized., describecn: 指定的 DataDisk.n.Size 不合法（超出范围）或者磁盘种类未被授权使用。}, {code: OperationDenied, describeen: The type of the disk does not support the operation., describecn: 指定磁盘类型不支持该操作。}, {code: OperationDenied.NoStock, describeen: Sales of this resource are temporarily suspended in the specified region; please try again later., describecn: 库存不足，请尝试其它系列或者其它可用区/地域的实例。}, {code: QuotaExceed.BuyImage, describeen: The specified image is from the image market, You have not bought it or your quota has been exceeded., describecn: 指定镜像没有购买或超过限制。}, {code: QuotaExceed.PortableCloudDisk, describeen: The quota of portable cloud disk exceeds., describecn: 可挂载的云磁盘数量已经达到上限（最多 16 块）。}, {code: RegionUnauthorized, describeen: There is no authority to create instance in the specified region., describecn: 用户无权使用该 Region。}, {code: SecurityGroupInstanceLimitExceed, describeen: The maximum number of instances in a security group is exceeded., describecn: 该 SecurityGroup 内的 Instance 数量已经达到上限。}, {code: Zone.NotOnSale, describeen: The specified zone is not available for purchase., describecn: 创建实例的可用区已经关闭售卖，请更换其他可用区/地域。（VPC 实例的交换机会限制购买可用区）。}, {code: Zone.NotOpen, describeen: The specified zone is not granted to you to buy resources yet., describecn: 创建实例的可用区没有对该用户开放售卖。}, {code: ZoneId.NotFound, describeen: The specified zone does not exists., describecn: 指定 Zone 不存在。}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: DependencyViolation.IoOptimized, describeen: The specified InstanceType must be IoOptimized instance., describecn: 指定的实例规格必须是 I/O 优化实例。}, {code: HOSTNAME_ILLEGAL, describeen: hostname is not valid., describecn: 指定的 HostName 参数不合法。}, {code: InvalidDataDiskSnapshotId.NotFound, describeen: The specified parameter DataDisk.n.SnapshotId is not valid., describecn: 指定的 DataDisk.n.SnapshotId 没找到。}, {code: InvalidDataDiskSnapshotId.NotFound, describeen: The specified parameter DataDisk.n.SnapshotId is not valid., describecn: 指定的 DataDisk.n.SnapshotId 没找到。}, {code: InvalidDeploymentSetId.NotFound, describeen: The specified DeploymentSetId does not exist., describecn: 指定的 DeploymentSetId 不存在。}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist., describecn: 指定的镜像不存在。}, {code: InvalidInstanceChargeType.NotFound, describeen: The InstanceChargeType does not exist in our records., describecn: 指定的 InstanceChargeType 不存在。}, {code: InvalidKeyPairName.NotFound, describeen: The specified KeyPairName does not exist in our records., describecn: 指定的 KeyPairName 不存在。}, {code: InvalidRamRole.NotFound, describeen: The specified RamRoleName does not exist., describecn: 指定的 RamRoleName 不存在。}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist., describecn: 指定的 RegionId 不存在。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist., describecn: 指定的 SecurityGroupId 不存在（实际情况也可能是该用户无权使用此 SecurityGroup）。}, {code: InvalidSystemDiskSize, describeen: The specified parameter SystemDisk.Size is invalid., describecn: 指定的 SystemDisk.Size 不合法。}, {code: InvalidSystemDiskSize.LessThanImageSize, describeen: The specified parameter SystemDisk.Size is less than the image size., describecn: 指定的 SystemDisk.Size 小于镜像大小。}, {code: InvalidSystemDiskSize.LessThanMinSize, describeen: The specified parameter SystemDisk.Size is less than the min size., describecn: 指定的 SystemDisk.Size 小于磁盘大小下限。}, {code: InvalidSystemDiskSize.MoreThanMaxSize, describeen: The specified parameter SystemDisk.Size is more than the max size., describecn: 指定的 SystemDisk.Size 大于磁盘大小上限。}, {code: InvalidVSwitchId.NotFound, describeen: Specified virtual switch does not exist., describecn: 指定的 VSwitch 不存在。}, {code: InvalidZoneId.NotFound, describeen: The specified ZoneId does not exist., describecn: 指定 Zone 不存在。}, {code: IoOptimized.NotSupported, describeen: The specified InstanceType is not support IoOptimized instance., describecn: 指定的实例类型不支持 I/O 优化实例。}, {code: OperationDenied, describeen: Another Instance is being created., describecn: 正在创建另外的实例。}, {code: PaymentMethodNotFound, describeen: No billing method has been registered on the account., describecn: 该账号下没有付款方式。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.},{code: InternalError, describeen: The request processing has failed due to some unknown error,exception or failure., describecn: 内部错误。}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="创建一个 ECS 实例"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=CreateInstance&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;ImageId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;_32_23c472_20120822172155_aliguest&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vhd&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;SecurityGroupId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;sg&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;c0003e8b9&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;HostName&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;Bctest01&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;InstanceType&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ecs&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;small&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=CreateInstance&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;ImageId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;_32_23c472_20120822172155_aliguest&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vhd&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;SecurityGroupId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;sg&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;c0003e8b9&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;HostName&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;Bctest01&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;InstanceType&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ecs&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;small&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreateInstanceResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;04F0F334-1335-436C-A1D7-6C044FE73368&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;i-instance1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreateInstanceResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;04F0F334-1335-436C-A1D7-6C044FE73368&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;i-instance1&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="        ResourceOwnerAccount    "/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

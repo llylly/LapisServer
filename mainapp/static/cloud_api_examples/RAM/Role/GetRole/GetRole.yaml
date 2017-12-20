@@ -1,0 +1,165 @@
+host: ram.aliyuncs.com
+info:
+    description: RAM (Resource Access Management) 是阿里云提供的资源访问控制服务。通过RAM，您可以集中管理您的用户（比如员工、系统或应用程序），以及控制用户可以访问您名下哪些资源的权限。RAM要解决的问题
+    title: RAM(Resource Access Management)访问控制
+    version: '1.0'
+paths:
+    /GetRole:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="接口描述">接口描述</h2><p>　获取角色信息</p>
+            parameters:
+            -   description: 操作接口名，系统规定参数，取值：GetRole
+                enum:
+                - GetRole
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 指定角色名，最多包含64个字符
+                in: query
+                maxLength: 64
+                name: RoleName
+                pattern: ^[a-zA-Z0-9\.@\-]+$
+                required: true
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            Role:
+                                description: 角色信息
+                                name: Role
+                                type: object
+                                properties:
+                                    Arn:
+                                        description: 角色的资源描述符
+                                        name: Arn
+                                        type: string
+                                    AssumeRolePolicyDocument:
+                                        description: 角色扮演授权策略
+                                        name: AssumeRolePolicyDocument
+                                        type: string
+                                    CreateDate:
+                                        description: 创建时间
+                                        name: CreateDate
+                                        type: string
+                                    Description:
+                                        description: 角色的文字描述
+                                        name: Description
+                                        type: string
+                                    RoleId:
+                                        description: 用户名称
+                                        name: RoleId
+                                        type: string
+                                    RoleName:
+                                        description: 角色名称
+                                        name: RoleName
+                                        type: string
+                                    UpdateDate:
+                                        description: 更新时间
+                                        name: UpdateDate
+                                        type: string
+                        type: object
+                400:
+                    description: '{code: InvalidParameter, describeen: The parameter - &quot;UserName&quot; contains invalid chars.}, {code: InvalidParameter.UserName.Length, describeen: The parameter - &quot;UserName&quot; beyond the length limit.}, {code: InvalidParameter.NewUserName.InvalidChars, describeen: The parameter - &quot;NewUserName&quot; contains invalid chars.}, {code: InvalidParameter.NewUserName.Length, describeen: The parameter - &quot;NewUserName&quot; beyond the length limit.}, {code: InvalidParameter.DisplayName.InvalidChars, describeen: The parameter - &quot;DisplayName&quot; contains invalid chars.}, {code: InvalidParameter.DisplayName.Length, describeen: The parameter - &quot;DisplayName&quot; beyond the length limit.}, {code: InvalidParameter.NewDisplayName.InvalidChars, describeen: The parameter - &quot;NewDisplayName&quot; contains invalid chars.}, {code: InvalidParameter.NewDisplayName.Length, describeen: The parameter - &quot;NewDisplayName&quot; beyond the length
+                        limit.}, {code: InvalidParameter.MobilePhone.Format, describeen: The format of the parameter - &quot;MobilePhone&quot; is incorrect.}, {code: InvalidParameter.NewMobilePhone.Format, describeen: The format of the parameter - &quot;NewMobilePhone&quot; is incorrect.}, {code: InvalidParameter.Email.Format, describeen: The format of the parameter - &quot;Email&quot; is incorrect.}, {code: InvalidParameter.NewEmail.Format, describeen: The format of the parameter - &quot;NewEmail&quot; is incorrect.}, {code: InvalidParameter.Comments.Length, describeen: The parameter - &quot;Comments&quot; beyond the length limit.}, {code: InvalidParameter.NewComments.Length, describeen: The parameter - &quot;NewComments&quot; beyond the length limit.}, {code: InvalidParameter.Password.TooWeak, describeen: The parameter - &quot;Password&quot; is not compliant with the password policy.}, {code: InvalidParameter.VirtualMFADeviceName.InvalidChars, describeen: The parameter - &quot;VirtualMFADeviceName&quot;
+                        contains invalid chars.}, {code: InvalidParameter.VirtualMFADeviceName.Length, describeen: The parameter - &quot;VirtualMFADeviceName&quot; beyond the length limit.}, {code: InvalidParameter.GroupName.InvalidChars, describeen: The parameter - &quot;GroupName&quot; contains invalid chars.}, {code: InvalidParameter.GroupName.Length, describeen: The parameter - &quot;GroupName&quot; beyond the length limit.}, {code: InvalidParameter.NewGroupName.InvalidChars, describeen: The parameter - &quot;NewGroupName&quot; contains invalid chars.}, {code: InvalidParameter.NewGroupName.Length, describeen: The parameter - &quot;NewGroupName&quot; beyond the length limit.}, {code: InvalidParameter.PolicyType, describeen: The parameter - &quot;PolicyType&quot; is incorrect.}, {code: InvalidParameter.PolicyName.InvalidChars, describeen: The parameter - &quot;PolicyNam&quot; contains invalid chars.}, {code: InvalidParameter.PolicyName.Length, describeen: The parameter - &quot;PolicyName&quot;
+                        beyond the length limit.}, {code: InvalidParameter.PolicyDocument.Length, describeen: The parameter - &quot;PolicyName&quot; beyond the length limit.}, {code: InvalidParameter.Description.Length, describeen: The parameter - &quot;Description&quot; beyond the length limit.}, {code: InvalidParameter.VersionId.Format, describeen: The format of the parameter - &quot;VersionId&quot; is incorrect.}, {code: InvalidParameter.AccountAlias.Format, describeen: The format of parameter - &quot;AccountAlias&quot; is incorrect.}, {code: InvalidParameter.AccountAlias.Length, describeen: The parameter - &quot;AccountAlias&quot; MUST be in the range of 3 and 63.}, {code: InvalidParameter.MinimumPasswordLength.Range, describeen: The parameter - &quot;MinimumPasswordLength&quot; MUST be in the range of 8 and 32.}, {code: InvalidParameter.AuthenticationCode.Format, describeen: The parameter - &quot;AuthenticationCode&quot; MUST be 6 numbers.}, {code: MalformedPolicyDocument, describeen:
+                        {The error details}},{code: <a name="InvalidParameter.RoleName.InvalidChars" class="reference-link"></a><span class="header-link octicon octicon-link"></span>InvalidParameter.RoleName.InvalidChars, describeen: The parameter - “RoleName” contains invalid chars.}, {code: <a name="InvalidParameter.RoleName.Length" class="reference-link"></a><span class="header-link octicon octicon-link"></span>InvalidParameter.RoleName.Length, describeen: The parameter - “RoleName” beyond the length limit.}, {code: <a name="InvalidParameter.AssumeRolePolicyDocument.Length" class="reference-link"></a><span class="header-link octicon octicon-link"></span>InvalidParameter.AssumeRolePolicyDocument.Length, describeen: The parameter - “AssumeRolePolicyDocument” beyond the length limit.}, {code: <a name="MalformedPolicyDocument" class="reference-link"></a><span class="header-link octicon octicon-link"></span>MalformedPolicyDocument, describeen: {The error details}},{code: InvalidParameter.RoleName.InvalidChars,
+                        describeen: The parameter - &quot;RoleName&quot; contains invalid chars.}, {code: InvalidParameter.RoleName.Length, describeen: The parameter - &quot;RoleName&quot; beyond the length limit.}'
+                403:
+                    description: '{code: NoPermission, describeen: You are not authorized to do this action.}, {code: Inactive, describeen: Your ram service is inactive, please activate it.}, {code: CheckAuthenticationCodeFail, describeen: The parameter - &quot;AuthenticationCode&quot; is inccorrect.}'
+                404:
+                    description: '{code: EntityNotExist, describeen: The user does not exist.}, {code: EntityNotExist.User.AccessKey, describeen: The user access key does not exist.}, {code: EntityNotExist.User.LoginProfile, describeen: The user login profile does not exist.}, {code: EntityNotExist.User.MFADevice, describeen: The user has not bound any MFA device.}, {code: EntityNotExist.User.Policy, describeen: The indicate policy of the user does not exist.}, {code: EntityNotExist.User.Group, describeen: The user has not joined the group.}, {code: EntityNotExist.VirtualMFADevice, describeen: The virtual mfa device does not exist.}, {code: EntityNotExist.Group, describeen: The group does not exist.}, {code: EntityNotExist.Group.Policy, describeen: The indicate policy attached to the group does not exist.}, {code: EntityNotExist.Policy, describeen: The policy does not exist.}, {code: EntityNotExist.Policy.Version, describeen: The policy version does not exist.},{code: EntityNotExist.Role,
+                        describeen: The role does not exist.}'
+                409:
+                    description: '{code: EntityAlreadyExists, describeen: The user does already EXIST.}, {code: EntityAlreadyExists.User.LoginProfile, describeen: The user login profile does already EXIST.}, {code: EntityAlreadyExists.User.MFADevice, describeen: The user has already bound a MFA device.}, {code: EntityAlreadyExists.User.Group, describeen: The user has already joined the group.}, {code: EntityAlreadyExists.User.Policy, describeen: The user has already been attached this policy.}, {code: EntityAlreadyExists.VirtualMFADevice, describeen: The virtual mfa device does already EXIST.}, {code: EntityAlreadyExists.VirtualMFADevice.User, describeen: The virtual mfa device does already been bound to a user.}, {code: EntityAlreadyExists.Group, describeen: The group does already EXIST.}, {code: EntityAlreadyExists.Group.Policy, describeen: The group has already been attached this policy.}, {code: EntityAlreadyExists.Policy, describeen: The group does already EXIST.}, {code: EntityAlreadyExists.AccountAlias,
+                        describeen: The account alias does already exist.}, {code: DeleteConflict, describeen: The user CAN NOT be in any group while deleting the user.}, {code: DeleteConflict.User.AccessKey, describeen: The user CAN NOT has any access key while deleting the user.}, {code: DeleteConflict.User.LoginProfile, describeen: The user CAN NOT has any login profile while deleting the user.}, {code: DeleteConflict.User.MFADevice, describeen: The user CAN NOT has any mfa device while deleting the user.}, {code: DeleteConflict.User.Policy, describeen: The user CAN NOT has any attached policy while deleting the user.}, {code: DeleteConflict.VirtualMFADevice.User, describeen: The virtual mfa device CAN NOT been bound to any user while deleting it.}, {code: DeleteConflict.Group.User, describeen: The group CAN NOT has any user member while deleting the group.}, {code: DeleteConflict.Group.Policy, describeen: The entity CAN NOT has any attached policy while deleting the group.}, {code: DeleteConflict.Policy.User,
+                        describeen: The policy CAN NOT been attached to any user while deleting the policy.}, {code: DeleteConflict.Policy.Group, describeen: The policy CAN NOT been attached to any group while deleting the policy.}, {code: DeleteConflict.Policy.Version, describeen: The policy CAN NOT has any version except the defaul version.}, {code: DeleteConflict.Policy.Version.Default, describeen: The default policy version CAN NOT been deleted directly.}, {code: DeleteConflict.Role.Policy, describeen: The role CAN NOT has any attached policy while deleting the role.}, {code: LimitExceeded, describeen: The count of users beyond the current limits.}, {code: LimitExceeded.User.AccessKey, describeen: The access key count of the user access keys beyond the current limits.}, {code: LimitExceeded.User.Group, describeen: The count of groups the target user joined  beyond the current limits.}, {code: LimitExceeded.User.Policy, describeen: The policy count of the user attached policies beyond
+                        the current limits.}, {code: LimitExceeded.VirtualMFADevice, describeen: The count of virtual mfa devices beyond the current limits.}, {code: LimitExceeded.Group, describeen: The count of groups beyond the current limits.}, {code: LimitExceeded.Group.Policy, describeen: The policy count of the group beyond the current limits.}, {code: LimitExceeded.Policy, describeen: The count of policy beyond the current limits.}, {code: LimitExceeded.Policy.Version, describeen: The count of policy version beyond the current limits.}, {code: LimitExceeded.Role, describeen: The count of roles beyond the current limits.}, {code: LimitExceeded.Role.Policy, describeen: The count of policies attached to the role beyond the current limits.},{code: <a name="EntityAlreadyExists.Role" class="reference-link"></a><span class="header-link octicon octicon-link"></span>EntityAlreadyExists.Role, describeen: The role does already EXIST.}, {code: <a name="LimitExceeded.Role" class="reference-link"></a><span
+                        class="header-link octicon octicon-link"></span>LimitExceeded.Role, describeen: The count of roles beyond the current limits.}'
+                500:
+                    description: '{code: InternalError, describeen: An internal error occurred.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 获取角色信息
+        x-access:
+        -   key: Action
+            value: ram:GetRole
+        -   key: Resource
+            value: acs:ram:*:${AccountId}:role/*
+        -   key: Role
+            value: <code>XML</code>格式
+        x-requestsample:
+        -   description: <pre><code>https://ram.aliyuncs.com/?Action=GetRole&amp;RoleName=ECSAdmin&amp;&lt;公共请求参数&gt;</code></pre>
+            id: 1
+        -   description: <pre><code>https://ram.aliyuncs.com/?Action=GetRole&amp;RoleName=ECSAdmin&amp;&lt;公共请求参数&gt;</code></pre>
+            id: 2
+        x-responsesample:
+        -   description: '<pre><code class="lang-xml">&lt;GetRoleResponse&gt;    &lt;RequestId&gt;04F0F334-1335-436C-A1D7-6C044FE73368&lt;/RequestId&gt;    &lt;Role&gt;        &lt;RoleId&gt;901234567890123&lt;/RoleId&gt;        &lt;RoleName&gt;ECSAdmin&lt;/RoleName&gt;        &lt;Arn&gt;acs:ram::1234567890123456:role/ECSAdmin&lt;/Arn&gt;        &lt;Description&gt;ECS管理角色&lt;/Description&gt;        &lt;AssumeRolePolicyDocument&gt;{ &quot;Statement&quot;: [ { &quot;Action&quot;: &quot;sts:AssumeRole&quot;, &quot;Effect&quot;: &quot;Allow&quot;, &quot;Principal&quot;: { &quot;RAM&quot;: &quot;acs:ram::123456789012345678:root&quot; } } ], &quot;Version&quot;: &quot;1&quot; }&lt;/AssumeRolePolicyDocument&gt;        &lt;CreateDate&gt;2015-01-23T12:33:18Z&lt;/CreateDate&gt;        &lt;UpdateDate&gt;2015-01-23T12:33:18Z&lt;/UpdateDate&gt;    &lt;/Role&gt;&lt;/GetRoleResponse&gt;</code></pre>'
+            id: 1
+            note: XML格式
+        -   description: '<pre><code class="lang-json">{    &quot;RequestId&quot;: &quot;04F0F334-1335-436C-A1D7-6C044FE73368&quot;,    &quot;Role&quot;: {        &quot;RoleId&quot;: &quot;901234567890123&quot;,        &quot;RoleName&quot;: &quot;ECSAdmin&quot;,        &quot;Arn&quot;: &quot;acs:ram::1234567890123456:role/ECSAdmin&quot;,        &quot;Description&quot;: &quot;ECS管理角色&quot;,        &quot;AssumeRolePolicyDocument&quot;: &quot;{ \&quot;Statement\&quot;: [ { \&quot;Action\&quot;: \&quot;sts:AssumeRole\&quot;, \&quot;Effect\&quot;: \&quot;Allow\&quot;, \&quot;Principal\&quot;: { \&quot;RAM\&quot;: \&quot;acs:ram::123456789012345678:root\&quot; } } ], \&quot;Version\&quot;: \&quot;1\&quot; }&quot;,        &quot;CreateDate&quot;: &quot;2015-01-23T12:33:18Z&quot;,        &quot;UpdateDate&quot;: &quot;2015-01-23T12:33:18Z&quot;    }}</code></pre>'
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

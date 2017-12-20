@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/DescribeTasks">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2--em-em-&quot;&gt;&lt;a name=&quot;&lt;em&gt;描述&lt;/em&gt;&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;&lt;em&gt;描述&lt;/em&gt;&lt;/h2&gt;&lt;p&gt;查询指定的异步请求的进度。&lt;/p&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="操作接口名，取值：DescribeTasks。"/>
+            <enum nodeType="array">
+              <enum value="DescribeTasks"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域ID。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="任务操作的接口名称，&lt;br&gt;支持的接口有：&lt;ul&gt;&lt;li&gt;ImportImage&lt;/li&gt;&lt;li&gt;ExportImage&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="ImportImage"/>
+              <enum value="ExportImage"/>
+            </enum>
+            <in value="query"/>
+            <name value="TaskAction"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="任务Ids，最多支持100个，用逗号分隔"/>
+            <in value="query"/>
+            <maxLength value="100"/>
+            <name value="TaskIds"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="任务状态，&lt;br&gt;可选值：&lt;ul&gt;&lt;li&gt;Finished已完成&lt;/li&gt;&lt;li&gt;Processing运行中&lt;/li&gt;&lt;li&gt;Pending等待执行&lt;/li&gt;&lt;li&gt;Deleted已取消&lt;/li&gt;&lt;li&gt;Paused暂停&lt;/li&gt;&lt;/ul&gt;默认值：无"/>
+            <enum nodeType="array">
+              <enum value="Finished"/>
+              <enum value="Processing"/>
+              <enum value="Pending"/>
+              <enum value="Deleted"/>
+              <enum value="Paused"/>
+            </enum>
+            <in value="query"/>
+            <name value="TaskStatus"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="按创建时间查询，创建时间区间的起始点。时间类型按照 ISO8601 标准表示，并需要使用UTC 时间。格式为：YYYY-MM-DDThh:mmZ。"/>
+            <in value="query"/>
+            <name value="StartTime"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="按创建时间查询，创建时间区间的终止点。时间类型按照 ISO8601 标准表示，并需要使用 UTC 时间。格式为：YYYY-MM-DDThh:mmZ。"/>
+            <in value="query"/>
+            <name value="EndTime"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="1"/>
+            <description value="查询结果的页码，起始值为 1，默认值为 1。"/>
+            <in value="query"/>
+            <name value="PageNumber"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="10"/>
+            <description value="分页查询时设置的每页记录数，最大值 100 行，默认为 10。"/>
+            <in value="query"/>
+            <maximum value="100"/>
+            <name value="PageSize"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <PageNumber>
+                  <description value="当前页码"/>
+                  <name value="PageNumber"/>
+                  <type value="integer"/>
+                </PageNumber>
+                <PageSize>
+                  <description value="当前分页包含多少条目"/>
+                  <name value="PageSize"/>
+                  <type value="integer"/>
+                </PageSize>
+                <RegionId>
+                  <description value="地域 ID。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。"/>
+                  <name value="RegionId"/>
+                  <type value="string"/>
+                </RegionId>
+                <TaskSet>
+                  <description value="任务集合"/>
+                  <name value="TaskSet"/>
+                  <properties>
+                    <Task>
+                      <items>
+                        <x-schema>
+                          <properties>
+                            <Action>
+                              <description value="操作接口名称"/>
+                              <name value="Action"/>
+                              <type value="string"/>
+                            </Action>
+                            <CreationTime>
+                              <description value="任务创建时间，时间类型按照 ISO8601 标准表示，并需要使用 UTC 时间。格式为：YYYY-MM-DDThh:mmZ。"/>
+                              <name value="CreationTime"/>
+                              <type value="string"/>
+                            </CreationTime>
+                            <FinishedTime>
+                              <description value="任务完成时间，时间类型按照 ISO8601 标准表示，并需要使用 UTC 时间。格式为：YYYY-MM-DDThh:mmZ。"/>
+                              <name value="FinishedTime"/>
+                              <type value="string"/>
+                            </FinishedTime>
+                            <SupportCancel>
+                              <description value="是否支持取消任务&lt;br&gt;可选值：&lt;ul&gt;&lt;li&gt;True&lt;/li&gt;&lt;li&gt;False&lt;/li&gt;&lt;/ul&gt;"/>
+                              <enum nodeType="array">
+                                <enum value="True"/>
+                                <enum value="False"/>
+                              </enum>
+                              <name value="SupportCancel"/>
+                              <type value="string"/>
+                            </SupportCancel>
+                            <TaskId>
+                              <description value="任务ID"/>
+                              <name value="TaskId"/>
+                              <type value="string"/>
+                            </TaskId>
+                            <TaskStatus>
+                              <description value="任务状态&lt;br&gt;可选值：&lt;ul&gt;&lt;li&gt;Finished已完成&lt;/li&gt;&lt;li&gt;Processing 运行中&lt;/li&gt;&lt;/ul&gt;"/>
+                              <enum nodeType="array">
+                                <enum value="Finished"/>
+                                <enum value="Processing"/>
+                              </enum>
+                              <name value="TaskStatus"/>
+                              <type value="string"/>
+                            </TaskStatus>
+                          </properties>
+                          <type value="object"/>
+                        </x-schema>
+                      </items>
+                      <type value="array"/>
+                    </Task>
+                  </properties>
+                  <type value="object"/>
+                </TaskSet>
+                <TotalCount>
+                  <description value="列表条条目数"/>
+                  <name value="TotalCount"/>
+                  <type value="integer"/>
+                </TotalCount>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: MissingParameter, describeen: An input parameter “RegionId” that is mandatory for processing the request is not supplied., describecn: 缺少必填参数 RegionId。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。}, {code: InvalidRegionId.NotFound, describeen: The specified region not found., describecn: 指定的 RegionId 不存在。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查询指定的异步请求的进度"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeTasks&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeTasks&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DescribeTasksResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageNumber&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageNumber&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TotalCount&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TotalCount&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RegionId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-hangzhou&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RegionId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;E5C82807-5588-4661-9A96-350B206A7623&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskSet&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Task&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2015-11-24T12:50Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;FinishedTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2015-11-24T12:50Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/FinishedTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SupportCancel&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SupportCancel&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskAction&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;IMPORT_IMAGE&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskAction&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskStatus&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Finished&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskStatus&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;t-23mo8zf9w&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Task&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Task&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2015-11-23T15:10Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;FinishedTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2015-11-23T15:16Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/FinishedTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SupportCancel&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SupportCancel&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskAction&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;IMPORT_IMAGE&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskAction&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskStatus&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Finished&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskStatus&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TaskId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;t-23sgu0dyj&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Task&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TaskSet&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DescribeTasksResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageNumber&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TotalCount&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;lit&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RegionId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-hangzhou&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;F746C690-D9EA-4F87-AF31-8E1910FAB541&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;，&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskSet&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Task&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-11-24T12:50Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;FinishedTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-11-24T12:50Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SupportCancel&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskAction&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImportImage&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskStatus&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Finished&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;t-23mo8zf9w&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-11-23T15:10Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;FinishedTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-11-23T15:16Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SupportCancel&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskAction&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImportImage&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskStatus&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Finished&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TaskId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;t-23sgu0dyj&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="ResourceOwnerAccount"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

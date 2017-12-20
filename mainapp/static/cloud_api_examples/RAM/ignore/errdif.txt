@@ -1,0 +1,9 @@
+错误代码
+InvalidVpcId.NotFou nd
+InvalidVpcName.Mal formed
+InvalidVpcDiscriptio n.Malformed
+InvalidParameter
+InvalidParameter
+InvalidUserCidr.Quot a
+InvalidUserCidr.Malf ormed
+InvalidUserCidr.Malf ormed

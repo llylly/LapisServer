@@ -1,0 +1,266 @@
+host: vpc.aliyuncs.com
+info:
+    description: 专有网络VPC（Virtual Private Cloud）是用户基于阿里云创建的自定义私有网络, 不同的专有网络之间二层逻辑隔离，用户可以在自己创建的专有网络内创建和管理云产品实例，比如ECS、负载均衡、RDS等。
+    title: VPC
+    version: '1.0'
+paths:
+    /DescribeRouterInterfaces:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2--em-em-"><a name="&lt;em&gt;描述&lt;/em&gt;" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p>查看路由器接口列表。</p><ul><li><p>可通过各种Filter对结果进行过滤。目前支持的Filter包括：</p><ul><li>RouterInterfaceId</li><li>RouterId</li><li>RouterType</li><li>RouterInterfaceOwnerId</li><li>OppositeInterfaceId</li><li>OppositeRouterType</li><li>OppositeRouterId</li><li>OppositeInterfaceOwnerId</li><li>Status</li><li>Name</li></ul></li></ul><ul><li><p>一个Filter的多个值之间是“or”关系（只要与其中一个值吻合则视为符合该Filter的过滤条件）；</p></li><li><p>各个Filter之间为“and”逻辑关系（符合所有Filter的过滤条件，才会进入最终查询结果中）。</p></li></ul>
+            parameters:
+            -   description: 系统规定参数，取值：DescribeRouterInterfaces
+                enum:
+                - DescribeRouterInterfaces
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 实例所在的地域
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   description: 第n个过滤器的类型。N从1开始，不大于5。
+                in: query
+                maxItem: 5
+                minItem: 1
+                name: Filter
+                required: false
+                type: array
+                items:
+                    x-schema:
+                        type: object
+                        properties:
+                            Key:
+                                description: 第n个过滤器的类型。N从1开始，不大于5。
+                                name: Filter.n.Key
+                                type: string
+                            Value:
+                                description: 第n个过滤器的第m个值。M从1开始，不大于5。
+                                name: Filter.n.Value.m
+                                type: array
+                                items:
+                                    type: string
+            -   default: 1
+                description: 查询结果的页码；不指定时，默认为1；取值范围：正整数；若PageNumber大于实际结果的最大页码，则返回最后一页的内容。
+                in: query
+                name: PageNumber
+                required: false
+                type: integer
+            -   default: 10
+                description: 查询结果的分页大小。取值范围为[1,100]，默认为10
+                in: query
+                maximum: 100
+                minimum: 1
+                name: PageSize
+                required: false
+                type: integer
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            Instances:
+                                description: 由RouterInterfaceSetType组成的数组格式，返回实例的信息
+                                name: Instances
+                                type: array
+                                items:
+                                    x-schema:
+                                        type: object
+                                        properties:
+                                            AccessPointId:
+                                                description: 本端接入点ID
+                                                name: AccessPointId
+                                                type: string
+                                            BusinessStatus:
+                                                description: Normal（正常）、FinancialLocked（欠费锁定状态）、SecurityLocked（安全风控锁定状态）
+                                                enum:
+                                                - Normal
+                                                - FinancialLocked
+                                                - SecurityLocked
+                                                name: BusinessStatus
+                                                type: string
+                                            ConnectedTime:
+                                                description: 连接建立的时间点
+                                                name: ConnectedTime
+                                                type: string
+                                            CreationTime:
+                                                description: 创建时间
+                                                name: CreationTime
+                                                type: string
+                                            Description:
+                                                description: 自定义的Description；
+                                                name: Description
+                                                type: string
+                                            HealthCheckSourceIp:
+                                                description: 健康检查源IP
+                                                name: HealthCheckSourceIp
+                                                type: string
+                                            HealthCheckTargetIp:
+                                                description: 健康检查目标IP
+                                                name: HealthCheckTargetIp
+                                                type: string
+                                            Name:
+                                                description: 自定义名称；
+                                                name: Name
+                                                type: string
+                                            OppositeAccessPointId:
+                                                description: 对端接入点ID
+                                                name: OppositeAccessPointId
+                                                type: string
+                                            OppositeInterfaceBusinessStatus:
+                                                description: 连接对端的RouterInterface的业务状态
+                                                name: OppositeInterfaceBusinessStatus
+                                                type: string
+                                            OppositeInterfaceId:
+                                                description: 连接对端的InterfaceId。
+                                                name: OppositeInterfaceId
+                                                type: string
+                                            OppositeInterfaceOwnerId:
+                                                description: 连接对端的RouterInterface的拥有者账号Id
+                                                name: OppositeInterfaceOwnerId
+                                                type: string
+                                            OppositeInterfaceSpec:
+                                                description: 连接对端RouterInterface的规格；
+                                                name: OppositeInterfaceSpec
+                                                type: string
+                                            OppositeInterfaceStatus:
+                                                description: 连接对端的RouterInterface的状态。
+                                                name: OppositeInterfaceStatus
+                                                type: string
+                                            OppositeRegionId:
+                                                description: 连接对端所处的地域
+                                                name: OppositeRegionId
+                                                type: string
+                                            OppositeRouterId:
+                                                description: 连接对端的RouterInterface所属的路由器Id
+                                                name: OppositeRouterId
+                                                type: string
+                                            OppositeRouterType:
+                                                description: 连接对端的RouterInterface所属的路由器类型
+                                                name: OppositeRouterType
+                                                type: string
+                                            Role:
+                                                description: 连接中的角色。发起端|接受端
+                                                name: Role
+                                                type: string
+                                            RouterId:
+                                                description: 所属的RouterId；
+                                                name: RouterId
+                                                type: string
+                                            RouterInterfaceId:
+                                                description: 对象的Id
+                                                name: RouterInterfaceId
+                                                type: string
+                                            RouterType:
+                                                description: 所属的Router的RouterType，可选值为 VRouter 或 VBR。
+                                                enum:
+                                                - VRouter
+                                                - VBR
+                                                name: RouterType
+                                                type: string
+                                            Spec:
+                                                description: 规格；
+                                                name: Spec
+                                                type: string
+                                            Status:
+                                                description: 状态；
+                                                name: Status
+                                                type: string
+
+                            PageNumber:
+                                description: 实例列表的页码
+                                name: PageNumber
+                                type: integer
+                            PageSize:
+                                description: 输入时设置的每页行数
+                                name: PageSize
+                                type: integer
+                            TotalCount:
+                                description: 实例总个数
+                                name: TotalCount
+                                type: integer
+                        type: object
+                400:
+                    description: '{code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied, describecn: 缺少 Action 字段}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied, describecn: 缺少 AccessKeyId 字段}, {code: MissingParameter, describeen: An input parameter “Signature” that is mandatory for processing the request is not supplied., describecn: 缺少 Signature 字段}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied, describecn: 缺少 Timestamp 字段}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied, describecn: 缺少 Version 字段}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid., describecn: 无效的 Action 值（该 API 不存在）}, {code: InvalidAccessKeyId.NotFound,
+                        describeen: The Access Key ID provided does not exist in our records., describecn: 无效的 AccessKeyId 值（该 key 不存在）}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards., describecn: 无效的 Signature 取值（签名结果错误）}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid., describecn: 无效的 SignatureMethod 取值}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid., describecn: 无效的 SignatureVersion 取值}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied., describecn: 无效的 Timestamp 取值（Timestamp 与服务器时间相差超过了 1 个小时）}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used., describecn: 无效的 SignatureNonce（该 SignatureNonce 值已被使用过）}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid., describecn: 无效的 Version 取值}, {code:
+                        InvalidOwnerId, describeen: The specified OwnerId is not valid., describecn: 无效的 OwnerId 取值}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid., describecn: 无效的 OwnerAccount 取值}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access., describecn: 同时使用了 OwnerId 和 OwnerAccount}, {code: Throttling, describeen: Request was denied due to request throttling., describecn: 因系统流控拒绝访问}, {code: Throttling, describeen: Request was denied due to request throttling., describecn: 该 key 的调用 quota 已用完}, {code: UnsupportedParameter, describeen: The parameter ”&lt;parameter name&gt;” is not supported., describecn: 使用了无效的参数}, {code: UnsupportedParameter, describeen: The parameter ”&lt;parameter name&gt;” is not supported., describecn: 该参数无权使用}, {code: InsufficientBalance, describeen: Your account does not have enough balance., describecn: 余额不足}, {code: IdempotentParameterMismatch, describeen: Request uses a client token
+                        in a previous request but is not identical to that request., describecn: 使用了一个已经使用过的 ClientToken，但此次请求内容却又与上一次使用该 Token 的 request 不一样.}, {code: InvalidParameter, describeen: The specified parameter is not valid, describecn: 参数校验失败},{code: InvalidRegionPair.NotReachable, describeen: The specified OppositeRegion is not reachable by ExpressConnect from that region specified by ‘RegionId’, describecn:  用户指定的两个region是无法通过高速通道产品进行连接的。}, {code: InvalidRole.ValueNotSupported, describeen: The specified Role is not valid., describecn: 指定的 Role 不合法}, {code: InvalidSpec.ValudNotSupported, describeen: The specified Spec is not supported., describecn: 指定的 Spec 不支持}, {code: InvalidRouterType.ValueNotSupported, describeen: The specified RouterType is not valid, describecn: 指定的 RouterType 不合法}, {code: InvalidOppositeRouterType.ValueNotSupported, describeen: The specified OppositeRouterType is not valid., describecn: 指定的 OppositeRouterType 不合法}, {code: ParameterMismatch.Role-Spec,
+                        describeen: The specified Spec and Role mismatch., describecn: 指定的 Spec 和 Role 不匹配}, {code: ParameterMismatch.RegionId-OppositeRegionId-Spec, describeen: The specified Spec is not supported between the specified RegionId and OppositeRegionId., describecn:  该规格在这两个Region之间不支持。}, {code: InvalidName.Malformed, describeen: The specified ‘Name’ is not valid., describecn: 指定的 Name 不合法}, {code: InvalidDescription.Malformed, describeen: The specifid ‘Description’ is not valid., describecn: 指定的 Description 不合法}, {code: Forbidden.BillsOutstanding, describeen: You cannot create more RouterInterface because you have bills outstanding., describecn:  有未结清的账单，因而拒绝创建更多的后付费资源；}, {code: QuotaExceed.RouterInterface, describeen: Living RouterInterface quota exceeded., describecn: 已有路由器接口数量超过配额}, {code: LimitationExceed.InterfaceNumberOnRouter, describeen: Total number of RouterInterfaces on a Router exceeded., describecn: 单个路由器上存在的路由器接口数量超过配额}, {code: InvalidParam.NotFound, describeen:
+                        Parameter must not be null,uid, bid,regionNo, remoteRegionNo or routerId, describecn: ‘uid’, ‘bid’, ‘regionNo’, ‘remoteRegionNo’ 或者 ‘routerId’不能为空}, {code: InvalidAccessPoint.NotMatch, describeen: The accessPoint id is not matched, describecn: 接入点Id 不匹配}, {code: InvalidAccessPoint.NotExist, describeen: The accessPoint not exit, describecn: 接入点Id 不存在}'
+                403:
+                    description: '{code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled., describecn: 该 AccessKey 处于禁用状态}, {code: InvalidAction, describeen: Specified action is not valid., describecn: 该 key 无权调用该 API}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported., describecn: 用户使用了不支持的 Http Method（当前 TOP 只支持 post 和 get）}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied., describecn: 调用该接口没有指定 OwnerId}, {code: Forbidden.SubUser, describeen: The specified action is not available for you。, describecn: 无权调用订单类接口}, {code: Forbidden.RAM, describeen: User not authorized to operate the specified resource, or this API doesn’t support RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次操作没有被正确的授权}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode., describecn: 该接口不允许使用 RAM 方式进行访问}, {code: RealNameAuthenticationError, describeen:
+                        Your account has not passed the real-name authentication yet., describecn: 用户未进行实名认证}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before, describecn: 幂等参数不匹配}, {code: LastTokenProcessing, describeen: The last token request is processing, describecn: 上一次请求还在处理中}'
+                404:
+                    description: '{code: Forbidden.InstanceNotFound, describeen: The specified Instance is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问，但是本次访问涉及到的 Instance 不存在}, {code: Forbidden.DiskNotFound, describeen: The specified Disk is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Disk 不存在}, {code: Forbidden.SecurityGroupNotFound, describeen: The specified SecurityGroup is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 SecurityGroup 不存在}, {code: Forbidden.SnapshotNotFound, describeen: The specified Snapshot is not found, so we cann’t get enough information to check permission in RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Snapshot 不存在}, {code: Forbidden.ImageNotFound, describeen: The specified Image is not found, so we cann’t get enough information to check permission in
+                        RAM., describecn: 使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Image 不存在},{code: InvalidRegionId.NotFound, describeen: The RegionId provided does not exist in our records., describecn: 指定的 RegionId 不存在}, {code: InvalidOppositeRegionId.NotFound, describeen: The OppositeRegionId provided does not exist in our records., describecn:  用户填写的OppositeRegionId是一个不存在的regionId}, {code: InvalidRouterId.NotFound, describeen: The specified RouterId does not exist in our recored., describecn: 指定的 RouterId 不存在},{code: InvalidRegionId.NotFound, describeen: The RegionId provided does not exist in our records., describecn: 指定的 RegionId 不存在}, {code: InvalidOppositeRegionId.NotFound, describeen: The oppositeRegionId provided does not exist in our records., describecn: 指定的对端 RegionId 不存在}, {code: InvalidFilterKey.ValueNotSupported, describeen: Specified filter key is not supported: Filter.X.key, describecn: 指定的过滤器类型不支持}'
+                500:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server., describecn: 服务不可用}, {code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure., describecn: 其他情况},{code: Forbidden.NotInRouterInterfaceCreateWhitelist, describeen: Not in router interface create whitelist., describecn: 帐号不在创建路由器接的白名单中}, {code: RI_CREATE_ONE_LIMIT_BY_SYNC, describeen: Create ri only one limit by sync., describecn: }, {code: InvalidAccessPoint.ValueNotAllowed, describeen: The non-vbr router interface cannot have access point configured., describecn: 非 VBR 路由器接口不能指定接入点信息}, {code: InvalidAccessPoint.ValueNotAllowed, describeen: The non-vbr opposite router interface cannot have opposite access point configured., describecn: 非 VBR 对端路由器接口不能指定接入点信息}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 查询路由器接口列表d
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

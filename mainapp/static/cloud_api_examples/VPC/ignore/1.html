@@ -1,0 +1,1250 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+ 	<link rel="dns-prefetch" href="//gtms01.alicdn.com">
+	<link rel="dns-prefetch" href="//gtms02.alicdn.com">
+	<link rel="dns-prefetch" href="//gtms03.alicdn.com">
+	<link rel="stylesheet" href="//g.alicdn.com/hichina/home/4.0.18/dpl/style/base.css">
+	<link rel="stylesheet" type="text/css" href="//g.alicdn.com/aliyun/www-doc/0.0.36/css/common.css">
+	<link type="text/css" rel="stylesheet" href="//g.alicdn.com/??aliyun/www-dpl/0.3.53/knight/css/doc.icons.css">	
+	<link rel="stylesheet" href="//g.alicdn.com/tbc/global/0.0.8/index-min.css">
+	<link type="text/css" rel="stylesheet" href="/assets/css/editormd-markdown.css">
+    <link rel="stylesheet" href="//g.alicdn.com/aliyun/dbl-official-ui/1.0.2/css/index.css">
+    <meta name="data-spm" content="5176" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+	<meta name="renderer" content="webkit">
+	<title>
+	    	        查询可用专线接入点信息_地域相关接口_API 参考_开发指南_专有网络 VPC-阿里云
+	    	</title>
+	<meta name="keywords" content="查询可用专线接入点信息,地域相关接口,API 参考,开发指南,专有网络 VPC">
+	<meta name="description" content="描述
+查询本Region管理下的所有专线接入点（AccessPoint）的详细信息
+请求参数                        名称        ">
+			<link rel="alternate" media="only screen and(max-width: 640px)" href="https://m.aliyun.com/doc/document_detail/36062.html" >
+        <meta name="mobile-agent" content="format=html5;url=https://m.aliyun.com/doc/document_detail/36062.html">
+		<meta name="mobile-agent" content="format=xhtml;url=https://m.aliyun.com/doc/document_detail/36062.html">
+		<meta name="mobile-agent" content="format=wml;url=https://m.aliyun.com/doc/document_detail/36062.html">
+				<link rel="canonical" href="https://help.aliyun.com/document_detail/36062.html"/>
+		
+	<script type="text/javascript" src="//www.aliyun.com/rgn/aliyun_assets?renderer=js"></script>
+	<script type="text/javascript" src="//g.alicdn.com/tbc/global/0.0.8/index-min.js"></script>	
+	<script type="text/javascript" src="//g.alicdn.com/aliyun/ali-init/0.0.7/index-min.js"></script>
+    <script src="//g.alicdn.com/??aliyun/dbl-official-ui/1.0.2/scripts/common.js,aliyun/dbl-official-ui/1.0.2/scripts/index.js"></script>
+</head>
+
+
+<body data-spm="doc36062" class="dochelp-detail"><script type="text/javascript">
+(function (d) {
+var t=d.createElement("script");t.type="text/javascript";t.async=true;t.id="tb-beacon-aplus";
+t.setAttribute("exparams","category=&userid=&aplus&yunid=&yunpk=");
+t.src=("https:"==d.location.protocol?"https://s":"http://a")+".tbcdn.cn/s/aplus_v2.js";
+d.getElementsByTagName("head")[0].appendChild(t);
+})(document);
+</script>
+
+ 	<!-- 公共搜索 -->
+     <script type="text/javascript" src="//www.aliyun.com/rgn/aliyun_topbar_simple/index.js"></script>
+
+<!-- exported styles -->
+
+
+<link rel="stylesheet" type="text/css" href="//g.alicdn.com/ali-mod/??aliyun-help-top/0.0.3/index.css"/>
+
+
+
+
+  
+      
+  <!--region -->
+            
+                
+                <div data-spm="331735" data-moduleid="177482" data-name="aliyun-help-top" data-guid="331735" id="guid-331735" data-scene-id="347014" data-scene-version="2" data-hidden="" data-gitgroup="ali-mod" data-ext="" data-engine="tce" class="aliyun-help-top J_Module" tms="aliyun-help-top/0.0.3" tms-datakey="tce/347014"><div class="module-wrap J_tb_lazyload dbl_tms_module_wrap">
+
+
+  <div class="help-search" data-spm="2015709">
+    <div class="y-row">
+      <div class="y-span3 title">帮助与文档</div>
+      <div class="y-span9 y-last">
+        <div class="search">
+          <input id="search" placeholder="请用关键词进行搜索，例如“服务器密码重置”" autocomplete="off" disableautocomplete>
+          <ul class="tip">
+          </ul>
+          <a class="btn search-all-btn" href="javascript:;" data-spm-click="gostr=/aliyun;locaid=d202223">搜全部</a>
+          <a class="btn search-product-btn" href="javascript:;" data-spm-click="gostr=/aliyun;locaid=d223432">搜本产品</a>
+        </div>
+        <div class="hot-search">
+          <label>搜索热词：</label>
+          <ul class="y-clear">
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8&amp;page=1">远程连接服务器</a></li>
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E7%9B%98&amp;page=1">挂载数据盘</a></li>
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90&amp;page=1">域名解析</a></li>
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E5%9F%9F%E5%90%8D%E5%AE%9E%E5%90%8D%E8%AE%A4%E8%AF%81&amp;page=1">域名实名认证</a></li>
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E8%B4%A6%E5%8F%B7%E5%AE%9E%E5%90%8D%E8%AE%A4%E8%AF%81&amp;page=1">账号实名认证</a></li>
+            
+            <li class="y-left"><a href="&#x2F;&#x2F;help.aliyun.com&#x2F;openSearchKnowledgeList.html?queryScope=all_all&amp;keyWords=%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81&amp;page=1">忘记密码</a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="help-tab-box" data-spm="201511181">
+    <div class="y-row y-clear">
+      <ul class="y-left y-clear">
+        
+        <li class="y-left" key="fqa"><a href="//help.aliyun.com/">文档与视频</a></li>
+        
+        <li class="y-left" key="new"><a href="//help.aliyun.com/contact/school.htm">新手学堂</a></li>
+        
+        <li class="y-left" key="service"><a href="//help.aliyun.com/contact/service.htm">自助工具</a></li>
+        
+        <li class="y-left" key="contact"><a href="//help.aliyun.com/contact/contact.htm">联系客服</a></li>
+        
+      </ul>
+      <ul class="y-right  y-clear">
+        
+        <li class="y-left"><a class="tab" href="//help.aliyun.com/my_favorites.html">我的收藏</a></li>
+        
+
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+            
+  <!--region -->
+      
+  
+
+<!-- exported scripts -->
+
+
+<script src="//g.alicdn.com/ali-mod/??aliyun-help-top/0.0.3/index.js"></script>
+
+
+
+
+
+
+<div class="help-body help-index y-row">
+    <!-- menu S -->
+<script> window.openSearch ={queryScope:"27706_all",isDisplayAll:false , isEnglish:"no", source:"vpc", type:"doc", knowledgeId:"36062"} </script>
+<script> window.help = {"action":"fqa"}; </script>
+<div class="help-menu-box" data-spm="6">
+    <div class="help-menu" style="padding-bottom: 0px;">
+
+        <div class="all y-clear" id="J_menu">
+            全部产品
+            <i class="icon-menu"></i>
+            <div class="goods y-clear">
+                <div class="y-left">
+                                                                                                                                        <span>弹性计算</span>
+                            <ul>
+                                                                                                        <li><a href="/product/25365.html">云服务器 ECS</a></li>
+                                                                                                    <li><a href="/product/57664.html">弹性高性能计算E-HPC</a></li>
+                                                                                                    <li><a href="/product/25855.html">弹性伸缩</a></li>
+                                                                                                    <li><a href="/product/25972.html">容器服务</a></li>
+                                                                                                    <li><a href="/product/58607.html">轻量应用服务器</a></li>
+                                                                                                    <li><a href="/product/27992.html">批量计算</a></li>
+                                                                                                    <li><a href="/product/50980.html">函数计算</a></li>
+                                                                                                    <li><a href="/product/25815.html">高性能计算</a></li>
+                                                                                                    <li><a href="/product/60716.html">容器镜像服务</a></li>
+                                                                                                                                            </ul>
+                                                                <span>会员服务</span>
+                            <ul>
+                                                                                                        <li><a href="/product/35470.html">财务</a></li>
+                                                                                                    <li><a href="/product/35469.html">会员账号&amp;实名认证</a></li>
+                                                                                                    <li><a href="/product/35468.html">备案</a></li>
+                                                                                                                                            </ul>
+                                                                <span>域名与网站(万网)</span>
+                            <ul>
+                                                                                                        <li><a href="/product/35473.html">域名</a></li>
+                                                                                                    <li><a href="/product/35465.html">云虚拟主机</a></li>
+                                                                                                    <li><a href="/product/29697.html">云解析</a></li>
+                                                                                                    <li><a href="/product/35466.html">企业邮箱</a></li>
+                                                                                                    <li><a href="/product/29830.html">弹性 Web 托管</a></li>
+                                                                                                                                            </ul>
+                                                                <span>网络</span>
+                            <ul>
+                                                                                                        <li><a href="/product/27537.html">负载均衡</a></li>
+                                                                                                    <li><a href="/product/27706.html">专有网络 VPC</a></li>
+                                                                                                    <li><a href="/product/44413.html">NAT 网关</a></li>
+                                                                                                    <li><a href="/product/61789.html">弹性公网 IP</a></li>
+                                                                                                    <li><a href="/product/27782.html">高速通道</a></li>
+                                                                                                    <li><a href="/product/51933.html">VPN 网关</a></li>
+                                                                                                    <li><a href="/product/55629.html">全球加速</a></li>
+                                                                                                    <li><a href="/product/55093.html">共享流量包</a></li>
+                                                                                                    <li><a href="/product/55092.html">共享带宽</a></li>
+                                                                                                                                            </ul>
+                                                                <span>移动云</span>
+                            <ul>
+                                                                                                        <li><a href="/product/30019.html">移动数据分析</a></li>
+                                                                                                    <li><a href="/product/30047.html">移动推送</a></li>
+                                                                                                    <li><a href="/product/30100.html">HTTPDNS</a></li>
+                                                                                                    <li><a href="/product/51341.html">移动用户反馈</a></li>
+                                                                                                    <li><a href="/product/51340.html">移动热修复</a></li>
+                                                                                                    <li><a href="/product/50644.html">移动测试</a></li>
+                                                                                                                                            </ul>
+                                                                <span>数加&middot;大数据分析及展现</span>
+                            <ul>
+                                                                                                        <li><a href="/product/43570.html">DataV数据可视化</a></li>
+                                                                                                    <li><a href="/product/30343.html">Quick BI</a></li>
+                                                                                                    <li><a href="/product/34396.html">画像分析</a></li>
+                                                                                                    <li><a href="/product/62401.html">I+关系网络分析</a></li>
+                                                                                                                                            </ul>
+                                                                <span>数加&middot;大数据应用</span>
+                            <ul>
+                                                                                                        <li><a href="/product/30367.html">推荐引擎</a></li>
+                                                                                                    <li><a href="/product/34383.html">公众趋势分析</a></li>
+                                                                                                    <li><a href="/product/44972.html">大数据解决方案</a></li>
+                                                                                                    <li><a href="/product/51213.html">营销引擎</a></li>
+                                                                                                                                            </ul>
+                                                                <span>管理与监控</span>
+                            <ul>
+                                                                                                        <li><a href="/product/28572.html">云监控</a></li>
+                                                                                                    <li><a href="/product/28625.html">访问控制</a></li>
+                                                                                                    <li><a href="/product/28802.html">操作审计</a></li>
+                                                                                                    <li><a href="/product/28850.html">资源编排</a></li>
+                                                                                                    <li><a href="/product/28933.html">密钥管理服务</a></li>
+                                                                                                                                            </ul>
+                                                                <span>云通信</span>
+                            <ul>
+                                                                                                        <li><a href="/product/44282.html">短信服务</a></li>
+                                                                                                    <li><a href="/product/54853.html">语音服务</a></li>
+                                                                                                    <li><a href="/product/54854.html">流量服务</a></li>
+                                                                                                    <li><a href="/product/57702.html">物联网无线连接服务</a></li>
+                                                                                                    <li><a href="/product/59433.html">号码隐私保护</a></li>
+                                                                                                                                            </ul>
+                                                                <span>阿里云办公</span>
+                            <ul>
+                                                                                                        <li><a href="/product/55759.html">云投屏</a></li>
+                                                                                                    <li><a href="/product/55760.html">网络准入</a></li>
+                                                                                                                                            </ul>
+                                                                <span>培训与认证</span>
+                            <ul>
+                                                                                                        <li><a href="/product/32348.html">专业技术认证</a></li>
+                                                                                                    <li><a href="/product/32349.html">培训合作伙伴</a></li>
+                                                                                                                                            </ul>
+                                                                <span>更多</span>
+                            <ul>
+                                                                                                        <li><a href="/product/30174.html">体验馆</a></li>
+                                                                                                    <li><a href="/product/30488.html">云市场</a></li>
+                                                                                                    <li><a href="/product/30507.html">持续交付平台</a></li>
+                                                                                                    <li><a href="/product/48842.html">阿里云App</a></li>
+                                                                                                    <li><a href="/product/42384.html">法律条款</a></li>
+                                                                                                    <li><a href="/product/35472.html">合作伙伴</a></li>
+                                                                                                    <li><a href="/product/35471.html">阿里云规则</a></li>
+                                                                                                    <li><a href="/product/44216.html">支持计划</a></li>
+                                                                                                    <li><a href="/product/42397.html">信任中心</a></li>
+                                                            </ul>
+                                </div>
+                <div class="y-left">
+                                                                                                                                        <span>存储与CDN</span>
+                            <ul>
+                                                                                                        <li><a href="/product/31815.html">对象存储 OSS</a></li>
+                                                                                                    <li><a href="/product/27099.html">CDN</a></li>
+                                                                                                    <li><a href="/product/27516.html">文件存储</a></li>
+                                                                                                    <li><a href="/product/27278.html">表格存储</a></li>
+                                                                                                    <li><a href="/product/27366.html">归档存储</a></li>
+                                                                                                    <li><a href="/product/55352.html">智能云相册</a></li>
+                                                                                                    <li><a href="/product/53942.html">混合云阵列</a></li>
+                                                                                                    <li><a href="/product/53923.html">云存储网关</a></li>
+                                                                                                    <li><a href="/product/54287.html">PCDN</a></li>
+                                                                                                    <li><a href="/product/60939.html">混合云备份服务</a></li>
+                                                                                                    <li><a href="/product/60938.html">混合云容灾服务</a></li>
+                                                                                                                                            </ul>
+                                                                <span>数据库</span>
+                            <ul>
+                                                                                                        <li><a href="/product/26090.html">云数据库 RDS 版</a></li>
+                                                                                                    <li><a href="/product/26340.html">云数据库 Redis 版</a></li>
+                                                                                                    <li><a href="/product/26556.html">云数据库 MongoDB 版</a></li>
+                                                                                                    <li><a href="/product/26590.html">数据传输服务DTS</a></li>
+                                                                                                    <li><a href="/product/26320.html">HybridDB for MySQL</a></li>
+                                                                                                    <li><a href="/product/35364.html">云数据库 HybridDB for PostgreSQL</a></li>
+                                                                                                    <li><a href="/product/26458.html">云数据库 OceanBase</a></li>
+                                                                                                    <li><a href="/product/26437.html">数据管理</a></li>
+                                                                                                    <li><a href="/product/26528.html">云数据库 Memcache 版</a></li>
+                                                                                                    <li><a href="/product/49055.html">云数据库 HBase 版</a></li>
+                                                                                                    <li><a href="/product/54825.html">高性能时间序列数据库 HiTSDB</a></li>
+                                                                                                    <li><a href="/product/58609.html">云数据库POLARDB</a></li>
+                                                                                                    <li><a href="/product/58992.html">数据库备份</a></li>
+                                                                                                                                            </ul>
+                                                                <span>安全</span>
+                            <ul>
+                                                                                                        <li><a href="/product/28515.html">Web 应用防火墙</a></li>
+                                                                                                    <li><a href="/product/28461.html">DDoS 高防IP</a></li>
+                                                                                                    <li><a href="/product/28533.html">证书服务</a></li>
+                                                                                                    <li><a href="/product/28396.html">DDoS 基础防护</a></li>
+                                                                                                    <li><a href="/product/28449.html">安骑士</a></li>
+                                                                                                    <li><a href="/product/28498.html">态势感知</a></li>
+                                                                                                    <li><a href="/product/28376.html">先知（安全众测）</a></li>
+                                                                                                    <li><a href="/product/57748.html">云防火墙</a></li>
+                                                                                                    <li><a href="/product/28341.html">加密服务</a></li>
+                                                                                                    <li><a href="/product/28308.html">数据风控</a></li>
+                                                                                                    <li><a href="/product/28415.html">内容安全</a></li>
+                                                                                                    <li><a href="/product/34401.html">移动安全</a></li>
+                                                                                                    <li><a href="/product/42806.html">安全管家</a></li>
+                                                                                                    <li><a href="/product/35474.html">安全公告和技术</a></li>
+                                                                                                    <li><a href="/product/44522.html">云盾混合云</a></li>
+                                                                                                    <li><a href="/product/52862.html">堡垒机</a></li>
+                                                                                                    <li><a href="/product/57038.html">实人认证</a></li>
+                                                                                                    <li><a href="/product/52432.html">数据库审计</a></li>
+                                                                                                                                            </ul>
+                                                                <span>应用服务</span>
+                            <ul>
+                                                                                                        <li><a href="/product/28958.html">日志服务</a></li>
+                                                                                                    <li><a href="/product/27412.html">消息服务</a></li>
+                                                                                                    <li><a href="/product/29102.html">开放搜索</a></li>
+                                                                                                    <li><a href="/product/29412.html">邮件推送</a></li>
+                                                                                                    <li><a href="/product/29462.html">API 网关</a></li>
+                                                                                                    <li><a href="/product/50727.html">智能对话分析服务</a></li>
+                                                                                                    <li><a href="/product/52375.html">云 AP</a></li>
+                                                                                                    <li><a href="/product/53782.html">云桌面</a></li>
+                                                                                                    <li><a href="/product/55138.html">云客服</a></li>
+                                                                                                    <li><a href="/product/55838.html">码栈</a></li>
+                                                                                                    <li><a href="/product/59384.html">企业控制台</a></li>
+                                                                                                    <li><a href="/product/59495.html">云小蜜</a></li>
+                                                                                                    <li><a href="/product/59499.html">云呼叫中心</a></li>
+                                                                                                                                            </ul>
+                                                                <span>数加&middot;人工智能</span>
+                            <ul>
+                                                                                                        <li><a href="/product/30347.html">机器学习PAI</a></li>
+                                                                                                    <li><a href="/product/53257.html">人脸识别</a></li>
+                                                                                                    <li><a href="/product/53258.html">图像识别</a></li>
+                                                                                                    <li><a href="/product/30413.html">智能语音交互</a></li>
+                                                                                                    <li><a href="/product/43579.html">人工智能图像类</a></li>
+                                                                                                    <li><a href="/product/42728.html">阿里云ET介绍</a></li>
+                                                                                                    <li><a href="/product/60058.html">自然语言处理</a></li>
+                                                                                                                                            </ul>
+                                                                <span>数加&middot;大数据基础服务</span>
+                            <ul>
+                                                                                                        <li><a href="/product/27797.html">MaxCompute</a></li>
+                                                                                                    <li><a href="/product/26371.html">分析型数据库</a></li>
+                                                                                                    <li><a href="/product/28066.html">E-MapReduce</a></li>
+                                                                                                    <li><a href="/product/30254.html">DataWorks（数据工场）</a></li>
+                                                                                                    <li><a href="/product/45029.html">流计算</a></li>
+                                                                                                    <li><a href="/product/28194.html">数据集成</a></li>
+                                                                                                    <li><a href="/product/53345.html">DataHub</a></li>
+                                                                                                    <li><a href="/product/43581.html">数加平台介绍</a></li>
+                                                                                                    <li><a href="/product/57736.html">阿里云Elasticsearch</a></li>
+                                                                                                                                            </ul>
+                                                                <span>互联网中间件</span>
+                            <ul>
+                                                                                                        <li><a href="/product/29500.html">企业级分布式应用服务 EDAS</a></li>
+                                                                                                    <li><a href="/product/29530.html">消息队列 MQ</a></li>
+                                                                                                    <li><a href="/product/29657.html">分布式关系型数据库 DRDS</a></li>
+                                                                                                    <li><a href="/product/31788.html">云服务总线 CSB</a></li>
+                                                                                                    <li><a href="/product/34364.html">业务实时监控服务 ARMS</a></li>
+                                                                                                    <li><a href="/product/48444.html">全局事务服务 GTS</a></li>
+                                                                                                    <li><a href="/product/29260.html">性能测试 PTS</a></li>
+                                                                                                    <li><a href="/product/53556.html">数据库和应用迁移服务 ADAM</a></li>
+                                                                                                    <li><a href="/product/59604.html">应用配置管理 ACM</a></li>
+                                                                                                                                            </ul>
+                                                                <span>视频服务</span>
+                            <ul>
+                                                                                                        <li><a href="/product/29932.html">视频点播</a></li>
+                                                                                                    <li><a href="/product/29949.html">视频直播</a></li>
+                                                                                                    <li><a href="/product/29194.html">媒体转码</a></li>
+                                                                                                                                            </ul>
+                                                                <span>开发者工具</span>
+                            <ul>
+                                                                                                        <li><a href="/product/29966.html">Eclipse 插件</a></li>
+                                                                                                    <li><a href="/product/29991.html">命令行工具 CLI</a></li>
+                                                                                                    <li><a href="/product/55903.html">CodePipeline</a></li>
+                                                                                                    <li><a href="/product/51588.html">云效</a></li>
+                                                                                                    <li><a href="/product/52507.html">阿里云SDK开发指南</a></li>
+                                                                                                                                            </ul>
+                                                                <span>解决方案</span>
+                            <ul>
+                                                                                                        <li><a href="/product/29849.html">金融云</a></li>
+                                                                                                    <li><a href="/product/63551.html">通用解决方案</a></li>
+                                                                                                    <li><a href="/product/57192.html">SAP 解决方案</a></li>
+                                                                                                                                            </ul>
+                                                                <span>物联网</span>
+                            <ul>
+                                                                                                        <li><a href="/product/30520.html">阿里云物联网套件</a></li>
+                                                                                                                                            </ul>
+                                                                <span>钉钉智能硬件</span>
+                            <ul>
+                                                                                                        <li><a href="/product/62909.html">钉钉智能通讯中心</a></li>
+                                                                                                    <li><a href="/product/62908.html">钉钉智能前台</a></li>
+                                                            </ul>
+                                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="J_menu_box">
+        <div class="help-menu" data-spm="6" data-spm-max-idx="537">
+            <span class="menu-title">专有网络 VPC</span>
+        <ul>
+                                                                <li class="level1 "><a href=" javascript:void(0); " title="产品简介">产品简介<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/document_detail/34217.html" title="什么是VPC">什么是VPC</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/34221.html" title="基础架构">基础架构</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/49002.html" title="功能概述">功能概述</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/34219.html" title="产品优势">产品优势</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53597.html" title="VPC通信">VPC通信</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/45289.html" title="应用场景">应用场景</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/34218.html" title="名词解释">名词解释</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27750.html" title="使用限制">使用限制</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="快速入门">快速入门<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/document_detail/27708.html" title="教程概述">教程概述</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/56163.html" title="使用默认专有网络创建ECS实例">使用默认专有网络创建ECS实例</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href=" javascript:void(0); " title="在非默认专有网络中创建ECS实例">在非默认专有网络中创建ECS实例<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/27710.html" title="创建专有网络和交换机">创建专有网络和交换机</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/27713.html" title="创建ECS实例">创建ECS实例</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href="/document_detail/27714.html" title="绑定弹性公网IP">绑定弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27716.html" title="解绑弹性公网IP">解绑弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27717.html" title="删除专有网络">删除专有网络</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="用户指南">用户指南<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/document_detail/53902.html" title="默认VPC和交换机">默认VPC和交换机</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href=" javascript:void(0); " title="搭建专有网络">搭建专有网络<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/53604.html" title="创建VPC">创建VPC</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/53670.html" title="创建交换机">创建交换机</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href="/document_detail/53682.html" title="管理路由表">管理路由表</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27741.html" title="VPC中的访问控制">VPC中的访问控制</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href=" javascript:void(0); " title="VPC内的公网访问">VPC内的公网访问<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/54202.html" title="分配公网IP">分配公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54203.html" title="绑定弹性公网IP">绑定弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54204.html" title="配置NAT网关">配置NAT网关</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href=" javascript:void(0); " title="公网访问VPC">公网访问VPC<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/54230.html" title="分配公网IP">分配公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54232.html" title="弹性公网IP">弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54233.html" title="配置DNAT">配置DNAT</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54247.html" title="配置公网负载均衡">配置公网负载均衡</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href=" javascript:void(0); " title="VPC互连">VPC互连<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/54193.html" title="高速通道">高速通道</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54200.html" title="VPN网关部署">VPN网关部署</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href=" javascript:void(0); " title="VPC与线下IDC互连">VPC与线下IDC互连<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/54210.html" title="专线接入">专线接入</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54211.html" title="搭建VPN网关">搭建VPN网关</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href="/document_detail/49014.html" title="在VPC中创建云产品实例">在VPC中创建云产品实例</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27732.html" title="专有网络中的ECS安全组设置">专有网络中的ECS安全组设置</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27735.html" title="VPC内设置私网隔离">VPC内设置私网隔离</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="最佳实践">最佳实践<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/document_detail/54095.html" title="网络规划">网络规划</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/61133.html" title="VPC私网接入">VPC私网接入</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53403.html" title="VPC中的访问控制">VPC中的访问控制</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53402.html" title="如何选择公网类产品和节约公网成本？">如何选择公网类产品和节约公网成本？</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53401.html" title="VPC内如何使用云产品？">VPC内如何使用云产品？</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53990.html" title="构建混合云">构建混合云</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href=" javascript:void(0); " title="经典网络迁移到VPC">经典网络迁移到VPC<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/55051.html" title="迁移方案概述">迁移方案概述</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href=" javascript:void(0); " title="ClassicLink迁移">ClassicLink迁移<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/58095.html" title="ClassicLink迁移概述">ClassicLink迁移概述</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/57949.html" title="ClassicLink迁移示例">ClassicLink迁移示例</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/58098.html" title="查看和取消连接">查看和取消连接</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="云数据库混访">云数据库混访<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/55064.html" title="云数据库混访概述">云数据库混访概述</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/57947.html" title="云数据库RDS版网络切换">云数据库RDS版网络切换</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/57965.html" title="云数据库 Redis 版网络切换">云数据库 Redis 版网络切换</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/57966.html" title="云数据库MongoDB版网络切换">云数据库MongoDB版网络切换</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href="/document_detail/58352.html" title="其它云产品混访支持">其它云产品混访支持</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/57946.html" title="混访混挂迁移示例">混访混挂迁移示例</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/57954.html" title="单ECS迁移示例">单ECS迁移示例</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                </ul>
+                            </li>
+                                                            <li class="level1 open"><a href=" javascript:void(0); " title="开发指南">开发指南<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 open"><a href=" javascript:void(0); " title="API 参考">API 参考<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/34962.html" title="简介">简介</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/34965.html" title="更新历史">更新历史</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href=" javascript:void(0); " title="调用方式">调用方式<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/35479.html" title="概述">概述</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35480.html" title="请求接口">请求接口</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35733.html" title="公共参数">公共参数</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35734.html" title="返回结果">返回结果</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35735.html" title="签名机制">签名机制</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href="/document_detail/34964.html" title="API概览">API概览</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href=" javascript:void(0); " title="借助RAM实现子账号对主账号的VPC资源访问">借助RAM实现子账号对主账号的VPC资源访问<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/34968.html" title="概述">概述</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/34969.html" title="RAM中可授权的专有网络资源类型">RAM中可授权的专有网络资源类型</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/34970.html" title="RAM中可对专有网络资源进行授权的Action">RAM中可对专有网络资源进行授权的Action</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/34971.html" title="专有网络API的鉴权规则">专有网络API的鉴权规则</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="VPC相关接口">VPC相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/35737.html" title="新建专有网络">新建专有网络</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35738.html" title="删除专有网络">删除专有网络</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35739.html" title="查询专有网络列表">查询专有网络列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35740.html" title="修改专有网络属性">修改专有网络属性</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="路由器相关接口">路由器相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/35742.html" title="查询路由器列表">查询路由器列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35743.html" title="修改路由器属性">修改路由器属性</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="交换机相关接口">交换机相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/35745.html" title="新建交换机">新建交换机</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35746.html" title="删除交换机">删除交换机</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/35748.html" title="查询交换机列表">查询交换机列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36010.html" title="修改交换机属性">修改交换机属性</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="路由表相关接口">路由表相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36012.html" title="新建自定义路由">新建自定义路由</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36013.html" title="删除自定义路由">删除自定义路由</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36014.html" title="查询路由表列表">查询路由表列表</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="弹性公网IP相关接口">弹性公网IP相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36016.html" title="申请弹性公网IP">申请弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36017.html" title="绑定弹性公网IP">绑定弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36021.html" title="解绑弹性公网IP">解绑弹性公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36018.html" title="查询弹性公网IP列表">查询弹性公网IP列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36019.html" title="修改弹性公网IP属性">修改弹性公网IP属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36020.html" title="释放弹性公网IP">释放弹性公网IP</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="物理专线相关接口">物理专线相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36040.html" title="申请物理专线接入">申请物理专线接入</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36039.html" title="取消物理专线接入">取消物理专线接入</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36042.html" title="查询物理专线列表">查询物理专线列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36044.html" title="修改物理专线属性">修改物理专线属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36045.html" title="物理专线接入终止">物理专线接入终止</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36043.html" title="开通物理专线">开通物理专线</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36041.html" title="删除物理专线">删除物理专线</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="路由器接口相关接口">路由器接口相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36032.html" title="新建路由器接口">新建路由器接口</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36035.html" title="查询路由器接口列表">查询路由器接口列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36031.html" title="发起路由器接口连接">发起路由器接口连接</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36030.html" title="将路由器接口状态置为激活">将路由器接口状态置为激活</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36033.html" title="将路由器接口状态置为非激活">将路由器接口状态置为非激活</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36037.html" title="修改路由器接口规格">修改路由器接口规格</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36036.html" title="修改路由器接口属性">修改路由器接口属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36034.html" title="删除路由器接口">删除路由器接口</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="虚拟边界路由器相关接口">虚拟边界路由器相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36023.html" title="新建虚拟边界路由器">新建虚拟边界路由器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/40542.html" title="删除虚拟边界路由器">删除虚拟边界路由器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36024.html" title="查询虚拟边界路由器">查询虚拟边界路由器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36025.html" title="查看物理专线下的边界路由器列表">查看物理专线下的边界路由器列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36026.html" title="修改虚拟边界路由器属性">修改虚拟边界路由器属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36027.html" title="恢复虚拟边界路由器">恢复虚拟边界路由器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36028.html" title="终止虚拟边界路由器">终止虚拟边界路由器</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="BGP">BGP<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/63231.html" title="CreateBgpGroup">CreateBgpGroup</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63264.html" title="DescribeBgpGroups">DescribeBgpGroups</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63253.html" title="ModifyBgpGroupAttribute">ModifyBgpGroupAttribute</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63241.html" title="DeleteBgpGroup">DeleteBgpGroup</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63265.html" title="CreateBgpPeer">CreateBgpPeer</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63268.html" title="DescribeBgpPeers">DescribeBgpPeers</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63267.html" title="DeleteBgpPeer">DeleteBgpPeer</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63270.html" title="AddBgpNetwork">AddBgpNetwork</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63271.html" title="DeleteBgpNetwork">DeleteBgpNetwork</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/63272.html" title="DescribeBgpNetwork">DescribeBgpNetwork</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="NAT 网关相关接口">NAT 网关相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36048.html" title="创建NAT网关">创建NAT网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36054.html" title="查询NAT网关列表">查询NAT网关列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42665.html" title="修改NAT网关规格">修改NAT网关规格</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42666.html" title="修改NAT网关属性">修改NAT网关属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36051.html" title="删除NAT网关">删除NAT网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42667.html" title="创建NAT带宽包">创建NAT带宽包</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36052.html" title="查询NAT带宽包列表">查询NAT带宽包列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36055.html" title="修改NAT带宽包带宽">修改NAT带宽包带宽</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42671.html" title="修改NAT带宽包属性">修改NAT带宽包属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36047.html" title="增加公网IP">增加公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36057.html" title="删除公网IP">删除公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36049.html" title="删除NAT带宽包">删除NAT带宽包</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36058.html" title="添加DNAT条目">添加DNAT条目</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36053.html" title="查询DNAT表">查询DNAT表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36056.html" title="修改DNAT条目">修改DNAT条目</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36050.html" title="删除DNAT条目">删除DNAT条目</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42672.html" title="添加SNAT条目">添加SNAT条目</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42677.html" title="查询SNAT表">查询SNAT表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42675.html" title="修改SNAT条目">修改SNAT条目</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42678.html" title="删除SNAT条目">删除SNAT条目</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="VPN 网关相关接口">VPN 网关相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/53007.html" title="创建VPN网关">创建VPN网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53018.html" title="查询VPN网关列表">查询VPN网关列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53020.html" title="查询VPN网关详细信息">查询VPN网关详细信息</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53025.html" title="修改VPN网关">修改VPN网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53026.html" title="删除VPN网关">删除VPN网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53031.html" title="创建用户网关">创建用户网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53033.html" title="查询用户网关列表">查询用户网关列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53034.html" title="查询用户网关详细信息">查询用户网关详细信息</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53036.html" title="删除用户网关">删除用户网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53038.html" title="修改用户网关">修改用户网关</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53042.html" title="创建VPN连接">创建VPN连接</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53043.html" title="查询VPN连接列表">查询VPN连接列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53046.html" title="查询VPN连接详细信息">查询VPN连接详细信息</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53047.html" title="修改VPN连接">修改VPN连接</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53051.html" title="删除VPN连接">删除VPN连接</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/53053.html" title="下载VPN连接配置">下载VPN连接配置</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="全球加速相关接口">全球加速相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/56827.html" title="创建全球加速实例">创建全球加速实例</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56829.html" title="查询全球加速实例列表">查询全球加速实例列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56831.html" title="修改全球加速实例属性">修改全球加速实例属性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56832.html" title="修改全球加速实例带宽">修改全球加速实例带宽</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56828.html" title="删除全球加速实例">删除全球加速实例</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56826.html" title="绑定后端服务器">绑定后端服务器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56833.html" title="解绑后端服务器">解绑后端服务器</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56830.html" title="查询后端服务器绑定的全球加速实例">查询后端服务器绑定的全球加速实例</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="共享带宽API">共享带宽API<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/55989.html" title="加入EIP到共享带宽包">加入EIP到共享带宽包</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/55930.html" title="创建共享带宽包">创建共享带宽包</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56000.html" title="删除共享带宽包">删除共享带宽包</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/55997.html" title="查询带宽包列表">查询带宽包列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/55962.html" title="共享带宽包修改名称和描述">共享带宽包修改名称和描述</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/55960.html" title="共享带宽包调整带宽">共享带宽包调整带宽</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/55995.html" title="移除带宽包中的EIP">移除带宽包中的EIP</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="监控相关接口">监控相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/42679.html" title="查询共享带宽包监控信息">查询共享带宽包监控信息</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42680.html" title="查询共享带宽包公网IP监控信息">查询共享带宽包公网IP监控信息</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36060.html" title="查看弹性公网 IP 监控信息">查看弹性公网 IP 监控信息</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 open"><a href=" javascript:void(0); " title="地域相关接口">地域相关接口<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36063.html" title="查询可用地域列表">查询可用地域列表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36064.html" title="查询可用区">查询可用区</a>
+                                            </li>
+                                                                                                                    <li class="level4 action"><a href="/document_detail/36062.html" title="查询可用专线接入点信息">查询可用专线接入点信息</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="数据类型">数据类型<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36066.html" title="AccessPointSetType">AccessPointSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36067.html" title="AccessPointType">AccessPointType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42681.html" title="BandwidthPackageMonitorDataSetType">BandwidthPackageMonitorDataSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42683.html" title="BandwidthPackageMonitorDataItemType">BandwidthPackageMonitorDataItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36070.html" title="BandwidthPackageSetType">BandwidthPackageSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36069.html" title="BandwidthPackageItemType">BandwidthPackageItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36071.html" title="EipAddressAssociateType">EipAddressAssociateType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36072.html" title="EipAddressSetType">EipAddressSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36073.html" title="EipMonitorDataType">EipMonitorDataType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36075.html" title="ForwardEntrySetType">ForwardEntrySetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36074.html" title="ForwardEntryItemType">ForwardEntryItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36078.html" title="IpAddressSetType">IpAddressSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36080.html" title="NatGatewaySetType">NatGatewaySetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36079.html" title="NatGatewayItemType">NatGatewayItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36082.html" title="NextHopListType">NextHopListType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36081.html" title="NextHopItemType">NextHopItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36084.html" title="OperationLocksType">OperationLocksType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36083.html" title="PhysicalConnectionSetType">PhysicalConnectionSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36085.html" title="PhysicalConnectionType">PhysicalConnectionType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36087.html" title="PublicIpAddressSetType">PublicIpAddressSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36086.html" title="PublicIpAddressItemType">PublicIpAddressItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36088.html" title="RegionType">RegionType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36089.html" title="RouteEntrySetType">RouteEntrySetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36091.html" title="RouterInterfaceSetType">RouterInterfaceSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36090.html" title="RouterInterfaceItemType">RouterInterfaceItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36092.html" title="RouteTableSetType">RouteTableSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42690.html" title="SnatEntryItemType">SnatEntryItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42689.html" title="SnatEntrySetType">SnatEntrySetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36093.html" title="VirtualBorderRouterForPhysicalConnectionSetType">VirtualBorderRouterForPhysicalConnectionSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36094.html" title="VirtualBorderRouterForPhysicalConnectionType">VirtualBorderRouterForPhysicalConnectionType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36095.html" title="VirtualBorderRouterSetType">VirtualBorderRouterSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36102.html" title="VirtualBorderRouterType">VirtualBorderRouterType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36097.html" title="VpcSetType">VpcSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36098.html" title="VRouterSetType">VRouterSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36099.html" title="VSwitchSetType">VSwitchSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36100.html" title="ZoneType">ZoneType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42684.html" title="BandwidthPackagePublicIpMonitorDataItemType">BandwidthPackagePublicIpMonitorDataItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/42682.html" title="BandwidthPackagePublicIpMonitorDataSetType">BandwidthPackagePublicIpMonitorDataSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56835.html" title="BackendServerItemType">BackendServerItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56834.html" title="BackendServerSetType">BackendServerSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56867.html" title="GlobalAccelerationInstanceItemType">GlobalAccelerationInstanceItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56869.html" title="GlobalAccelerationInstanceSetType">GlobalAccelerationInstanceSetType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56870.html" title="ServerRelatedGlobalAccelerationInstanceItemType">ServerRelatedGlobalAccelerationInstanceItemType</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/56871.html" title="ServerRelatedGlobalAccelerationInstanceSetType">ServerRelatedGlobalAccelerationInstanceSetType</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level3 "><a href=" javascript:void(0); " title="附录">附录<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level4 "><a href="/document_detail/36567.html" title="时间格式">时间格式</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36568.html" title="错误代码表">错误代码表</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36569.html" title="如何保证幂等性">如何保证幂等性</a>
+                                            </li>
+                                                                                                                    <li class="level4 "><a href="/document_detail/36570.html" title="如何调用接口">如何调用接口</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                </ul>
+                            </li>
+                                                            <li class="level2 "><a href=" javascript:void(0); " title="SDK 参考">SDK 参考<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/27779.html" title="SDK 参考">SDK 参考</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="常见问题">常见问题<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/knowledge_detail/54489.html" title="VPC常见问题">VPC常见问题</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/54484.html" title="网段常见问题">网段常见问题</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/54486.html" title="VPC通信常见问题">VPC通信常见问题</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/38753.html" title="EIP常见问题">EIP常见问题</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/38742.html" title="阿里云切换到专有网络策略FAQ">阿里云切换到专有网络策略FAQ</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="技术运维与分享">技术运维与分享<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/knowledge_detail/38758.html" title="VPC环境下FTP服务的配置概要说明">VPC环境下FTP服务的配置概要说明</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/38740.html" title="VPC网络环境连接OSS地址失败的解决方法">VPC网络环境连接OSS地址失败的解决方法</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/38764.html" title="在公网无法通过Windows Explorer连接FTP">在公网无法通过Windows Explorer连接FTP</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href=" javascript:void(0); " title="VPC内如何配置组播代理">VPC内如何配置组播代理<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level3 "><a href="/document_detail/54586.html" title="组播代理概述">组播代理概述</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54601.html" title="Linux组播代理工具使用说明">Linux组播代理工具使用说明</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/54831.html" title="Windows组播代理工具使用说明">Windows组播代理工具使用说明</a>
+                                            </li>
+                                                                                                                    <li class="level3 "><a href="/document_detail/58463.html" title="Linux内核态组播工具使用说明">Linux内核态组播工具使用说明</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level2 "><a href="/document_detail/56909.html" title="释放ECS的固定公网IP">释放ECS的固定公网IP</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/knowledge_detail/38776.html" title="Linux系统配置SNAT">Linux系统配置SNAT</a>
+                                            </li>
+                                                                                                                                                        </ul>
+                            </li>
+                                                            <li class="level1 "><a href="/video_list/54633.html" title="视频专区">视频专区</a>
+                                        <ul>
+                                                                                                            </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="相关条约">相关条约<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/knowledge_list/38780.html" title="服务条款">服务条款</a>
+                                        <ul>
+                                                                                                                                                        </ul>
+                            </li>
+                                                </ul>
+                            </li>
+                                                            <li class="level1 "><a href=" javascript:void(0); " title="通用参考">通用参考<i class="up"></i></a>
+                                        <ul>
+                                                                        <li class="level2 "><a href="/document_detail/53652.html?parentId=27706" title="产品文档介绍">产品文档介绍</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/47605.html?parentId=27706" title="使用阿里云管理控制台">使用阿里云管理控制台</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53289.html?parentId=27706" title="地域和可用区">地域和可用区</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/54462.html?parentId=27706" title="阿里云产品使用限制">阿里云产品使用限制</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/47315.html?parentId=27706" title="备案">备案</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/47316.html?parentId=27706" title="支持渠道">支持渠道</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/53045.html?parentId=27706" title="创建AccessKey">创建AccessKey</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/54229.html?parentId=27706" title="API 签名机制">API 签名机制</a>
+                                            </li>
+                                                                                                                    <li class="level2 "><a href="/document_detail/27781.html?parentId=27706" title="词汇表">词汇表</a>
+                                            </li>
+                                                                                            </ul>
+                    </li>
+                                                            </ul>
+        </div>
+    </div>
+</div>
+<!-- menu E -->
+	
+
+
+<script>
+window.api={"title":"查询可用专线接入点信息","productAlias":"vpc","documentAlias":"DescribeAccessPoints","parentNodeTitle":"地域相关接口","parentNodeAlias","region"}
+</script>
+
+<div class="help-body-box help-body-box-detail" data-spm="2">
+
+  <div class="help-body-box-detail-crumbs" data-spm="3">
+	<ul class="y-clear">
+  <li><a href='/product/27706.html'>专有网络 VPC</a>&nbsp;&gt;&nbsp;</li><li><a href='/document_detail/34962.html'>开发指南</a>&nbsp;&gt;&nbsp;</li><li><a href='/document_detail/34962.html'>API 参考</a>&nbsp;&gt;&nbsp;</li><li><a href='/document_detail/36063.html'>地域相关接口</a>&nbsp;&gt;&nbsp;</li><li><span>查询可用专线接入点信息</span></li>    </ul>
+
+    <input type="hidden" name="nolinkcrumbs" value="专有网络 VPC&gt;开发指南&gt;API 参考&gt;地域相关接口&gt;查询可用专线接入点信息">
+
+  </div>
+  
+  <div class="help-body-box-detail-title">
+    <h1>查询可用专线接入点信息</h1>
+    <p> 更新时间：2017-06-07 13:26:11</p>
+	<div class="ribbon">
+      <a class="ribbon-btn weibo-btn" target="_blank" href="http://service.weibo.com/share/share.php?title=推荐一篇阿里云文档《查询可用专线接入点信息》（来自 阿里云文档 - 专有网络 VPC - 开发指南 - API 参考 - 地域相关接口）&url=http://help.aliyun.com/document_detail/36062.html?spm=5176.doc36064.6.740.Ta9TOY" title="分享本文档到微博">
+        <i class="ribbon-btn-icon dbl-icon-base-sina"></i>
+      </a>
+      <a class="ribbon-btn weixin-btn" href="javascript:void(0);" data-tooltip-content="#tooltip_content">
+        <i class="ribbon-btn-icon dbl-icon-base-weixin"></i>
+      </a>
+      <a class="ribbon-btn favorite-btn " title="收藏本文档">
+        <i class="ribbon-btn-icon dbl-icon-base-wujiaoxing"></i>
+      </a>
+      <a class="ribbon-btn download-btn " target="_blank" href="http://docs-aliyun.cn-hangzhou.oss.aliyun-inc.com/pdf/vpc-developerGuide-cn-zh-2017-12-13.pdf" title="下载开发指南文档PDF">
+        <i class="ribbon-btn-icon dbl-icon-base-xiazai"></i>
+      </a>
+    </div>
+  </div>
+  <div class="markdown-body" >
+  <p><strong style="font-size: large; color: red;"></strong></p>
+<h2 id="h2--em-em-"><a name="&lt;em&gt;描述&lt;/em&gt;" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><ul>
+<li>查询本Region管理下的所有专线接入点（AccessPoint）的详细信息</li></ul>
+<h2 id="h2--em-em-"><a name="&lt;em&gt;请求参数&lt;/em&gt;" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>请求参数</em></h2><div>    <table class="vpc vpc_interface_request">        <tbody><tr>            <th style="width: 20%;">名称</th>            <th style="width: 10%;">类型</th>            <th style="width: 15%;">是否必须</th>            <th style="width: 55%;">描述</th>        </tr>    <tr>      <td>Action</td>      <td>String</td>      <td>是</td>      <td>操作接口名，系统规定参数，取值:DescribeAccessPoints</td>        </tr>        <tr>      <td>RegionId</td>      <td>String</td>      <td>是</td>      <td>所在地域（管理实例的Region ID）</td>        </tr>    <tr>      <td>Type</td>      <td>String</td>      <td>否</td>      <td>专线接入点（AP）类型，不指定表示返回所有类型的AP。 可选值：<br><li>VPC - VPC接入点，可接受访问VPC类型网络的专线接入</li></td>        </tr>        <tr>      <td>PageNumber</td>      <td>Integer</td>      <td>否</td>      <td>查询结果的页码；不指定时，默认为1；<br>取值范围：正整数；若PageNumber大于实际结果的最大页码，则返回最后一页的内容。</td>        </tr>        <tr>      <td>PageSize</td>      <td>Integer</td>      <td>否</td>      <td>查询结果的分页大小。取值范围为[1,100]，默认为10。</td>        </tr>    </tbody></table></div>
+
+<h2 id="h2--em-em-"><a name="&lt;em&gt;返回参数&lt;/em&gt;" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>返回参数</em></h2><p>公共返回参数，详见<a href="/document_detail/36100.html">公共返回参数</a></p>
+<div>    <table class="vpc vpc_interface_response">        <tbody><tr>            <th style="width: 20%;">名称</th>            <th style="width: 15%;">类型</th>            <th style="width: 65%;">描述</th>        </tr>        <tr>            <td>AccessPointSet</td>            <td>AccessPointSetType</td>            <td>专线接入点信息AccessPointType组成的集合</td>        </tr>        <tr>            <td>TotalCount</td>            <td>Integer</td>            <td>实例总个数</td>        </tr>        <tr>            <td>PageNumber</td>            <td>Integer</td>            <td>实例列表的页码</td>        </tr>        <tr>            <td>PageSize</td>            <td>Integer</td>            <td>查询结果的分页大小</td>        </tr>    </tbody></table></div>
+
+
+<h2 id="h2--em-em-"><a name="&lt;em&gt;错误码&lt;/em&gt;" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>错误码</em></h2><div>    <table class="vpc vpc_interface_errcode">        <tbody><tr>            <th style="width: 20%;">错误代码</th>            <th style="width: 40%;">描述</th>            <th style="width: 15%;">Http 状态码</th>            <th style="width: 25%;">语义</th>        </tr>        <tr>            <td>InvalidRegionId.NotFound</td>            <td>The RegionId provided does not exist in our records.</td>            <td>404</td>            <td>指定的RegionId不存在</td>        </tr>    </tbody></table></div>  </div>
+	<div class="ribbon">
+      <a class="ribbon-btn weibo-btn" target="_blank" href="http://service.weibo.com/share/share.php?title=推荐一篇阿里云文档《查询可用专线接入点信息》（来自 阿里云文档 - 专有网络 VPC - 开发指南 - API 参考 - 地域相关接口）&url=http://help.aliyun.com/document_detail/36062.html?spm=5176.doc36064.6.740.Ta9TOY" title="分享本文档到微博">
+        <i class="ribbon-btn-icon dbl-icon-base-sina"></i>
+      </a>
+      <a class="ribbon-btn weixin-btn" href="javascript:void(0);" data-tooltip-content="#tooltip_content">
+        <i class="ribbon-btn-icon dbl-icon-base-weixin"></i>
+      </a>
+      <a class="ribbon-btn favorite-btn " title="收藏本文档">
+        <i class="ribbon-btn-icon dbl-icon-base-wujiaoxing"></i>
+      </a>
+      <a class="ribbon-btn download-btn " target="_blank" href="http://docs-aliyun.cn-hangzhou.oss.aliyun-inc.com/pdf/vpc-developerGuide-cn-zh-2017-12-13.pdf" title="下载开发指南文档PDF">
+        <i class="ribbon-btn-icon dbl-icon-base-xiazai"></i>
+      </a>
+    </div>
+      <!--导读目录 -->
+    <!--<div class="help-category-box">-->
+      <div class="help-category-expand">
+        <div class="help-category-expand-right">
+          <div class="help-category-expand-title">本文导读目录</div>
+          <div class="help-category-expand-content">
+            <ul>
+            </ul>
+          </div>
+        </div>
+        <a class="help-category-ask-btn" target="_blank" href="https://drcloud.aliyun.com"></a>
+      </div>
+    <div class="tooltip_templates" style="display: none;">
+        <div id="tooltip_content" style="width: 130px;height: 130px;">
+        </div>
+    </div>
+    <!--</div>-->
+    <!--导读目录 -->
+	
+	<!-- 评论 -->
+    <!-- 评论 -->
+	  <div class="help-detail-feedback-wrapper">
+        <div class="help-detail-raty-area">
+          <span class="help-detail-raty-tip">以上内容是否对您有帮助？</span>
+          <div class="help-detail-raty"></div>
+        </div>
+        <div class="help-detail-comment-area">
+          <p style="color: #777F84;">在文档使用中是否遇到以下问题</p>
+          <ul class="help-detail-problem-list">
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="1" />内容错误
+              </div>
+            </li>
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="2" />更新不及时
+              </div>
+            </li>
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="4" />链接错误
+              </div>
+            </li>
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="8" />缺少代码/图片示例
+              </div>
+            </li>
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="16" />太简单/步骤待完善
+              </div>
+            </li>
+						<li data-less-show="true">
+              <div>
+                <input type="checkbox" value="32" />其他
+              </div>
+            </li>
+									<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="1" />内容错误
+              </div>
+            </li>
+						<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="2" />更新不及时
+              </div>
+            </li>
+						<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="4" />链接错误
+              </div>
+            </li>
+						<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="8" />缺少代码/图片示例
+              </div>
+            </li>
+						<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="16" />太简单/步骤待完善
+              </div>
+            </li>
+						<li data-less-show="false">
+              <div>
+                <input type="checkbox" value="32" />其他
+              </div>
+            </li>
+			          </ul>
+          <div class="textarea-wrapper">
+            <p style="color: #777F84;">更多建议</p>
+            <textarea placeholder="请详细描述在文档使用中遇到的问题或改进建议"></textarea>
+            <button class="help-detail-submit dn-btn dn-btn-primary" disabled>提交建议</button>
+			<input class="anonymous-check-box" type="checkbox" checked>匿名提交
+        </div>
+        </div>
+        <div class="help-detail-tip-area">
+          <span>感谢您的打分，是否有意见建议想告诉我们？</span>
+          <button class="help-detail-comment dn-btn dn-btn-primary">提交建议</button>
+        </div>
+        <div class="help-detail-success-tip-area">
+          <i class="dbl-icon-base-right"></i>感谢您的反馈，反馈我们已经收到
+        </div>
+      </div>
+
+    <!-- 反馈 -->
+    <!-- 反馈 -->
+
+    <!-- 反馈list -->
+    <div class="help-body-box-detail-feedback-list">
+	    </div>
+    <!-- 反馈list -->
+	<input name='_tb_token_' type='hidden' value='xweH3kf464hU4oRZHwH5sB'>
+	<script>
+	    window.HELP_NODE_ID=36062;
+					</script>
+	<script> window.detail = true; </script>
+
+</div>
+
+</div>
+
+
+<!-- footer S -->
+    <script type="text/javascript" src="//www.aliyun.com/rgn/aliyun_footer?renderer=js"></script>
+<script src="//g.alicdn.com/hichina/home/4.0.8/dpl/script/all.js"></script>
+<script type="text/javascript" src="//g.alicdn.com/??aliyun/www-doc/0.0.19/vendor/highlight.js,aliyun/www-doc/0.0.19/vendor/jquery.raty.js,aliyun/www-doc/0.0.19/vendor/tooltipster.bundle.js"></script>
+
+
+<script type="text/javascript" src="//g.alicdn.com/??aliyun/www-doc/0.0.36/scripts/common.js,aliyun/www-doc/0.0.36/scripts/2016doc.js"></script>
+<!-- footer E -->
+</body>
+</html>
+
+
+

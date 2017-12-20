@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/DescribeInstances">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2-u63CFu8FF01&quot;&gt;&lt;a name=&quot;描述&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;描述&lt;/h2&gt;&lt;p&gt;查询所有实例的详细信息。&lt;/p&gt;&lt;ul&gt;&lt;li&gt;此接口不会校验参数之间的依赖关系，而是作为 Filter 进行使用，为逻辑与（&lt;code&gt;AND&lt;/code&gt;）关系。&lt;/li&gt;&lt;li&gt;如果参数为空，则过滤器不起作用，但是 InstanceIds 如果是一个空 Json Array（即 &lt;code&gt;[]&lt;/code&gt;），则视为该过滤器有效，且返回空。&lt;/li&gt;&lt;/ul&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数。取值：DescribeInstances"/>
+            <enum nodeType="array">
+              <enum value="DescribeInstances"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="地域 ID。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="专有网络 ID。"/>
+            <in value="query"/>
+            <name value="VpcId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="交换机 ID。"/>
+            <in value="query"/>
+            <name value="VSwitchId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="可用区 ID。"/>
+            <in value="query"/>
+            <name value="ZoneId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的编号列表。&lt;br&gt;参数为一个带有格式的 Json Array：[“i-xxxxxxxxx”, ”i-yyyyyyyyy”, … “i-zzzzzzzzz”]，最多 100 个 ID，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <name value="InstanceIds"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的规格。"/>
+            <in value="query"/>
+            <name value="InstanceType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的规格族。"/>
+            <in value="query"/>
+            <name value="InstanceTypeFamily"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例网络类型。"/>
+            <in value="query"/>
+            <name value="InstanceNetworkType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="VPC 网络类型实例的私有 IP 列表。当 NetworkType 为 VPC 时，这个参数生效.&lt;br&gt;参数为一个带有格式的 Json Array：[“172.16.1.1”, “172.16.2.1”, … “172.16.10.1”]，最多 100 个 IP，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <name value="PrivateIpAddresses"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="经典网络类型实例的内网 IP 列表。当 NetworkType 为 Classic 时，这个参数生效。&lt;br&gt;参数为一个带有格式的 Json Array：[“10.1.1.1”, ”10.1.2.1”, … “10.1.10.1”]，最多 100 个 IP，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <name value="InnerIpAddresses"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="经典网络类型实例的公网 IP 列表。当 NetworkType 为 Classic 时，这个参数生效。&lt;br&gt;参数为一个带有格式的 Json Array：[“42.1.1.1”, ”42.1.2.1”, … “42.1.10.1”]，最多 100 个 IP，用半角逗号字符隔开。"/>
+            <in value="query"/>
+            <name value="PublicIpAddresses"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例所属的安全组。"/>
+            <in value="query"/>
+            <name value="SecurityGroupId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例的付费方式。取值范围：&lt;ul&gt;&lt;li&gt;PrePaid：预付费，即包年包月&lt;/li&gt;&lt;li&gt;PostPaid：后付费，即按量付费&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="PrePaid"/>
+              <enum value="PostPaid"/>
+            </enum>
+            <in value="query"/>
+            <name value="InstanceChargeType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="NoSpot"/>
+            <description value="后付费实例的竞价策略&lt;br&gt;当InstanceChargeType为PostPay时为生效，&lt;br&gt;可选取值为： &lt;br&gt;NoSpot，正常按量付费实例;&lt;br&gt;SpotWithPriceLimit，设置上限价格的竞价实例;&lt;br&gt;SpotAsPriceGo 系统自动出价，最高按量付费价格。&lt;br&gt;默认值为NoSpot"/>
+            <enum nodeType="array">
+              <enum value="NoSpot"/>
+              <enum value="SpotWithPriceLimit"/>
+              <enum value="SpotAsPriceGo"/>
+            </enum>
+            <in value="query"/>
+            <name value="SpotStrategy"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="网络计费类型。取值范围：&lt;ul&gt;&lt;li&gt;PayByTraffic：按流量计费&lt;/li&gt;&lt;li&gt;PayByBandwidth：按带宽计费&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="PayByTraffic"/>
+              <enum value="PayByBandwidth"/>
+            </enum>
+            <in value="query"/>
+            <name value="InternetChargeType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例名称。"/>
+            <in value="query"/>
+            <name value="InstanceName"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="镜像 ID。"/>
+            <in value="query"/>
+            <name value="ImageId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="部署集 ID。"/>
+            <in value="query"/>
+            <name value="DeploymentSetId"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="实例状态。取值范围：&lt;ul&gt;&lt;li&gt;Running&lt;/li&gt;&lt;li&gt;Starting&lt;/li&gt;&lt;li&gt;Stopping&lt;/li&gt;&lt;li&gt;Stopped&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="Running"/>
+              <enum value="Starting"/>
+              <enum value="Stopping"/>
+              <enum value="Stopped"/>
+            </enum>
+            <in value="query"/>
+            <name value="Status"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="是否是 I/O 优化型实例。取值范围：&lt;ul&gt;&lt;li&gt;True：是 I/O 优化型实例&lt;/li&gt;&lt;li&gt;False：不是 I/O 优化型实例&lt;/li&gt;&lt;/ul&gt;"/>
+            <enum nodeType="array">
+              <enum value="True"/>
+              <enum value="False"/>
+            </enum>
+            <in value="query"/>
+            <name value="IoOptimized"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="标签"/>
+            <in value="query"/>
+            <items>
+              <x-schema>
+                <properties>
+                  <Key>
+                    <description value="标签 key，n 的取值范围：[1, 5]&lt;br&gt;最多支持 64 个字符。 &lt;br&gt;不支持 aliyun 开头。&lt;br&gt;不支持 http:// 和 https:// 开头。&lt;br&gt;不允许为空字符串。"/>
+                    <maxLength value="64"/>
+                    <name value="Tag.n.Key"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Key>
+                  <Value>
+                    <description value="标签 value，n 的取值范围：[1, 5]&lt;br&gt;最多支持 128 个字符。 &lt;br&gt;不支持 aliyun 开头。 &lt;br&gt;不支持 http:// 和 https:// 开头。 &lt;br&gt;允许为空字符串。"/>
+                    <maxLength value="128"/>
+                    <name value="Tag.n.Value"/>
+                    <required value="false"/>
+                    <type value="string"/>
+                  </Value>
+                </properties>
+                <type value="object"/>
+              </x-schema>
+            </items>
+            <maxItems value="5"/>
+            <minItems value="1"/>
+            <name value="Tag"/>
+            <required value="false"/>
+            <type value="array"/>
+          </parameters>
+          <parameters>
+            <default value="1"/>
+            <description value="实例状态列表的页码，起始值为 1。&lt;br&gt;默认值：1"/>
+            <in value="query"/>
+            <name value="PageNumber"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+          <parameters>
+            <default value="10"/>
+            <description value="分页查询时设置的每页行数，最大值为 100 行。&lt;br&gt;默认值：10"/>
+            <in value="query"/>
+            <name value="PageSize"/>
+            <required value="false"/>
+            <type value="integer"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <Instances>
+                  <description value="由 InstanceAttributesType 组成的数组格式，返回实例的信息"/>
+                  <items>
+                    <x-schema>
+                      <name value="InstanceAttributesType"/>
+                      <properties>
+                        <Cpu>
+                          <description value="CPU 核数"/>
+                          <name value="Cpu"/>
+                          <type value="integer"/>
+                        </Cpu>
+                        <CreationTime>
+                          <description value="创建时间。按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用UTC时间。格式为：YYYY-MM-DDThh:mmZ 。"/>
+                          <name value="CreationTime"/>
+                          <type value="string"/>
+                        </CreationTime>
+                        <DeploymentSetId>
+                          <description value="部署集 ID"/>
+                          <name value="DeploymentSetId"/>
+                          <type value="string"/>
+                        </DeploymentSetId>
+                        <Description>
+                          <description value="实例的描述"/>
+                          <name value="Description"/>
+                          <type value="string"/>
+                        </Description>
+                        <DeviceAvailable>
+                          <description value="实例是否还可以挂载磁盘。取值范围：&lt;ul&gt;&lt;li&gt;True&lt;/li&gt;&lt;li&gt;False&lt;/li&gt;&lt;/ul&gt;"/>
+                          <name value="DeviceAvailable"/>
+                          <type value="string"/>
+                        </DeviceAvailable>
+                        <EipAddress>
+                          <description value="弹性公网 IP 绑定信息"/>
+                          <name value="EipAddress"/>
+                          <properties>
+                            <AllocationId>
+                              <description value="弹性公网IP实例Id"/>
+                              <name value="AllocationId"/>
+                              <type value="string"/>
+                            </AllocationId>
+                            <Bandwidth>
+                              <description value="弹性公网IP的公网带宽限速，默认是5Mbps"/>
+                              <name value="Bandwidth"/>
+                              <type value="integer"/>
+                            </Bandwidth>
+                            <InternetChargeType>
+                              <description value="弹性公网IP的计费方式。"/>
+                              <name value="InternetChargeType"/>
+                              <type value="string"/>
+                            </InternetChargeType>
+                            <IpAddress>
+                              <description value="弹性公网IP"/>
+                              <name value="IpAddress"/>
+                              <type value="string"/>
+                            </IpAddress>
+                          </properties>
+                          <type value="object"/>
+                        </EipAddress>
+                        <ExpiredTime>
+                          <description value="过期时间。按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为：YYYY-MM-DDThh:mmZ"/>
+                          <name value="ExpiredTime"/>
+                          <type value="string"/>
+                        </ExpiredTime>
+                        <HostName>
+                          <description value="实例机器名称"/>
+                          <name value="HostName"/>
+                          <type value="string"/>
+                        </HostName>
+                        <ImageId>
+                          <description value="镜像 ID"/>
+                          <name value="ImageId"/>
+                          <type value="string"/>
+                        </ImageId>
+                        <InnerIpAddress>
+                          <description value="实例的内网 IP 地址"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <IpAddress>
+                                  <description value="IP地址"/>
+                                  <name value="IpAddress"/>
+                                  <type value="string"/>
+                                </IpAddress>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="InnerIpAddress"/>
+                          <type value="array"/>
+                        </InnerIpAddress>
+                        <InstanceChargeType>
+                          <description value="实例的付费方式。取值范围：&lt;ul&gt;&lt;li&gt;PrePaid：预付费，即包年包月&lt;/li&gt;&lt;li&gt;PostPaid：后付费，即按量付费&lt;/li&gt;&lt;/ul&gt;"/>
+                          <name value="InstanceChargeType"/>
+                          <type value="string"/>
+                        </InstanceChargeType>
+                        <InstanceId>
+                          <description value="实例 ID"/>
+                          <name value="InstanceId"/>
+                          <type value="string"/>
+                        </InstanceId>
+                        <InstanceName>
+                          <description value="实例的显示名称"/>
+                          <name value="InstanceName"/>
+                          <type value="string"/>
+                        </InstanceName>
+                        <InstanceNetworkType>
+                          <description value="实例网络类型。取值范围：&lt;ul&gt;&lt;li&gt;Classic&lt;/li&gt;&lt;li&gt;Vpc&lt;/li&gt;&lt;/ul&gt;"/>
+                          <name value="InstanceNetworkType"/>
+                          <type value="string"/>
+                        </InstanceNetworkType>
+                        <InstanceType>
+                          <description value="实例资源规格"/>
+                          <name value="InstanceType"/>
+                          <type value="string"/>
+                        </InstanceType>
+                        <InstanceTypeFamily>
+                          <description value="实例规格族"/>
+                          <name value="InstanceTypeFamily"/>
+                          <type value="string"/>
+                        </InstanceTypeFamily>
+                        <InternetChargeType>
+                          <description value="网络计费类型。取值范围：&lt;ul&gt;&lt;li&gt;PayByTraffic：按流量计费&lt;/li&gt;&lt;li&gt;PayByBandwidth：按带宽计费&lt;/li&gt;&lt;/ul&gt;"/>
+                          <name value="InternetChargeType"/>
+                          <type value="string"/>
+                        </InternetChargeType>
+                        <InternetMaxBandwidthIn>
+                          <description value="公网入带宽最大值"/>
+                          <name value="InternetMaxBandwidthIn"/>
+                          <type value="integer"/>
+                        </InternetMaxBandwidthIn>
+                        <InternetMaxBandwidthOut>
+                          <description value="公网出带宽最大值"/>
+                          <name value="InternetMaxBandwidthOut"/>
+                          <type value="integer"/>
+                        </InternetMaxBandwidthOut>
+                        <IoOptimized>
+                          <description value="是否是 I/O 优化型实例。取值范围：&lt;ul&gt;&lt;li&gt;True&lt;/li&gt;&lt;li&gt;False&lt;/li&gt;&lt;/ul&gt;"/>
+                          <name value="IoOptimized"/>
+                          <type value="string"/>
+                        </IoOptimized>
+                        <KeyPairName>
+                          <description value="密钥对名称"/>
+                          <name value="KeyPairName"/>
+                          <type value="string"/>
+                        </KeyPairName>
+                        <Memory>
+                          <description value="内存大小，单位：MB"/>
+                          <name value="Memory"/>
+                          <type value="integer"/>
+                        </Memory>
+                        <NetworkInterfaces>
+                          <description value="实例包含的弹性网卡集合"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <MacAddress>
+                                  <description value="弹性网卡的 MAC 地址"/>
+                                  <name value="MacAddress"/>
+                                  <type value="string"/>
+                                </MacAddress>
+                                <NetworkInterfaceId>
+                                  <description value="弹性网卡的 ID"/>
+                                  <name value="NetworkInterfaceId"/>
+                                  <type value="string"/>
+                                </NetworkInterfaceId>
+                                <PrimaryIpAddress>
+                                  <description value="弹性网卡主私有 IP 地址"/>
+                                  <name value="PrimaryIpAddress"/>
+                                  <type value="string"/>
+                                </PrimaryIpAddress>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="NetworkInterfaces"/>
+                          <type value="array"/>
+                        </NetworkInterfaces>
+                        <OperationLocks>
+                          <description value="锁定列表"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <LockReason>
+                                  <description value="锁定类型&lt;ul&gt;&lt;li&gt;financial：因欠费被锁定&lt;/li&gt;&lt;li&gt;security：因安全原因被锁定&lt;/li&gt;&lt;li&gt;recycling：竞价实例的待释放锁定状态&lt;/li&gt;&lt;/ul&gt;"/>
+                                  <name value="LockReason"/>
+                                  <type value="string"/>
+                                </LockReason>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="OperationLocks"/>
+                          <type value="array"/>
+                        </OperationLocks>
+                        <PublicIpAddress>
+                          <description value="实例的公网 IP 地址"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <IpAddress>
+                                  <description value="IP地址"/>
+                                  <name value="IpAddress"/>
+                                  <type value="string"/>
+                                </IpAddress>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="PublicIpAddress"/>
+                          <type value="array"/>
+                        </PublicIpAddress>
+                        <RegionId>
+                          <description value="实例所属地域 ID"/>
+                          <name value="RegionId"/>
+                          <type value="string"/>
+                        </RegionId>
+                        <SecurityGroupIds>
+                          <description value="实例所属安全组的集合"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <SecurityGroupId>
+                                  <description value="安全组ID"/>
+                                  <name value="SecurityGroupId"/>
+                                  <type value="string"/>
+                                </SecurityGroupId>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="SecurityGroupIds"/>
+                          <type value="array"/>
+                        </SecurityGroupIds>
+                        <SerialNumber>
+                          <description value="实例机器的序列号"/>
+                          <name value="SerialNumber"/>
+                          <type value="string"/>
+                        </SerialNumber>
+                        <SpotStrategy>
+                          <description value="后付费实例的竞价策略&lt;br&gt;当InstanceChargeType为PostPay时为生效，&lt;br&gt;可选取值为： &lt;br&gt;NoSpot，正常按量付费实例;&lt;br&gt;SpotWithPriceLimit，设置上限价格的竞价实例;&lt;br&gt;SpotAsPriceGo 系统自动出价，最高按量付费价格。&lt;br&gt;默认值为NoSpot"/>
+                          <name value="SpotStrategy"/>
+                          <type value="string"/>
+                        </SpotStrategy>
+                        <Status>
+                          <description value="实例状态"/>
+                          <name value="Status"/>
+                          <type value="string"/>
+                        </Status>
+                        <VpcAttributes>
+                          <description value="专有网络属性"/>
+                          <name value="VpcAttributes"/>
+                          <properties>
+                            <NatIpAddress>
+                              <description value="云产品 IP，用于云产品之间的网络互通"/>
+                              <name value="NatIpAddress"/>
+                              <type value="string"/>
+                            </NatIpAddress>
+                            <PrivateIpAddress>
+                              <description value="IpAddressSetType类型"/>
+                              <items>
+                                <x-schema>
+                                  <properties>
+                                    <IpAddress>
+                                      <description value="IP地址"/>
+                                      <name value="IpAddress"/>
+                                      <type value="string"/>
+                                    </IpAddress>
+                                  </properties>
+                                  <type value="object"/>
+                                </x-schema>
+                              </items>
+                              <name value="PrivateIpAddress"/>
+                              <type value="array"/>
+                            </PrivateIpAddress>
+                            <VSwitchId>
+                              <description value="交换机 ID"/>
+                              <name value="VSwitchId"/>
+                              <type value="string"/>
+                            </VSwitchId>
+                            <VpcId>
+                              <description value="虚拟专有网络 ID"/>
+                              <name value="VpcId"/>
+                              <type value="string"/>
+                            </VpcId>
+                          </properties>
+                          <type value="object"/>
+                        </VpcAttributes>
+                        <ZoneId>
+                          <description value="实例所属可用区"/>
+                          <name value="ZoneId"/>
+                          <type value="string"/>
+                        </ZoneId>
+                      </properties>
+                      <type value="object"/>
+                    </x-schema>
+                  </items>
+                  <name value="Instances"/>
+                  <type value="array"/>
+                </Instances>
+                <PageNumber>
+                  <description value="实例列表的页码"/>
+                  <name value="PageNumber"/>
+                  <type value="integer"/>
+                </PageNumber>
+                <PageSize>
+                  <description value="输入时设置的每页行数"/>
+                  <name value="PageSize"/>
+                  <type value="integer"/>
+                </PageSize>
+                <TotalCount>
+                  <description value="实例总个数"/>
+                  <name value="TotalCount"/>
+                  <type value="integer"/>
+                </TotalCount>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidTag.Mismatch, describeen: The specified Tag.n.Key and Tag.n.Value are not match., describecn: 指定的 Tag.n.Key 和 Tag.n.Value 不匹配。}, {code: InvalidTagCount, describeen: The specified tags are beyond the permitted range., describecn: 指定的 Tag 数超过了 5 个。}"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidInstanceChargeType.NotFound, describeen: The InstanceChargeType does not exist in our records., describecn: 指定的 InstanceChargeType 不存在。}, {code: InvalidInternetChargeType.ValueNotSupported, describeen: The specified InternetChargeType is not valid, describecn: 指定的 InternetChargeType 不存在。}, {code: InvalidNetworkType.NotFound, describeen: The specified InstanceNetworkType is not found , describecn: 指定的 InstanceNetworkType 不存在。}, {code: InvalidStatus.NotFound, describeen: The specified Status is not found , describecn: 指定的 Status 不存在。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查询所有 ECS 实例的详细信息"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeInstances&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeInstances&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DescribeInstancesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageNumber&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageNumber&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TotalCount&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TotalCount&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PageSize&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PageSize&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;8EF01A45-FFFA-497B-B5C3-1DE1B74DB32D&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Instances&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Instance&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InnerIpAddress/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ImageId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ubuntu_16_0402_64_20G_alibase_20170818.vhd&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ImageId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceTypeFamily&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ecs.g5&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceTypeFamily&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;VlanId/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;NetworkInterfaces&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;NetworkInterface&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;MacAddress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;00:16:3e:32:b4:dc&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/MacAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PrimaryIpAddress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;172.17.XX.XXX&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PrimaryIpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;NetworkInterfaceId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;eni-2zeh9atclduxvf1zcyal&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/NetworkInterfaceId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/NetworkInterface&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/NetworkInterfaces&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;XXXXXXXXXXX&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;EipAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IpAddress/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AllocationId/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InternetChargeType/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/EipAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InternetMaxBandwidthIn&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InternetMaxBandwidthIn&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ZoneId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-beijing-e&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ZoneId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InternetChargeType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;PayByBandwidth&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InternetChargeType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SpotStrategy&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;NoSpot&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SpotStrategy&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;StoppedMode&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Not-applicable&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/StoppedMode&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SerialNumber&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;d9bd1cdc-624d-4736-9da5-2ba2f741a304&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SerialNumber&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IoOptimized&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/IoOptimized&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Memory&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;8192&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Memory&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Cpu&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Cpu&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;VpcAttributes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;NatIpAddress/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PrivateIpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IpAddress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;172.17.XX.XXX&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/IpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PrivateIpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;VSwitchId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vsw-2zeh0r1pabwtg6wcssgca&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/VSwitchId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;VpcId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vpc-2zeuphj08tt7q3brdb36x&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/VpcId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/VpcAttributes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InternetMaxBandwidthOut&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InternetMaxBandwidthOut&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DeviceAvailable&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DeviceAvailable&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SecurityGroupIds&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SecurityGroupId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;sg-2ze21r9qb638hvtrvsus&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SecurityGroupId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SecurityGroupIds&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SpotPriceLimit&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SpotPriceLimit&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;SaleCycle&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Week&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/SaleCycle&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AutoReleaseTime/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ECS-BUY-2017-57-10&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Description/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ResourceGroupId/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;OSType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;linux&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/OSType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;OSName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Ubuntu 16.04 64&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/OSName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceNetworkType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;vpc&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceNetworkType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;PublicIpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;IpAddress&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;47.94.XX.XX&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/IpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/PublicIpAddress&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;HostName&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;iZ2zeh9atclduxvf1zxuylZ&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/HostName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ecs.g5.large&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;CreationTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2017-12-10T04:04Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/CreationTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Tags&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagValue&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;fqwfew&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagValue&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagKey&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;fefqe&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagKey&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagValue&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;weqfwq&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagValue&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagKey&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;fqewfwqewf&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagKey&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagValue&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;ewqffeqw&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagValue&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;TagKey&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;fqfwewfqw&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/TagKey&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Tag&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Tags&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Status&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Running&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Status&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ClusterId/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Recyclable&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Recyclable&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RegionId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-beijing&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RegionId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;GPUSpec/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;OperationLocks/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;GPUAmount&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/GPUAmount&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;InstanceChargeType&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;PrePaid&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/InstanceChargeType&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ExpiredTime&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;2017-12-17T16:00Z&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ExpiredTime&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Instance&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Instances&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DescribeInstancesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Instances&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Instance&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;CreationTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2015-07-27T07:08Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;DeviceAvailable&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;EipAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ExpiredTime&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;2011-09-08T16:00Z&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;HostName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;iZ94t3s0jxkZ&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ImageId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;centos6u5_64_20G_aliaegis_20150130.vhd&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InnerIpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;10.170.XX.XXX&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceChargeType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PostPaid&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;XXXXXXXXX&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;dd\u6027\u80fd\u6d4b\u8bd5&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceNetworkType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;classic&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InstanceType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ecs.s2.large&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InternetChargeType&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PayByTraffic&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InternetMaxBandwidthIn&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;-1&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;InternetMaxBandwidthOut&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IoOptimized&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;false&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;OperationLocks&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;LockReason&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PublicIpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;120.25.XX.XXX&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RegionId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-shenzhen&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SecurityGroupIds&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SecurityGroupId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;sg-94kd0cyg0&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;SerialNumber&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;51d1353b-22bf-4567-a176-8b3e12e43135&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Status&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Running&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;VpcAttributes&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PrivateIpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;IpAddress&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ZoneId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-shenzhen-a&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageNumber&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;PageSize&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;10&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;14A07460-EBE7-47CA-9757-12CC4761D47A&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;TotalCount&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="        ResourceOwnerAccount    "/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

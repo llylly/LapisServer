@@ -1,0 +1,221 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /RevokeSecurityGroupEgress:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2-u63CFu8FF0"><a name="描述" class="reference-link"></a><span class="header-link octicon octicon-link"></span>描述</h2><p>撤销安全组出方向的访问规则。支持两种方式：一是本Region(经典网络)/本VPC(VPC)内采用指定协议通过指定端口访问其他安全组；二是采用指定协议通过指定端口访问IP地址范围，只有调用授权接口授权的权限条目才可以删除（参数值跟授权时的参数相同）。</p><p>安全组规则由两组可选参数中的一组组成：<code>DestGroupOwnerAccount</code>、<code>DestGroupId</code>、<code>IpProtocol</code>、<code>PortRange</code>、<code>NicType</code>、<code>Policy</code>或者<code>DestCidrIp</code>、<code>IpProtocol</code>、<code>PortRange</code>、<code>NicType</code>、<code>Policy</code>。如匹配的规则找不到将会报错。</p>
+            parameters:
+            -   description: 系统规定参数，取值：RevokeSecurityGroupEgress
+                enum:
+                - RevokeSecurityGroupEgress
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 源安全组ID
+                in: query
+                name: SecurityGroupId
+                required: true
+                type: string
+            -   description: 源安全组所属 Region ID。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   description: IP协议，取值：tcp | udp | icmp | gre | all；<br>all表示同时支持四种协议
+                enum:
+                - tcp
+                - udp
+                - icmp
+                - gre
+                - all
+                in: query
+                name: IpProtocol
+                required: true
+                type: string
+            -   description: IP协议相关的端口号范围<ul><li>协议为tcp、udp时默认端口号，取值范围为1~65535；例如“1/200”意思是端口号范围为1~200，若输入值为：“200/1”接口调用将报错。</li><li>协议为icmp时端口号范围值为-1/-1；</li><li>gre协议时端口号范围值为-1/-1；</li><li>协议为all时端口号范围值为-1/-1</li></ul>
+                in: query
+                name: PortRange
+                required: true
+                type: string
+            -   default: SourceCidrIp
+                description: 授权同一Region内的目标安全组，SourceGroupId或者SourceCidrIp参数必须设置一项，如果两项都设置，则默认对SourceCidrIp授权。可以同时指定多个Group（最多10个），但必须采用逗号“,”分隔
+                in: query
+                maxLength: 10
+                name: DestGroupId
+                required: false
+                type: string
+            -   description: 希望跨用户撤销安全组规则的目标安全组所属用户阿里云账号。该参数可选，如果该参数及DestGroupOwnerId均未设置，则默认为同一账户安全组间撤销。DestCidrIp如果已经被设置，则该参数无效。
+                in: query
+                name: DestGroupOwnerAccount
+                required: false
+                type: string
+            -   description: 跨用户安全组授权时，目标安全组所属用户阿里云账号ID。该参数可选，如果该参数及DestGroupOwnerAccount均未设置，则默认为同一账户安全组间授权。DestCidrIp如果已经被设置，则该参数无效。
+                in: query
+                name: DestGroupOwnerId
+                required: false
+                type: string
+            -   default: 0.0.0.0/0
+                description: 授权的目标IP地址范围，必须采用CIDR格式来指定IP地址范围，默认值为0.0.0.0/0（表示不受限制），其他支持的格式如10.159.6.18/12。仅支持IPV4。
+                in: query
+                name: DestCidrIp
+                required: false
+                type: string
+            -   default: 0.0.0.0/0
+                description: 源一侧IP地址范围，必须采用CIDR格式来指定IP地址范围，默认值为0.0.0.0/0（表示不受限制），其他支持的格式如10.159.6.18/12。仅支持IPV4。
+                in: query
+                name: SourceCidrIp
+                required: false
+                type: string
+            -   description: 源IP协议相关的端口号范围，可选参数，不填则不限制端口。<ul><li>协议为tcp、udp时默认端口号，取值范围为1~65535；例如“1/200”意思是端口号范围为1~200，若输入值为：“200/1”接口调用将报错。</li><li>协议为icmp时端口号范围值为-1/-1；</li><li>gre协议时端口号范围值为-1/-1；</li><li>协议为all时端口号范围值为-1/-1</li></ul>
+                in: query
+                name: SourcePortRange
+                required: false
+                type: string
+            -   default: accept
+                description: 授权策略，参数值可为：accept（接受访问），drop (拒绝访问) <br>默认值为：accept
+                enum:
+                - accept
+                - drop
+                in: query
+                name: Policy
+                required: false
+                type: string
+            -   default: internet
+                description: 网络类型，取值：<ul><li>internet</li><li>intranet；</li></ul>默认值为internet<br>当对安全组进行相互授权时（即指定了DestGroupId且没有指定DestCidrIp），必须指定NicType为intranet
+                enum:
+                - internet
+                - intranet
+                in: query
+                name: NicType
+                required: false
+                type: string
+            -   description: 安全组规则的优先级。该参数可选，如果该参数有值则会精确删除与该Priority匹配的规则，否则忽略此条件
+                in: query
+                name: Priority
+                required: false
+                type: integer
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties: {}
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidIpProtocol.ValueNotSupported, describeen: The specified IpProtocol does not exist., describecn: IpProtocol参数指定的值不支持}, {code: InvalidIpPortRange.Malformed, describeen: The specified parameter “PortRange” is not valid., describecn: PortRange格式不正确}, {code: InvalidDestCidrIp.Malformed, describeen: The specified parameter “DestCidrIp” is not valid., describecn: DestCidrIp参数格式不正确}, {code: MissingParameter, describeen: The input parameter “DestGroupId” or “DestCidrIp” cannot be both blank., describecn: DestGroupId或者DestCidrIp参数未指定}, {code: InvalidPolicy.Malformed, describeen: The specified parameter “Policy” is not valid., describecn: Policy参数格式不正确}, {code: InvalidNicType.ValueNotSupported, describeen: The specified NicType does not exist., describecn: NicType指定的值不支持}, {code: InvalidDestCidrIp.sMalformed,
+                        describeen: The specified parameter “DestCidrIp” is not valid., describecn: DestCidrIp参数格式不正确}, {code: InvalidDestGroupId.Mismatch, describeen: Specified security group and destination group are not in the same VPC., describecn: 指定的安全组和目标安全组不属于同一个vpc}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: InvalidNicType.Mismatch, describeen: Specified nic type conflicts with the authorization record., describecn: 指定网络类型与安全组规则不符合}, {code: InvalidGroupAuthItem.NotFound, describeen: Specified group authorized item does not exist in our records., describecn: 指定的安全组规则不存在}, {code: InvalidSecurityGroup.IsSame, describeen: The authorized SecurityGroupId should be different from the DestGroupId.,
+                        describecn: SecurityGroupId必须与DestGroupId不同}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist., describecn: 指定的 RegionId 不存在。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist., describecn: 指定的SecurityGroupId不存在}, {code: InvalidDestGroupId.NotFound, describeen: The DestGroupId provided does not exist in our records., describecn: 指定的DestGroupId不存在}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 撤销安全组出方向的访问规则
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94oi1r1bp</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span
+                class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">Priority</span><span class="pun">=</span><span class="lit">1</span></code></li><li class="L7"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+            note: 授权对其他安全组的访问权限
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94oi1r1bp</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span
+                class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">Priority</span><span class="pun">=</span><span class="lit">1</span></code></li><li class="L7"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+            note: 授权对其他安全组的访问权限
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestCidrIp</span><span class="pun">=</span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pun">/</span><span class="lit">8</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 3
+            note: 授权对指定的IP地址范围的访问权限
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestCidrIp</span><span class="pun">=</span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pun">/</span><span class="lit">8</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 4
+            note: 授权对指定的IP地址范围的访问权限    
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestCidrIp</span><span class="pun">=</span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pun">/</span><span class="lit">8</span></code></li><li class="L4"><code class="lang-shell"><span
+                class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;RevokeSecurityGroupEgressResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">CEF72CEB-54B6-4AE8-B225-F876FF7BA984</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="tag">&lt;/RevokeSecurityGroupEgressResponse&gt;</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=RevokeSecurityGroupEgress</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">SecurityGroupId</span><span class="pun">=</span><span class="pln">sg</span><span class="pun">-</span><span class="lit">94n63e80l</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">all </span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestCidrIp</span><span class="pun">=</span><span class="lit">10.0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pun">/</span><span class="lit">8</span></code></li><li class="L4"><code class="lang-shell"><span
+                class="pun">&amp;</span><span class="typ">IpProtocol</span><span class="pun">=</span><span class="pln">tcp</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PortRange</span><span class="pun">=</span><span class="lit">1</span><span class="pun">/</span><span class="lit">65535</span></code></li><li class="L6"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 3
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;RevokeSecurityGroupEgressResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">     </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">CEF72CEB-54B6-4AE8-B225-F876FF7BA984</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="tag">&lt;/RevokeSecurityGroupEgressResponse&gt;</span></code></li></ol></pre>
+            id: 4
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

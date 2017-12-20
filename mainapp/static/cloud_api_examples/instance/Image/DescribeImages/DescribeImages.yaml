@@ -1,0 +1,358 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /DescribeImages:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2-u63CFu8FF01"><a name="描述" class="reference-link"></a><span class="header-link octicon octicon-link"></span>描述</h2><p>查询用户可以使用的镜像列表。显示出的镜像资源列表包括用户自定义的镜像，阿里云提供的公共镜像，第三方镜像市场的镜像和其他用户主动共享给您的共享镜像。镜像市场的镜像需要先到镜像市场的网站上订阅后才能进行创建ECS实例。此接口支持分页查询，查询结果包括可使用的镜像资源的总数和当前页的镜像资源。每页的数量默认为10条。</p>
+            parameters:
+            -   description: 系统规定参数，取值：DescribeImages。
+                enum:
+                - DescribeImages
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 实例所属于的 Region ID。
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   description: 镜像 ID，最多 100 个 ID，用半角逗号字符隔开。
+                in: query
+                name: ImageId
+                required: false
+                type: string
+            -   description: 镜像状态。<br>取值： <ul><li>Creating 创建中</li><li>Available 可用（默认值）</li><li>UnAvailable 不可用</li><li>CreateFailed 创建失败</li></ul>可以取多个值，值之间以半角逗号隔开。
+                enum:
+                - Creating
+                - Available
+                - UnAvailable
+                - CreateFailed
+                in: query
+                name: Status
+                required: false
+                type: string
+            -   description: 创建镜像的快照 ID。
+                in: query
+                name: SnapshotId
+                required: false
+                type: string
+            -   description: 镜像的名称。
+                in: query
+                name: ImageName
+                required: false
+                type: string
+            -   default: 空
+                description: 镜像所有者别名。取值范围：<ul><li>system：阿里云官方提供镜像</li><li>self：用户自定义镜像</li><li>others：其他阿里云用户共享给您的镜像</li><li>marketplace：镜像市场提供的镜像</li></ul>默认值：空，空表示返回 <code>system</code>、<code>self</code>以及<code>others</code>参数的结果。
+                enum:
+                - system
+                - self
+                - others
+                - marketplace
+                in: query
+                name: ImageOwnerAlias
+                required: false
+                type: string
+            -   description: 有引用关系的资源类型。取值范围：<ul><li>instance：镜像处于运行状态，有 ECS 实例使用。</li><li>none：镜像处于闲置状态，暂无 ECS 实例使用。</li></ul>
+                enum:
+                - instance
+                - none
+                in: query
+                name: Usage
+                required: false
+                type: string
+            -   description: 标签
+                in: query
+                name: Tag
+                required: false
+                type: array
+                maxItems: '5'
+                minItems: '1'
+                items:
+                    x-schema:
+                        type: object
+                        properties:
+                            Key:
+                                description: 标签key，n 的取值范围为 [1, 5]。<br>不允许为空字符串。
+                                minLength: 1
+                                name: Tag.n.Key
+                                required: false
+                                type: string
+                            Value:
+                                description: 标签value，n 的取值范围为 [1, 5]。<br>允许为空字符串。
+                                name: Tag.n.Value
+                                required: false
+                                type: string
+            -   default: 1
+                description: 实例状态列表的页码，起始值为 1，默认值为 1。
+                in: query
+                name: PageNumber
+                required: false
+                type: integer
+            -   default: 10
+                description: 分页查询时设置的每页行数，最大值 50 行，默认值为 10。
+                in: query
+                maximum: 50
+                name: PageSize
+                required: false
+                type: integer
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            Images:
+                                description: 镜像信息 ImageType 组成的集合。
+                                name: Images
+                                type: object
+                                properties:
+                                    Architecture:
+                                        description: 镜像系统类型：i386 | x86_64
+                                        enum:
+                                        - i386
+                                        - x86_64
+                                        name: Architecture
+                                        type: string
+                                    CreationTime:
+                                        description: 创建时间。按照<a href="/document_detail/25696.html?spm=5176.doc25628.2.5.WGOxfV" data-spm-anchor-id="5176.doc25628.2.5">ISO8601</a>标准表示，并需要使用UTC时间。格式为：<br>YYYY-MM-DDThh:mmZ
+                                        name: CreationTime
+                                        type: string
+                                    Description:
+                                        description: 描述信息
+                                        name: Description
+                                        type: string
+                                    DiskDeviceMappings:
+                                        description: 镜像下包含磁盘和快照的系统描述
+                                        name: DiskDeviceMappings
+                                        type: object
+                                        properties:
+                                            Device:
+                                                description: 生成磁盘的Device信息：比如/dev/xvdb
+                                                name: Device
+                                                type: string
+                                            Format:
+                                                description: 镜像格式
+                                                name: Format
+                                                type: string
+                                            ImportOSSBucket:
+                                                description: 导入镜像的oss的bucket
+                                                name: ImportOSSBucket
+                                                type: string
+                                            ImportOSSObject:
+                                                description: 导入镜像文件的所属OSS的object
+                                                name: ImportOSSObject
+                                                type: string
+                                            Size:
+                                                description: '生成磁盘的大小 '
+                                                name: Size
+                                                type: string
+                                            SnapshotId:
+                                                description: 快照ID
+                                                name: SnapshotId
+                                                type: string
+                                    ImageId:
+                                        description: '镜像编码 '
+                                        name: ImageId
+                                        type: string
+                                    ImageName:
+                                        description: '镜像的名称 '
+                                        name: ImageName
+                                        type: string
+                                    ImageOwnerAlias:
+                                        description: 镜像所有者别名<br>有效值：<ul><li>system – 系统公共镜像</li><li>self – 用户的自定义镜像</li><li>others – 其他用户的公开镜像</li><li>marketplace -镜像市场镜像</li></ul>
+                                        enum:
+                                        - system
+                                        - self
+                                        - others
+                                        - marketplace
+                                        name: ImageOwnerAlias
+                                        type: string
+                                    ImageVersion:
+                                        description: 镜像版本
+                                        name: ImageVersion
+                                        type: string
+                                    IsCopied:
+                                        description: 是否是拷贝的镜像，true | false
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: IsCopied
+                                        type: string
+                                    IsSubscribed:
+                                        description: 用户是否订阅了该镜像的ProductCode对应的镜像商品的服务条款. <ul><li>true：表示已经订阅</li><li>false：表示未订阅</li></ul>
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: IsSubscribed
+                                        type: string
+                                    OSName:
+                                        description: 操作系统的显示名称
+                                        name: OSName
+                                        type: string
+                                    OSType:
+                                        description: 操作系统类型，可选值有：<ul><li>windows</li><li>linux</li></ul>
+                                        enum:
+                                        - windows
+                                        - linux
+                                        name: OSType
+                                        type: string
+                                    Platform:
+                                        description: 操作系统平台
+                                        name: Platform
+                                        type: string
+                                    ProductCode:
+                                        description: 镜像市场的镜像商品标示
+                                        name: ProductCode
+                                        type: string
+                                    Progress:
+                                        description: 镜像完成的进度，单位为百分比
+                                        name: Progress
+                                        type: string
+                                    Size:
+                                        description: 镜像大小
+                                        name: Size
+                                        type: integer
+                                    Status:
+                                        description: 镜像的状态，可能的值有：<ul><li>UnAvailable 不可用</li><li>Available 可用</li><li>Creating 创建中</li><li>CreateFailed 创建失败</li></ul>
+                                        enum:
+                                        - UnAvailable
+                                        - Available
+                                        - Creating
+                                        - CreateFailed
+                                        name: Status
+                                        type: string
+                                    Usage:
+                                        description: 有引用关系的资源类型，instance | none
+                                        enum:
+                                        - instance
+                                        - none
+                                        name: Usage
+                                        type: string
+
+                            PageNumber:
+                                description: 当前页码。
+                                name: PageNumber
+                                type: integer
+                            PageSize:
+                                description: 当前分页包含多少条目。
+                                name: PageSize
+                                type: integer
+                            RegionId:
+                                description: 镜像所属地域 ID。
+                                name: RegionId
+                                type: string
+                            TotalCount:
+                                description: 列表条条目数。
+                                name: TotalCount
+                                type: integer
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidImageOwnerAlias.ValueNotSupported, describeen: The specified ImageOwnerAlias value is not supported., describecn: 无效的 ImageOwnerAlias 取值。}, {code: InvalidTag.Mismatch, describeen: The specified Tag.n.Key and Tag.n.Value are not match., describecn: 指定的Tag.n.Key和Tag.n.Value不匹配。}, {code: InvalidTagCount, describeen: The specified tags are beyond the permitted range., describecn: 指定的 Tag 数超过了 5 个。}, {code: InvalidInstanceType.ValueNotSupported, describeen: The specified InstanceType beyond the permitted range., describecn: 指定的InstanceType不合法（超出可选范围）。}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidUsage, describeen: The specifed Usage is not valid, describecn: 指定的 Usage 不合法。}, {code: InvalidOSType, describeen: The specifed OSType is not valid, describecn: 指定的 OSType 不合法。}, {code: InvalidArchitecture, describeen: The specifed Architecture is not valid, describecn: 指定的平台架构不合法。}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 查询用户可以使用的镜像列表
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=DescribeImages</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=DescribeImages</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;DescribeImagesResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;Images&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;Image&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Architecture&gt;</span><span class="pln">i386</span><span class="tag">&lt;/Architecture&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;CreationTime&gt;</span><span class="pln">2014-07-22T09:53:44Z</span><span class="tag">&lt;/CreationTime&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Description&gt;&lt;/Description&gt;</span></code></li><li
+                class="L6"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DiskDeviceMappings&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">                </span><span class="tag">&lt;DiskDeviceMapping&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">                    </span><span class="tag">&lt;Device&gt;</span><span class="pln">/dev/xvda</span><span class="tag">&lt;/Device&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">                    </span><span class="tag">&lt;Size&gt;</span><span class="pln">20</span><span class="tag">&lt;/Size&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">                    </span><span class="tag">&lt;SnapshotId&gt;&lt;/SnapshotId&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">                </span><span class="tag">&lt;/DiskDeviceMapping&gt;</span></code></li><li class="L2"><code
+                class="lang-xml"><span class="pln">            </span><span class="tag">&lt;/DiskDeviceMappings&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ImageId&gt;</span><span class="pln">suse11sp3_64_20G_aliaegis_20150428.vhd</span><span class="tag">&lt;/ImageId&gt;</span><span class="pln">            </span><span class="tag">&lt;ImageName&gt;</span><span class="pln">suse11sp3_64_20G_aliaegis_20150428.vhd</span><span class="tag">&lt;/ImageName&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ImageOwnerAlias&gt;</span><span class="pln">system</span><span class="tag">&lt;/ImageOwnerAlias&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ImageVersion&gt;</span><span class="pln">1.0</span><span class="tag">&lt;/ImageVersion&gt;</span></code></li><li class="L6"><code class="lang-xml"><span
+                class="pln">            </span><span class="tag">&lt;IsCopied&gt;</span><span class="pln">false</span><span class="tag">&lt;/IsCopied&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;IsSubscribed&gt;</span><span class="pln">false</span><span class="tag">&lt;/IsSubscribed&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;OSName&gt;</span><span class="pln">SUSE Linux  Enterprise Server 11 SP3 64位</span><span class="tag">&lt;/OSName&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ProductCode&gt;&lt;/ProductCode&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;OSType&gt;</span><span class="pln">linux</span><span class="tag">&lt;/OSType&gt;</span></code></li><li class="L1"><code class="lang-xml"><span
+                class="pln">            </span><span class="tag">&lt;Platform&gt;</span><span class="pln">SUSE</span><span class="tag">&lt;/Platform&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Progress&gt;</span><span class="pln">100</span><span class="tag">&lt;/Progress&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Size&gt;</span><span class="pln">20</span><span class="tag">&lt;/Size&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Status&gt;</span><span class="pln">Available</span><span class="tag">&lt;/Status&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Usage&gt;</span><span class="pln">instance</span><span class="tag">&lt;/Usage&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">        </span><span
+                class="tag">&lt;/Image&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;/Images&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;PageNumber&gt;</span><span class="pln">1</span><span class="tag">&lt;/PageNumber&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;PageSize&gt;</span><span class="pln">2</span><span class="tag">&lt;/PageSize&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;RegionId&gt;</span><span class="pln">cn-hangzhou</span><span class="tag">&lt;/RegionId&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;TotalCount&gt;</span><span class="pln">24</span><span class="tag">&lt;/TotalCount&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">    </span><span
+                class="tag">&lt;RequestId&gt;</span><span class="pln">7871BB26-3002-4950-B2E6-98D333077EA5</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="tag">&lt;/DescribeImagesResponse&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">  </span><span class="str">"Images"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code class="lang-json"><span class="pln">    </span><span class="str">"Image"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span></code></li><li class="L3"><code class="lang-json"><span class="pln">      </span><span class="pun">{</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"Architecture"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"x86_64"</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"CreationTime"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="str">"2015-05-06T09:01:32Z"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"DiskDeviceMappings"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code class="lang-json"><span class="pln">          </span><span class="str">"DiskDeviceMapping"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span></code></li><li class="L8"><code class="lang-json"><span class="pln">            </span><span class="pun">{</span></code></li><li class="L9"><code class="lang-json"><span class="pln">              </span><span class="str">"Device"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"/dev/xvda"</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="pln">              </span><span class="str">"Size"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="str">"20"</span></code></li><li class="L1"><code class="lang-json"><span class="pln">            </span><span class="pun">}</span></code></li><li class="L2"><code class="lang-json"><span class="pln">          </span><span class="pun">]</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="pun">},</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"ImageId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"suse11sp3_64_20G_aliaegis_20150428.vhd"</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"ImageName"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"suse11sp3_64_20G_aliaegis_20150428.vhd"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span
+                class="pln">        </span><span class="str">"ImageOwnerAlias"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"system"</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">        </span><span class="str">"ImageVersion"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"1"</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">        </span><span class="str">"IsCopied"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">        </span><span class="str">"IsSubscribed"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"OSName"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="str">"SUSE Linux  Enterprise Server 11 SP3 64位"</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"OSType"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"linux"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">        </span><span class="str">"Platform"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"SUSE"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="str">"Progress"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"100%"</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"Size"</span><span class="pun">:</span><span class="pln"> </span><span
+                class="lit">20</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"Status"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Available"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"Usage"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"instance"</span></code></li><li class="L7"><code class="lang-json"><span class="pln">      </span><span class="pun">}</span></code></li><li class="L8"><code class="lang-json"><span class="pln">    </span><span class="pun">]</span></code></li><li class="L9"><code class="lang-json"><span class="pln">  </span><span class="pun">}</span></code></li><li class="L0"><code class="lang-json"><span class="pln">  </span><span class="str">"PageNumber"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span
+                class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">  </span><span class="str">"PageSize"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">  </span><span class="str">"RegionId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-hangzhou"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">  </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"49CBCED4-C9B9-4851-BEB5-8FB5E5169E30"</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-json"><span class="pln">  </span><span class="str">"TotalCount"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">24</span></code></li><li class="L5"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

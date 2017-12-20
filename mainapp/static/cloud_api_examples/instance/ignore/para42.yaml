@@ -1,0 +1,15 @@
+-   description: 操作接口名，取值：CancelTask。
+    in: query
+    name: Action
+    required: true
+    type: string
+-   description: 地域 ID。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+    in: query
+    name: RegionId
+    required: true
+    type: string
+-   description: 任务Id
+    in: query
+    name: TaskId
+    required: true
+    type: string

@@ -1,0 +1,250 @@
+<table class="vpc vpc_interface_errcode">
+    <tbody>
+        <tr>
+            <th style="width: 20%;">错误代码</th>
+            <th style="width: 40%;">描述</th>
+            <th style="width: 20%;">Http 状态码</th>
+            <th style="width: 25%;">语义</th>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>The input parameter “Action” that is mandatory for processing this request is not supplied</td>
+            <td>400</td>
+            <td>缺少 Action 字段</td>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied</td>
+            <td>400</td>
+            <td>缺少 AccessKeyId 字段</td>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>An input parameter “Signature” that is mandatory for processing the request is not supplied.</td>
+            <td>400</td>
+            <td>缺少 Signature 字段</td>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>The input parameter “TimeStamp” that is mandatory for processing this request is not supplied</td>
+            <td>400</td>
+            <td>缺少 Timestamp 字段</td>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>The input parameter “Version” that is mandatory for processing this request is not supplied</td>
+            <td>400</td>
+            <td>缺少 Version 字段</td>
+        </tr>
+        <tr>
+            <td>InvalidParameter</td>
+            <td>The specified parameter “Action or Version” is not valid.</td>
+            <td>400</td>
+            <td>无效的 Action 值（该 API 不存在）</td>
+        </tr>
+        <tr>
+            <td>InvalidAccessKeyId.NotFound</td>
+            <td>The Access Key ID provided does not exist in our records.</td>
+            <td>400</td>
+            <td>无效的 AccessKeyId 值（该 key 不存在）</td>
+        </tr>
+        <tr>
+            <td>Forbidden.AccessKeyDisabled</td>
+            <td>The Access Key is disabled.</td>
+            <td>403</td>
+            <td>该 AccessKey 处于禁用状态</td>
+        </tr>
+        <tr>
+            <td>IncompleteSignature</td>
+            <td>The request signature does not conform to Aliyun standards.</td>
+            <td>400</td>
+            <td>无效的 Signature 取值（签名结果错误）</td>
+        </tr>
+        <tr>
+            <td>InvalidParamater</td>
+            <td>The specified parameter “SignatureMethod” is not valid.</td>
+            <td>400</td>
+            <td>无效的 SignatureMethod 取值</td>
+        </tr>
+        <tr>
+            <td>InvalidParamater</td>
+            <td>The specified parameter “SignatureVersion” is not valid.</td>
+            <td>400</td>
+            <td>无效的 SignatureVersion 取值</td>
+        </tr>
+        <tr>
+            <td>IllegalTimestamp</td>
+            <td>The input parameter “Timestamp” that is mandatory for processing this request is not supplied.</td>
+            <td>400</td>
+            <td>无效的 Timestamp 取值（Timestamp 与服务器时间相差超过了 1 个小时）</td>
+        </tr>
+        <tr>
+            <td>SignatureNonceUsed</td>
+            <td>The request signature nonce has been used.</td>
+            <td>400</td>
+            <td>无效的 SignatureNonce（该 SignatureNonce 值已被使用过）</td>
+        </tr>
+        <tr>
+            <td>InvalidParameter</td>
+            <td>The specified parameter “Action or Version” is not valid.</td>
+            <td>400</td>
+            <td>无效的 Version 取值</td>
+        </tr>
+        <tr>
+            <td>InvalidOwnerId</td>
+            <td>The specified OwnerId is not valid.</td>
+            <td>400</td>
+            <td>无效的 OwnerId 取值</td>
+        </tr>
+        <tr>
+            <td>InvalidOwnerAccount</td>
+            <td>The specified OwnerAccount is not valid.</td>
+            <td>400</td>
+            <td>无效的 OwnerAccount 取值</td>
+        </tr>
+        <tr>
+            <td>InvalidOwner</td>
+            <td>OwnerId and OwnerAccount can’t be used at one API access.</td>
+            <td>400</td>
+            <td>同时使用了 OwnerId 和 OwnerAccount</td>
+        </tr>
+        <tr>
+            <td>Throttling</td>
+            <td>Request was denied due to request throttling.</td>
+            <td>400</td>
+            <td>因系统流控拒绝访问</td>
+        </tr>
+        <tr>
+            <td>Throttling</td>
+            <td>Request was denied due to request throttling.</td>
+            <td>400</td>
+            <td>该 key 的调用 quota 已用完</td>
+        </tr>
+        <tr>
+            <td>InvalidAction</td>
+            <td>Specified action is not valid.</td>
+            <td>403</td>
+            <td>该 key 无权调用该 API</td>
+        </tr>
+        <tr>
+            <td>UnsupportedHTTPMethod</td>
+            <td>This http method is not supported.</td>
+            <td>403</td>
+            <td>用户使用了不支持的 Http Method（当前 TOP 只支持 post 和 get）</td>
+        </tr>
+        <tr>
+            <td>ServiceUnavailable</td>
+            <td>The request has failed due to a temporary failure of the server.</td>
+            <td>500</td>
+            <td>服务不可用</td>
+        </tr>
+        <tr>
+            <td>UnsupportedParameter</td>
+            <td>The parameter ”&lt;parameter name&gt;” is not supported.</td>
+            <td>400</td>
+            <td>使用了无效的参数</td>
+        </tr>
+        <tr>
+            <td>InternalError</td>
+            <td>The request processing has failed due to some unknown error, exception or failure.</td>
+            <td>500</td>
+            <td>其他情况</td>
+        </tr>
+        <tr>
+            <td>MissingParameter</td>
+            <td>The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.</td>
+            <td>403</td>
+            <td>调用该接口没有指定 OwnerId</td>
+        </tr>
+        <tr>
+            <td>Forbidden.SubUser</td>
+            <td>The specified action is not available for you。</td>
+            <td>403</td>
+            <td>无权调用订单类接口</td>
+        </tr>
+        <tr>
+            <td>UnsupportedParameter</td>
+            <td>The parameter ”&lt;parameter name&gt;” is not supported.</td>
+            <td>400</td>
+            <td>该参数无权使用</td>
+        </tr>
+        <tr>
+            <td>Forbidden.InstanceNotFound</td>
+            <td>The specified Instance is not found, so we cann’t get enough information to check permission in RAM.</td>
+            <td>404</td>
+            <td>使用了 RAM 授权子账号进行资源访问，但是本次访问涉及到的 Instance 不存在</td>
+        </tr>
+        <tr>
+            <td>Forbidden.DiskNotFound</td>
+            <td>The specified Disk is not found, so we cann’t get enough information to check permission in RAM.</td>
+            <td>404</td>
+            <td>使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Disk 不存在</td>
+        </tr>
+        <tr>
+            <td>Forbidden.SecurityGroupNotFound</td>
+            <td>The specified SecurityGroup is not found, so we cann’t get enough information to check permission in RAM.</td>
+            <td>404</td>
+            <td>使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 SecurityGroup 不存在</td>
+        </tr>
+        <tr>
+            <td>Forbidden.SnapshotNotFound</td>
+            <td>The specified Snapshot is not found, so we cann’t get enough information to check permission in RAM.</td>
+            <td>404</td>
+            <td>使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Snapshot 不存在</td>
+        </tr>
+        <tr>
+            <td>Forbidden.ImageNotFound</td>
+            <td>The specified Image is not found, so we cann’t get enough information to check permission in RAM.</td>
+            <td>404</td>
+            <td>使用了 RAM 授权子账号进行资源访问,但是本次访问涉及到的 Image 不存在</td>
+        </tr>
+        <tr>
+            <td>Forbidden.RAM</td>
+            <td>User not authorized to operate the specified resource, or this API doesn’t support RAM.</td>
+            <td>403</td>
+            <td>使用了 RAM 授权子账号进行资源访问,但是本次操作没有被正确的授权</td>
+        </tr>
+        <tr>
+            <td>Forbidden.NotSupportRAM</td>
+            <td>This action does not support accessed by RAM mode.</td>
+            <td>403</td>
+            <td>该接口不允许使用 RAM 方式进行访问</td>
+        </tr>
+        <tr>
+            <td>InsufficientBalance</td>
+            <td>Your account does not have enough balance.</td>
+            <td>400</td>
+            <td>余额不足</td>
+        </tr>
+        <tr>
+            <td>IdempotentParameterMismatch</td>
+            <td>Request uses a client token in a previous request but is not identical to that request.</td>
+            <td>400</td>
+            <td>使用了一个已经使用过的 ClientToken，但此次请求内容却又与上一次使用该 Token 的 request 不一样.</td>
+        </tr>
+        <tr>
+            <td>RealNameAuthenticationError</td>
+            <td>Your account has not passed the real-name authentication yet.</td>
+            <td>403</td>
+            <td>用户未进行实名认证</td>
+        </tr>
+        <tr>
+            <td>InvalidIdempotenceParameter.Mismatch</td>
+            <td>The specified parameters are different from before</td>
+            <td>403</td>
+            <td>幂等参数不匹配</td>
+        </tr>
+        <tr>
+            <td>LastTokenProcessing</td>
+            <td>The last token request is processing</td>
+            <td>403</td>
+            <td>上一次请求还在处理中</td>
+        </tr>
+        <tr>
+            <td>InvalidParameter</td>
+            <td>The specified parameter is not valid</td>
+            <td>400</td>
+            <td>参数校验失败</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,157 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /CopyImage:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2--em-em-"><a name="<em>描述</em>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p>复制镜像可以把用户某个地域的自定义镜像复制到其他地域进行跨地域一致性部署，在其他地域可以使用复制后的镜像创建实例和更换系统盘等操作。</p><ul><li>只有自定义镜像为可用（Available）状态才可以复制。</li><li>只能在本账号下复制的镜像，不能跨账号复制。</li><li>如果镜像没有复制完成，不能删除操作，可以取消复制。</li></ul>
+            parameters:
+            -   description: 系统规定参数。取值：CopyImage
+                enum:
+                - CopyImage
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 源自定义镜像的 RegionId。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   description: 源自定义镜像的 ID。
+                in: query
+                name: ImageId
+                required: true
+                type: string
+            -   description: 复制到目标 RegionId。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+                in: query
+                name: DestinationRegionId
+                required: true
+                type: string
+            -   default: 空
+                description: 目标镜像名称。<ul><li>长度为 [2, 128] 个字符英文或中文字符，必须以大小字母或中文开头，可包含数字，下划线（_）或连字符（-）。</li><li>不能以 http:// 和 https:// 开头。</li></ul>不填则为空，默认值：空。
+                in: query
+                maxLength: 128
+                minLength: 2
+                name: DestinationImageName
+                required: false
+                type: string
+            -   default: 空
+                description: 目标镜像的描述信息。<ul><li>长度为 [0, 256] 个字符。</li><li>不能以 http:// 和 https:// 开头。</li></ul>不填则为空，默认值：空。
+                in: query
+                maxLength: 256
+                minLength: 0
+                name: DestinationDescription
+                required: false
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            ImageId:
+                                description: 目标镜像的 ID
+                                name: ImageId
+                                type: string
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: DestinationRegion.NotFound, describeen: The destination region not found, describecn: 指定的目标镜像的 RegionId 不存在。}, {code: IncorrectImageStatus, describeen: The image not available., describecn: 指定的镜像状态不对。}, {code: InvalidDescription.Malformed, describeen: The specified destination description is wrongly formed., describecn: 指定的 Description 不合法。}, {code: InvalidDescription.Malformed, describeen: The specified description is wrongly formed., describecn: 指定的 Description 不合法。}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist., describecn: 指定的源镜像 ID 不存在。}, {code: InvalidImageName.Duplicated, describeen: The destination image is exist., describecn: 目标镜像名称已经重复。}, {code: InvalidImageName.Malformed, describeen: The specified destination Image name is wrongly formed.,
+                        describecn: 指定的目标镜像名称不合法。}, {code: InvalidImageName.Malformed, describeen: The specified Image name is wrongly formed., describecn: 无效的ImageName取值（字符不支持或者超出长度）。}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist., describecn: 指定镜像的快照不存在。}, {code: SourceRegion.NotFound, describeen: The source region not found, describecn: 指定的源镜像的 RegionId 不存在。}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: Forbidden, describeen: User not authorized to operate on the specified resource., describecn: 用户没有权限复制镜像。}, {code: IncorrectDestinationRegion, describeen: The destination region is not equal the target region., describecn: 复制镜像的源 region 不能等于目标 region。}, {code: InvalidSnapshot.TooOld, describeen: This operation is denied because the specified snapshot is created before 2013-07-15., describecn:
+                        指定快照创建于 2013 年 7 月 15 日（含）之前。}, {code: OperationDeined.EncryptedSnapshot, describeen: The image contains encrypted snapshots, which do not support copying., describecn: 该镜像含有加密快照，不支持复制。}, {code: OperationDenied, describeen: The specified snapshot is not allowed to create image., describecn: 特定磁盘的快照不能创建镜像。}, {code: OperationDenied.ImageCopying, describeen: The specified image is being copied., describecn: 镜像正在复制中。}, {code: QuotaExceed.Image, describeen: The Image Quota exceeds., describecn: 已经超过自定义镜像配额限制，不能再镜像复制。}, {code: QuotaExceed.Snapshot, describeen: The maximum number of snapshots is exceeded., describecn: 已经超过快照的配额限制，不能再镜像复制。}, {code: RegionNotSupportCopy, describeen: The region not support copy., describecn: 指定的目标镜像 region 或者源镜像 region 暂时不支持镜像复制。}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 复制镜像
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=CopyImage</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestinationRegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ImageId</span><span class="pun">=</span><span class="pln">m</span><span class="pun">-</span><span class="lit">281234567</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span></code></li><li class="L4"><code class="lang-shell"><span
+                class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=CopyImage</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">DestinationRegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ImageId</span><span class="pun">=</span><span class="pln">m</span><span class="pun">-</span><span class="lit">281234567</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span></code></li><li class="L4"><code class="lang-shell"><span
+                class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;CopyImageResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">C8B26B44-0189-443E-9816-D951F59623A9</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;ImageId&gt;</span><span class="pln">Img-231234567</span><span class="tag">&lt;/ImageId&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="tag">&lt;/CopyImageResponse&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">    </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"C8B26B44-0189-443E-9816-D951F59623A9"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">    </span><span class="str">"ImageId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Img-231234567"</span></code></li><li class="L3"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

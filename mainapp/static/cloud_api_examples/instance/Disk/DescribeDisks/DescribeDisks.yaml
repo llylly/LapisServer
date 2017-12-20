@@ -1,0 +1,465 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /DescribeDisks:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2--em-em-"><a name="<em>描述</em>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p><code>RegionId</code>，<code>ZoneId</code>，<code>DiskIds</code>，<code>InstanceId</code> 等参数都是过滤器的概念，参数间是逻辑与（<code>AND</code>）关系。</p><p>其中，<code>DiskIds</code> 是一个 JSON 格式的 Json Array，如果参数为空，则过滤器不起作用，但是 <code>DiskIds</code> 如果是一个空 Json Array（即<code>[]</code>），则视为该过滤器有效，且返回空。</p>
+            parameters:
+            -   description: 系统规定参数。取值：DescribeDisks
+                enum:
+                - DescribeDisks
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 磁盘所属于的 Region ID。
+                in: query
+                name: RegionId
+                required: true
+                type: string
+            -   default: false
+                description: 过滤加密磁盘。取值范围:<ul><li>true：只筛选出加密磁盘。</li><li>false：不做加密属性的筛选。</li></ul>默认值：false
+                enum:
+                - true
+                - false
+                in: query
+                name: 'Encrypted '
+                required: false
+                type: boolean
+            -   default: 空
+                description: 可用区 ID。默认值：空。
+                in: query
+                name: ZoneId
+                required: false
+                type: string
+            -   description: 磁盘 ID。一个带有格式的 Json Array：[“d-xxxxxxxxx”, ”d-yyyyyyyyy”, … “d-zzzzzzzzz”]，最多 100 个 ID，用半角逗号字符隔开。
+                in: query
+                name: DiskIds
+                required: false
+                type: string
+            -   description: 实例 ID。
+                in: query
+                name: InstanceId
+                required: false
+                type: string
+            -   default: all
+                description: '磁盘类型。取值范围：<ul><li>all: 系统盘与数据盘</li><li>system：系统盘</li><li>data：数据盘</li></ul>默认值：all'
+                enum:
+                - all
+                - system
+                - data
+                in: query
+                name: DiskType
+                required: false
+                type: string
+            -   default: all
+                description: 磁盘种类。取值范围：<ul><li>all：所有云盘</li><li>cloud：普通云盘</li><li>cloud_efficiency：高效云盘</li><li>cloud_ssd：SSD 云盘</li><li>ephemeral：本地磁盘</li><li>ephemeral_ssd：本地 SSD 盘</li></ul>默认值：all
+                enum:
+                - all
+                - cloud
+                - cloud_efficiency
+                - cloud_ssd
+                - ephemeral
+                - ephemeral_ssd
+                in: query
+                name: Category
+                required: false
+                type: string
+            -   default: All
+                description: 磁盘状态，参考文档<a href="/document_detail/25689.html">普通云盘状态表</a>。取值范围：<ul><li>In_use</li><li>Available</li><li>Attaching </li><li>Detaching</li><li>Creating</li><li>ReIniting</li><li>All</li></ul>默认值：All
+                enum:
+                - In_use
+                - Available
+                - Attaching
+                - Detaching
+                - Creating
+                - ReIniting
+                - All
+                in: query
+                name: Status
+                required: false
+                type: string
+            -   description: 创建磁盘使用的快照。
+                in: query
+                name: SnapshotId
+                required: false
+                type: string
+            -   description: 磁盘名称。
+                in: query
+                name: DiskName
+                required: false
+                type: string
+            -   description: 磁盘是否支持卸载。这个属性用户不能更改。取值范围：<ul><li>true：可卸载云盘，可以独立存在且可以自由在可用区内挂载和卸载。</li><li>false：不可卸载云盘，不可以独立存在且不可以自由在可用区内挂载和卸载。</li></ul>这个属性为 true 的磁盘才能挂载（attach）和卸载（detach）。<br>其中：<ul><li>本地磁盘</li><li>本地 SSD 盘</li><li>普通云盘，高效云盘和 SSD 云盘的系统盘</li><li>包年包月的普通云盘、高效云盘、SSD云盘</li></ul>该属性都为 false。<br>
+                enum:
+                - 'true'
+                - 'false'
+                in: query
+                name: Portable
+                required: false
+                type: string
+            -   default: 'false'
+                description: 磁盘是否随实例释放。取值范围：<ul><li>true：实例释放时，这块磁盘随 Instance 一起释放。</li><li>false：实例释放时，这块磁盘保留不释放。</li></ul>默认值：false
+                enum:
+                - 'true'
+                - 'false'
+                in: query
+                name: DeleteWithInstance
+                required: false
+                type: string
+            -   default: 'false'
+                description: 删除磁盘时，是否同时删除自动快照。取值范围：<ul><li>true：同时删除自动快照。</li><li>false：保留自动快照。</li></ul>默认值：false
+                enum:
+                - 'true'
+                - 'false'
+                in: query
+                name: DeleteAutoSnapshot
+                required: false
+                type: string
+            -   default: 'false'
+                description: 磁盘是否执行自动快照策略（前提是用户整体的自动快照策略已经开启）。取值范围：<ul><li>true：表示这块磁盘执行自动快照策略。</li><li>false：表示这块磁盘不执行自动快照策略。</li></ul> 默认值：false
+                enum:
+                - 'true'
+                - 'false'
+                in: query
+                name: EnableAutoSnapshot
+                required: false
+                type: string
+            -   description: 磁盘的付费方式。取值范围：<ul><li>PrePaid：预付费，即包年包月。</li><li>PostPaid：后付费，即按量付费。</li></ul>
+                enum:
+                - PrePaid
+                - PostPaid
+                in: query
+                name: DiskChargeType
+                required: false
+                type: string
+            -   description: 标签
+                in: query
+                name: Tag
+                required: false
+                type: array
+                maxItems: '5'
+                minItems: '1'
+                items:
+                    x-schema:
+                        type: object
+                        properties:
+                            Key:
+                                description: 标签键，n 的取值范围为 [1, 5]。<br>不允许为空字符串。
+                                minLength: 1
+                                name: Tag.n.Key
+                                required: false
+                                type: string
+                            Value:
+                                description: 标签值，n 的取值范围为 [1, 5]。<br>允许为空字符串。
+                                name: Tag.n.Value
+                                required: false
+                                type: string
+            -   default: 1
+                description: '磁盘状态列表的页码，起始值为 1。<br>默认值: 1'
+                in: query
+                name: PageNumber
+                required: false
+                type: integer
+            -   default: 10
+                description: '分页查询时设置的每页行数，最大值 100 行。<br>默认值: 10'
+                in: query
+                maximum: 100
+                name: PageSize
+                required: false
+                type: integer
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            Disks:
+                                description: 磁盘信息 DiskItemType 组成的集合
+                                name: Disks
+                                type: object
+                                properties:
+                                    AttachedTime:
+                                        description: 挂载时间。按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC时间。格式为：YYYY-MM-DDThh:mmZ<br>只有在 <code>Status</code> 为 <code>In_use</code> 时才有意义。
+                                        enum:
+                                        - Status
+                                        - In_use
+                                        name: AttachedTime
+                                        type: string
+                                    Category:
+                                        description: '磁盘种类。取值范围：<ul><li>cloud: 普通云盘</li><li>cloud_efficiency：高效云盘</li><li>cloud_ssd：SSD云盘</li><li>ephemeral_ssd: 本地 SSD 盘</li><li>ephemeral: 本地磁盘</li></ul>'
+                                        enum:
+                                        - cloud
+                                        - cloud_efficiency
+                                        - cloud_ssd
+                                        - ephemeral_ssd
+                                        - ephemeral
+                                        name: Category
+                                        type: string
+                                    CreationTime:
+                                        description: 创建时间。按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC时间。格式为：YYYY-MM-DDThh:mmZ
+                                        name: CreationTime
+                                        type: string
+                                    DeleteAutoSnapshot:
+                                        description: 是否同时删除自动快照。取值范围：<ul><li>true：删除磁盘上的快照。</li><li>false：保留磁盘上的快照。</li></ul>通过 <a href="/document_detail/ 25524.html">CreateSnapshot</a> 或者在控制台创建的快照，不受这个参数的影响，会始终保留。
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: DeleteAutoSnapshot
+                                        type: string
+                                    DeleteWithInstance:
+                                        description: 是否随实例释放。取值范围：<ul><li>true：释放实例时，这块磁盘随实例一起释放。</li><li>false：释放实例时，这块磁盘保留不释放。</li></ul>
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: DeleteWithInstance
+                                        type: string
+                                    Description:
+                                        description: 磁盘描述。
+                                        name: Description
+                                        type: string
+                                    DetachedTime:
+                                        description: 卸载时间。按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为：YYYY-MM-DDThh:mmZ<br>只有在<code>Status</code> 为 <code>Available</code> 时才有意义。
+                                        enum:
+                                        - Status
+                                        - Available
+                                        name: DetachedTime
+                                        type: string
+                                    Device:
+                                        description: 所属 Instance 的 Device 信息（例如：/dev/xvdb）。<br>只有在 <code>Status</code> 为 <code>In_use</code> 是才有值，其他状态为空。
+                                        enum:
+                                        - Status
+                                        - In_use
+                                        name: Device
+                                        type: string
+                                    DiskChargeType:
+                                        description: 磁盘的付费方式。取值范围：<ul><li>PrePaid：预付费，即包年包月。</li><li>PostPaid：后付费，即按量付费。</li></ul>
+                                        enum:
+                                        - PrePaid
+                                        - PostPaid
+                                        name: DiskChargeType
+                                        type: string
+                                    DiskId:
+                                        description: 磁盘 ID。
+                                        name: DiskId
+                                        type: string
+                                    DiskName:
+                                        description: 磁盘名。
+                                        name: DiskName
+                                        type: string
+                                    EnableAutoSnapshot:
+                                        default: 'false'
+                                        description: 磁盘是否执行自动快照策略。取值范围：<ul><li>true：这块磁盘执行自动快照策略。</li><li>false：这块磁盘不执行自动快照策略。</li></ul>默认值：false
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: EnableAutoSnapshot
+                                        type: string
+                                    Encrypted:
+                                        description: '是否为加密磁盘。取值范围：<ul><li>true: 是加密磁盘。</li><li>false：不是加密磁盘。</li></ul>'
+                                        enum:
+                                        - true
+                                        - false
+                                        name: Encrypted
+                                        type: boolean
+                                    ImageId:
+                                        description: 创建磁盘的镜像 ID，只有通过镜像创建的磁盘才有值，否则为空。这个值在磁盘的生命周期内始终不变。
+                                        name: ImageId
+                                        type: string
+                                    InstanceId:
+                                        description: 所属 Instance ID。<br>只有在 <code>Status</code> 为 <code>In_use</code> 时才有值，其他状态为空。
+                                        enum:
+                                        - Status
+                                        - In_use
+                                        name: InstanceId
+                                        type: string
+                                    OperationLocks:
+                                        description: 磁盘锁定原因类型。
+                                        name: OperationLocks
+                                        type: object
+                                        properties:
+                                            LockReason:
+                                                description: <ul><li>financial：因欠费被锁定</li><li>security：因安全原因被锁定</li><li>recycling：竞价实例的待释放锁定状态</li></ul>
+                                                name: LockReason
+                                                type: string
+                                    Portable:
+                                        description: 磁盘是否可卸载。取值范围：<br><ul><li>true：独立普通云盘，可以独立存在且可以自由在可用区内挂载和卸载。</li><li>false：非独立普通云盘，不可以独立存在，不可以在可用区内挂载和卸载，生命周期与实例等同。</li></ul>用户如果需要挂载或卸载磁盘，必须事先查询，<code>Portable</code> 属性为 <code>true</code> 的磁盘才能操作。本地磁盘，本地SSD盘，普通云盘，SSD 云盘的系统盘和包年包月的普通云盘，该属性都为 <code>false</code>。不支持修改该属性。
+                                        enum:
+                                        - 'true'
+                                        - 'false'
+                                        name: Portable
+                                        type: string
+                                    ProductCode:
+                                        description: '镜像市场的商品标识。 '
+                                        name: ProductCode
+                                        type: string
+                                    RegionId:
+                                        description: 磁盘所属的地域 ID。RegionId 的列表详见 <a href="/document_detail/40654.html">地域列表</a>。
+                                        name: RegionId
+                                        type: string
+                                    Size:
+                                        description: 磁盘大小，单位 GB。
+                                        name: Size
+                                        type: integer
+                                    SourceSnapshotId:
+                                        description: 创建磁盘使用的快照，如果创建磁盘时，没有指定快照，则为空。这个值在磁盘的生命周期内始终不变。
+                                        name: SourceSnapshotId
+                                        type: string
+                                    Status:
+                                        description: 磁盘状态。取值范围：<ul><li>In_use</li><li>Available</li><li>Attaching</li><li>Detaching</li><li>Creating</li><li>ReIniting</li></ul>
+                                        enum:
+                                        - In_use
+                                        - Available
+                                        - Attaching
+                                        - Detaching
+                                        - Creating
+                                        - ReIniting
+                                        name: Status
+                                        type: string
+                                    Type:
+                                        description: '磁盘类型。取值范围：<ul><li>system: 系统盘</li><li>data: 数据盘</li></ul>'
+                                        enum:
+                                        - system
+                                        - data
+                                        name: Type
+                                        type: string
+                                    ZoneId:
+                                        description: 磁盘所属的可用区 ID。
+                                        name: ZoneId
+                                        type: string
+
+                            Encrypted:
+                                description: 是否为加密磁盘
+                                name: Encrypted
+                                type: boolean
+                            PageNumber:
+                                description: 磁盘列表的页码
+                                name: PageNumber
+                                type: integer
+                            PageSize:
+                                description: 输入时设置的每页行数
+                                name: PageSize
+                                type: integer
+                            TotalCount:
+                                description: 磁盘总个数
+                                name: TotalCount
+                                type: integer
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidDiskType.ValueNotSupported, describeen: The specified disk type is not supported., describecn: 指定的磁盘属性不支持。}, {code: InvalidCategory.ValueNotSupported, describeen: The specified disk category is not supported., describecn: 指定的磁盘种类不支持或者无权限。}, {code: InvalidStatus.ValueNotSupported, describeen: The specified disk status is not supported., describecn: 指定的磁盘状态不支持。}, {code: InvalidTag.Mismatch, describeen: The specified Tag.n.Key and Tag.n.Value are not match., describecn: 指定的 Tag.n.Key 和 Tag.n.Value 不匹配。}, {code: InvalidTagCount, describeen: The specified tags are beyond the permitted range., describecn: 指定的 Tag 数超过了 5 个。}, {code: InvalidRegion.NotFound, describeen: The specified parameter RegionId is not valid., describecn: 指定的 RegionId 不存在。}, {code: InvalidZoneId.NotFound, describeen:
+                        The ZoneId provided does not exist., describecn: 指定的 ZoneId 不存在。}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: InvalidDiskIds.Malformed, describeen: The amount of specified disk Ids exceeds the limit., describecn: 指定的 DiskId 格式不正确。}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidDiskChargeType.NotFound, describeen: The DiskChargeType does not exist., describecn: 指定的 DiskChargeType 不存在。}, {code: InvalidLockReason.NotFound, describeen: The specified LockReason is not found, describecn: 指定的 LockReason 不存在。}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 查询磁盘信息
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?action=DescribeDisks</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PageNumber</span><span class="pun">=</span><span class="lit">1</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ZoneId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span><span class="pun">-</span><span class="pln">b</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?action=DescribeDisks</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">PageNumber</span><span class="pun">=</span><span class="lit">1</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ZoneId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">qingdao</span><span class="pun">-</span><span class="pln">b</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;DescribeDisksResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;Disks&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;Disk&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DeleteAutoSnapshot&gt;</span><span class="pln">true</span><span class="tag">&lt;/DeleteAutoSnapshot&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DeleteWithInstance&gt;</span><span class="pln">false</span><span class="tag">&lt;/DeleteWithInstance&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;EnableAutoSnapshot&gt;</span><span
+                class="pln">false</span><span class="tag">&lt;/EnableAutoSnapshot&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Category&gt;</span><span class="pln">cloud</span><span class="tag">&lt;/Category&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Description&gt;&lt;/Description&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DiskName&gt;&lt;/DiskName&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Size&gt;</span><span class="pln">5</span><span class="tag">&lt;/Size&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Type&gt;</span><span class="pln">data</span><span class="tag">&lt;/Type&gt;</span></code></li><li class="L1"><code class="lang-xml"><span
+                class="pln">            </span><span class="tag">&lt;InstanceId&gt;&lt;/InstanceId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;CreationTime&gt;</span><span class="pln">2014-07-23T02:44:07Z</span><span class="tag">&lt;/CreationTime&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ImageId&gt;&lt;/ImageId&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ZoneId&gt;</span><span class="pln">cn-qingdao-b</span><span class="tag">&lt;/ZoneId&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;AttachedTime&gt;</span><span class="pln">2014-07-23T07:47:35Z</span><span class="tag">&lt;/AttachedTime&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DetachedTime&gt;</span><span
+                class="pln">2014-07-23T08:28:48Z</span><span class="tag">&lt;/DetachedTime&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Device&gt;&lt;/Device&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;OperationLocks&gt;&lt;/OperationLocks&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Portable&gt;</span><span class="pln">true</span><span class="tag">&lt;/Portable&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ProductCode&gt;&lt;/ProductCode&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;RegionId&gt;</span><span class="pln">cn-qingdao</span><span class="tag">&lt;/RegionId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span
+                class="pln">            </span><span class="tag">&lt;DiskId&gt;</span><span class="pln">d-28m5zbua0</span><span class="tag">&lt;/DiskId&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;SourceSnapshotId&gt;&lt;/SourceSnapshotId&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Status&gt;</span><span class="pln">Available</span><span class="tag">&lt;/Status&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;/Disk&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;Disk&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DeleteAutoSnapshot&gt;</span><span class="pln">true</span><span class="tag">&lt;/DeleteAutoSnapshot&gt;</span></code></li><li class="L8"><code
+                class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DeleteWithInstance&gt;</span><span class="pln">false</span><span class="tag">&lt;/DeleteWithInstance&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;EnableAutoSnapshot&gt;</span><span class="pln">false</span><span class="tag">&lt;/EnableAutoSnapshot&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Category&gt;</span><span class="pln">cloud</span><span class="tag">&lt;/Category&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Description&gt;&lt;/Description&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DiskName&gt;&lt;/DiskName&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span
+                class="tag">&lt;Size&gt;</span><span class="pln">5</span><span class="tag">&lt;/Size&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Type&gt;</span><span class="pln">data</span><span class="tag">&lt;/Type&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;InstanceId&gt;&lt;/InstanceId&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;CreationTime&gt;</span><span class="pln">2014-07-23T02:44:06Z</span><span class="tag">&lt;/CreationTime&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ImageId&gt;&lt;/ImageId&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ZoneId&gt;</span><span class="pln">cn-qingdao-b</span><span class="tag">&lt;/ZoneId&gt;</span></code></li><li
+                class="L9"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;AttachedTime&gt;&lt;/AttachedTime&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DetachedTime&gt;&lt;/DetachedTime&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Device&gt;&lt;/Device&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;OperationLocks&gt;&lt;/OperationLocks&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Portable&gt;</span><span class="pln">true</span><span class="tag">&lt;/Portable&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;ProductCode&gt;&lt;/ProductCode&gt;</span></code></li><li class="L5"><code class="lang-xml"><span
+                class="pln">            </span><span class="tag">&lt;RegionId&gt;</span><span class="pln">cn-qingdao</span><span class="tag">&lt;/RegionId&gt;</span></code></li><li class="L6"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;DiskId&gt;</span><span class="pln">d-28zfrmo13</span><span class="tag">&lt;/DiskId&gt;</span></code></li><li class="L7"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;SourceSnapshotId&gt;&lt;/SourceSnapshotId&gt;</span></code></li><li class="L8"><code class="lang-xml"><span class="pln">            </span><span class="tag">&lt;Status&gt;</span><span class="pln">Available</span><span class="tag">&lt;/Status&gt;</span></code></li><li class="L9"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;/Disk&gt;</span></code></li><li class="L0"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;/Disks&gt;</span></code></li><li class="L1"><code class="lang-xml"><span
+                class="pln">    </span><span class="tag">&lt;PageNumber&gt;</span><span class="pln">1</span><span class="tag">&lt;/PageNumber&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;PageSize&gt;</span><span class="pln">2</span><span class="tag">&lt;/PageSize&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;TotalCount&gt;</span><span class="pln">9</span><span class="tag">&lt;/TotalCount&gt;</span></code></li><li class="L4"><code class="lang-xml"><span class="pln">    </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">ED5CF6DD-71CA-462C-9C94-A61A78A01479</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L5"><code class="lang-xml"><span class="tag">&lt;/DescribeDisksResponse&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">  </span><span class="str">"Disks"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code class="lang-json"><span class="pln">    </span><span class="str">"Disk"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span></code></li><li class="L3"><code class="lang-json"><span class="pln">      </span><span class="pun">{</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"AttachedTime"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2014-07-23T07:47:35Z"</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"Category"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="str">"cloud"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"CreationTime"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2014-07-23T02:44:07Z"</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">        </span><span class="str">"DeleteAutoSnapshot"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">        </span><span class="str">"DeleteWithInstance"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">        </span><span class="str">"EnableAutoSnapshot"</span><span class="pun">:</span><span
+                class="pln"> </span><span class="kwd">false</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"Description"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"DetachedTime"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2014-07-23T08:28:48Z"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">        </span><span class="str">"Device"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="str">"DiskId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"d-28m5zbua0"</span><span class="pun">,</span></code></li><li
+                class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"DiskName"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"ImageId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"InstanceId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">        </span><span class="str">"OperationLocks"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code class="lang-json"><span class="pln">            </span><span class="str">"OperationLock"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="pun">[]</span></code></li><li class="L9"><code class="lang-json"><span class="pln">        </span><span class="pun">},</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"Portable"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"ProductCode"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">        </span><span class="str">"RegionId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-qingdao"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="str">"Size"</span><span
+                class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"SourceSnapshotId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"Status"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Available"</span><span class="pun">,</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"Type"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"data"</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">        </span><span class="str">"ZoneId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-qingdao-b"</span></code></li><li
+                class="L8"><code class="lang-json"><span class="pln">      </span><span class="pun">},</span></code></li><li class="L9"><code class="lang-json"><span class="pln">      </span><span class="pun">{</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"AttachedTime"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"Category"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cloud"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">        </span><span class="str">"CreationTime"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2014-07-23T02:44:06Z"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span
+                class="str">"DeleteAutoSnapshot"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L4"><code class="lang-json"><span class="pln">        </span><span class="str">"DeleteWithInstance"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="str">"EnableAutoSnapshot"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"Description"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span class="pln">        </span><span class="str">"DetachedTime"</span><span class="pun">:</span><span class="pln">
+                </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">        </span><span class="str">"Device"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">        </span><span class="str">"DiskId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"d-28zfrmo13"</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"DiskName"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"ImageId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L2"><code
+                class="lang-json"><span class="pln">        </span><span class="str">"InstanceId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="str">"OperationLocks"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code class="lang-json"><span class="pln">            </span><span class="str">"OperationLock"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[]</span></code></li><li class="L5"><code class="lang-json"><span class="pln">        </span><span class="pun">},</span></code></li><li class="L6"><code class="lang-json"><span class="pln">        </span><span class="str">"Portable"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L7"><code class="lang-json"><span
+                class="pln">        </span><span class="str">"ProductCode"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">        </span><span class="str">"RegionId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-qingdao"</span><span class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">        </span><span class="str">"Size"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="pln">        </span><span class="str">"SourceSnapshotId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span></code></li><li class="L1"><code class="lang-json"><span class="pln">        </span><span class="str">"Status"</span><span class="pun">:</span><span
+                class="pln"> </span><span class="str">"Available"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">        </span><span class="str">"Type"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"data"</span><span class="pun">,</span></code></li><li class="L3"><code class="lang-json"><span class="pln">        </span><span class="str">"ZoneId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"cn-qingdao-b"</span></code></li><li class="L4"><code class="lang-json"><span class="pln">      </span><span class="pun">}</span></code></li><li class="L5"><code class="lang-json"><span class="pln">    </span><span class="pun">]</span></code></li><li class="L6"><code class="lang-json"><span class="pln">  </span><span class="pun">},</span></code></li><li class="L7"><code class="lang-json"><span class="pln">  </span><span class="str">"PageNumber"</span><span class="pun">:</span><span class="pln">
+                </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L8"><code class="lang-json"><span class="pln">  </span><span class="str">"PageSize"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span></code></li><li class="L9"><code class="lang-json"><span class="pln">  </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"ACD9BBB0-A9D1-46D7-9630-B7A69889E110"</span><span class="pun">,</span></code></li><li class="L0"><code class="lang-json"><span class="pln">  </span><span class="str">"TotalCount"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">9</span></code></li><li class="L1"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '        本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: '        ResourceOwnerAccount    '
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

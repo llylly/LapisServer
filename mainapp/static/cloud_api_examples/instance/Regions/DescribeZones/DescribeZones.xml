@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <host value="ecs.aliyuncs.com"/>
+  <info>
+    <description value="云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"/>
+    <title value="instance"/>
+    <version value="1.0"/>
+  </info>
+  <paths>
+    <node nodeName="/DescribeZones">
+      <get>
+        <consumes nodeType="array">
+          <consumes value="application/x-www-form-urlencoded"/>
+        </consumes>
+        <description value="&lt;h2 id=&quot;h2--em-em-&quot;&gt;&lt;a name=&quot;&lt;em&gt;描述&lt;/em&gt;&quot; class=&quot;reference-link&quot;&gt;&lt;/a&gt;&lt;span class=&quot;header-link octicon octicon-link&quot;&gt;&lt;/span&gt;&lt;em&gt;描述&lt;/em&gt;&lt;/h2&gt;&lt;p&gt;查询可用区列表。&lt;/p&gt;"/>
+        <parameters nodeType="array">
+          <parameters>
+            <description value="系统规定参数。取值：DescribeZones"/>
+            <enum nodeType="array">
+              <enum value="DescribeZones"/>
+            </enum>
+            <in value="query"/>
+            <name value="Action"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="目标 RegionId。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。"/>
+            <in value="query"/>
+            <name value="RegionId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="PostPaid"/>
+            <description value="实例的付费方式。取值范围：&lt;ul&gt;&lt;li&gt;PrePaid：预付费，即包年包月&lt;/li&gt;&lt;li&gt;PostPaid：后付费，即按量付费&lt;/li&gt;&lt;/ul&gt;默认值：PostPaid"/>
+            <enum nodeType="array">
+              <enum value="PrePaid"/>
+              <enum value="PostPaid"/>
+            </enum>
+            <in value="query"/>
+            <name value="InstanceChargeType"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <default value="NoSpot"/>
+            <description value="后付费实例的竞价策略。&lt;br&gt;当 InstanceChargeType 为PostPaid 时为生效。取值范围:&lt;ul&gt;&lt;li&gt;NoSpot：正常按量付费实例&lt;/li&gt;&lt;li&gt;SpotWithPriceLimit：设置上限价格的竞价实例&lt;/li&gt;&lt;li&gt;SpotAsPriceGo：系统自动出价，最高按量付费价格&lt;/li&gt;&lt;/ul&gt;默认值：NoSpot"/>
+            <enum nodeType="array">
+              <enum value="NoSpot"/>
+              <enum value="SpotWithPriceLimit"/>
+              <enum value="SpotAsPriceGo"/>
+            </enum>
+            <in value="query"/>
+            <name value="SpotStrategy"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+        <produces nodeType="array">
+          <produces value="application/xml"/>
+          <produces value="application/json"/>
+        </produces>
+        <responses>
+          <node nodeName="200">
+            <description value="Accept"/>
+            <schema>
+              <properties>
+                <Zones>
+                  <description value="数据中心信息 ZoneType 组成的集合"/>
+                  <items>
+                    <x-schema>
+                      <properties>
+                        <AvailableDiskCategories>
+                          <description value="支持的磁盘种类集合"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <DiskCategories>
+                                  <description value="磁盘种类&lt;br&gt;&lt;ul&gt;&lt;li&gt;cloud：支持创建普通云盘和独立普通云盘&lt;/li&gt;&lt;li&gt;cloud_ssd：支持创建SSD云盘&lt;/li&gt;&lt;li&gt;ephemeral：支持创建本地磁盘&lt;/li&gt;&lt;li&gt;ephemeral_ssd：支持创建本地 SSD 盘&lt;/li&gt;&lt;/ul&gt;"/>
+                                  <enum nodeType="array">
+                                    <enum value="cloud"/>
+                                    <enum value="cloud_ssd"/>
+                                    <enum value="ephemeral"/>
+                                    <enum value="ephemeral_ssd"/>
+                                  </enum>
+                                  <name value="DiskCategories"/>
+                                  <type value="string"/>
+                                </DiskCategories>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="AvailableDiskCategories"/>
+                          <type value="array"/>
+                        </AvailableDiskCategories>
+                        <AvailableInstanceTypes>
+                          <description value="允许创建的实例规格类型"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <InstanceTypes>
+                                  <description value="实例规格种类"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="DiskCategories"/>
+                                  <type value="array"/>
+                                </InstanceTypes>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="AvailableInstanceTypes"/>
+                          <type value="array"/>
+                        </AvailableInstanceTypes>
+                        <AvailableResourceCreation>
+                          <description value="允许创建的资源类型集合"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <ResourceTypes>
+                                  <description value="资源类型，如下：&lt;ul&gt;&lt;li&gt;Instance：支持实例创建&lt;/li&gt;&lt;li&gt;IoOptimized：支持IO优化的实例创建&lt;/li&gt;&lt;li&gt;Disk：支持磁盘创建&lt;/li&gt;&lt;li&gt;VSwitch：支持专有网络创建&lt;/li&gt;&lt;/ul&gt;"/>
+                                  <enum nodeType="array">
+                                    <enum value="Instance"/>
+                                    <enum value="IoOptimized"/>
+                                    <enum value="Disk"/>
+                                    <enum value="VSwitch"/>
+                                  </enum>
+                                  <name value="ResourceTypes"/>
+                                  <type value="string"/>
+                                </ResourceTypes>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="AvailableResourceCreation"/>
+                          <type value="array"/>
+                        </AvailableResourceCreation>
+                        <AvailableResources>
+                          <description value="可供创建的具体资源，AvailableResourcesType 组成的数组"/>
+                          <items>
+                            <x-schema>
+                              <properties>
+                                <IoOptimized>
+                                  <description value="是否 I/O 优化"/>
+                                  <name value="IoOptimized"/>
+                                  <type value="string"/>
+                                </IoOptimized>
+                                <supportedDataDiskCategory>
+                                  <description value="支持创建的数据盘类型组成的数组"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="supportedDataDiskCategory"/>
+                                  <type value="array"/>
+                                </supportedDataDiskCategory>
+                                <supportedInstanceGeneration>
+                                  <description value="支持的实例系列"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="supportedInstanceGeneration"/>
+                                  <type value="array"/>
+                                </supportedInstanceGeneration>
+                                <supportedInstanceType>
+                                  <description value="支持创建的实例规格组成的数组"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="supportedInstanceType"/>
+                                  <type value="array"/>
+                                </supportedInstanceType>
+                                <supportedInstanceTypeFamily>
+                                  <description value="支持的实例规格族"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="supportedInstanceTypeFamily"/>
+                                  <type value="array"/>
+                                </supportedInstanceTypeFamily>
+                                <supportedNetworkCategory>
+                                  <description value="支持的网络类型"/>
+                                  <name value="supportedNetworkCategory"/>
+                                  <type value="string"/>
+                                </supportedNetworkCategory>
+                                <supportedSystemDiskCategory>
+                                  <description value="支持创建的系统盘类型组成的数组"/>
+                                  <items>
+                                    <type value="string"/>
+                                  </items>
+                                  <name value="supportedSystemDiskCategory"/>
+                                  <type value="array"/>
+                                </supportedSystemDiskCategory>
+                              </properties>
+                              <type value="object"/>
+                            </x-schema>
+                          </items>
+                          <name value="AvailableResources"/>
+                          <type value="array"/>
+                        </AvailableResources>
+                        <LocalName>
+                          <description value="可用区本地语言名"/>
+                          <name value="LocalName"/>
+                          <type value="string"/>
+                        </LocalName>
+                        <ZoneId>
+                          <description value="可用区ID"/>
+                          <name value="ZoneId"/>
+                          <type value="string"/>
+                        </ZoneId>
+                      </properties>
+                      <type value="object"/>
+                    </x-schema>
+                  </items>
+                  <name value="Zones"/>
+                  <type value="array"/>
+                </Zones>
+              </properties>
+              <type value="object"/>
+            </schema>
+          </node>
+          <node nodeName="400">
+            <description value="{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter, describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.}, {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: }"/>
+          </node>
+          <node nodeName="403">
+            <description value="{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&amp;#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.}, {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.}"/>
+          </node>
+          <node nodeName="404">
+            <description value="{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist., describecn: 指定的 RegionId 不存在。RegionId 的列表详见 &lt;a href=&quot;/document_detail/40654.html&quot;&gt;地域列表&lt;/a&gt;。}"/>
+          </node>
+          <node nodeName="409">
+            <description value="{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}"/>
+          </node>
+          <node nodeName="500">
+            <description value="{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}"/>
+          </node>
+          <node nodeName="503">
+            <description value="{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}"/>
+          </node>
+        </responses>
+      </get>
+      <parameter>
+        <node nodeName="$ref" value="#/paths/&quot;/public&quot;/request/parameters"/>
+      </parameter>
+      <summary value="查询可用区"/>
+      <x-requestsample nodeType="array">
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeZones&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+        </x-requestsample>
+        <x-requestsample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pln&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;com&quot;&gt;//ecs.aliyuncs.com/?Action=DescribeZones&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;typ&quot;&gt;RegionId&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;hangzhou&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-shell&quot;&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;lt;公共请求参数&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+        </x-requestsample>
+      </x-requestsample>
+      <x-responsesample nodeType="array">
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DescribeZonesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Zones&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Zone&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AvailableResourceCreation&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ResourceTypes&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Instance&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ResourceTypes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ResourceTypes&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Disk&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ResourceTypes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/AvailableResourceCreation&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;LocalName&amp;gt;&amp;lt;/LocalName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ZoneId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-hangzhou-d&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ZoneId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AvailableDiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DiskCategories&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cloud&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/AvailableDiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Zone&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;Zone&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AvailableResourceCreation&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ResourceTypes&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Instance&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ResourceTypes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ResourceTypes&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;Disk&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ResourceTypes&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/AvailableResourceCreation&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;LocalName&amp;gt;&amp;lt;/LocalName&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;ZoneId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cn-hangzhou-b&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/ZoneId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;AvailableDiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;DiskCategories&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;cloud&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/AvailableDiskCategories&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Zone&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/Zones&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;RequestId&amp;gt;&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt;6DB97BCC-92BA-424D-A7C8-3F6486612BAE&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/RequestId&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/DescribeZonesResponse&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="1"/>
+          <note value="XML格式"/>
+        </x-responsesample>
+        <x-responsesample>
+          <description value="&lt;pre class=&quot;prettyprint linenums prettyprinted&quot; style=&quot;&quot;&gt;&lt;ol class=&quot;linenums&quot;&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;RequestId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;A347EF0E-BBCC-4EFA-BD79-27AA3ACFD1BF&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Zones&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Zone&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;AvailableDiskCategories&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;DiskCategories&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cloud&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;AvailableResourceCreation&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ResourceTypes&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Instance&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Disk&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;LocalName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ZoneId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-hangzhou-d&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;AvailableDiskCategories&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;DiskCategories&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cloud&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;AvailableResourceCreation&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ResourceTypes&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;[&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L7&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Instance&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L8&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;Disk&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L9&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;          &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L0&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L1&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;LocalName&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L2&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;ZoneId&quot;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;pln&quot;&gt; &lt;/span&gt;&lt;span class=&quot;str&quot;&gt;&quot;cn-hangzhou-b&quot;&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L3&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L4&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L5&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pln&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;li class=&quot;L6&quot;&gt;&lt;code class=&quot;lang-json&quot;&gt;&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/pre&gt;"/>
+          <id value="2"/>
+          <note value="JSON格式"/>
+        </x-responsesample>
+      </x-responsesample>
+    </node>
+    <node nodeName="/public">
+      <request>
+        <parameters nodeType="array">
+          <parameters>
+            <default value="XML"/>
+            <description value="返回值的类型，支持 JSON 与 XML。默认为 XML。"/>
+            <enum nodeType="array">
+              <enum value="XML"/>
+              <enum value="JSON"/>
+            </enum>
+            <in value="query"/>
+            <name value="Format"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。"/>
+            <in value="query"/>
+            <name value="Version"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="阿里云颁发给用户的访问服务所用的密钥 ID。"/>
+            <in value="query"/>
+            <name value="AccessKeyId"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名结果串，关于签名的计算方法，请参见&amp;lt;&lt;a href=&quot;/document_detail/25492.html&quot;&gt;签名机制&lt;/a&gt;&amp;gt;。"/>
+            <in value="query"/>
+            <name value="Signature"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名方式，目前支持 HMAC-SHA1。"/>
+            <in value="query"/>
+            <name value="SignatureMethod"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="        请求的时间戳。日期格式按照 &lt;a href=&quot;/document_detail/25696.html&quot;&gt;ISO8601&lt;/a&gt; 标准表示，并需要使用 UTC 时间。格式为： &lt;br /&gt;        YYYY-MM-DDThh:mm:ssZ &lt;br /&gt;        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    "/>
+            <in value="query"/>
+            <name value="Timestamp"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="签名算法版本，目前版本是 1.0。"/>
+            <in value="query"/>
+            <name value="SignatureVersion"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值"/>
+            <in value="query"/>
+            <name value="SignatureNonce"/>
+            <required value="true"/>
+            <type value="string"/>
+          </parameters>
+          <parameters>
+            <description value="本次 API 请求访问到的资源拥有者账户，即登录用户名。 &lt;br /&gt;        此参数的使用方法，详见&amp;lt; &lt;a href=&quot;/document_detail/25494.html&quot;&gt;借助 RAM 实现子账号对主账号的 ECS 资源访问&lt;/a&gt; &amp;gt;，（只能在 &lt;a href=&quot;/document_detail/25496.html&quot;&gt;RAM 中可对 ECS 资源进行授权的 Action&lt;/a&gt; 中才能使用此参数，否则访问会被拒绝）    "/>
+            <in value="query"/>
+            <name value="ResourceOwnerAccount"/>
+            <required value="false"/>
+            <type value="string"/>
+          </parameters>
+        </parameters>
+      </request>
+      <response>
+        <RequestId>
+          <description value="用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码"/>
+          <in value="body"/>
+          <name value="RequestId"/>
+          <type value="string"/>
+        </RequestId>
+      </response>
+    </node>
+  </paths>
+  <swagger value="2.0"/>
+  <x-vee value="2.0 AS"/>
+</root>

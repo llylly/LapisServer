@@ -1,0 +1,149 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /CreateSnapshot:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: '<h2 id="h2--em-em-"><a name="<em>描述</em>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><em>描述</em></h2><p>对指定的磁盘存储设备创建快照。</p><ul><li>云服务器仅在 Stopped 或 Running 状态下才能创建快照。（但刚创建完成从未启动过的实例不能创建快照）</li><li>刚创建完成的云服务器系统盘，或刚增加从快照创建的数据盘，由于尚未完成数据的加载，此时创建快照会返回错误。一般来说，系统盘创建完成 1 个小时后即可创建快照，数据盘的可创建快照的时间取决于磁盘数据的大小。</li><li>新增加一块磁盘后，如果实例尚未启动过，新增的这块磁盘不能用于创建快照。</li><li>如果快照创建没有完成（即进度没有达到 100%），那么这个快照无法用于创建自定义镜像。</li><li>如果快照创建没有完成（即进度没有达到 100%），那么不能对同一磁盘再次创建快照。</li><li>快照数量的配额取决于该帐号下拥有的磁盘总数量。最多可创建的快照数量为磁盘数量乘以64。</li><li>如果磁盘在 <code>In_use</code> 状态下，挂载的实例的 <code>OperationLocks</code> 中标记了 <code>"LockReason" : "security"</code> 的锁定状态时，不能创建快照。</li><li>磁盘挂载的实例创建后第一次启动前，不能创建快照</li><li>独立普通云盘创建后，如果没有挂载过，创建快照会出现错误提示。</li></ul>'
+            parameters:
+            -   description: 系统规定参数，取值：CreateSnapshot
+                enum:
+                - CreateSnapshot
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 指定的磁盘 ID
+                in: query
+                name: DiskId
+                required: true
+                type: string
+            -   description: 快照的显示名称，[2, 128] 英文或中文字符，必须以大小字母或中文开头，可包含数字，”_”或”-”，且不能以 auto 开头（auto 开头的快照名是预留给自动快照的）。快照的显示名称会显示在控制台中。不能以 http:// 和 https:// 开头。
+                in: query
+                maxLength: 128
+                minLength: 2
+                name: SnapshotName
+                required: false
+                type: string
+            -   default: 空
+                description: 快照的描述，[2, 256] 个字符。快照的描述会显示在控制台中。不填则为空，默认为空。不能以 http:// 和 https:// 开头。
+                in: query
+                maxLength: 256
+                minLength: 2
+                name: Description
+                required: false
+                type: string
+            -   description: 用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不值过 64 个 ASCII 字符。<br>具体参见附录：<a href="/document_detail/25693.html">如何保证幂等性</a>。
+                in: query
+                maxLength: 64
+                name: ClientToken
+                required: false
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            SnapshotId:
+                                description: 快照 ID
+                                name: SnapshotId
+                                type: string
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: InvalidSnapshotName.Malformed, describeen: The specified SnapshotName is wrongly formed., describecn: SnapshotName 格式不合法}, {code: IncorrectInstanceStatus, describeen: The current status of the resource does not support this operation., describecn: 指定的实例状态不正确}, {code: DiskCategory.OperationNotSupported, describeen: The operation is not supported to the specified disk due to its disk category, describecn: 指定磁盘的磁盘类型不支持该操作}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: IncorrectDiskStatus.CreatingSnapshot, describeen: A previous snapshot creation is in process., describecn: 指定的磁盘正在创建快照}, {code: InstanceLockedForSecurity, describeen: The disk attached instance is locked due to security., describecn: 指定的实例被安全锁定}, {code: IncorrectDiskStatus.NeverAttached, describeen: The specified disk has never been attached to any instance., describecn: 可卸载的普通云盘创建后未被挂载，内容没有变化},
+                        {code: QuotaExceed.Snapshot, describeen: The maximum number of snapshots is exceeded., describecn: 快照额度超过限制}, {code: IncorrectDiskStatus.NeverUsed, describeen: The specified disk has never been used after creating., describecn: 磁盘创建后未被使用，内容没有变化}, {code: CreateSnapshot.Failed, describeen: The process of creating snapshot is failed., describecn: 创建快照失败}, {code: DiskInArrears, describeen: The specified operation is denied as your disk has expired., describecn: 指定磁盘已经欠费}, {code: DiskId.ValueNotSupported, describeen: The specified parameter diskid is not supported., describecn: 指定的参数diskid不支持}, {code: IncorrectDiskStatus, describeen: The current disk status does not support this operation., describecn: 磁盘状态不正确}, {code: InvalidAccountStatus.NotEnoughBalance, describeen: Your account does not have enough balance., describecn: 账户余额不足}, {code: InvalidAccountStatus.SnapshotServiceUnavailable, describeen: Snapshot service has not been opened yet., describecn: 快照服务未开通}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist., describecn: 指定的磁盘不存在}, {code: InvalidDescription.Malformed, describeen: The specified description is wrongly formed., describecn: Description 格式不合法}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 对指定的磁盘存储设备创建快照
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=CreateSnapshot</span></code></li><li class="L1"><code><span class="pun">&amp;</span><span class="typ">DiskId</span><span class="pun">=</span><span class="lit">1033</span><span class="pun">-</span><span class="lit">60053321</span></code></li><li class="L2"><code><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=CreateSnapshot</span></code></li><li class="L1"><code><span class="pun">&amp;</span><span class="typ">DiskId</span><span class="pun">=</span><span class="lit">1033</span><span class="pun">-</span><span class="lit">60053321</span></code></li><li class="L2"><code><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;CreateSnapshotResponse&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">C8B26B44-0189-443E-9816-D951F59623A9</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="pln">        </span><span class="tag">&lt;SnapshotId&gt;</span><span class="pln">s-923FE2BF0</span><span class="tag">&lt;/SnapshotId&gt;</span></code></li><li class="L3"><code class="lang-xml"><span class="tag">&lt;/CreateSnapshotResponse&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">    </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"C8B26B44-0189-443E-9816-D951F59623A9"</span><span class="pun">,</span></code></li><li class="L2"><code class="lang-json"><span class="pln">    </span><span class="str">"SnapshotId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"s-923FE2BF0"</span></code></li><li class="L3"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS

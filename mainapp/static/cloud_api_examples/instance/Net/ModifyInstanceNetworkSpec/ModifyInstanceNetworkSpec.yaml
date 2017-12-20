@@ -1,0 +1,172 @@
+host: ecs.aliyuncs.com
+info:
+    description: 云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。
+    title: instance
+    version: '1.0'
+paths:
+    /ModifyInstanceNetworkSpec:
+        get:
+            consumes:
+            - application/x-www-form-urlencoded
+            description: <h2 id="h2-u63CFu8FF0"><a name="描述" class="reference-link"></a><span class="header-link octicon octicon-link"></span>描述</h2><p>修改实例的带宽配置。当实例现有网络规格不满足要求时，可以通过此接口修改实例的网络规格来提高网络性能。修改后可能影响到实例所产生的账单费用。在使用这个接口的时候，需要注意以下几点：</p><ul><li><p>修改包年包月实例的带宽配置：</p><ul><li><p>按使用流量支付，可以扩大或缩小带宽；按固定带宽支付，则只能扩大带宽。</p></li><li><p>支持将按使用流量计费转为按固定带宽计费。</p></li><li><p>暂未开放包年包月实例按固定带宽计费转按使用流量计费，您需要登录 <a href="https://ecs.console.aliyun.com/" title="ECS控制台">ECS控制台</a> 操作。</p></li></ul></li><li><p>修改按量付费实例的带宽配置：</p><ul><li><p>可以调大带宽也可以调小带宽。</p></li><li><p>支持按量付费实例按流量计费转固定带宽计费，固定带宽计费转按流量计费带宽。</p></li></ul></li><li><p>经典网络下的实例，当公网出带宽从0 Mbps升级到大于0 Mbps的时候，实例必须处于已停止（<code>Stopped</code>）状态。包年包月实例（<code>Prepaid</code>）公网出方向带宽从0 Mbps升级到大于0 Mbps的时候会自动分配公网 IP，按量付费实例（<code>PostPaid</code>）公网出方向带宽从0 Mbps升级到大于0 Mbps的时候不会自动分配公网 IP，需要调用 <a href="/document_detail/25544.html">AllocatePublicIpAddress</a> 给分配公网IP。</p></li><li><p>单个实例每成功操作一次，5分钟内不能继续操作。</p></li><li><p>使用该接口默认自动扣费，请确保账户余额充足，如果账户余额不足会生成未支付订单，生成的未支付订单目前暂不支持登录
+                <a href="https://ecs.console.aliyun.com/" title="ECS控制台">ECS控制台</a> 支付，只能作废该订单；如果账户余额不足，可通过设置参数<code>AutoPay</code>为<code>false</code>取消自动支付，此时调用该接口会生成未支付的订单，此订单可登录 <a href="https://ecs.console.aliyun.com/" title="ECS控制台">ECS控制台</a>支付。</p></li></ul>
+            parameters:
+            -   description: 系统规定参数。取值：ModifyInstanceNetworkSpec
+                enum:
+                - ModifyInstanceNetworkSpec
+                in: query
+                name: Action
+                required: true
+                type: string
+            -   description: 指定的实例 ID。
+                in: query
+                name: InstanceId
+                required: true
+                type: string
+            -   description: '公网出带宽最大值，单位为Mbps（Megabit per second）。取值范围：<ul><li>按带宽计费：[0, 200]</li><li>按流量计费：[0, 200]</li></ul> '
+                in: query
+                maximum: 200
+                minimum: 0
+                name: InternetMaxBandwidthOut
+                required: false
+                type: integer
+            -   description: 公网入带宽最大值，单位为Mbps（Megabit per second）。取值范围：<ul><li>按带宽计费：[1, 100]</li><li>按流量计费：[1, 100]</li></ul>您可以 <a href="https://selfservice.console.aliyun.com/ticket/createIndex.htm" title="提交工单">提交工单</a> 申请将带宽范围设置成[1, 200] Mbps。
+                in: query
+                minimum: 1
+                name: InternetMaxBandwidthIn
+                required: false
+                type: integer
+            -   description: '转换网络计费类型，转换为按流量计费或按固定带宽计费。取值范围：<ul><li>PayByBandwidth：按固定带宽计费</li><li>PayByTraffic：按使用流量计费</li></ul> '
+                enum:
+                - PayByBandwidth
+                - PayByTraffic
+                in: query
+                name: NetworkChargeType
+                required: false
+                type: string
+            -   default: true
+                description: 是否自动支付。取值范围：<ul><li> true</li><li>false</li></ul>默认值：true<br>参数<code>AutoPay</code>为<code>true</code>表示自动支付，账户余额不足的时候会生成无法支付的订单，需要登录 <a href="https://ecs.console.aliyun.com/" title="ECS控制台">ECS控制台</a> 作废订单。参数<code>AutoPay</code>为<code>false</code>时会生成未支付的订单，可登录 <a href="https://ecs.console.aliyun.com/" title="ECS控制台">ECS控制台</a> 支付。
+                enum:
+                - true
+                - false、
+                in: query
+                name: AutoPay
+                required: false
+                type: boolean
+            -   description: 用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大值不超过64个ASCII字符。具体参见附录：<a href="/document_detail/25693.html">如何保证幂等性</a>。
+                in: query
+                maxLength: 64
+                name: ClientToken
+                required: false
+                type: string
+            produces:
+            - application/xml
+            - application/json
+            responses:
+                200:
+                    description: Accept
+                    schema:
+                        properties:
+                            OrderId:
+                                description: 生成的订单ID
+                                name: OrderId
+                                type: integer
+                            RequestId:
+                                description: 唯一请求ID
+                                name: RequestId
+                                type: string
+                        type: object
+                400:
+                    description: '{code: IdempotentParameterMismatch, describeen: The request is retried with updated parameters.}, {code: IllegalTimestamp, describeen: The input parameter “Timestamp” that is mandatory for processing this request is not supplied.}, {code: IncompleteSignature, describeen: The request signature does not conform to Aliyun standards.}, {code: InsufficientBalance, describeen: Your account does not have enough balance.}, {code: InvalidAccessKeyId.NotFound, describeen: The specified Access Key ID does not exist.}, {code: InvalidOwner, describeen: OwnerId and OwnerAccount can’t be used at one API access.}, {code: InvalidOwnerAccount, describeen: The specified OwnerAccount is not valid.}, {code: InvalidOwnerId, describeen: The specified OwnerId is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureMethod” is not valid.}, {code: InvalidParamater, describeen: The specified parameter “SignatureVersion” is not valid.}, {code: InvalidParameter,
+                        describeen: The specified parameter is not valid}, {code: InvalidParameter, describeen: The specified parameter “Action or Version” is not valid.}, {code: InvalidParameter.IsNull, describeen: The required parameter must be not null.}, {code: MissingParameter, describeen: The input parameter “Action” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “AccessKeyId” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Signature” that is mandatory for processing the request is not supplied.}, {code: MissingParameter, describeen: The input parameter “TimeStamp” that is mandatory for processing this request is not supplied}, {code: MissingParameter, describeen: The input parameter “Version” that is mandatory for processing this request is not supplied}, {code: SignatureNonceUsed, describeen: The request signature nonce has been used.},
+                        {code: Throttling, describeen: You have made too many requests within a short time; your request is denied due to request throttling.}, {code: UnsupportedParameter, describeen: },{code: Account.Arrearage, describeen: Your account has an outstanding payment., describecn: 账号已经欠费。}, {code: DecreasedBandWidthNotAllowed, describeen: A higher bandwidth than the current one is required., describecn: 新带宽不能低于已有带宽。}, {code: InvalidEndTime.ValueNotSupported, describeen: The specified EndTime is out of the permitted range., describecn: 指定的EndTime不合法。}, {code: InvalidInstance.UnpaidOrder, describeen: The specified instance has unpaid order., describecn: 当前实例有未支付的订单。}, {code: InvalidInstanceStatus.NotStopped, describeen: The specified Instance status is not Stopped., describecn: 实例未处于停止状态。}, {code: InvalidInternetChargeType.ValueNotSupported, describeen: The specified InternetChargeType is invalid., describecn: 指定的InternetChargeType不存在。}, {code: InvalidInternetMaxBandwidthIn.ValueNotSupported,
+                        describeen: The specified InternetMaxBandwidthIn is beyond the permitted range., describecn: 指定的InternetMaxBandwidthIn超出取值范围。}, {code: InvalidInternetMaxBandwidthOut.ValueNotSupported, describeen: The specified InternetMaxBandwidthOut is beyond the permitted range., describecn: 指定的InternetMaxBandwidthOut超出取值范围。}, {code: InvalidStartTime.ValueNotSupported, describeen: The specified StartTime is out of the permitted range., describecn: 指定的StartTime超出取值范围。}, {code: MissingParameter, describeen: The input parameter “InstanceId” that is mandatory for processing this request is not supplied., describecn: 缺少InstanceId值}, {code: OperationDenied, describeen: Specified instance is in VPC., describecn: VPC网络实例不支持该操作。}'
+                403:
+                    description: '{code: ChargeTypeViolation, describeen: The operation is not permitted due to charge type of the instance.}, {code: Forbidden.AccessKeyDisabled, describeen: The Access Key is disabled.}, {code: Forbidden.NotSupportRAM, describeen: This action does not support accessed by RAM mode.}, {code: Forbidden.RAM, describeen: User not authorized to operate on the specified resource, or this API doesn&#39;t support RAM.}, {code: Forbidden.RiskControl, describeen: This operation is forbidden by Aliyun RiskControl system.}, {code: Forbidden.SubUser, describeen: The specified action is not available for you.}, {code: Forbidden.Unauthorized, describeen: User not authorized to operate on the specified resource.}, {code: InvalidAccount.NotFound, describeen: The specified Account does not exist.}, {code: InvalidAction, describeen: Specified action is not valid.}, {code: InvalidIdempotenceParameter.Mismatch, describeen: The specified parameters are different from before.},
+                        {code: InvalidParameter.OwnerAccount, describeen: OwnerAccount is Invalid.}, {code: InvalidParameter.ResourceOwnerAccount, describeen: ResourceOwnerAccount is Invalid.}, {code: LastTokenProcessing, describeen: The last token request is processing.}, {code: MissingParameter, describeen: The input parameter OwnerId,OwnerAccount that is mandatory for processing this request is not supplied.}, {code: RealNameAuthenticationError, describeen: Your account has not passed the real-name authentication yet.}, {code: UnsupportedHTTPMethod, describeen: This http method is not supported.},{code: ChargeTypeViolation, describeen: The operation is not permitted due to billing method of the instance., describecn: 当前实例的付费类型不支持此操作。}, {code: IncorrectInstanceStatus, describeen: The current status of the instance does not support this operation., describecn: 该实例目前的状态不支持此操作。}, {code: InstanceExpiredOrInArrears, describeen: The specified operation is denied as your prepay instance is expired
+                        (prepay mode) or in arrears (afterpay mode)., describecn: 实例到期或者欠费（是指该实例是包年包月或者按量欠费的情况）。}, {code: InstanceLockedForSecurity, describeen: The specified operation is denied as your instance is locked for security reasons., describecn: 该实例目前被安全锁定，拒绝操作。}, {code: InvalidAccountStatus.NotEnoughBalance, describeen: Your account does not have enough balance., describecn: 账户余额不足。}, {code: OperationDenied, describeen: The operation is denied due to the instance is PrePaid., describecn: 包年包月实例不支持此操作。}'
+                404:
+                    description: '{code: InvalidDiskId.NotFound, describeen: The specified DiskId does not exist.}, {code: InvalidImageId.NotFound, describeen: The specified ImageId does not exist.}, {code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist.}, {code: InvalidRegionId.NotFound, describeen: The specified RegionId does not exist.}, {code: InvalidSecurityGroupId.NotFound, describeen: The specified SecurityGroupId does not exist.}, {code: InvalidSnapshotId.NotFound, describeen: The specified SnapshotId does not exist.},{code: InvalidInstanceId.NotFound, describeen: The specified InstanceId does not exist., describecn: 指定的实例ID不存在。}'
+                409:
+                    description: '{code: OperationConflict, describeen: Request was denied due to conflict with a previous request.}'
+                500:
+                    description: '{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure.},{code: InternalError, describeen: The request processing has failed due to some unknown error, exception or failure., describecn: 内部错误。}'
+                503:
+                    description: '{code: ServiceUnavailable, describeen: The request has failed due to a temporary failure of the server.}, {code: ServiceUnavailable.RegionMaintaining, describeen: System maintenance is in progress on the selected region, please wait a few minutes before trying again.}'
+        parameter:
+            $ref: '#/paths/"/public"/request/parameters'
+        summary: 修改实例的带宽配置
+        x-requestsample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=UpgradeInstanceBandwidth</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">InstanceId</span><span class="pun">=</span><span class="pln">i</span><span class="pun">-</span><span class="pln">xxxxx1</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">InternetMaxBandwidthOut</span><span class="pun">=</span><span class="lit">10</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ClientToken</span><span
+                class="pun">=</span><span class="pln">xxxxxxxxxxxxxx</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 1
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-shell"><span class="pln">https</span><span class="pun">:</span><span class="com">//ecs.aliyuncs.com/?Action=UpgradeInstanceBandwidth</span></code></li><li class="L1"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">RegionId</span><span class="pun">=</span><span class="pln">cn</span><span class="pun">-</span><span class="pln">hangzhou</span></code></li><li class="L2"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">InstanceId</span><span class="pun">=</span><span class="pln">i</span><span class="pun">-</span><span class="pln">xxxxx1</span></code></li><li class="L3"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">InternetMaxBandwidthOut</span><span class="pun">=</span><span class="lit">10</span></code></li><li class="L4"><code class="lang-shell"><span class="pun">&amp;</span><span class="typ">ClientToken</span><span
+                class="pun">=</span><span class="pln">xxxxxxxxxxxxxx</span></code></li><li class="L5"><code class="lang-shell"><span class="pun">&amp;&lt;公共请求参数&gt;</span></code></li></ol></pre>
+            id: 2
+        x-responsesample:
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-xml"><span class="tag">&lt;UpgradeInstanceBandwidth&gt;</span></code></li><li class="L1"><code class="lang-xml"><span class="pln">      </span><span class="tag">&lt;RequestId&gt;</span><span class="pln">04F0F334-1335-436C-A1D7-6C044FE73368</span><span class="tag">&lt;/RequestId&gt;</span></code></li><li class="L2"><code class="lang-xml"><span class="tag">&lt;/UpgradeInstanceBandwidth&gt;</span></code></li></ol></pre>
+            id: 1
+            note: XML格式
+        -   description: <pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><code class="lang-json"><span class="pun">{</span></code></li><li class="L1"><code class="lang-json"><span class="pln">      </span><span class="str">"RequestId"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"04F0F334-1335-436C-A1D7-6C044FE73368"</span></code></li><li class="L2"><code class="lang-json"><span class="pun">}</span></code></li></ol></pre>
+            id: 2
+            note: JSON格式
+    /public:
+        request:
+            parameters:
+            -   default: XML
+                description: 返回值的类型，支持 JSON 与 XML。默认为 XML。
+                enum:
+                - XML
+                - JSON
+                in: query
+                name: Format
+                required: false
+                type: string
+            -   description: API 版本号，为日期形式：YYYY-MM-DD，本版本对应为 2014-05-26。
+                in: query
+                name: Version
+                required: true
+                type: string
+            -   description: 阿里云颁发给用户的访问服务所用的密钥 ID。
+                in: query
+                name: AccessKeyId
+                required: true
+                type: string
+            -   description: 签名结果串，关于签名的计算方法，请参见&lt;<a href="/document_detail/25492.html">签名机制</a>&gt;。
+                in: query
+                name: Signature
+                required: true
+                type: string
+            -   description: 签名方式，目前支持 HMAC-SHA1。
+                in: query
+                name: SignatureMethod
+                required: true
+                type: string
+            -   description: '        请求的时间戳。日期格式按照 <a href="/document_detail/25696.html">ISO8601</a> 标准表示，并需要使用 UTC 时间。格式为： <br />        YYYY-MM-DDThh:mm:ssZ <br />        例如，2014-05-26T12:00:00Z（为北京时间 2014 年 5 月 26 日 20 点 0 分 0 秒）。    '
+                in: query
+                name: Timestamp
+                required: true
+                type: string
+            -   description: 签名算法版本，目前版本是 1.0。
+                in: query
+                name: SignatureVersion
+                required: true
+                type: string
+            -   description: 唯一随机数，用于防止网络重放攻击。用户在不同请求间要使用不同的随机数值
+                in: query
+                name: SignatureNonce
+                required: true
+                type: string
+            -   description: '本次 API 请求访问到的资源拥有者账户，即登录用户名。 <br />        此参数的使用方法，详见&lt; <a href="/document_detail/25494.html">借助 RAM 实现子账号对主账号的 ECS 资源访问</a> &gt;，（只能在 <a href="/document_detail/25496.html">RAM 中可对 ECS 资源进行授权的 Action</a> 中才能使用此参数，否则访问会被拒绝）    '
+                in: query
+                name: ResourceOwnerAccount
+                required: false
+                type: string
+        response:
+            RequestId:
+                description: 用户发送的每次接口调用请求，无论成功与否，系统都会返回一个唯一识别码
+                in: body
+                name: RequestId
+                type: string
+swagger: '2.0'
+x-vee: 2.0 AS
